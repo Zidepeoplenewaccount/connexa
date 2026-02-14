@@ -1,4 +1,4 @@
-import './hero.css';
+import './Hero.css';
 
 const marqueeItems = [
   { text: 'Network', color: 'var(--orange)' },
