@@ -1,6 +1,7 @@
 import './hero.css';
 import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.png';
 
+
 const marqueeItems = [
   { text: 'Network', color: 'var(--orange)' },
   { text: 'Grow', color: 'var(--green)' },
