@@ -82,6 +82,9 @@
 .ticket-card[data-type="vip-partner"]::before { background: linear-gradient(to right, var(--red), var(--orange), var(--green), var(--blue)); }
 .ticket-card[data-type="vip-partner"]:hover { border-color: rgba(232,49,42,0.3); box-shadow: 0 20px 60px rgba(232,49,42,0.15); }
 
+.ticket-card[data-type="connectors"]::before { background: var(--purple); }
+.ticket-card[data-type="connectors"]:hover { border-color: rgba(114, 42, 239, 0.3); box-shadow: 0 20px 60px rgba(140, 35, 245, 0.1); }
+
 /* VIP Partner special styling */
 .ticket-card.featured {
   background: linear-gradient(135deg, rgba(232,49,42,0.08), rgba(245,166,35,0.08), rgba(45,184,75,0.08), rgba(26,115,232,0.08));
@@ -123,6 +126,7 @@
 .ticket-icon-blue { background: rgba(26,115,232,0.1); }
 .ticket-icon-green { background: rgba(45,184,75,0.1); }
 .ticket-icon-white { background: rgba(255,255,255,0.06); }
+.ticket-icon-purple { background: rgba(114, 42, 239, 0.1); }
 .ticket-icon-gradient { background: linear-gradient(135deg, rgba(245,166,35,0.15), rgba(232,49,42,0.15)); }
 .ticket-icon-rainbow { background: linear-gradient(135deg, rgba(232,49,42,0.1), rgba(245,166,35,0.1), rgba(45,184,75,0.1), rgba(26,115,232,0.1)); }
 
@@ -243,6 +247,20 @@
 }
 .ticket-cta.cta-gradient:hover { box-shadow: 0 8px 30px rgba(232,49,42,0.4); }
 
+.ticket-cta.cta-white {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--black);
+}
+.ticket-cta.cta-white:hover { box-shadow: 0 8px 30px rgba(255, 255, 255, 0.4); }
+
+.ticket-cta.cta-purple {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: var(--white);
+}
+.ticket-cta.cta-purple:hover { box-shadow: 0 8px 30px rgba(114,42,239,0.4); }
+
 .tickets-note {
   text-align: center;
   margin-top: 40px;
@@ -293,9 +311,16 @@
   overflow: hidden;
 }
 
-.ticket-spots-fill {
+.ticket-spots-fill-vendor {
   height: 100%;
   background: linear-gradient(to right, var(--red), var(--orange));
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+.ticket-spots-fill-connectors {
+  height: 100%;
+  background: linear-gradient(to right, var(--blue), var(--purple));
   border-radius: 2px;
   transition: width 1s ease;
 }

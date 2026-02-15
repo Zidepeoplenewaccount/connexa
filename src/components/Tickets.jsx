@@ -127,7 +127,7 @@ const tickets = [
   {
     type: 'connectors',
     icon: '🔗',
-    iconClass: 'ticket-icon-blue',
+    iconClass: 'ticket-icon-purple',
     label: 'Coming Soon',
     name: 'Connectors Pass',
     subtitle: 'More details dropping soon — stay tuned.',
@@ -135,8 +135,8 @@ const tickets = [
     features: [],
     bestFor: null,
     cta: 'Get Connectors Pass',
-    ctaClass: 'cta-blue',
-    dotColor: 'var(--blue)',
+    ctaClass: 'cta-purple',
+    dotColor: 'var(--purple)',
     comingSoon: true,
   },
 ];
@@ -189,7 +189,7 @@ export default function Tickets() {
                   </div>
                   <div className="ticket-spots-track">
                     <div
-                      className="ticket-spots-fill"
+                      className={`ticket-spots-fill-${ticket.type}`}
                       style={{ width: `${Math.min((ticket.spotsLeft / 100) * 100, 100)}%` }}
                     />
                   </div>
