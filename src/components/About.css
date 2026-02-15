@@ -1,0 +1,143 @@
+.about {
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-text {}
+
+.about-text .section-title {
+  margin-bottom: 24px;
+}
+
+.about-text p {
+  color: rgba(255,255,255,0.6);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.about-highlights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 36px;
+}
+
+.about-highlight {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  transition: transform var(--transition);
+}
+
+.about-highlight:hover {
+  transform: translateY(-4px);
+}
+
+.about-highlight-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+  display: block;
+  animation: squish 4s ease-in-out infinite;
+}
+
+.about-highlight-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.about-highlight-desc {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.5;
+}
+
+.about-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.about-card-stack {
+  position: relative;
+  width: 320px;
+  height: 380px;
+}
+
+.about-floating-card {
+  position: absolute;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  width: 260px;
+}
+
+.about-floating-card-1 {
+  top: 0;
+  left: 0;
+  animation: float 6s ease-in-out infinite;
+  border-top: 3px solid var(--orange);
+}
+
+.about-floating-card-2 {
+  bottom: 0;
+  right: 0;
+  animation: float 8s ease-in-out infinite 1.5s;
+  border-top: 3px solid var(--green);
+}
+
+.about-card-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 10px;
+}
+
+.about-floating-card-2 .about-card-label {
+  color: var(--green);
+}
+
+.about-card-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.about-card-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .about-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .about-visual {
+    display: none;
+  }
+
+  .about-highlights {
+    grid-template-columns: 1fr;
+  }
+}

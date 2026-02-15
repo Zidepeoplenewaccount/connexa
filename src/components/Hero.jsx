@@ -1,4 +1,5 @@
 import './hero.css';
+import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.png';
 
 const marqueeItems = [
   { text: 'Network', color: 'var(--orange)' },
@@ -35,6 +36,10 @@ export default function Hero() {
           </div>
 
           <h1 className="hero-title">
+            {/*<img src={connexaLogo} alt="Connexa" />*/}
+
+
+
             <span className="highlight-red">C</span>
             <span className="highlight-orange">O</span>
             <span>NN</span>

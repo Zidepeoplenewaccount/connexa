@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.png';
 import './Navbar.css';
+//CONNEXA_LOGO-BLACK(3)-Photoroom.png
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -16,6 +18,7 @@ export default function Navbar() {
     { label: 'Tickets', href: '#tickets' },
     { label: 'Awards', href: '#awards' },
     { label: 'Vote', href: '#voting' },
+    { label: 'Merch', href: '#merch' },
   ];
 
   return (
@@ -23,6 +26,7 @@ export default function Navbar() {
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         <div className="container navbar-inner">
           <a href="#" className="navbar-logo">
+            <img src={connexaLogo} alt="Connexa" />
           </a>
 
           <div className="navbar-links">
