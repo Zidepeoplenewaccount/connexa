@@ -1,4 +1,4 @@
-import './hero.css';
+import './Hero.css';
 import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.png';
 
 
