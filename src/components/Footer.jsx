@@ -1,4 +1,4 @@
-import './footer.css';
+import './Footer.css';
 import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3).png';
 import zideLogo from '../assets/IMG_5735.PNG';
 

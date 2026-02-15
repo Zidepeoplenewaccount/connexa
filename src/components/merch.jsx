@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './merch.css';
+import './Merch.css';
 
 const PAYSTACK_PLACEHOLDER = 'https://paystack.com/pay/connexa-merch';
 

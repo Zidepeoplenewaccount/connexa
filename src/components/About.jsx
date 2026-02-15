@@ -1,4 +1,4 @@
-import './about.css';
+import './About.css';
 
 const highlights = [
   { icon: '🛒', title: 'Live Marketplace', desc: 'Real buyers, real sellers, real transactions on the day' },

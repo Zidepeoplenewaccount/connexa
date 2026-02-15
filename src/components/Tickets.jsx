@@ -1,4 +1,4 @@
-import './tickets.css';
+import './Tickets.css';
 
 const tickets = [
   {
