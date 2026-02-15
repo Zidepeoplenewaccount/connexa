@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './merch.css';
 
-const PAYSTACK_PLACEHOLDER = 'https://paystack.com/pay/connexa-merch';
+const PAYSTACK_PLACEHOLDER = '';
 
 const allProducts = [
   {
@@ -98,20 +98,7 @@ const allProducts = [
     priceClass: 'price-orange',
     buyClass: 'buy-orange',
   },
-  {
-    id: 8,
-    name: 'Connect Pass',
-    category: 'Access',
-    filter: 'pass',
-    price: 10000,
-    icon: '',// '🪪',
-    desc: 'Your physical card pass into the Connexa network. Limited spots available — do not sleep on this.',
-    badge: 'limited',
-    cardClass: 'limited',
-    priceClass: 'price-red',
-    buyClass: 'buy-red',
-    isLimited: true,
-  },
+  
 ];
 
 const filters = [
@@ -147,7 +134,7 @@ export default function Merch() {
             Wear the <span className="highlight-green">Movement</span>
           </h2>
           <p>
-            Official Connexa 2026 merchandise. Limited quantities — order early.
+            Official Connexa 2026 merchandise. Limited quantities, order early.
           </p>
         </div>
 

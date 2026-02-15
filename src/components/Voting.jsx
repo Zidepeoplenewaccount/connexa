@@ -1,35 +1,35 @@
 import { useState, useEffect } from 'react';
 import './Voting.css';
 
-const PAYSTACK_PLACEHOLDER = 'https://paystack.com/pay/connexa-vote';
+const PAYSTACK_PLACEHOLDER = '';
 
 const businessEntries = [
   {
     id: 1,
     name: 'Sample Business Co.',
     category: 'Business Award',
-    desc: 'A placeholder entry — real businesses will appear here once voting opens.',
+    desc: '',
   },
   {
     id: 2,
-    name: 'Another Great Brand',
+    name: 'Another Sample Business',
     category: 'Business Award',
-    desc: 'Another placeholder showing how entries will look on this page.',
+    desc: '',
   },
 ];
 
 const talentEntries = [
   {
     id: 3,
-    name: 'Creative Individual',
+    name: 'Test Individual',
     category: 'Talent Award',
-    desc: 'A placeholder talent entry — real participants will appear once voting opens.',
+    desc: '',
   },
   {
     id: 4,
-    name: 'Skilled Professional',
+    name: 'Sample Professional',
     category: 'Talent Award',
-    desc: 'Another talent placeholder showing the voting card layout.',
+    desc: '',
   },
 ];
 
@@ -76,7 +76,7 @@ export default function Voting() {
           <h2 className="section-title">
             Vote for the <span className="highlight-orange">Connexa</span> Award
           </h2>
-          <p>Support your favourite business or individual. Every vote counts — ₦100 per vote.</p>
+          <p>Support your favourite business or individual. Every vote counts (₦100 per vote).</p>
         </div>
 
         <div className="voting-tabs reveal">

@@ -20,7 +20,7 @@ export default function Awards() {
             <h3 className="award-title">Business Opportunity Award</h3>
             <p className="award-description">
               For registered businesses ready to showcase their story and win
-              real visibility. From Market Vendor to VIP Partner — if you're
+              real visibility. From Market Vendor to VIP Partner, if you're
               in the marketplace, you're eligible.
             </p>
 
@@ -34,14 +34,14 @@ export default function Awards() {
               <div className="award-step">
                 <div className="award-step-num">2</div>
                 <div className="award-step-text">
-                  Post a 1–2 minute video on Instagram or TikTok — tag us, explain
+                  Post a 1–2 minute video on Instagram or TikTok, tag us, explain
                   what your business does, your challenge, and why you deserve to win
                 </div>
               </div>
               <div className="award-step">
                 <div className="award-step-num">3</div>
                 <div className="award-step-text">
-                  Drive public votes — likes, shares, and comments count
+                  Drive public votes, likes, shares, and comments count
                 </div>
               </div>
               <div className="award-step">
@@ -66,7 +66,10 @@ export default function Awards() {
               </div>
             </div>
 
-            <a href="#voting" className="award-cta">Apply & Start Voting →</a>
+            <div className="award-actions">
+              <a href="#apply" className="award-cta">Apply for Award →</a>
+              <a href="#voting" className="award-cta award-cta-outline">Vote Now →</a>
+            </div>
           </div>
 
           {/* Individual Award */}
@@ -76,7 +79,7 @@ export default function Awards() {
             <h3 className="award-title">Individual Talent Award</h3>
             <p className="award-description">
               For VIP Individual Pass holders ready to show the world what
-              they're made of. Talent, skill, expertise — if it adds value,
+              they're made of. Talent, skill, expertise, if it adds value,
               it belongs at Connexa.
             </p>
 
@@ -104,7 +107,7 @@ export default function Awards() {
               <div className="award-step">
                 <div className="award-step-num">4</div>
                 <div className="award-step-text">
-                  Public votes decide — multiple votes allowed at ₦100 per vote
+                  Public votes decide, multiple votes allowed at ₦100 per vote
                 </div>
               </div>
             </div>

@@ -28,7 +28,7 @@ const tickets = [
     iconClass: 'ticket-icon-blue',
     label: 'Non-Selling Businesses & Startups',
     name: 'Brand Showcase Pass',
-    subtitle: 'Build visibility, trust, and partnerships — without selling',
+    subtitle: 'Build visibility, trust, and partnerships without selling',
     features: [
       'Dedicated space to showcase your app, service, or solution',
       'Brand awareness in front of founders, talents, and decision-makers',
@@ -54,7 +54,7 @@ const tickets = [
       'Practical insights for scaling, operations, and sales',
       'Peer networking with other business owners',
       'Access to roaming business advisors',
-      'No booth required — full focus on learning and strategy',
+      'No booth required, full focus on learning and strategy',
     ],
     bestFor: 'Founders who want clarity, structure, and growth direction.',
     cta: 'Get Growth Pass',
@@ -66,7 +66,7 @@ const tickets = [
     icon: '🎟️',
     iconClass: 'ticket-icon-white',
     label: 'General Attendees',
-    name: 'Individual Pass — Regular',
+    name: 'Individual Pass - Regular',
     subtitle: 'Learn, connect, and discover opportunities',
     features: [
       'Access to speaker sessions and panels',
@@ -85,7 +85,7 @@ const tickets = [
     icon: '⭐',
     iconClass: 'ticket-icon-gradient',
     label: 'Premium Individuals',
-    name: 'Individual Pass — VIP',
+    name: 'Individual Pass - VIP',
     subtitle: 'Premium access, priority networking, and recognition',
     badge: 'VIP',
     badgeClass: '',
@@ -130,7 +130,7 @@ const tickets = [
     iconClass: 'ticket-icon-purple',
     label: 'Coming Soon',
     name: 'Connectors Pass',
-    subtitle: 'More details dropping soon — stay tuned.',
+    subtitle: 'More details dropping soon - stay tuned.',
     spotsLeft: 30,
     features: [],
     bestFor: null,
@@ -150,7 +150,7 @@ export default function Tickets() {
           <h2 className="section-title">
             Access. Opportunity. <span className="highlight-orange">Results.</span>
           </h2>
-          <p>Connexa tickets are not about attendance — they're about what you get out of the room.</p>
+          <p>Connexa tickets are not about attendance - they're about what you get out of the room.</p>
         </div>
 
         <div className="tickets-grid">
@@ -161,12 +161,12 @@ export default function Tickets() {
               data-type={ticket.type}
               style={{ transitionDelay: `${(i % 3) * 0.1}s` }}
             >
-              {/* Limited badge — auto shows if spotsLeft exists */}
+              {/* Limited badge  auto shows if spotsLeft exists */}
               {ticket.spotsLeft && (
                 <div className="ticket-card-badge badge-red">LIMITED</div>
               )}
 
-              {/* Regular badge — only shows if no spotsLeft */}
+              {/* Regular badge  only shows if no spotsLeft */}
               {ticket.badge && !ticket.spotsLeft && (
                 <div className={`ticket-card-badge ${ticket.badgeClass || ''}`}>
                   {ticket.badge}

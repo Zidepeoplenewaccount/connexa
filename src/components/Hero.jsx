@@ -52,7 +52,7 @@ export default function Hero() {
           <p className="hero-title-sub">Business · Innovation · Opportunity</p>
 
           <p className="hero-description">
-            Lagos' most energetic business event — where vendors sell,
+            Lagos' most energetic business event, where vendors sell,
             brands grow, and opportunities happen in real time.
             One day. Endless possibilities.
           </p>

@@ -14,11 +14,11 @@ export default function Footer() {
               brands grow, and opportunities happen in real time.
             </p>
             <div className="footer-socials">
-              <a href="https://www.instagram.com/techexpohq" target="_blank" rel="noreferrer" className="footer-social">
+              {/*<a href="https://www.instagram.com/techexpohq" target="_blank" rel="noreferrer" className="footer-social">
                 📸
               </a>
               <a href="#" className="footer-social">🎵</a>
-              <a href="#" className="footer-social">🐦</a>
+              <a href="#" className="footer-social">🐦</a>*/}
             </div>
           </div>
 
@@ -29,16 +29,15 @@ export default function Footer() {
               <a href="#tickets">Tickets</a>
               <a href="#awards">Awards</a>
               <a href="#voting">Vote</a>
+              <a href="#merch">Merch</a>
             </div>
           </div>
 
           <div>
             <div className="footer-col-title">Event</div>
             <div className="footer-col-links">
-              <a href="#">Lagos Island</a>
-              <a href="#">2026</a>
-              <a href="#">Contact Us</a>
-              <a href="#">Become a Sponsor</a>
+              <p href="#">Lagos Island</p>
+              <p href="#">2026</p>
             </div>
           </div>
         </div>

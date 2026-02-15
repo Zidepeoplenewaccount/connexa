@@ -19,13 +19,13 @@ export default function About() {
               <span className="highlight-orange">Meets Opportunity</span>
             </h2>
             <p>
-              Connexa 2026 is Lagos' most energetic one-day business event —
+              Connexa 2026 is Lagos' most energetic one-day business event,
               designed for vendors, startups, brands, and professionals who
               are serious about growth.
             </p>
             <p>
               Whether you're selling products, showcasing your platform,
-              looking to learn, or hunting for your next opportunity — Connexa
+              looking to learn, or hunting for your next opportunity, Connexa
               puts you in the room where things happen.
             </p>
 
