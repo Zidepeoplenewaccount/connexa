@@ -275,7 +275,7 @@
   color: var(--orange);
 }
 
-/* ===================== RESPONSIVE ===================== */
+
 @media (max-width: 1024px) {
   .tickets-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -288,7 +288,7 @@
   }
 }
 
-/* ===================== SPOTS REMAINING ===================== */
+
 .ticket-spots {
   margin-bottom: 16px;
 }
@@ -325,7 +325,7 @@
   transition: width 1s ease;
 }
 
-/* ===================== COMING SOON ===================== */
+
 .ticket-coming-soon {
   display: flex;
   flex-direction: column;
@@ -346,4 +346,189 @@
   font-size: 14px;
   color: rgba(255,255,255,0.45);
   line-height: 1.6;
+}
+
+
+
+
+.ticket-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  backdrop-filter: blur(8px);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.ticket-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.ticket-modal::-webkit-scrollbar {
+  width: 0px;
+}
+
+.ticket-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.6);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.ticket-modal-close:hover {
+  background: rgba(255,255,255,0.15);
+  color: var(--white);
+}
+
+.ticket-modal-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  padding-right: 40px;
+}
+
+.ticket-modal-price {
+  font-size: 1.1rem;
+  color: var(--orange);
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.ticket-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ticket-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ticket-input-group label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.7);
+}
+
+.ticket-input {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  width: 100%;
+}
+
+.ticket-input:focus {
+  border-color: var(--orange);
+}
+
+.ticket-input-hint {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  font-style: italic;
+}
+
+.ticket-attendees {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ticket-attendees label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 4px;
+}
+
+.ticket-modal-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.04);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+}
+
+.ticket-modal-total strong {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.ticket-modal-error {
+  background: rgba(232,49,42,0.1);
+  border: 1px solid rgba(232,49,42,0.3);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  color: var(--red);
+  font-size: 14px;
+  text-align: center;
+}
+
+.ticket-modal-submit {
+  width: 100%;
+  padding: 16px;
+  background: var(--orange);
+  color: var(--black);
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  transition: transform var(--transition), box-shadow 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.ticket-modal-submit:hover:not(:disabled) {
+  transform: scale(1.03);
+  box-shadow: 0 8px 30px rgba(245,166,35,0.4);
+}
+
+.ticket-modal-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .ticket-modal {
+    padding: 28px;
+  }
 }

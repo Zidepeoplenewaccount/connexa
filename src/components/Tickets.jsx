@@ -1,4 +1,6 @@
-import './Tickets.css';
+import { useState } from 'react';
+import './tickets.css';
+import { initializePayment } from '../services/api';
 
 const tickets = [
   {
@@ -8,6 +10,7 @@ const tickets = [
     label: 'Selling Businesses',
     name: 'Market Vendor Pass',
     subtitle: 'Sell directly to a high-intent audience in one day',
+    price: 50000,
     spotsLeft: 50,
     features: [
       'Physical booth in a live marketplace with real buyers',
@@ -28,7 +31,8 @@ const tickets = [
     iconClass: 'ticket-icon-blue',
     label: 'Non-Selling Businesses & Startups',
     name: 'Brand Showcase Pass',
-    subtitle: 'Build visibility, trust, and partnerships without selling',
+    subtitle: 'Build visibility, trust, and partnerships — without selling',
+    price: 40000,
     features: [
       'Dedicated space to showcase your app, service, or solution',
       'Brand awareness in front of founders, talents, and decision-makers',
@@ -49,12 +53,13 @@ const tickets = [
     label: 'Learning-Only Business Owners',
     name: 'Business Growth Pass',
     subtitle: "Learn what works. Fix what's not working. Grow faster.",
+    price: 30000,
     features: [
       'Access to all speaker sessions and panels',
       'Practical insights for scaling, operations, and sales',
       'Peer networking with other business owners',
       'Access to roaming business advisors',
-      'No booth required, full focus on learning and strategy',
+      'No booth required — full focus on learning and strategy',
     ],
     bestFor: 'Founders who want clarity, structure, and growth direction.',
     cta: 'Get Growth Pass',
@@ -66,8 +71,9 @@ const tickets = [
     icon: '🎟️',
     iconClass: 'ticket-icon-white',
     label: 'General Attendees',
-    name: 'Individual Pass - Regular',
+    name: 'Individual Pass — Regular',
     subtitle: 'Learn, connect, and discover opportunities',
+    price: 15000,
     features: [
       'Access to speaker sessions and panels',
       'Exposure to businesses, vendors, and hiring brands',
@@ -85,8 +91,9 @@ const tickets = [
     icon: '⭐',
     iconClass: 'ticket-icon-gradient',
     label: 'Premium Individuals',
-    name: 'Individual Pass - VIP',
+    name: 'Individual Pass — VIP',
     subtitle: 'Premium access, priority networking, and recognition',
+    price: 25000,
     badge: 'VIP',
     badgeClass: '',
     features: [
@@ -108,6 +115,7 @@ const tickets = [
     label: 'Sell • Showcase • Partner',
     name: 'VIP Partner Pass',
     subtitle: 'Maximum exposure. Maximum access. Maximum influence.',
+    price: 100000,
     badge: 'PREMIUM',
     badgeClass: 'badge-red',
     featured: true,
@@ -127,21 +135,102 @@ const tickets = [
   {
     type: 'connectors',
     icon: '🔗',
-    iconClass: 'ticket-icon-purple',
+    iconClass: 'ticket-icon-blue',
     label: 'Coming Soon',
     name: 'Connectors Pass',
-    subtitle: 'More details dropping soon - stay tuned.',
+    subtitle: 'More details dropping soon — stay tuned.',
+    price: 20000,
     spotsLeft: 30,
     features: [],
     bestFor: null,
     cta: 'Get Connectors Pass',
-    ctaClass: 'cta-purple',
-    dotColor: 'var(--purple)',
+    ctaClass: 'cta-blue',
+    dotColor: 'var(--blue)',
     comingSoon: true,
   },
 ];
 
 export default function Tickets() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [buyerEmail, setBuyerEmail] = useState('');
+  const [attendeeNames, setAttendeeNames] = useState(['']);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  function openModal(ticket) {
+    setSelectedTicket(ticket);
+    setModalOpen(true);
+    setQuantity(1);
+    setBuyerEmail('');
+    setAttendeeNames(['']);
+    setError('');
+  }
+
+  function closeModal() {
+    setModalOpen(false);
+    setSelectedTicket(null);
+  }
+
+  function handleQuantityChange(newQuantity) {
+    setQuantity(newQuantity);
+    const newNames = Array(newQuantity).fill('');
+    for (let i = 0; i < Math.min(attendeeNames.length, newQuantity); i++) {
+      newNames[i] = attendeeNames[i];
+    }
+    setAttendeeNames(newNames);
+  }
+
+  function handleNameChange(index, value) {
+    const newNames = [...attendeeNames];
+    newNames[index] = value;
+    setAttendeeNames(newNames);
+  }
+
+  async function handleProceedToPayment(e) {
+    e.preventDefault();
+    setError('');
+
+    if (!buyerEmail) {
+      setError('Please enter your email address');
+      return;
+    }
+
+    const allNamesFilled = attendeeNames.every(name => name.trim() !== '');
+    if (!allNamesFilled) {
+      setError('Please fill in all attendee names');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const totalAmount = selectedTicket.price * quantity;
+
+      const paymentData = {
+        buyerEmail,
+        amount: totalAmount,
+        ticketType: selectedTicket.name,
+        ticketNames: attendeeNames,
+        quantity,
+      };
+
+      const response = await initializePayment(paymentData);
+
+      if (response.status && response.data.authorization_url) {
+        window.location.href = response.data.authorization_url;
+      } else {
+        setError('Payment initialization failed. Please try again.');
+      }
+    } catch (err) {
+      console.error('Payment error:', err);
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <section className="tickets section" id="tickets">
       <div className="container">
@@ -150,7 +239,7 @@ export default function Tickets() {
           <h2 className="section-title">
             Access. Opportunity. <span className="highlight-orange">Results.</span>
           </h2>
-          <p>Connexa tickets are not about attendance - they're about what you get out of the room.</p>
+          <p>Connexa tickets are not about attendance — they're about what you get out of the room.</p>
         </div>
 
         <div className="tickets-grid">
@@ -161,12 +250,10 @@ export default function Tickets() {
               data-type={ticket.type}
               style={{ transitionDelay: `${(i % 3) * 0.1}s` }}
             >
-              {/* Limited badge  auto shows if spotsLeft exists */}
               {ticket.spotsLeft && (
                 <div className="ticket-card-badge badge-red">LIMITED</div>
               )}
 
-              {/* Regular badge  only shows if no spotsLeft */}
               {ticket.badge && !ticket.spotsLeft && (
                 <div className={`ticket-card-badge ${ticket.badgeClass || ''}`}>
                   {ticket.badge}
@@ -198,11 +285,10 @@ export default function Tickets() {
 
               <div className="ticket-divider" />
 
-              {/* Coming soon state */}
               {ticket.comingSoon ? (
                 <div className="ticket-coming-soon">
-                  {/*<span>✨</span>
-                  <p>Full details for this pass will be revealed soon. Grab your spot before it's gone.</p>*/}
+                  <span>✨</span>
+                  <p>Full details for this pass will be revealed soon. Grab your spot before it's gone.</p>
                 </div>
               ) : (
                 <>
@@ -223,9 +309,12 @@ export default function Tickets() {
                 </>
               )}
 
-              <a href="#" className={`ticket-cta ${ticket.ctaClass}`}>
+              <button
+                onClick={() => openModal(ticket)}
+                className={`ticket-cta ${ticket.ctaClass}`}
+              >
                 {ticket.cta}
-              </a>
+              </button>
             </div>
           ))}
         </div>
@@ -235,9 +324,84 @@ export default function Tickets() {
           They are about <span>access, opportunity, and results.</span>
         </p>
       </div>
+
+      {modalOpen && selectedTicket && (
+        <div className="ticket-modal-overlay" onClick={(e) => e.target === e.currentTarget && closeModal()}>
+          <div className="ticket-modal">
+            <button className="ticket-modal-close" onClick={closeModal}>×</button>
+
+            <h3 className="ticket-modal-title">{selectedTicket.name}</h3>
+            <p className="ticket-modal-price">
+              ₦{selectedTicket.price.toLocaleString()} per ticket
+            </p>
+
+            <form className="ticket-modal-form" onSubmit={handleProceedToPayment}>
+              <div className="ticket-input-group">
+                <label>Your Email</label>
+                <input
+                  type="email"
+                  className="ticket-input"
+                  placeholder="your@email.com"
+                  value={buyerEmail}
+                  onChange={(e) => setBuyerEmail(e.target.value)}
+                  required
+                />
+                <span className="ticket-input-hint">
+                  Payment confirmation will be sent here
+                </span>
+              </div>
+
+              <div className="ticket-input-group">
+                <label>Number of Tickets</label>
+                <select
+                  className="ticket-input"
+                  value={quantity}
+                  onChange={(e) => handleQuantityChange(parseInt(e.target.value))}
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                    <option key={num} value={num}>{num}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="ticket-attendees">
+                <label>Attendee Names</label>
+                {attendeeNames.map((name, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    className="ticket-input"
+                    placeholder={`Attendee ${index + 1} Full Name`}
+                    value={name}
+                    onChange={(e) => handleNameChange(index, e.target.value)}
+                    required
+                  />
+                ))}
+              </div>
+
+              <div className="ticket-modal-total">
+                <span>Total Amount</span>
+                <strong>₦{(selectedTicket.price * quantity).toLocaleString()}</strong>
+              </div>
+
+              {error && <div className="ticket-modal-error">{error}</div>}
+
+              <button
+                type="submit"
+                className="ticket-modal-submit"
+                disabled={loading}
+              >
+                {loading ? 'Processing...' : 'Proceed to Payment →'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
+
+
 
 
 
