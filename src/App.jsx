@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './app.css';
+import './App.css';
 import { useScrollReveal } from './hooks/ScrollReveal';
 import Loader from './components/Loader';
 import Navbar from './components/Navbar';
