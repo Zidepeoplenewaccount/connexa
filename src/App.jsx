@@ -9,7 +9,7 @@ import Speakers from './components/speakers';
 import Tickets from './components/Tickets';
 import Awards from './components/Awards';
 import Voting from './components/Voting';
-import Merch from './components/Merch';
+import Merch from './components/merch';
 import Footer from './components/Footer';
 import PaymentSuccess from './components/paymentSuccess';
 
