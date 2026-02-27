@@ -1,179 +1,338 @@
 import { useState, useEffect } from 'react';
 import './Voting.css';
+import { getCandidates, initializeVote } from '../services/api';
 
-const PAYSTACK_PLACEHOLDER = '';
+// Add this at the top of the Voting component, right after the state declarations
 
-const businessEntries = [
-  {
-    id: 1,
-    name: 'Sample Business Co.',
-    category: 'Business Award',
-    desc: '',
-  },
-  {
-    id: 2,
-    name: 'Another Sample Business',
-    category: 'Business Award',
-    desc: '',
-  },
-];
+// TEST DATA - Remove this when backend is ready
 
-const talentEntries = [
-  {
-    id: 3,
-    name: 'Test Individual',
-    category: 'Talent Award',
-    desc: '',
-  },
-  {
-    id: 4,
-    name: 'Sample Professional',
-    category: 'Talent Award',
-    desc: '',
-  },
-];
 
 export default function Voting() {
-  const [activeTab, setActiveTab] = useState('business');
+  const [activeTab, setActiveTab] = useState('businesses');
+  const [businesses, setBusinesses] = useState([]);
+  const [talents, setTalents] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selected, setSelected] = useState(null);
-  const [form, setForm] = useState({ name: '', email: '' });
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [voterName, setVoterName] = useState('');
+  const [voterEmail, setVoterEmail] = useState('');
+  const [voteLoading, setVoteLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const entries = activeTab === 'business' ? businessEntries : talentEntries;
+  const [voteQuantity, setVoteQuantity] = useState(1);
 
-  function openModal(entry) {
-    setSelected(entry);
+  // Update openVoteModal function to reset quantity
+  function openVoteModal(candidate) {
+    setSelectedCandidate(candidate);
     setModalOpen(true);
+    setVoterName('');
+    setVoterEmail('');
+    setVoteQuantity(1);  // ADD THIS LINE
+    setError('');
+  }
+
+
+  // Fetch candidates on mount
+  useEffect(() => {
+    fetchCandidates();
+  }, []);
+
+  async function fetchCandidates() {
+    try {
+      setLoading(true);
+      
+      // TEMPORARY: Use test data
+      // TODO: Remove this and uncomment API calls when backend is ready
+      
+      //const businessData = testCandidates.filter(c => c.candidate_type === 'business');
+      //const talentData = testCandidates.filter(c => c.candidate_type === 'individual');
+      
+      //setBusinesses(businessData);
+      //setTalents(talentData);
+      
+      // UNCOMMENT WHEN BACKEND IS READY:
+      const businessData = await getCandidates('business');
+      setBusinesses(businessData);
+      const talentData = await getCandidates('individual');
+      setTalents(talentData);
+      
+    } catch (err) {
+      console.error('Failed to load candidates:', err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function openVoteModal(candidate) {
+    setSelectedCandidate(candidate);
+    setModalOpen(true);
+    setVoterName('');
+    setVoterEmail('');
+    setError('');
   }
 
   function closeModal() {
     setModalOpen(false);
-    setSelected(null);
-    setForm({ name: '', email: '' });
+    setSelectedCandidate(null);
   }
 
-  function handleVote(e) {
+  
+  // Update handleVoteSubmit to include quantity
+  async function handleVoteSubmit(e) {
     e.preventDefault();
-    if (!form.name || !form.email) return;
-    // In production: hit Paystack with the collected info
-    window.open(PAYSTACK_PLACEHOLDER, '_blank');
+    setError('');
+
+    if (!voterName.trim() || !voterEmail.trim()) {
+      setError('Please fill in all fields');
+      return;
+    }
+
+    setVoteLoading(true);
+
+    try {
+      const voteData = {
+        candidate_id: selectedCandidate.id,
+        voter_name: voterName,
+        voter_email: voterEmail,
+        quantity: voteQuantity,  // ADD THIS LINE
+      };
+
+      const response = await initializeVote(voteData);
+
+      if (response.status && response.data.authorization_url) {
+        window.location.href = response.data.authorization_url;
+      } else {
+        setError('Vote initialization failed. Please try again.');
+      }
+    } catch (err) {
+      console.error('Vote error:', err);
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setVoteLoading(false);
+    }
   }
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
+      entries.forEach(e => e.isIntersecting && e.target.classList.add(''));
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.voting-card').forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, [activeTab]);
 
+  const currentCandidates = activeTab === 'businesses' ? businesses : talents;
+
   return (
     <section className="voting section" id="voting">
       <div className="container">
         <div className="voting-header reveal">
-          <div className="section-tag">Voting</div>
+          <div className="section-tag">Vote</div>
           <h2 className="section-title">
-            Vote for the <span className="highlight-orange">Connexa</span> Award
+            Support Your <span className="highlight-orange">Favorites</span>
           </h2>
-          <p>Support your favourite business or individual. Every vote counts (₦100 per vote).</p>
+          <p>
+            Cast your vote and help your favorite businesses and talents win at Connexa 2026.
+            ₦100 per vote.
+          </p>
         </div>
 
+        {/* Tabs */}
         <div className="voting-tabs reveal">
           <button
-            className={`voting-tab${activeTab === 'business' ? ' active' : ''}`}
-            onClick={() => setActiveTab('business')}
+            className={`voting-tab ${activeTab === 'businesses' ? 'active' : ''}`}
+            onClick={() => setActiveTab('businesses')}
           >
-            🏢 Businesses
+            Business Award
           </button>
           <button
-            className={`voting-tab${activeTab === 'talent' ? ' active' : ''}`}
-            onClick={() => setActiveTab('talent')}
+            className={`voting-tab ${activeTab === 'talents' ? 'active' : ''}`}
+            onClick={() => setActiveTab('talents')}
           >
-            🌟 Talents
+            Talent Award
           </button>
         </div>
 
-        <div className="voting-list">
-          {entries.map((entry, i) => (
-            <div
-              key={entry.id}
-              className="voting-card reveal"
-              style={{ transitionDelay: `${i * 0.1}s` }}
-            >
-              <div className="voting-card-header">
-                <div className="voting-card-name">{entry.name}</div>
-                <div className="voting-card-category">{entry.category}</div>
+        {/* Loading State */}
+        {loading && (
+          <div className="voting-loading">
+            <p>Loading candidates...</p>
+          </div>
+        )}
+
+        {/* Candidates Grid */}
+        {!loading && (
+          <div className="voting-grid">
+            {currentCandidates.length === 0 ? (
+              <div className="voting-empty">
+                <p>No candidates yet. Check back soon!</p>
               </div>
-              <p className="voting-card-desc">{entry.desc}</p>
-              <button
-                className="voting-card-btn"
-                onClick={() => openModal(entry)}
+            ) : (
+              currentCandidates.map((candidate, i) => (
+              <div
+                key={candidate.id}
+                className="voting-card"
+                style={{ transitionDelay: `${(i % 3) * 0.1}s` }}
               >
-                Vote Now →
-              </button>
-            </div>
-          ))}
-        </div>
+                <div className="voting-card-header">
+                  <h3>{candidate.business_name || candidate.individual_name}</h3>
+                  {/* Only show video link if it exists */}
+                  {candidate.video_url && (
+                    <a
+                      href={candidate.video_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="voting-video-link"
+                    >
+                      📹 Watch Video
+                    </a>
+                  )}
+                </div>
+
+                <p className="voting-card-description">
+                  {candidate.business_description || candidate.individual_bio}
+                </p>
+
+                {/* Only show challenge if it exists */}
+                {candidate.challenge && (
+                  <div className="voting-card-challenge">
+                    <strong>Challenge:</strong> {candidate.challenge}
+                  </div>
+                )}
+
+                {/* Social handles - only show if they exist */}
+                {(candidate.instagram_handle || candidate.tiktok_handle) && (
+                  <div className="voting-card-socials">
+                    {candidate.instagram_handle && (
+                      <a
+                        href={`https://instagram.com/${candidate.instagram_handle.replace('@', '')}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="voting-social-link"
+                      >
+                        📸 Instagram
+                      </a>
+                    )}
+                    {candidate.tiktok_handle && (
+                      <a
+                        href={`https://tiktok.com/@${candidate.tiktok_handle.replace('@', '')}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="voting-social-link"
+                      >
+                        🎵 TikTok
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                <div className="voting-card-stats">
+                  <div className="voting-stat">
+                    <div className="voting-stat-number">{candidate.vote_count || 0}</div>
+                    <div className="voting-stat-label">Votes</div>
+                  </div>
+                  <div className="voting-stat">
+                    <div className="voting-stat-number">₦{((candidate.vote_count || 0) * 100).toLocaleString()}</div>
+                    <div className="voting-stat-label">Raised</div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => openVoteModal(candidate)}
+                  className="voting-card-btn"
+                >
+                  Vote Now
+                </button>
+              </div>
+            ))
+          )}
+          </div>
+        )}
       </div>
 
       {/* Vote Modal */}
-      <div
-        className={`vote-modal-overlay${modalOpen ? ' open' : ''}`}
-        onClick={(e) => e.target === e.currentTarget && closeModal()}
-      >
-        <div className="vote-modal">
-          <button className="vote-modal-close" onClick={closeModal}>×</button>
+      {modalOpen && selectedCandidate && (
+        <div className="voting-modal-overlay" onClick={(e) => e.target === e.currentTarget && closeModal()}>
+          <div className="voting-modal">
+            <button className="voting-modal-close" onClick={closeModal}>×</button>
 
-          <h3 className="vote-modal-title">Cast Your Vote</h3>
-          <p className="vote-modal-subtitle">Fill in your details to proceed to payment.</p>
+            <h3 className="voting-modal-title">
+              Vote for {selectedCandidate.business_name || selectedCandidate.individual_name}
+            </h3>
 
-          {selected && (
-            <div className="vote-modal-for">
-              Voting for: {selected.name}
-            </div>
-          )}
+            <p className="voting-modal-price">₦100 per vote</p>
 
-          <form className="vote-form" onSubmit={handleVote}>
-            <div className="vote-input-group">
-              <label>Full Name</label>
-              <input
-                type="text"
-                className="vote-input"
-                placeholder="Enter your full name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="vote-input-group">
-              <label>Email Address</label>
-              <input
-                type="email"
-                className="vote-input"
-                placeholder="Enter your email address"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="vote-price-info">
-              <span>Cost per vote</span>
-              <strong>₦100</strong>
+            {/* ADD QUANTITY SELECTOR HERE */}
+            <div className="voting-quantity-selector">
+              <label>Number of Votes</label>
+              <div className="voting-quantity-controls">
+                <button 
+                  type="button"
+                  onClick={() => setVoteQuantity(Math.max(1, voteQuantity - 1))}
+                  className="voting-quantity-btn"
+                >
+                  −
+                </button>
+                <input 
+                  type="number" 
+                  min="1" 
+                  max="100"
+                  value={voteQuantity}
+                  onChange={(e) => setVoteQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                  className="voting-quantity-input"
+                />
+                <button 
+                  type="button"
+                  onClick={() => setVoteQuantity(Math.min(100, voteQuantity + 1))}
+                  className="voting-quantity-btn"
+                >
+                  +
+                </button>
+              </div>
+              <div className="voting-total-price">
+                Total: ₦{(voteQuantity * 100).toLocaleString()}
+              </div>
             </div>
 
-            <button type="submit" className="vote-submit">
-              Proceed to Payment →
-            </button>
+            <form className="voting-modal-form" onSubmit={handleVoteSubmit}>
+              <div className="voting-input-group">
+                <label>Your Name</label>
+                <input
+                  type="text"
+                  className="voting-input"
+                  placeholder="Full Name"
+                  value={voterName}
+                  onChange={(e) => setVoterName(e.target.value)}
+                  required
+                />
+              </div>
 
-            <p className="vote-note">
-              Powered by Paystack · Multiple votes allowed
-            </p>
-          </form>
+              <div className="voting-input-group">
+                <label>Your Email</label>
+                <input
+                  type="email"
+                  className="voting-input"
+                  placeholder="your@email.com"
+                  value={voterEmail}
+                  onChange={(e) => setVoterEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              {error && <div className="voting-modal-error">{error}</div>}
+
+              <button
+                type="submit"
+                className="voting-modal-submit"
+                disabled={voteLoading}
+              >
+                {voteLoading ? 'Processing...' : `Pay ₦${(voteQuantity * 100).toLocaleString()} →`}
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

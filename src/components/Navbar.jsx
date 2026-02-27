@@ -19,11 +19,12 @@ export default function Navbar() {
     { label: 'Awards', href: '#awards' },
     { label: 'Vote', href: '#voting' },
     { label: 'Merch', href: '#merch' },
+    { label: 'Become A Partner', href: '#partner-form' },
   ];
 
   return (
     <>
-      <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
+      <nav className={`navbar${scrolled ? ' scrolled' : ''}${mobileOpen ? ' open' : ''}`}>
         <div className="container navbar-inner">
           <a href="#" className="navbar-logo">
             <img src={connexaLogo} alt="Connexa" />
@@ -37,7 +38,7 @@ export default function Navbar() {
           </div>
 
           <button
-            className="navbar-hamburger"
+            className={`navbar-hamburger${mobileOpen ? ' open' : ''}`}
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
           >

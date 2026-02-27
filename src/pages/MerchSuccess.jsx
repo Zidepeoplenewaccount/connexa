@@ -2,11 +2,11 @@ import { useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { verifyPayment } from '../services/api';
 
-export default function PaymentSuccess() {
+export default function MerchSuccess() {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState('verifying');
   const [message, setMessage] = useState('');
-  const hasVerified = useRef(false); // Track if verification already happened
+  const hasVerified = useRef(false);
 
   useEffect(() => {
     const reference = searchParams.get('reference');
@@ -17,7 +17,6 @@ export default function PaymentSuccess() {
       return;
     }
 
-    // Only verify once
     if (!hasVerified.current) {
       hasVerified.current = true;
       handleVerification(reference);
@@ -28,15 +27,12 @@ export default function PaymentSuccess() {
     try {
       const data = await verifyPayment(reference);
 
-      // Handle both 'success' and 'already_processed' as success
       if (data.status === 'success' || data.status === 'already_processed') {
-        console.log('Payment verified:', data);
         setStatus('success');
-        setMessage(data.message || 'Payment successful!');
+        setMessage(data.message || 'Order placed successfully!');
       } else {
-        console.error('Payment verification failed:', data);
         setStatus('error');
-        setMessage('Payment verification failed');
+        setMessage('Order verification failed');
       }
     } catch (error) {
       console.error('Verification error:', error);
@@ -56,16 +52,16 @@ export default function PaymentSuccess() {
     }}>
       {status === 'verifying' && (
         <div>
-          <h1>Verifying Payment...</h1>
-          <p>Please wait while we confirm your payment.</p>
+          <h1>Verifying Order...</h1>
+          <p>Please wait while we confirm your order.</p>
         </div>
       )}
 
       {status === 'success' && (
         <div>
-          <h1 style={{ color: '#2db84b' }}>✅ Payment Successful!</h1>
+          <h1 style={{ color: '#2db84b' }}>✅ Order Successful!</h1>
           <p>{message}</p>
-          <p>Check your email for ticket details.</p>
+          <p>Check your email for order details.</p>
           <a href="/" style={{ 
             display: 'inline-block', 
             marginTop: '20px',
@@ -83,9 +79,9 @@ export default function PaymentSuccess() {
 
       {status === 'error' && (
         <div>
-          <h1 style={{ color: '#e8312a' }}>❌ Payment Failed</h1>
+          <h1 style={{ color: '#e8312a' }}>❌ Order Failed</h1>
           <p>{message}</p>
-          <a href="/#tickets" style={{ 
+          <a href="/#merch" style={{ 
             display: 'inline-block', 
             marginTop: '20px',
             padding: '12px 24px',

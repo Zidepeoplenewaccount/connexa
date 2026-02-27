@@ -1,6 +1,6 @@
-import './Hero.css';
-import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.png';
-
+import './hero.css';
+import zideLogo from '../assets/IMG_5735.PNG';
+import ArcLogo from '../assets/ARC_LOGO.png';
 
 const marqueeItems = [
   { text: 'Network', color: 'var(--orange)' },
@@ -11,6 +11,16 @@ const marqueeItems = [
   { text: 'Win', color: 'var(--green)' },
   { text: 'Showcase', color: 'var(--red)' },
   { text: 'Partner', color: 'var(--blue)' },
+];
+
+// Sponsors data - add your real sponsors here
+const sponsors = [
+  { name: 'Zidepeople', logo: zideLogo },
+  { name: 'Arc Studio', logo: ArcLogo },
+  { name: 'Zidepeople', logo: zideLogo },
+  { name: 'Arc Studio', logo: ArcLogo },
+  { name: 'Zidepeople', logo: zideLogo },
+  { name: 'Arc Studio', logo: ArcLogo },
 ];
 
 export default function Hero() {
@@ -37,10 +47,6 @@ export default function Hero() {
           </div>
 
           <h1 className="hero-title">
-            {/*<img src={connexaLogo} alt="Connexa" />*/}
-
-
-
             <span className="highlight-red">C</span>
             <span className="highlight-orange">O</span>
             <span>NN</span>
@@ -49,11 +55,13 @@ export default function Hero() {
             <span>A</span>
           </h1>
 
-          <p className="hero-title-sub">Business · Innovation · Opportunity</p>
+          <p className="hero-title-sub">BUSINESS · TALENT · CONNECTIONS</p>
 
           <p className="hero-description">
-            Lagos' most energetic business event, where vendors sell,
-            brands grow, and opportunities happen in real time.
+            Lagos’ most energetic business and 
+            talent event, where entrepreneurs, 
+            brands, and individuals connect, 
+            showcase, and discover opportunities. 
             One day. Endless possibilities.
           </p>
 
@@ -61,27 +69,53 @@ export default function Hero() {
             <a href="#tickets" className="btn-primary">
               <span>Get Your Ticket →</span>
             </a>
-            <a href="#about" className="btn-secondary">
-              Learn More
+            <a href="#partner-form" className="btn-secondary">
+              Become A Partner
             </a>
           </div>
 
           <div className="hero-stats">
             <div className="hero-stat">
-              <div className="hero-stat-number highlight-orange">6</div>
-              <div className="hero-stat-label">Ticket Types</div>
+              <div className="hero-stat-number highlight-orange">2000+</div>
+              <div className="hero-stat-label">Attendees</div>
             </div>
             <div className="hero-stat">
-              <div className="hero-stat-number highlight-green">1</div>
-              <div className="hero-stat-label">Powerful Day</div>
+              <div className="hero-stat-number highlight-green">150+</div>
+              <div className="hero-stat-label">Businesses</div>
             </div>
             <div className="hero-stat">
-              <div className="hero-stat-number highlight-red">∞</div>
-              <div className="hero-stat-label">Opportunities</div>
+              <div className="hero-stat-number highlight-blue">10+</div>
+              <div className="hero-stat-label">Speakers</div>
             </div>
             <div className="hero-stat">
-              <div className="hero-stat-number highlight-blue">2</div>
-              <div className="hero-stat-label">Award Categories</div>
+              <div className="hero-stat-number highlight-red">50+</div>
+              <div className="hero-stat-label">Exhibitors</div>
+            </div>
+            <div className="hero-stat">
+              <div className="hero-stat-number highlight-orange">10+</div>
+              <div className="hero-stat-label">Industry Panels</div>
+            </div>
+          </div>
+
+          {/* Sponsors Marquee */}
+          <div className="hero-sponsors">
+            <div className="hero-sponsors-label">Sponsored By</div>
+            <div className="hero-sponsors-track">
+              {/* Duplicate sponsors array for infinite scroll effect */}
+              {[...sponsors, ...sponsors].map((sponsor, i) => (
+                <div key={i} className="hero-sponsor-item">
+                  {sponsor.logo ? (
+                    <img 
+                      src={sponsor.logo} 
+                      alt={sponsor.name} 
+                      className="hero-sponsor-logo" 
+                    />
+                  ) : (
+                    <div className="hero-sponsor-placeholder">Logo</div>
+                  )}
+                  <span className="hero-sponsor-text">{sponsor.name}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

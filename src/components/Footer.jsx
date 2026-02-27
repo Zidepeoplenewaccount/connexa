@@ -1,6 +1,7 @@
 import './Footer.css';
 import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3).png';
-import zideLogo from '../assets/IMG_5735.PNG';
+import zideLogo from '../assets/IMG_6707.PNG';
+import ArcLogo from '../assets/ARC_LOGO.png';
 
 export default function Footer() {
   return (
@@ -57,8 +58,10 @@ export default function Footer() {
           </div>
 
           <a href="https://www.zidepeople.com/" target="_blank" rel="noreferrer" className="footer-powered">
-            Organised by
+            Powered by
             <img src={zideLogo} alt="Zidepeople" className="footer-zide-logo" />
+            and
+            <img src={ArcLogo} alt="Arc" className="footer-arc-logo" />
           </a>
         </div>
       </div>

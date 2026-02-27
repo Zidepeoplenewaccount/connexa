@@ -1,29 +1,12 @@
 import './speakers.css';
 
-/**
- * SPEAKERS DATA
- * -------------------------
- * To add a real speaker, fill in all fields below.
- * To hide a field from the card, just delete that line from the JSX — not the data.
- *
- * Fields:
- *   id          — unique number
- *   name        — full name
- *   title       — job title / role
- *   company     — company or organisation
- *   topic       — talk title or subject
- *   photo       — image path e.g. '/speakers/john.jpg' (put images in /public/speakers/)
- *   featured    — true/false, shows an "Featured" badge
- *   socials     — object with any of: instagram, twitter, linkedin, tiktok
- *                 set to null or remove the key if not applicable
- */
 const speakers = [
   {
     id: 1,
-    name: 'Speaker Name',
-    title: 'Job Title',
+    name: 'Speakers',
+    title: 'CEO',
     company: 'Company / Organisation',
-    topic: 'Talk title or subject goes here',
+    topic: 's',
     photo: null,
     featured: true,
     socials: {
@@ -34,10 +17,10 @@ const speakers = [
   },
   {
     id: 2,
-    name: 'Speaker Name',
-    title: 'Job Title',
+    name: 'Speakers',
+    title: 'CEO',
     company: 'Company / Organisation',
-    topic: 'Talk title or subject goes here',
+    topic: 's',
     photo: null,
     featured: false,
     socials: {
@@ -47,10 +30,10 @@ const speakers = [
   },
   {
     id: 3,
-    name: 'Speaker Name',
-    title: 'Job Title',
+    name: 'Speakers',
+    title: 'CEO',
     company: 'Company / Organisation',
-    topic: 'Talk title or subject goes here',
+    topic: 's',
     photo: null,
     featured: false,
     socials: {
@@ -60,10 +43,10 @@ const speakers = [
   },
   {
     id: 4,
-    name: 'Speaker Name',
-    title: 'Job Title',
+    name: 'Speakers',
+    title: 'CEO',
     company: 'Company / Organisation',
-    topic: 'Talk title or subject goes here',
+    topic: 's',
     photo: null,
     featured: false,
     socials: {

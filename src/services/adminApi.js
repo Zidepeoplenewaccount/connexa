@@ -1,0 +1,152 @@
+import axios from 'axios';
+
+const BACKEND_URL = 'http://localhost:8000'; // TODO: Replace with actual backend URL
+
+const getAuthToken = () => localStorage.getItem('admin_token');
+
+const adminAxios = axios.create({ baseURL: BACKEND_URL });
+
+adminAxios.interceptors.request.use((config) => {
+  const token = getAuthToken();
+  if (token) config.headers.Authorization = token;
+  return config;
+});
+
+// Auth
+export const adminLogin = (password) => {
+  if (password === 'admin123') {
+    const token = 'Bearer admin-secret-token';
+    localStorage.setItem('admin_token', token);
+    return { success: true, token };
+  }
+  return { success: false, error: 'Invalid password' };
+};
+
+export const adminLogout = () => localStorage.removeItem('admin_token');
+export const isAuthenticated = () => !!getAuthToken();
+
+// Dashboard
+export const getDashboardStats = async () => {
+  const response = await adminAxios.get('/admin/dashboard');
+  return response.data;
+};
+
+// Tickets
+export const getAllTickets = async (filters = {}) => {
+  const response = await adminAxios.get('/admin/tickets', { params: filters });
+  return response.data;
+};
+
+export const deleteTicket = async (ticketId) => {
+  const response = await adminAxios.delete(`/admin/tickets/${ticketId}`);
+  return response.data;
+};
+
+export const exportTickets = async () => {
+  const response = await adminAxios.get('/admin/export/tickets', { responseType: 'blob' });
+  return response.data;
+};
+
+// Get all candidates (admin - includes pending)
+export const getAllCandidatesAdmin = async (filters = {}) => {
+  const response = await adminAxios.get('/candidates/admin/all', { params: filters });
+  return response.data;
+};
+
+// Candidates
+export const createBusinessCandidate = async (data) => {
+  const response = await adminAxios.post('/candidates/admin/business', data);
+  return response.data;
+};
+
+export const createIndividualCandidate = async (data) => {
+  const response = await adminAxios.post('/candidates/admin/individual', data);
+  return response.data;
+};
+
+export const approveCandidate = async (id, notes) => {
+  const response = await adminAxios.patch(`/candidates/${id}/approve`, null, {
+    params: { admin_notes: notes },
+  });
+  return response.data;
+};
+
+export const rejectCandidate = async (id, notes) => {
+  const response = await adminAxios.patch(`/candidates/${id}/reject`, null, {
+    params: { admin_notes: notes },
+  });
+  return response.data;
+};
+
+export const deleteCandidate = async (id) => {
+  const response = await adminAxios.delete(`/candidates/${id}`);
+  return response.data;
+};
+
+// Orders
+export const getAllOrders = async (filters = {}) => {
+  const response = await adminAxios.get('/merch/orders', { params: filters });
+  return response.data;
+};
+
+export const updateOrderStatus = async (orderId, status) => {
+  const response = await adminAxios.patch(`/merch/orders/${orderId}/status`, { status });
+  return response.data;
+};
+
+export const exportOrders = async () => {
+  const response = await adminAxios.get('/admin/export/orders', { responseType: 'blob' });
+  return response.data;
+};
+
+// Payments
+export const getAllPayments = async (filters = {}) => {
+  const response = await adminAxios.get('/admin/payments', { params: filters });
+  return response.data;
+};
+
+export const exportPayments = async () => {
+  const response = await adminAxios.get('/admin/export/payments', { responseType: 'blob' });
+  return response.data;
+};
+
+// Votes
+export const exportVotes = async () => {
+  const response = await adminAxios.get('/admin/export/votes', { responseType: 'blob' });
+  return response.data;
+};
+
+
+
+// Affiliates
+export const createAffiliate = async (data) => {
+  const response = await adminAxios.post('/affiliates/create', data);
+  return response.data;
+};
+
+export const generateAffiliate = async (name, description) => {
+  const response = await adminAxios.post('/affiliates/generate', null, {
+    params: { name, description },
+  });
+  return response.data;
+};
+
+export const getAllAffiliates = async () => {
+  const response = await adminAxios.get('/affiliates');
+  return response.data;
+};
+
+export const getAffiliateStats = async () => {
+  const response = await adminAxios.get('/affiliates/stats');
+  return response.data;
+};
+
+export const toggleAffiliate = async (code) => {
+  const response = await adminAxios.patch(`/affiliates/${code}/toggle`);
+  return response.data;
+};
+
+export const deleteAffiliate = async (code) => {
+  const response = await adminAxios.delete(`/affiliates/${code}`);
+  return response.data;
+};

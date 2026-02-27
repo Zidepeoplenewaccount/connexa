@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { verifyPayment } from '../services/api';
+import { verifyPayment } from '../services/api';  // Use verifyPayment
 
-export default function PaymentSuccess() {
+export default function VoteSuccess() {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState('verifying');
   const [message, setMessage] = useState('');
-  const hasVerified = useRef(false); // Track if verification already happened
+  const hasVerified = useRef(false);
 
   useEffect(() => {
     const reference = searchParams.get('reference');
@@ -17,7 +17,6 @@ export default function PaymentSuccess() {
       return;
     }
 
-    // Only verify once
     if (!hasVerified.current) {
       hasVerified.current = true;
       handleVerification(reference);
@@ -28,15 +27,13 @@ export default function PaymentSuccess() {
     try {
       const data = await verifyPayment(reference);
 
-      // Handle both 'success' and 'already_processed' as success
       if (data.status === 'success' || data.status === 'already_processed') {
-        console.log('Payment verified:', data);
         setStatus('success');
-        setMessage(data.message || 'Payment successful!');
+        const voteCount = data.tickets?.filter(t => t.type === 'vote').length || 1;
+        setMessage(`${voteCount} vote(s) cast successfully!`);
       } else {
-        console.error('Payment verification failed:', data);
         setStatus('error');
-        setMessage('Payment verification failed');
+        setMessage('Vote verification failed');
       }
     } catch (error) {
       console.error('Verification error:', error);
@@ -56,17 +53,17 @@ export default function PaymentSuccess() {
     }}>
       {status === 'verifying' && (
         <div>
-          <h1>Verifying Payment...</h1>
-          <p>Please wait while we confirm your payment.</p>
+          <h1>Verifying Vote...</h1>
+          <p>Please wait while we confirm your vote.</p>
         </div>
       )}
 
       {status === 'success' && (
         <div>
-          <h1 style={{ color: '#2db84b' }}>✅ Payment Successful!</h1>
+          <h1 style={{ color: '#2db84b' }}>✅ Vote Successful!</h1>
           <p>{message}</p>
-          <p>Check your email for ticket details.</p>
-          <a href="/" style={{ 
+          <p>Thank you for supporting your favorite!</p>
+          <a href="/#voting" style={{ 
             display: 'inline-block', 
             marginTop: '20px',
             padding: '12px 24px',
@@ -76,16 +73,16 @@ export default function PaymentSuccess() {
             textDecoration: 'none',
             fontWeight: 'bold'
           }}>
-            Back to Home
+            Back to Voting
           </a>
         </div>
       )}
 
       {status === 'error' && (
         <div>
-          <h1 style={{ color: '#e8312a' }}>❌ Payment Failed</h1>
+          <h1 style={{ color: '#e8312a' }}>❌ Vote Failed</h1>
           <p>{message}</p>
-          <a href="/#tickets" style={{ 
+          <a href="/#voting" style={{ 
             display: 'inline-block', 
             marginTop: '20px',
             padding: '12px 24px',

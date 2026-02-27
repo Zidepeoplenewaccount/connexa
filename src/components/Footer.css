@@ -125,7 +125,19 @@
   transition: opacity 0.2s ease;
 }
 
+.footer-arc-logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
 .footer-powered:hover .footer-zide-logo {
+  opacity: 1;
+}
+
+.footer-powered:hover .footer-arc-logo {
   opacity: 1;
 }
 

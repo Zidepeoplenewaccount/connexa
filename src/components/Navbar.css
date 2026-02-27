@@ -156,9 +156,21 @@
   .navbar-hamburger {
     display: flex;
   }
+  
+  .navbar-hamburger.open{
+    display: none;
+  }
 
   .navbar-mobile {
     display: flex;
+  }
+
+  .navbar-mobile a {
+    font-size: 1.5rem;
+  }
+
+  .navbar.open {
+    display: none;
   }
 }
 

@@ -300,7 +300,233 @@
   margin-top: 4px;
 }
 
-/* ===================== RESPONSIVE ===================== */
+.voting-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  backdrop-filter: blur(8px);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.voting-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+}
+
+.voting-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.6);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.voting-modal-close:hover {
+  background: rgba(255,255,255,0.15);
+  color: var(--white);
+}
+
+.voting-modal-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  padding-right: 40px;
+}
+
+.voting-modal-price {
+  font-size: 1.1rem;
+  color: var(--orange);
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.voting-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.voting-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.voting-input-group label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.7);
+}
+
+.voting-input {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.voting-input:focus {
+  border-color: var(--orange);
+}
+
+.voting-modal-error {
+  background: rgba(232,49,42,0.1);
+  border: 1px solid rgba(232,49,42,0.3);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  color: var(--red);
+  font-size: 14px;
+  text-align: center;
+}
+
+.voting-modal-submit {
+  width: 100%;
+  padding: 16px;
+  background: var(--orange);
+  color: var(--black);
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  transition: transform var(--transition), box-shadow 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.voting-modal-submit:hover:not(:disabled) {
+  transform: scale(1.03);
+  box-shadow: 0 8px 30px rgba(245,166,35,0.4);
+}
+
+.voting-modal-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.voting-loading,
+.voting-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255,255,255,0.5);
+}
+
+.voting-card-socials {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.voting-social-link {
+  font-size: 12px;
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.voting-social-link:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.voting-quantity-selector {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+}
+
+.voting-quantity-selector label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 12px;
+}
+
+.voting-quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+
+.voting-quantity-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.voting-quantity-btn:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: var(--orange);
+}
+
+.voting-quantity-input {
+  width: 80px;
+  height: 40px;
+  text-align: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--white);
+  font-size: 18px;
+  font-weight: 700;
+  outline: none;
+}
+
+.voting-quantity-input:focus {
+  border-color: var(--orange);
+}
+
+.voting-total-price {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--orange);
+}
+
 @media (max-width: 768px) {
   .awards-grid {
     grid-template-columns: 1fr;

@@ -12,6 +12,24 @@ import Voting from './components/Voting';
 import Merch from './components/merch';
 import Footer from './components/Footer';
 import PaymentSuccess from './components/paymentSuccess';
+import VoteSuccess from './pages/VoteSuccess';
+import MerchSuccess from './pages/MerchSuccess';
+
+
+
+
+import AdminLogin from './components/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminTickets from './pages/admin/AdminTickets';
+import AdminCandidates from './pages/admin/AdminCandidates';
+import AdminVotes from './pages/admin/AdminVotes';
+import AdminOrders from './pages/admin/AdminOrders';
+import AdminPayments from './pages/admin/AdminPayments';
+import AdminAffiliates from './pages/admin/AdminAffiliates';
+import ProtectedRoute from './components/admin/protectedRoute';
+import PartnerForm from './components/PartnerForm';
+import Gallery from './components/Gallery';
+
 
 function HomePage() {
   useScrollReveal();
@@ -23,11 +41,13 @@ function HomePage() {
       <main>
         <Hero />
         <About />
+        {/*<Gallery />*/}
         <Speakers />
         <Tickets />
         <Awards />
         <Voting />
         <Merch />
+        <PartnerForm />
       </main>
       <Footer />
     </>
@@ -40,6 +60,67 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/vote-success" element={<VoteSuccess />} />
+        <Route path="/merch-success" element={<MerchSuccess />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/tickets"
+          element={
+            <ProtectedRoute>
+              <AdminTickets />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/candidates"
+          element={
+            <ProtectedRoute>
+              <AdminCandidates />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/votes"
+          element={
+            <ProtectedRoute>
+              <AdminVotes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/orders"
+          element={
+            <ProtectedRoute>
+              <AdminOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/payments"
+          element={
+            <ProtectedRoute>
+              <AdminPayments />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/affiliates"
+          element={
+            <ProtectedRoute>
+              <AdminAffiliates />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
