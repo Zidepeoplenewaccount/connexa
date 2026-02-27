@@ -1,4 +1,4 @@
-import './hero.css';
+import './Hero.css';
 import zideLogo from '../assets/IMG_5735.PNG';
 import ArcLogo from '../assets/ARC_LOGO.png';
 

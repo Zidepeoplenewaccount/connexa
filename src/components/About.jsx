@@ -1,4 +1,4 @@
-import './about.css';
+import './About.css';
 import zideLogo from '../assets/IMG_6707.PNG';
 
 const highlights = [

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './gallery.css';
+import './Gallery.css';
 
 export default function Gallery() {
   const [currentSlide, setCurrentSlide] = useState(0);

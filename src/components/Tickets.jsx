@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './tickets.css';
+import './Tickets.css';
 import { initializePayment } from '../services/api';
 
 const tickets = [
