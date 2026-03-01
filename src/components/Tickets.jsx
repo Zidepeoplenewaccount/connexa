@@ -215,7 +215,8 @@ export default function Tickets() {
     category: '',
     needElectricity: 'no',
     electricityAppliances: '',
-    supportAssistant: 'no'
+    supportAssistant: 'no',
+  supportQuantity: 1
   });
   
   const [loading, setLoading] = useState(false);
@@ -274,7 +275,7 @@ export default function Tickets() {
     } else if (isVendor) {
       if (!vendorData.fullName.trim() || !vendorData.businessName.trim() || 
           !vendorData.whatsapp.trim() || !vendorData.email.trim() || 
-          !vendorData.instagramWebsite.trim() || !vendorData.category.trim()) {
+          !vendorData.category.trim()) {
         setError('Please fill in all vendor details');
         return;
       }
@@ -319,7 +320,7 @@ export default function Tickets() {
         
         // Add support assistant cost
         if (vendorData.supportAssistant === 'zidepeople') {
-          baseAmount += 10000;
+          baseAmount += (vendorData.supportQuantity * 10000);
         }
         
         totalAmount = baseAmount;
@@ -331,11 +332,12 @@ export default function Tickets() {
           business_name: vendorData.businessName,
           whatsapp: vendorData.whatsapp,
           email: vendorData.email,
-          instagram_website: vendorData.instagramWebsite,
+          instagram_website: vendorData.instagramWebsite || null,
           category: vendorData.category,
           need_electricity: vendorData.needElectricity,
-          electricity_appliances: vendorData.electricityAppliances,
-          support_assistant: vendorData.supportAssistant
+          electricity_appliances: vendorData.electricityAppliances || null,
+          support_assistant: vendorData.supportAssistant,
+          support_quantity: vendorData.supportQuantity
         };
       } else {
         totalAmount = selectedTicket.price;
@@ -648,11 +650,10 @@ export default function Tickets() {
                   />
                   <input
                     type="text"
-                    placeholder="Instagram Page/Website"
+                    placeholder="Instagram Page/Website (Optional)"
                     className="ticket-input"
                     value={vendorData.instagramWebsite}
                     onChange={(e) => setVendorData({...vendorData, instagramWebsite: e.target.value})}
-                    required
                   />
                   <input
                     type="text"
@@ -722,7 +723,7 @@ export default function Tickets() {
                           checked={vendorData.supportAssistant === 'zidepeople'}
                           onChange={(e) => setVendorData({...vendorData, supportAssistant: e.target.value})}
                         />
-                        Yes – Zidepeople assistant (+₦10,000)
+                        Yes – Zidepeople assistant (₦10,000 each)
                       </label>
                       <label>
                         <input
@@ -737,6 +738,49 @@ export default function Tickets() {
                     </div>
                   </div>
 
+                  {/* ADD QUANTITY SELECTOR */}
+                  {vendorData.supportAssistant === 'zidepeople' && (
+                    <div className="ticket-quantity-group">
+                      <label>How many support assistants do you need?</label>
+                      <div className="ticket-quantity-controls">
+                        <button 
+                          type="button"
+                          onClick={() => setVendorData({
+                            ...vendorData, 
+                            supportQuantity: Math.max(1, vendorData.supportQuantity - 1)
+                          })}
+                          className="ticket-quantity-btn"
+                        >
+                          −
+                        </button>
+                        <input 
+                          type="number" 
+                          min="1" 
+                          max="10"
+                          value={vendorData.supportQuantity}
+                          onChange={(e) => setVendorData({
+                            ...vendorData, 
+                            supportQuantity: Math.max(1, parseInt(e.target.value) || 1)
+                          })}
+                          className="ticket-quantity-input"
+                        />
+                        <button 
+                          type="button"
+                          onClick={() => setVendorData({
+                            ...vendorData, 
+                            supportQuantity: Math.min(10, vendorData.supportQuantity + 1)
+                          })}
+                          className="ticket-quantity-btn"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <div className="ticket-quantity-total">
+                        Support cost: ₦{(vendorData.supportQuantity * 10000).toLocaleString()}
+                      </div>
+                    </div>
+                  )}
+
                   {vendorData.supportAssistant === 'own' && (
                     <div className="ticket-info-box">
                       ℹ️ Your assistant must register and purchase an individual ticket separately.
@@ -744,6 +788,39 @@ export default function Tickets() {
                   )}
                 </>
               )}
+
+              {selectedTicket.passType === 'vendor' && (
+              <div className="ticket-price-breakdown">
+                <h4>Price Breakdown</h4>
+                <div className="ticket-price-item">
+                  <span>Base Pass:</span>
+                  <span>₦{selectedTicket.price.toLocaleString()}</span>
+                </div>
+                
+                {vendorData.needElectricity === 'yes' && (
+                  <div className="ticket-price-item">
+                    <span>Electricity:</span>
+                    <span>+₦20,000</span>
+                  </div>
+                )}
+                
+                {vendorData.supportAssistant === 'zidepeople' && (
+                  <div className="ticket-price-item">
+                    <span>Support ({vendorData.supportQuantity} assistant{vendorData.supportQuantity > 1 ? 's' : ''}):</span>
+                    <span>+₦{(vendorData.supportQuantity * 10000).toLocaleString()}</span>
+                  </div>
+                )}
+                
+                <div className="ticket-price-total">
+                  <span>Total:</span>
+                  <span>₦{(
+                    selectedTicket.price + 
+                    (vendorData.needElectricity === 'yes' ? 20000 : 0) + 
+                    (vendorData.supportAssistant === 'zidepeople' ? vendorData.supportQuantity * 10000 : 0)
+                  ).toLocaleString()}</span>
+                </div>
+              </div>
+            )}
 
               {error && <div className="ticket-modal-error">{error}</div>}
 

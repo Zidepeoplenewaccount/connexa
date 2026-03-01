@@ -134,7 +134,6 @@ export default function Voting() {
           </h2>
           <p>
             Cast your vote and help your favorite businesses and talents win at Connexa 2026.
-            ₦100 per vote.
           </p>
         </div>
 
@@ -166,7 +165,7 @@ export default function Voting() {
           <div className="voting-grid">
             {currentCandidates.length === 0 ? (
               <div className="voting-empty">
-                <p>No candidates yet. Check back soon!</p>
+                {/*<p>No candidates yet. Check back soon!</p>*/}
               </div>
             ) : (
               currentCandidates.map((candidate, i) => (

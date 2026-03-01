@@ -1,5 +1,6 @@
 import './Hero.css';
-import zideLogo from '../assets/IMG_5735.PNG';
+import { useState, useEffect } from 'react';
+import zideLogo from '../assets/IMG_5735-removebg-preview2.png';
 import ArcLogo from '../assets/ARC_LOGO.png';
 
 const marqueeItems = [
@@ -24,6 +25,86 @@ const sponsors = [
 ];
 
 export default function Hero() {
+
+  const [timeLeft, setTimeLeft] = useState({
+    months: 0,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    const eventDate = new Date('2026-11-28T10:00:00');
+
+    function calculateTimeLeft() {
+      const now = new Date();
+      const difference = eventDate - now;
+
+      if (difference > 0) {
+        // Calculate months properly
+        let years = eventDate.getFullYear() - now.getFullYear();
+        let months = eventDate.getMonth() - now.getMonth();
+        let days = eventDate.getDate() - now.getDate();
+
+        // Adjust for negative days
+        if (days < 0) {
+          months--;
+          const lastMonth = new Date(eventDate.getFullYear(), eventDate.getMonth(), 0);
+          days += lastMonth.getDate();
+        }
+
+        // Adjust for negative months
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+
+        // Total months
+        const totalMonths = years * 12 + months;
+
+        // Calculate remaining time for hours, minutes, seconds
+        const hours = eventDate.getHours() - now.getHours();
+        const minutes = eventDate.getMinutes() - now.getMinutes();
+        const seconds = eventDate.getSeconds() - now.getSeconds();
+
+        // Adjust hours/minutes/seconds
+        let finalHours = hours;
+        let finalMinutes = minutes;
+        let finalSeconds = seconds;
+
+        if (finalSeconds < 0) {
+          finalSeconds += 60;
+          finalMinutes--;
+        }
+
+        if (finalMinutes < 0) {
+          finalMinutes += 60;
+          finalHours--;
+        }
+
+        if (finalHours < 0) {
+          finalHours += 24;
+        }
+
+        setTimeLeft({
+          months: totalMonths,
+          days: days,
+          hours: Math.abs(finalHours),
+          minutes: Math.abs(finalMinutes),
+          seconds: Math.abs(finalSeconds)
+        });
+      } else {
+        setTimeLeft({ months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    }
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <>
       <section className="hero" id="home">
@@ -54,6 +135,7 @@ export default function Hero() {
             <span className="highlight-blue">X</span>
             <span>A</span>
           </h1>
+          <span className="hero-subtitle">The Future of Flexible Work</span>
 
           <p className="hero-title-sub">BUSINESS · TALENT · CONNECTIONS</p>
 
@@ -65,12 +147,55 @@ export default function Hero() {
             One day. Endless possibilities.
           </p>
 
+          <div className="hero-details">
+            <div className="hero-detail-item">
+              <span className="hero-detail-icon">📍</span>
+              <span className="hero-detail-text">Lagos Island, Nigeria</span>
+            </div>
+            <div className="hero-detail-item">
+              <span className="hero-detail-icon">📅</span>
+              <span className="hero-detail-text">November 28th, 2026</span>
+            </div>
+            <div className="hero-detail-item">
+              <span className="hero-detail-icon">🕐</span>
+              <span className="hero-detail-text">10:00 AM</span>
+            </div>
+          </div>
+
+          {/* Countdown */}
+          <div className="hero-countdown">
+            <div className="countdown-item">
+              <div className="countdown-value">{timeLeft.months}</div>
+              <div className="countdown-label">Months</div>
+            </div>
+            <div className="countdown-separator">:</div>
+            <div className="countdown-item">
+              <div className="countdown-value">{timeLeft.days}</div>
+              <div className="countdown-label">Days</div>
+            </div>
+            <div className="countdown-separator">:</div>
+            <div className="countdown-item">
+              <div className="countdown-value">{String(timeLeft.hours).padStart(2, '0')}</div>
+              <div className="countdown-label">Hours</div>
+            </div>
+            <div className="countdown-separator">:</div>
+            <div className="countdown-item">
+              <div className="countdown-value">{String(timeLeft.minutes).padStart(2, '0')}</div>
+              <div className="countdown-label">Minutes</div>
+            </div>
+            <div className="countdown-separator">:</div>
+            <div className="countdown-item">
+              <div className="countdown-value">{String(timeLeft.seconds).padStart(2, '0')}</div>
+              <div className="countdown-label">Seconds</div>
+            </div>
+          </div>
+
           <div className="hero-actions">
             <a href="#tickets" className="btn-primary">
               <span>Get Your Ticket →</span>
             </a>
             <a href="#partner-form" className="btn-secondary">
-              Become A Partner
+              Become A Sponsor
             </a>
           </div>
 
@@ -80,11 +205,11 @@ export default function Hero() {
               <div className="hero-stat-label">Attendees</div>
             </div>
             <div className="hero-stat">
-              <div className="hero-stat-number highlight-green">150+</div>
+              <div className="hero-stat-number highlight-green">150</div>
               <div className="hero-stat-label">Businesses</div>
             </div>
             <div className="hero-stat">
-              <div className="hero-stat-number highlight-blue">10+</div>
+              <div className="hero-stat-number highlight-blue">10</div>
               <div className="hero-stat-label">Speakers</div>
             </div>
             <div className="hero-stat">
@@ -92,14 +217,14 @@ export default function Hero() {
               <div className="hero-stat-label">Exhibitors</div>
             </div>
             <div className="hero-stat">
-              <div className="hero-stat-number highlight-orange">10+</div>
+              <div className="hero-stat-number highlight-orange">10</div>
               <div className="hero-stat-label">Industry Panels</div>
             </div>
           </div>
 
           {/* Sponsors Marquee */}
           <div className="hero-sponsors">
-            <div className="hero-sponsors-label">Sponsored By</div>
+            <div className="hero-sponsors-label">SPONSORS & PARTNERS</div>
             <div className="hero-sponsors-track">
               {/* Duplicate sponsors array for infinite scroll effect */}
               {[...sponsors, ...sponsors].map((sponsor, i) => (

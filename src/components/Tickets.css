@@ -670,6 +670,107 @@
   border-color: var(--orange);
 }
 
+.ticket-quantity-group {
+  margin: 20px 0;
+  padding: 16px;
+  background: rgba(245,166,35,0.1);
+  border: 1px solid rgba(245,166,35,0.3);
+  border-radius: 8px;
+}
+
+.ticket-quantity-group label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 12px;
+}
+
+.ticket-quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.ticket-quantity-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ticket-quantity-btn:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: var(--orange);
+}
+
+.ticket-quantity-input {
+  width: 80px;
+  height: 40px;
+  text-align: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--white);
+  font-size: 18px;
+  font-weight: 700;
+  outline: none;
+}
+
+.ticket-quantity-input:focus {
+  border-color: var(--orange);
+}
+
+.ticket-quantity-total {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--orange);
+}
+
+.ticket-price-breakdown {
+  margin: 24px 0;
+  padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.ticket-price-breakdown h4 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--white);
+}
+
+.ticket-price-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.ticket-price-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0 0 0;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--orange);
+}
+
 @media (max-width: 480px) {
   .ticket-modal {
     padding: 28px;

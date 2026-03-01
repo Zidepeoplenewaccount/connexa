@@ -246,4 +246,7 @@
   .partner-radio {
     min-width: auto;
   }
+  .partner-radio span {
+    font-size: 12px;
+  }
 }

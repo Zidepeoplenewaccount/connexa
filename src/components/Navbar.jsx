@@ -19,7 +19,15 @@ export default function Navbar() {
     { label: 'Awards', href: '#awards' },
     { label: 'Vote', href: '#voting' },
     { label: 'Merch', href: '#merch' },
-    { label: 'Become A Partner', href: '#partner-form' },
+    { label: 'Become A Sponsor', href: '#partner-form' },
+  ];
+
+  const navLinksMobile = [
+    { label: 'About', href: '#about' },
+    { label: 'Awards', href: '#awards' },
+    { label: 'Vote', href: '#voting' },
+    { label: 'Merch', href: '#merch' },
+    { label: 'Become A Sponsor', href: '#partner-form' },
   ];
 
   return (
@@ -55,7 +63,7 @@ export default function Navbar() {
         >
           ×
         </button>
-        {navLinks.map(link => (
+        {navLinksMobile.map(link => (
           <a
             key={link.label}
             href={link.href}

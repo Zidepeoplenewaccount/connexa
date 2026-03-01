@@ -31,6 +31,14 @@ export default function PartnerForm() {
     'Food & Beverage Sponsor',
     'Merch Sponsor',
     'Award Sponsor',
+    'Financial Sponsor',
+    'In-Kind Sponsor (Product or Service Sponsor)',
+    'Industry Sponsor',
+    'Knowledge Sponsor',
+    'Stage Sponsor',
+    'Experience Sponsor',
+    'Talent Access Sponsor',
+    'Strategic Growth Partner',
     'Other'
   ];
 

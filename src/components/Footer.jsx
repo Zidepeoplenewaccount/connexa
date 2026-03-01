@@ -11,8 +11,8 @@ export default function Footer() {
           <div className="footer-brand">
             <img src={connexaLogo} alt="Connexa" className="footer-brand-logo" />
             <p className="footer-brand-desc">
-              Lagos' most energetic one-day business event. Where vendors sell,
-              brands grow, and opportunities happen in real time.
+              Connexa brings together talents, business owners, brands, and
+              decision-makers to learn, sell, connect and grow - in one space.
             </p>
             <div className="footer-socials">
               {/*<a href="https://www.instagram.com/techexpohq" target="_blank" rel="noreferrer" className="footer-social">
@@ -60,8 +60,6 @@ export default function Footer() {
           <a href="https://www.zidepeople.com/" target="_blank" rel="noreferrer" className="footer-powered">
             Powered by
             <img src={zideLogo} alt="Zidepeople" className="footer-zide-logo" />
-            and
-            <img src={ArcLogo} alt="Arc" className="footer-arc-logo" />
           </a>
         </div>
       </div>
