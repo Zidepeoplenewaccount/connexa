@@ -250,3 +250,14 @@ export const signupIndividualCandidate = async (candidateData) => {
     throw error;
   }
 };
+
+// Affiliate signup
+export const signupAffiliate = async (formData) => {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/affiliates/signup`, formData);
+    return response.data;
+  } catch (error) {
+    console.error('Affiliate signup failed:', error);
+    throw error;
+  }
+};

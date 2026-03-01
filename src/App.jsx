@@ -29,6 +29,8 @@ import AdminAffiliates from './pages/admin/AdminAffiliates';
 import ProtectedRoute from './components/admin/protectedRoute';
 import PartnerForm from './components/PartnerForm';
 import Gallery from './components/Gallery';
+import AffiliateSignup from './components/AffiliateSignup';
+
 
 
 function HomePage() {
@@ -41,13 +43,14 @@ function HomePage() {
       <main>
         <Hero />
         <About />
-        {/*<Gallery />*/}
+        <Gallery />
         {/*<Speakers />*/}
         <Tickets />
         <Awards />
         <Voting />
         <Merch />
         <PartnerForm />
+        <AffiliateSignup />
       </main>
       <Footer />
     </>

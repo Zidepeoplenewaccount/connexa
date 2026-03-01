@@ -1,5 +1,21 @@
 import { useState, useEffect } from 'react';
 import './Gallery.css';
+import GroupPhoto from '../assets/IMG_0132.jpg';
+import ZideTeamPhoto from '../assets/IMG_0164.jpg';
+import EmptyRoom from '../assets/MLD00002.jpg';
+import GirlHoldingIGThingy from '../assets/MLD00080.jpg';
+import SameGirlSmiling from '../assets/MLD00181.jpg';
+import MokiGoingOffStage from '../assets/MLD00332.jpg';
+import BackViewOfAppReview from '../assets/MLD00437.jpg';
+import MokiAskingQuestion from '../assets/MLD00501.jpg';
+import FirstSpeaker from '../assets/MLD00519.jpg';
+import LinkdinGuySpeaking from '../assets/MLD00575.jpg';
+import AnimatorGuySpeaking from '../assets/MLD00633.jpg';
+import HannahSpeaking from '../assets/MLD00651.jpg';
+import EstherSpeaking from '../assets/MLD00705.jpg';
+import LinkedinAndHrGuyClass from '../assets/MLD00732.jpg';
+import AnimatorGuyClass from '../assets/MLD00743.jpg';
+import CoreZideTeamPhoto from '../assets/MLD00876.jpg';
 
 export default function Gallery() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -10,52 +26,100 @@ export default function Gallery() {
   const images = [
     {
       id: 1,
-      url: '/gallery/event-1.jpg',
-      caption: 'Opening keynote - Connexa 2025',
+      url:  GroupPhoto,
+      caption: '',
       alt: 'Keynote speaker on stage'
     },
     {
       id: 2,
-      url: '/gallery/event-2.jpg',
-      caption: 'Networking session with industry leaders',
-      alt: 'Attendees networking'
+      url: ZideTeamPhoto,
+      caption: '',
+      alt: 'Zide team members'
     },
     {
       id: 3,
-      url: '/gallery/event-3.jpg',
-      caption: 'Panel discussion on flexible work',
-      alt: 'Panel discussion'
+      url: EmptyRoom,
+      caption: '',
+      alt: 'Empty conference room'
     },
     {
       id: 4,
-      url: '/gallery/event-4.jpg',
-      caption: 'Vendor marketplace in action',
-      alt: 'Vendor booths'
+      url: GirlHoldingIGThingy,
+      caption: '',
+      alt: 'Girl holding Instagram thingy'
     },
     {
       id: 5,
-      url: '/gallery/event-5.jpg',
-      caption: 'Award ceremony winners',
-      alt: 'Award winners on stage'
+      url: SameGirlSmiling,
+      caption: '',
+      alt: 'Same girl smiling'
     },
     {
       id: 6,
-      url: '/gallery/event-6.jpg',
-      caption: 'Community connections',
-      alt: 'Group photo'
+      url: MokiGoingOffStage,
+      caption: '',
+      alt: 'Moki going off stage'
     },
     {
       id: 7,
-      url: '/gallery/event-7.jpg',
-      caption: 'Workshop sessions',
-      alt: 'Workshop in progress'
+      url: BackViewOfAppReview,
+      caption: 'Zidepeople App Demo',
+      alt: 'Back view of app review'
     },
     {
       id: 8,
-      url: '/gallery/event-8.jpg',
-      caption: 'Closing celebration',
-      alt: 'Closing event'
-    }
+      url: MokiAskingQuestion,
+      caption: '',
+      alt: 'Moki asking a question'
+    },
+    {
+      id: 9,
+      url: FirstSpeaker,
+      caption: 'Victor Adeyemo - "What HR Professionals Look For In Candidates".',
+      alt: 'First speaker on stage'
+    },
+    {
+      id: 10,
+      url: LinkdinGuySpeaking,
+      caption: 'Oladotun Ajayi - "Leveraging Social Media to Build Skills and Meet Global Industry Demands".',
+      alt: 'LinkedIn guy speaking'
+    },
+    {
+      id: 11,
+      url: AnimatorGuySpeaking,
+      caption: 'Chukwukere Oriaku - "Zidepeople: A Digital Platform for Flexible Jobs in Nigeria".',
+      alt: 'Animator guy speaking'
+    },
+    {
+      id: 12,
+      url: HannahSpeaking,
+      caption: 'Hannah Adejugbagbe - "Personal Branding and Online Perception".',
+      alt: 'Hannah speaking'
+    },
+    {
+      id: 13,
+      url: EstherSpeaking,
+      caption: 'Esther Oyeleye - "Turning Your SKills into Profits and How Zidepeople Helps You Earn Flexibly".',
+      alt: 'Esther speaking'
+    },
+    {
+        id : 14, 
+        url : LinkedinAndHrGuyClass, 
+        caption : "Victor And Oladotun private class", 
+        alt : "LinkedIn and HR guy in class"
+     },
+     {
+        id : 15, 
+        url : AnimatorGuyClass, 
+        caption : "Chukwukere Oriaku private class", 
+        alt : "Animator guy in class"
+     },
+     {
+        id : 16, 
+        url : CoreZideTeamPhoto, 
+        caption : "Core Zidepeople team photo", 
+        alt : "Core Zide team photo"
+     }
   ];
 
   // Auto-advance slideshow
@@ -97,7 +161,7 @@ export default function Gallery() {
           <h2 className="section-title">
             Last Year's <span className="highlight-orange">Highlights</span>
           </h2>
-          <p>Relive the energy, connections, and moments from Connexa 2025</p>
+          <p>Relive the energy, connections, and moments from The Future of Flexible Work 2025</p>
         </div>
 
         {/* Main Slideshow */}
@@ -116,11 +180,11 @@ export default function Gallery() {
                     backgroundColor: '#1a1a1a' // Fallback while images load
                   }}
                 >
-                  {/* Placeholder gradient if image doesn't exist */}
+                  {/* Placeholder gradient if image doesn't exist 
                   <div className="gallery-placeholder">
                     <span className="gallery-placeholder-icon">📸</span>
                     <p>Event Photo {index + 1}</p>
-                  </div>
+                  </div>*/}
                 </div>
                 <div className="gallery-slide-caption">
                   <p>{image.caption}</p>
@@ -176,10 +240,6 @@ export default function Gallery() {
                   <div className="gallery-grid-overlay">
                     <span className="gallery-grid-icon">🔍</span>
                   </div>
-                  {/* Placeholder */}
-                  <div className="gallery-placeholder">
-                    <span className="gallery-placeholder-icon">📸</span>
-                  </div>
                 </div>
               </div>
             ))}
@@ -197,7 +257,7 @@ export default function Gallery() {
             className="gallery-lightbox-content"
             onClick={(e) => e.stopPropagation()}
           >
-            <img src={lightboxImage.url} alt={lightboxImage.alt} />
+            <img src={lightboxImage.url} alt={lightboxImage.alt} loading="lazy"/>
             <div className="gallery-lightbox-caption">
               <p>{lightboxImage.caption}</p>
             </div>

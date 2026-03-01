@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_URL = 'http://localhost:8000'; // TODO: Replace with actual backend URL
+const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net'; // TODO: Replace with actual backend URL
 
 const getAuthToken = () => localStorage.getItem('admin_token');
 
@@ -119,11 +119,6 @@ export const exportVotes = async () => {
 
 
 // Affiliates
-export const createAffiliate = async (data) => {
-  const response = await adminAxios.post('/affiliates/create', data);
-  return response.data;
-};
-
 export const generateAffiliate = async (name, description) => {
   const response = await adminAxios.post('/affiliates/generate', null, {
     params: { name, description },
@@ -131,13 +126,29 @@ export const generateAffiliate = async (name, description) => {
   return response.data;
 };
 
+// Affiliates and Commissions
 export const getAllAffiliates = async () => {
-  const response = await adminAxios.get('/affiliates');
+  const response = await adminAxios.get('/affiliates/');
   return response.data;
 };
 
 export const getAffiliateStats = async () => {
-  const response = await adminAxios.get('/affiliates/stats');
+  const response = await adminAxios.get('/affiliates/admin/stats');
+  return response.data;
+};
+
+export const getAllCommissions = async (params = {}) => {
+  const response = await adminAxios.get('/affiliates/admin/commissions', { params });
+  return response.data;
+};
+
+export const markCommissionPaid = async (commissionId) => {
+  const response = await adminAxios.patch(`/affiliates/admin/commissions/${commissionId}/mark-paid`);
+  return response.data;
+};
+
+export const bulkMarkCommissionsPaid = async (commissionIds) => {
+  const response = await adminAxios.patch('/affiliates/admin/commissions/bulk-mark-paid', commissionIds);
   return response.data;
 };
 
@@ -148,5 +159,9 @@ export const toggleAffiliate = async (code) => {
 
 export const deleteAffiliate = async (code) => {
   const response = await adminAxios.delete(`/affiliates/${code}`);
+  return response.data;
+};
+export const createAffiliate = async (data) => {
+  const response = await adminAxios.post('/affiliates/admin/create', data);
   return response.data;
 };
