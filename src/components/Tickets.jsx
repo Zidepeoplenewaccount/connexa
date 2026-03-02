@@ -164,7 +164,7 @@ const tickets = [
     label: 'Sell • Showcase • Partner',
     name: 'VIP Partner Pass',
     subtitle: 'Maximum exposure. Maximum access. Maximum influence.',
-    price: 150000,
+    price: 500000,
     badge: 'PREMIUM',
     badgeClass: 'badge-red',
     featured: true,
