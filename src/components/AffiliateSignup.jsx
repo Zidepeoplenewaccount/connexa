@@ -113,13 +113,13 @@ export default function AffiliateSignup() {
                   📋 Copy
                 </button>
               </div>
-              <small>Share this link to earn 20% commission on every ticket sale!</small>
+              <small>Share this link to earn on every ticket sale!</small>
             </div>
 
             <div className="affiliate-commission-info">
               <h3>📊 Commission Details</h3>
               <ul>
-                <li>✅ Earn 20% commission on every confirmed ticket sold</li>
+                <li>✅ Earn up to 20% commission on every confirmed ticket sold</li>
                 <li>💰 Commissions paid monthly via bank transfer</li>
                 <li>📈 Track your earnings in real-time</li>
                 <li>🎯 No limit on how much you can earn</li>
@@ -159,13 +159,13 @@ export default function AffiliateSignup() {
           <h2 className="section-title">
             Become a <span className="highlight-orange">Connexa Affiliate</span>
           </h2>
-          <p>Earn 20% commission on every ticket you sell. No limits. Paid monthly.</p>
+          <p>Earn up to 20% commission on every ticket you sell. No limits. Paid monthly.</p>
         </div>
 
         <div className="affiliate-benefits">
           <div className="affiliate-benefit-card">
             <div className="affiliate-benefit-icon">💰</div>
-            <h3>20% Commission</h3>
+            <h3>Up to 20% Commission</h3>
             <p>On every confirmed ticket sale</p>
           </div>
           <div className="affiliate-benefit-card">
@@ -301,7 +301,7 @@ export default function AffiliateSignup() {
 
           {/* Commission Info Box */}
           <div className="affiliate-commission-notice">
-            <strong>💰 Commission Structure:</strong> You earn 20% on every confirmed ticket sale. Commissions are calculated on the total payment amount and paid monthly via bank transfer.
+            <strong>💰 Commission Structure:</strong> You earn up to 20% on every confirmed ticket sale. Commissions are calculated on the total payment amount and paid monthly via bank transfer.
           </div>
 
           {/* Terms Checkboxes */}
@@ -313,7 +313,7 @@ export default function AffiliateSignup() {
                 checked={formData.agreeCommission}
                 onChange={handleChange}
               />
-              <span>I understand I earn 20% commission on every confirmed ticket sold through my unique link.</span>
+              <span>I understand I earn commissions on every confirmed ticket sold through my unique link.</span>
             </label>
 
             <label className="affiliate-checkbox">
