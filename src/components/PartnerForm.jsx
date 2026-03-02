@@ -100,7 +100,7 @@ export default function PartnerForm() {
         <div className="partner-form-header">
           <span className="section-tag">JOIN US</span>
           <h2 className="section-title">
-            Partner or Sponsor <span className="highlight-orange">Connexa</span>
+            Sponsor or Partner <span className="highlight-orange">Connexa</span>
           </h2>
           <p>Be part of shaping the future of flexible work in Africa.</p>
         </div>
