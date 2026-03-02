@@ -154,7 +154,7 @@ export default function Hero() {
             </div>
             <div className="hero-detail-item">
               <span className="hero-detail-icon">📅</span>
-              <span className="hero-detail-text">November 28th, 2026</span>
+              <span className="hero-detail-text">November 2026</span>
             </div>
             <div className="hero-detail-item">
               <span className="hero-detail-icon">🕐</span>
