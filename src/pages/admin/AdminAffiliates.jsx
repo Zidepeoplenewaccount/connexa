@@ -619,10 +619,12 @@ export default function AdminAffiliates() {
                 <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}>
                   Bank Name *
                 </label>
-                <select
+                <input
+                  type="text"
                   value={formData.bankName}
                   onChange={(e) => setFormData({...formData, bankName: e.target.value})}
                   required
+                  placeholder="e.g., Access Bank, GTBank, OPay"
                   style={{
                     width: '100%',
                     padding: '12px',
@@ -631,12 +633,7 @@ export default function AdminAffiliates() {
                     borderRadius: '8px',
                     color: '#fff'
                   }}
-                >
-                  <option value="">Select bank</option>
-                  {nigerianBanks.map(bank => (
-                    <option key={bank} value={bank}>{bank}</option>
-                  ))}
-                </select>
+                />
               </div>
 
               <div style={{ marginBottom: '16px' }}>

@@ -454,6 +454,16 @@
   overflow: hidden;
 }
 
+.hero-sponsors {
+  position: relative;
+  margin-top: 80px;
+  padding: 48px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  background: rgba(255,255,255,0.05); /* 5% white - noticeable but not harsh */
+}
+
 .hero-sponsors-label {
   text-align: center;
   font-family: var(--font-display);
@@ -502,6 +512,14 @@
 .hero-sponsor-item:hover .hero-sponsor-logo {
   filter: grayscale(0%) brightness(1) opacity(1);
   transform: scale(1.15);
+}
+
+.zide-logo {
+  width: 100%;
+}
+
+.arc-logo {
+  width: 90%;
 }
 
 .hero-sponsor-text {

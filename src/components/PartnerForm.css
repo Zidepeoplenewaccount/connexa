@@ -79,7 +79,7 @@
 
 .partner-radio {
   display: flex;
-  align-items: center;
+  align-items: center !important;
   gap: 10px;
   padding: 14px 20px;
   background: rgba(255,255,255,0.03);
@@ -89,6 +89,7 @@
   transition: all 0.2s ease;
   flex: 1;
   min-width: 150px;
+  line-height: 1;
 }
 
 .partner-radio:hover {
@@ -100,11 +101,16 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
+  align-self: center;
+  transform: translateY(3px);
 }
+
 
 .partner-radio span {
   font-size: 15px;
   font-weight: 500;
+  line-height: 1;
+  padding-left: 3%;
 }
 
 .partner-btn {
@@ -225,6 +231,19 @@
   max-width: 300px;
 }
 
+
+.partnership-email-text {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 60px;
+}
+
+.partnership-email-text p {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.7);
+  margin-top: 16px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .partner-form-section {
@@ -248,5 +267,8 @@
   }
   .partner-radio span {
     font-size: 12px;
+  }
+  .partner-radio input[type="radio"] {
+    transform: translateY(5px);
   }
 }

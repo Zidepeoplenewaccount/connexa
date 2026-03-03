@@ -169,12 +169,13 @@
 }
 
 .about-powered-logo {
-  height: 120px !important;
-  width: 120px !important;
+  height: 200px !important;
+  width: 200px !important;
   object-fit: contain;
   filter: drop-shadow(0 4px 12px rgba(107,53,232,0.3));
   animation: float 4s ease-in-out infinite;
   transition: transform 0.3s ease;
+  margin-bottom: -20%;
 }
 
 .about-powered-logo-container:hover .about-powered-logo {

@@ -3,7 +3,7 @@ import './speakers.css';
 const speakers = [
   {
     id: 1,
-    name: 'Speakers',
+    name: 'Connexer',
     title: 'CEO',
     company: 'Company / Organisation',
     topic: 's',
@@ -17,7 +17,7 @@ const speakers = [
   },
   {
     id: 2,
-    name: 'Speakers',
+    name: 'Connexer',
     title: 'CEO',
     company: 'Company / Organisation',
     topic: 's',
@@ -30,7 +30,7 @@ const speakers = [
   },
   {
     id: 3,
-    name: 'Speakers',
+    name: 'Connexer',
     title: 'CEO',
     company: 'Company / Organisation',
     topic: 's',
@@ -43,7 +43,7 @@ const speakers = [
   },
   {
     id: 4,
-    name: 'Speakers',
+    name: 'Connexer',
     title: 'CEO',
     company: 'Company / Organisation',
     topic: 's',
@@ -68,7 +68,7 @@ export default function Speakers() {
       <div className="container">
 
         <div className="speakers-header reveal">
-          <div className="section-tag">Speakers</div>
+          <div className="section-tag">Connexers</div>
           <h2 className="section-title">
             Learn From The <span className="highlight-blue">Best</span>
           </h2>

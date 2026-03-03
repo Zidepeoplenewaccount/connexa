@@ -19,25 +19,7 @@ export default function AffiliateSignup() {
   const [affiliateCode, setAffiliateCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  const nigerianBanks = [
-    'Access Bank',
-    'GTBank',
-    'First Bank',
-    'UBA',
-    'Zenith Bank',
-    'Fidelity Bank',
-    'Union Bank',
-    'Sterling Bank',
-    'Stanbic IBTC',
-    'FCMB',
-    'Ecobank',
-    'Wema Bank',
-    'OPay',
-    'PalmPay',
-    'Kuda Bank',
-    'Other'
-  ];
+  const [showConfirmModal, setShowConfirmModal] = useState(false); // ADD THIS
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
@@ -47,10 +29,24 @@ export default function AffiliateSignup() {
     }));
   }
 
-  async function handleSubmit(e) {
+  // UPDATE THIS FUNCTION - Don't submit, show modal instead
+  function handleFormSubmit(e) {
     e.preventDefault();
     setError('');
 
+    // Basic validation
+    if (!formData.fullName.trim() || !formData.email.trim() || !formData.phone.trim() ||
+        !formData.bankName || !formData.accountName.trim() || !formData.accountNumber.trim()) {
+      setError('Please fill in all required fields');
+      return;
+    }
+
+    // Show confirmation modal
+    setShowConfirmModal(true);
+  }
+
+  // ADD THIS FUNCTION - Actual submission
+  async function handleConfirmSubmit() {
     // Validate checkboxes
     if (!formData.agreeCommission || !formData.agreeNoMisrepresent) {
       setError('Please agree to both terms to continue');
@@ -58,6 +54,7 @@ export default function AffiliateSignup() {
     }
 
     setLoading(true);
+    setError('');
 
     try {
       const result = await signupAffiliate({
@@ -75,6 +72,7 @@ export default function AffiliateSignup() {
 
       setAffiliateCode(result.code);
       setSubmitted(true);
+      setShowConfirmModal(false);
     } catch (err) {
       console.error('Signup error:', err);
       setError(err.response?.data?.detail || 'Something went wrong. Please try again.');
@@ -113,13 +111,14 @@ export default function AffiliateSignup() {
                   📋 Copy
                 </button>
               </div>
-              <small>Share this link to earn 20% commission on every ticket sale!</small>
+              <small>Share this link to earn up to 20% commission on every ticket sale!</small>
             </div>
 
             <div className="affiliate-commission-info">
               <h3>📊 Commission Details</h3>
               <ul>
-                <li>✅ Earn 20% commission on every confirmed ticket sold</li>
+                <li>✅ Earn 20% on tickets under ₦30,000</li>
+                <li>✅ Earn 10% on tickets ₦30,000 and above</li>
                 <li>💰 Commissions paid monthly via bank transfer</li>
                 <li>📈 Track your earnings in real-time</li>
                 <li>🎯 No limit on how much you can earn</li>
@@ -159,14 +158,14 @@ export default function AffiliateSignup() {
           <h2 className="section-title">
             Become a <span className="highlight-orange">Connexa Affiliate</span>
           </h2>
-          <p>Earn 20% commission on every ticket you sell. No limits. Paid monthly.</p>
+          <p>Earn up to 20% commission on every ticket you sell. No limits. Paid monthly.</p>
         </div>
 
         <div className="affiliate-benefits">
           <div className="affiliate-benefit-card">
             <div className="affiliate-benefit-icon">💰</div>
-            <h3>20% Commission</h3>
-            <p>On every confirmed ticket sale</p>
+            <h3>Up to 20% Commission</h3>
+            <p>Tiered rates based on ticket price</p>
           </div>
           <div className="affiliate-benefit-card">
             <div className="affiliate-benefit-icon">🔗</div>
@@ -185,7 +184,7 @@ export default function AffiliateSignup() {
           </div>
         </div>
 
-        <form className="affiliate-form" onSubmit={handleSubmit}>
+        <form className="affiliate-form" onSubmit={handleFormSubmit}>
           <div className="affiliate-form-grid">
             {/* Full Name */}
             <div className="affiliate-form-group">
@@ -256,18 +255,15 @@ export default function AffiliateSignup() {
             {/* Bank Name */}
             <div className="affiliate-form-group">
               <label htmlFor="bankName">Bank Name *</label>
-              <select
+              <input
+                type="text"
                 id="bankName"
                 name="bankName"
                 value={formData.bankName}
                 onChange={handleChange}
+                placeholder="e.g., Access Bank, GTBank, OPay"
                 required
-              >
-                <option value="">Select your bank</option>
-                {nigerianBanks.map(bank => (
-                  <option key={bank} value={bank}>{bank}</option>
-                ))}
-              </select>
+              />
             </div>
 
             {/* Account Name */}
@@ -299,40 +295,105 @@ export default function AffiliateSignup() {
             </div>
           </div>
 
-          {/* Commission Info Box */}
+          {/* Commission Info Box - UPDATED */}
           <div className="affiliate-commission-notice">
-            <strong>💰 Commission Structure:</strong> You earn 20% on every confirmed ticket sale. Commissions are calculated on the total payment amount and paid monthly via bank transfer.
+            <strong>💰 Commission Structure:</strong> Earn up to 20% commission on ticket sales. Commissions are calculated on the total payment amount and paid monthly via bank transfer.
           </div>
 
-          {/* Terms Checkboxes */}
-          <div className="affiliate-terms">
-            <label className="affiliate-checkbox">
-              <input
-                type="checkbox"
-                name="agreeCommission"
-                checked={formData.agreeCommission}
-                onChange={handleChange}
-              />
-              <span>I understand I earn 20% commission on every confirmed ticket sold through my unique link.</span>
-            </label>
-
-            <label className="affiliate-checkbox">
-              <input
-                type="checkbox"
-                name="agreeNoMisrepresent"
-                checked={formData.agreeNoMisrepresent}
-                onChange={handleChange}
-              />
-              <span>I agree not to misrepresent Connexa or give false pricing information.</span>
-            </label>
-          </div>
-
-          {error && <div className="affiliate-error">{error}</div>}
-
-          <button type="submit" className="affiliate-btn" disabled={loading}>
-            {loading ? 'Creating Your Affiliate Account...' : 'Generate My Affiliate Link'}
+          <button type="submit" className="affiliate-btn">
+            Generate My Affiliate Link
           </button>
         </form>
+
+        {/* ADD CONFIRMATION MODAL */}
+        {showConfirmModal && (
+          <div 
+            className="affiliate-modal-overlay"
+            onClick={(e) => e.target === e.currentTarget && setShowConfirmModal(false)}
+          >
+            <div className="affiliate-modal">
+              <button 
+                className="affiliate-modal-close"
+                onClick={() => setShowConfirmModal(false)}
+              >
+                ×
+              </button>
+
+              <h3 className="affiliate-modal-title">Commission Structure</h3>
+              
+              <div className="affiliate-modal-breakdown">
+                <div className="affiliate-commission-tier">
+                  <div className="affiliate-tier-icon">🎯</div>
+                  <div className="affiliate-tier-content">
+                    <h4>20% Commission</h4>
+                    <p>For tickets <strong>under ₦30,000</strong></p>
+                    <div className="affiliate-tier-example">
+                      Example: ₦10,000 ticket = ₦2,000 commission
+                    </div>
+                  </div>
+                </div>
+
+                <div className="affiliate-commission-tier">
+                  <div className="affiliate-tier-icon">💎</div>
+                  <div className="affiliate-tier-content">
+                    <h4>10% Commission</h4>
+                    <p>For tickets <strong>₦30,000 and above</strong></p>
+                    <div className="affiliate-tier-example">
+                      Example: ₦100,000 ticket = ₦10,000 commission
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="affiliate-modal-info">
+                <p>💰 <strong>Monthly Payouts:</strong> Commissions are paid monthly via direct bank transfer</p>
+                <p>📈 <strong>No Limits:</strong> The more you sell, the more you earn!</p>
+              </div>
+
+              {/* Terms Checkboxes */}
+              <div className="affiliate-modal-terms">
+                <label className="affiliate-checkbox">
+                  <input
+                    type="checkbox"
+                    name="agreeCommission"
+                    checked={formData.agreeCommission}
+                    onChange={handleChange}
+                  />
+                  <span>I understand I earn 20% commission on tickets under ₦30,000 and 10% on tickets ₦30,000 and above sold through my unique link.</span>
+                </label>
+
+                <label className="affiliate-checkbox">
+                  <input
+                    type="checkbox"
+                    name="agreeNoMisrepresent"
+                    checked={formData.agreeNoMisrepresent}
+                    onChange={handleChange}
+                  />
+                  <span>I agree not to misrepresent Connexa or give false pricing information.</span>
+                </label>
+              </div>
+
+              {error && <div className="affiliate-error">{error}</div>}
+
+              <div className="affiliate-modal-actions">
+                <button
+                  onClick={handleConfirmSubmit}
+                  className="affiliate-btn"
+                  disabled={loading || !formData.agreeCommission || !formData.agreeNoMisrepresent}
+                >
+                  {loading ? 'Creating Account...' : 'I Agree - Create My Account'}
+                </button>
+                <button
+                  onClick={() => setShowConfirmModal(false)}
+                  className="affiliate-btn-secondary"
+                  disabled={loading}
+                >
+                  Go Back
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

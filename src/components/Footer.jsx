@@ -14,6 +14,10 @@ export default function Footer() {
               Connexa brings together talents, business owners, brands, and
               decision-makers to learn, sell, connect and grow - in one space.
             </p>
+            
+            <p className="footer-brand-desc">
+              For more info email us at partnerships@zidepeople.com.
+            </p>
             <div className="footer-socials">
               {/*<a href="https://www.instagram.com/techexpohq" target="_blank" rel="noreferrer" className="footer-social">
                 📸

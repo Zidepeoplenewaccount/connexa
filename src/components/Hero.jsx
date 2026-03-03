@@ -16,12 +16,12 @@ const marqueeItems = [
 
 // Sponsors data - add your real sponsors here
 const sponsors = [
-  { name: 'Zidepeople', logo: zideLogo },
-  { name: 'Arc Studio', logo: ArcLogo },
-  { name: 'Zidepeople', logo: zideLogo },
-  { name: 'Arc Studio', logo: ArcLogo },
-  { name: 'Zidepeople', logo: zideLogo },
-  { name: 'Arc Studio', logo: ArcLogo },
+  { name: '', logo: zideLogo },
+  { name: '', logo: ArcLogo },
+  { name: '', logo: zideLogo },
+  { name: '', logo: ArcLogo },
+  { name: '', logo: zideLogo },
+  { name: '', logo: ArcLogo },
 ];
 
 export default function Hero() {
@@ -154,7 +154,7 @@ export default function Hero() {
             </div>
             <div className="hero-detail-item">
               <span className="hero-detail-icon">📅</span>
-              <span className="hero-detail-text">November 28th, 2026</span>
+              <span className="hero-detail-text">November, 2026</span>
             </div>
             <div className="hero-detail-item">
               <span className="hero-detail-icon">🕐</span>
@@ -233,7 +233,7 @@ export default function Hero() {
                     <img 
                       src={sponsor.logo} 
                       alt={sponsor.name} 
-                      className="hero-sponsor-logo" 
+                      className={`hero-sponsor-logo ${sponsor.logo === zideLogo ? 'zide-logo' : 'arc-logo'}`}
                     />
                   ) : (
                     <div className="hero-sponsor-placeholder">Logo</div>

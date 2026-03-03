@@ -38,86 +38,80 @@ export default function Gallery() {
     },
     {
       id: 3,
-      url: EmptyRoom,
-      caption: '',
-      alt: 'Empty conference room'
-    },
-    {
-      id: 4,
       url: GirlHoldingIGThingy,
       caption: '',
       alt: 'Girl holding Instagram thingy'
     },
     {
-      id: 5,
+      id: 4,
       url: SameGirlSmiling,
       caption: '',
       alt: 'Same girl smiling'
     },
     {
-      id: 6,
+      id: 5,
       url: MokiGoingOffStage,
       caption: '',
       alt: 'Moki going off stage'
     },
     {
-      id: 7,
+      id: 6,
       url: BackViewOfAppReview,
-      caption: 'Zidepeople App Demo',
+      caption: '',
       alt: 'Back view of app review'
     },
     {
-      id: 8,
+      id: 7,
       url: MokiAskingQuestion,
       caption: '',
       alt: 'Moki asking a question'
     },
     {
-      id: 9,
+      id: 8,
       url: FirstSpeaker,
-      caption: 'Victor Adeyemo - "What HR Professionals Look For In Candidates".',
+      caption: '',
       alt: 'First speaker on stage'
     },
     {
-      id: 10,
+      id: 9,
       url: LinkdinGuySpeaking,
-      caption: 'Oladotun Ajayi - "Leveraging Social Media to Build Skills and Meet Global Industry Demands".',
+      caption: '',
       alt: 'LinkedIn guy speaking'
     },
     {
-      id: 11,
+      id: 10,
       url: AnimatorGuySpeaking,
-      caption: 'Chukwukere Oriaku - "Zidepeople: A Digital Platform for Flexible Jobs in Nigeria".',
+      caption: '',
       alt: 'Animator guy speaking'
     },
     {
-      id: 12,
+      id: 11,
       url: HannahSpeaking,
-      caption: 'Hannah Adejugbagbe - "Personal Branding and Online Perception".',
+      caption: '',
       alt: 'Hannah speaking'
     },
     {
-      id: 13,
+      id: 12,
       url: EstherSpeaking,
-      caption: 'Esther Oyeleye - "Turning Your SKills into Profits and How Zidepeople Helps You Earn Flexibly".',
+      caption: '',
       alt: 'Esther speaking'
     },
     {
-        id : 14, 
+        id : 13, 
         url : LinkedinAndHrGuyClass, 
-        caption : "Victor And Oladotun private class", 
+        caption : "", 
         alt : "LinkedIn and HR guy in class"
      },
      {
-        id : 15, 
+        id : 14, 
         url : AnimatorGuyClass, 
-        caption : "Chukwukere Oriaku private class", 
+        caption : "", 
         alt : "Animator guy in class"
      },
      {
-        id : 16, 
+        id : 15, 
         url : CoreZideTeamPhoto, 
-        caption : "Core Zidepeople team photo", 
+        caption : "", 
         alt : "Core Zide team photo"
      }
   ];

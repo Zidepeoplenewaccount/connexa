@@ -47,11 +47,11 @@ export default function Awards() {
               <div className="awards-prize-category">Business Owners</div>
               <div className="awards-prize-item">
                 <span className="awards-prize-position">🥇 1st Runner-Up</span>
-                <span className="awards-prize-amount">₦500,000</span>
+                <span className="awards-prize-amount">Cash Prices to be Won</span>
               </div>
               <div className="awards-prize-item">
                 <span className="awards-prize-position">🥈 2nd Runner-Up</span>
-                <span className="awards-prize-amount">₦200,000</span>
+                <span className="awards-prize-amount">Cash Prices to be Won</span>
               </div>
             </div>
 
@@ -59,11 +59,11 @@ export default function Awards() {
               <div className="awards-prize-category">Talent</div>
               <div className="awards-prize-item">
                 <span className="awards-prize-position">🥇 1st Runner-Up</span>
-                <span className="awards-prize-amount">₦500,000</span>
+                <span className="awards-prize-amount">Cash Prices to be Won</span>
               </div>
               <div className="awards-prize-item">
                 <span className="awards-prize-position">🥈 2nd Runner-Up</span>
-                <span className="awards-prize-amount">₦200,000</span>
+                <span className="awards-prize-amount">Cash Prices to be Won</span>
               </div>
             </div>
           </div>

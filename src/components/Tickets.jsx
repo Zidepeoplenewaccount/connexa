@@ -33,7 +33,7 @@ const tickets = [
     subtitle: 'Learn, connect, and discover opportunities',
     price: 5000,
     features: [
-      'Access to speaker sessions and panels',
+      'Access to Connexer sessions and panels',
       'Exposure to businesses, vendors, and hiring brands',
       'Networking with professionals and creatives',
       'Insight into the future of flexible work',
@@ -55,7 +55,7 @@ const tickets = [
     price: 5000,
     features: [
       'Gain entry to curated networking sessions',
-      'Structured introductions to business owners and speakers',
+      'Structured introductions to business owners and Connexers',
       'Priority participation in connection circles',
       'Access to all regular pass benefits',
       'Focused relationship-building opportunities',
@@ -78,7 +78,7 @@ const tickets = [
     badgeClass: '',
     features: [
       'Priority seating and VIP event access',
-      'Exclusive networking with speakers and partners',
+      'Exclusive networking with Connexers and partners',
       'Access to VIP-only areas and sessions',
       'Eligibility for Individual Awards & Recognition',
       'Public acknowledgment and premium event experience',
@@ -98,7 +98,7 @@ const tickets = [
     subtitle: "Learn what works. Fix what's not working. Grow faster.",
     price: 30000,
     features: [
-      'Access to all speaker sessions and panels',
+      'Access to all Connexers sessions and panels',
       'Practical insights for scaling, operations, and sales',
       'Peer networking with other business owners',
       'Access to roaming business advisors',
@@ -124,7 +124,7 @@ const tickets = [
       'Dedicated space to showcase your brand, app, or service',
       'Brand awareness in front of founders, talents, and decision-makers',
       'Opportunity to attract users, partners, and collaborators',
-      'Access to business advisors and speaker sessions',
+      'Access to business advisors and Connexer sessions',
       'Eligibility for Brand Recognition Award',
       'Brand positioning without sales pressure',
     ],
@@ -164,7 +164,7 @@ const tickets = [
     label: 'Sell • Showcase • Partner',
     name: 'VIP Partner Pass',
     subtitle: 'Maximum exposure. Maximum access. Maximum influence.',
-    price: 150000,
+    price: 500000,
     badge: 'PREMIUM',
     badgeClass: 'badge-red',
     featured: true,
