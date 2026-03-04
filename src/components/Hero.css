@@ -461,7 +461,7 @@
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
-  background: rgba(255,255,255,0.05); /* 5% white - noticeable but not harsh */
+  background: rgba(255,255,255,0.8); /* 5% white - noticeable but not harsh */
 }
 
 .hero-sponsors-label {
@@ -471,7 +471,7 @@
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
+  color: rgba(0, 0, 0, 0.8);
   margin-bottom: 32px;
 }
 

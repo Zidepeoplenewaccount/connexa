@@ -152,6 +152,69 @@
   border-radius: 50%;
 }
 
+/* Contact Info - ADD THIS */
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-contact-icon {
+  font-size: 16px;
+}
+
+.footer-contact-link {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.footer-contact-link:hover {
+  color: var(--orange);
+  transform: translateX(2px);
+}
+
+/* Remove old paragraph style - UPDATE THIS */
+.footer-brand-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  max-width: 320px;
+  margin-bottom: 20px; /* Changed from 24px */
+}
+
+/* Update responsive - ADD THIS */
+@media (max-width: 768px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .footer-contact {
+    gap: 16px;
+  }
+
+  .footer-contact-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+}
+
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 768px) {
   .footer-top {

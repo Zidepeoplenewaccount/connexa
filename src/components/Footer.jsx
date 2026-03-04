@@ -18,6 +18,23 @@ export default function Footer() {
             <p className="footer-brand-desc">
               For more info email us at partnerships@zidepeople.com.
             </p>
+
+            {/* ADD CONTACT INFO */}
+            <div className="footer-contact">
+              <div className="footer-contact-item">
+                <span className="footer-contact-icon">📞</span>
+                <a href="tel:+2348185577843" className="footer-contact-link">
+                  +234 818 557 7843
+                </a>
+              </div>
+              <div className="footer-contact-item">
+                <span className="footer-contact-icon">✉️</span>
+                <a href="mailto:partnerships@zidepeople.com" className="footer-contact-link">
+                  partnerships@zidepeople.com
+                </a>
+              </div>
+            </div>
+            
             <div className="footer-socials">
               {/*<a href="https://www.instagram.com/techexpohq" target="_blank" rel="noreferrer" className="footer-social">
                 📸

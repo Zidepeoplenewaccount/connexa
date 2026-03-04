@@ -100,7 +100,10 @@ const allProducts = [
     priceClass: 'price-orange',
     buyClass: 'buy-orange',
   },
-  {
+];
+
+
+  {/*
     id: 8,
     name: 'Connect Pass',
     category: 'Access',
@@ -113,8 +116,7 @@ const allProducts = [
     priceClass: 'price-red',
     buyClass: 'buy-red',
     isLimited: true,
-  },
-];
+  */}
 
 const filters = [
   { label: 'All', value: 'all' },
