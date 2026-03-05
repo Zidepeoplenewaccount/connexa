@@ -124,7 +124,7 @@ export default function Hero() {
         <div className="hero-content">
           <div className="hero-badge">
             <span className="hero-badge-dot" />
-            Lagos Island · 2026
+            Lagos · 2026
           </div>
 
           <h1 className="hero-title">
@@ -150,7 +150,7 @@ export default function Hero() {
           <div className="hero-details">
             <div className="hero-detail-item">
               <span className="hero-detail-icon">📍</span>
-              <span className="hero-detail-text">Lagos Island, Nigeria</span>
+              <span className="hero-detail-text">Lagos, Nigeria</span>
             </div>
             <div className="hero-detail-item">
               <span className="hero-detail-icon">

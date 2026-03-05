@@ -4,6 +4,7 @@ import { initializePayment } from '../services/api';
 
 const tickets = [
   {
+    id: 1,
     type: 'general',
     passType: 'individual',
     icon: '🎫',
@@ -12,6 +13,7 @@ const tickets = [
     name: 'General Access Ticket',
     subtitle: 'Experience the future of flexible work',
     price: 3000,
+    available: 100,  // ADD THIS
     features: [
       'Access to main event space',
       'Exposure to businesses and vendors',
@@ -24,6 +26,7 @@ const tickets = [
     dotColor: 'rgba(255,255,255,0.5)',
   },
   {
+    id: 2,
     type: 'regular',
     passType: 'individual',
     icon: '🎟️',
@@ -32,8 +35,9 @@ const tickets = [
     name: 'Individual Pass — Regular',
     subtitle: 'Learn, connect, and discover opportunities',
     price: 5000,
+    available: 2700,  // ADD THIS
     features: [
-      'Access to Connexer sessions and panels',
+      'Access to speaker sessions and panels',
       'Exposure to businesses, vendors, and hiring brands',
       'Networking with professionals and creatives',
       'Insight into the future of flexible work',
@@ -45,6 +49,7 @@ const tickets = [
     dotColor: 'rgba(255,255,255,0.7)',
   },
   {
+    id: 3,
     type: 'connectors',
     passType: 'individual',
     icon: '🔗',
@@ -53,9 +58,10 @@ const tickets = [
     name: 'Connectors Pass',
     subtitle: 'Turn networking into real opportunities',
     price: 5000,
+    available: 30,  // ADD THIS
     features: [
       'Gain entry to curated networking sessions',
-      'Structured introductions to business owners and Connexers',
+      'Structured introductions to business owners and speakers',
       'Priority participation in connection circles',
       'Access to all regular pass benefits',
       'Focused relationship-building opportunities',
@@ -66,6 +72,7 @@ const tickets = [
     dotColor: 'var(--blue)',
   },
   {
+    id: 4,
     type: 'vip',
     passType: 'individual',
     icon: '⭐',
@@ -74,11 +81,12 @@ const tickets = [
     name: 'Individual Pass — VIP',
     subtitle: 'Premium access, priority networking, and recognition',
     price: 10000,
+    available: 500,  // ADD THIS
     badge: 'VIP',
     badgeClass: '',
     features: [
       'Priority seating and VIP event access',
-      'Exclusive networking with Connexers and partners',
+      'Exclusive networking with speakers and partners',
       'Access to VIP-only areas and sessions',
       'Eligibility for Individual Awards & Recognition',
       'Public acknowledgment and premium event experience',
@@ -89,6 +97,7 @@ const tickets = [
     dotColor: 'var(--orange)',
   },
   {
+    id: 5,
     type: 'growth',
     passType: 'business',
     icon: '📈',
@@ -97,8 +106,9 @@ const tickets = [
     name: 'Business Owner Pass',
     subtitle: "Learn what works. Fix what's not working. Grow faster.",
     price: 30000,
+    available: 500,  // ADD THIS
     features: [
-      'Access to all Connexers sessions and panels',
+      'Access to all speaker sessions and panels',
       'Practical insights for scaling, operations, and sales',
       'Peer networking with other business owners',
       'Access to roaming business advisors',
@@ -111,6 +121,7 @@ const tickets = [
     dotColor: 'var(--green)',
   },
   {
+    id: 6,
     type: 'showcase',
     passType: 'vendor',
     icon: '💡',
@@ -119,12 +130,13 @@ const tickets = [
     name: 'Showcase Vendor Pass',
     subtitle: 'Build visibility, trust, and partnerships — bring your own booth',
     price: 100000,
+    available: 70,  // ADD THIS
     features: [
       'Bring your own booth setup',
       'Dedicated space to showcase your brand, app, or service',
       'Brand awareness in front of founders, talents, and decision-makers',
       'Opportunity to attract users, partners, and collaborators',
-      'Access to business advisors and Connexer sessions',
+      'Access to business advisors and speaker sessions',
       'Eligibility for Brand Recognition Award',
       'Brand positioning without sales pressure',
     ],
@@ -134,6 +146,7 @@ const tickets = [
     dotColor: 'var(--blue)',
   },
   {
+    id: 7,
     type: 'vendor',
     passType: 'vendor',
     icon: '🏪',
@@ -142,6 +155,7 @@ const tickets = [
     name: 'Market Vendor Pass',
     subtitle: 'Sell directly to a high-intent audience — tent provided',
     price: 120000,
+    available: 100,  // ADD THIS
     features: [
       'Tent and booth setup provided by us',
       'Physical marketplace presence with real buyers',

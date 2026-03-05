@@ -95,11 +95,13 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
+  transform: translateY(4px);
 }
 
 .candidate-radio span {
   font-size: 15px;
   font-weight: 600;
+  padding-left: 2%;
 }
 
 .candidate-btn {
