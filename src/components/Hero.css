@@ -458,7 +458,7 @@
   border-top: 1px solid var(--border);
   border-bottom: none;
   overflow: hidden;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,1);
 }
 
 .hero-sponsors-label {
@@ -468,7 +468,7 @@
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.8);
+  color: rgba(0, 0, 0, 0.8);
   margin-bottom: 32px;
   padding: 0 20px;
 }
@@ -520,11 +520,11 @@
 }
 
 .zide-logo {
-  width: 100%;
+  width: 150vh !important;
 }
 
 .arc-logo {
-  width: 85%;
+  width: 90%;
 }
 
 .hero-sponsor-text {

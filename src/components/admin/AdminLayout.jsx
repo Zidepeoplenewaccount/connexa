@@ -52,6 +52,9 @@ export default function AdminLayout({ children }) {
             <Link to="/admin/affiliates" className={isActive('/admin/affiliates') ? 'active' : ''}>
               🔗 Affiliates
             </Link>
+            <Link to="/admin/questions" className={isActive('/admin/questions') ? 'active' : ''}>
+              ❓ Questions
+            </Link>
           </nav>
 
           <div className="admin-nav-footer">

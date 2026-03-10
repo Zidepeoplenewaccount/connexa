@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net'; // TODO: Replace with actual backend URL
-const BACKEND_URL = 'http://127.0.0.1:8000';
+const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net'; // TODO: Replace with actual backend URL
+//const BACKEND_URL = 'http://127.0.0.1:8000';
 
 const getAuthToken = () => localStorage.getItem('admin_token');
 
@@ -164,5 +164,26 @@ export const deleteAffiliate = async (code) => {
 };
 export const createAffiliate = async (data) => {
   const response = await adminAxios.post('/affiliates/admin/create', data);
+  return response.data;
+};
+
+
+
+
+
+
+// Speaker Questions (Admin)
+export const getAllQuestions = async (filters = {}) => {
+  const response = await adminAxios.get('/speaker-questions/admin/all', { params: filters });
+  return response.data;
+};
+
+export const updateQuestion = async (questionId, updateData) => {
+  const response = await adminAxios.patch(`/speaker-questions/admin/${questionId}`, updateData);
+  return response.data;
+};
+
+export const deleteQuestion = async (questionId) => {
+  const response = await adminAxios.delete(`/speaker-questions/admin/${questionId}`);
   return response.data;
 };

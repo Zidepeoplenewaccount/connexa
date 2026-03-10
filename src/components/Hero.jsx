@@ -217,7 +217,7 @@ export default function Hero() {
             </div>
             <div className="hero-stat">
               <div className="hero-stat-number highlight-blue">10</div>
-              <div className="hero-stat-label">Speakers</div>
+              <div className="hero-stat-label">Connexers</div>
             </div>
             <div className="hero-stat">
               <div className="hero-stat-number highlight-red">50+</div>

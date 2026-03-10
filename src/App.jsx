@@ -30,6 +30,10 @@ import ProtectedRoute from './components/admin/protectedRoute';
 import PartnerForm from './components/PartnerForm';
 import Gallery from './components/Gallery';
 import AffiliateSignup from './components/AffiliateSignup';
+import UpgradeSuccess from './pages/UpgradeSuccess';
+import AdminQuestions from './pages/admin/AdminQuestions';
+import UpgradeTicket from './pages/UpgradeTicket';
+
 
 
 
@@ -43,8 +47,8 @@ function HomePage() {
       <main>
         <Hero />
         <About />
+        <Speakers />
         <Gallery />
-        {/*<Speakers />*/}
         <Tickets />
         <Awards />
         <Voting />
@@ -65,6 +69,7 @@ export default function App() {
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/vote-success" element={<VoteSuccess />} />
         <Route path="/merch-success" element={<MerchSuccess />} />
+        <Route path="/upgrade-ticket" element={<UpgradeTicket />} />
 
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
@@ -123,6 +128,14 @@ export default function App() {
               <AdminAffiliates />
             </ProtectedRoute>
           }
+        />
+        <Route 
+          path="/upgrade-success" 
+          element={<UpgradeSuccess />} 
+        />
+        <Route 
+          path="/admin/questions" 
+          element={<ProtectedRoute><AdminQuestions /></ProtectedRoute>} 
         />
       </Routes>
     </BrowserRouter>

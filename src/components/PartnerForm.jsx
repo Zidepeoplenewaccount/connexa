@@ -263,7 +263,7 @@ export default function PartnerForm() {
           </div>
 
           <button type="submit" className="partner-btn" disabled={loading}>
-            {loading ? 'Submitting...' : 'Submit Application'}
+            {loading ? 'Submitting...' : 'Be Part of Connexa'}
           </button>
         </form>
       </div>

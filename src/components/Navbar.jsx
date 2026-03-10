@@ -16,7 +16,7 @@ export default function Navbar() {
   const navLinks = [
     { label: 'About', href: '#about' },
     { label: 'Gallery', href: '#gallery' },
-    { label: 'Tickets', href: '#tickets' },
+    //{ label: 'Tickets', href: '#tickets' },
     { label: 'Awards', href: '#awards' },
     { label: 'Vote', href: '#voting' },
     { label: 'Merch', href: '#merch' },
@@ -36,7 +36,7 @@ export default function Navbar() {
     <>
       <nav className={`navbar${scrolled ? ' scrolled' : ''}${mobileOpen ? ' open' : ''}`}>
         <div className="container navbar-inner">
-          <a href="#" className="navbar-logo">
+          <a href="/#" className="navbar-logo">
             <img src={connexaLogo} alt="Connexa" />
           </a>
 

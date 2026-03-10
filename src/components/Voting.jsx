@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import './Voting.css';
 import { getCandidates, initializeVote } from '../services/api';
 
+
 // Add this at the top of the Voting component, right after the state declarations
 
 // TEST DATA - Remove this when backend is ready

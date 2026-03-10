@@ -2,8 +2,8 @@ import axios from 'axios';
 
 //const PAYSTACK_SECRET_KEY = 'sk_live_c58363dfd6faf9bd2b81568330ecc563f02572c3';
 const PAYSTACK_SECRET_KEY = 'sk_test_41296c97d16db0d5baaca5e3589329542f292305';
-//const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
-const BACKEND_URL = 'http://127.0.0.1:8000';
+const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
+//const BACKEND_URL = 'http://127.0.0.1:8000';
 // Update initializePayment to include affiliate code
 export const initializePayment = async (paymentData) => {
   try {
@@ -258,6 +258,59 @@ export const signupAffiliate = async (formData) => {
     return response.data;
   } catch (error) {
     console.error('Affiliate signup failed:', error);
+    throw error;
+  }
+};
+
+
+
+
+
+
+
+
+// Speaker Questions
+export const submitSpeakerQuestion = async (questionData) => {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/speaker-questions/submit`, questionData);
+    return response.data;
+  } catch (error) {
+    console.error('Question submission failed:', error);
+    throw error;
+  }
+};
+
+export const validateTicketId = async (ticketId) => {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/speaker-questions/validate-ticket`, null, {
+      params: { ticket_id: ticketId }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Ticket validation failed:', error);
+    throw error;
+  }
+};
+
+// Ticket Upgrades
+export const getUpgradeOptions = async (ticketId) => {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/ticket-upgrades/get-options`, null, {
+      params: { ticket_id: ticketId }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Get upgrade options failed:', error);
+    throw error;
+  }
+};
+
+export const initializeUpgrade = async (upgradeData) => {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/ticket-upgrades/initialize`, upgradeData);
+    return response.data;
+  } catch (error) {
+    console.error('Upgrade initialization failed:', error);
     throw error;
   }
 };

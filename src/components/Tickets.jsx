@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './Tickets.css';
 import { initializePayment } from '../services/api';
+import { getAffiliateCode } from '../utils/affiliate';
+
 
 const tickets = [
   {
@@ -308,6 +310,7 @@ export default function Tickets() {
 
     try {
       let totalAmount, metadata;
+      const affiliateCode = getAffiliateCode();
 
       if (isIndividual) {
         const baseAmount = selectedTicket.price * quantity;
@@ -322,7 +325,8 @@ export default function Tickets() {
           attendees: attendees.map(a => ({
             name: a.name,
             email: a.email
-          }))
+          })),
+          affiliate_code: affiliateCode
         };
       } else if (isVendor) {
         let baseAmount = selectedTicket.price;
@@ -351,7 +355,8 @@ export default function Tickets() {
           need_electricity: vendorData.needElectricity,
           electricity_appliances: vendorData.electricityAppliances || null,
           support_assistant: vendorData.supportAssistant,
-          support_quantity: vendorData.supportQuantity
+          support_quantity: vendorData.supportQuantity,
+          affiliate_code: affiliateCode
         };
       } else {
         totalAmount = selectedTicket.price;
@@ -362,7 +367,8 @@ export default function Tickets() {
           business_name: businessName,
           representative_name: repName,
           email: businessEmail,
-          phone: businessPhone
+          phone: businessPhone,
+          affiliate_code: affiliateCode
         };
       }
 

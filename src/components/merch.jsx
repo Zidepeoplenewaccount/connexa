@@ -2,6 +2,8 @@ import { useState } from 'react';
 import './merch.css';
 import FaceCap from '../assets/IMG_6719.PNG'
 import { initializeMerchOrder } from '../services/api';
+import { getAffiliateCode } from '../utils/affiliate';
+
 
 const PAYSTACK_PLACEHOLDER = 'https://paystack.com/pay/connexa-merch';
 
@@ -169,6 +171,8 @@ export default function Merch() {
     setLoading(true);
 
     try {
+      const affiliateCode = getAffiliateCode();
+
       const orderData = {
         buyer_name: buyerName,
         buyer_email: buyerEmail,
@@ -177,7 +181,8 @@ export default function Merch() {
         quantity: 1,
         unit_price: selectedProduct.price,
         total_amount: selectedProduct.price,
-        delivery_address: deliveryAddress
+        delivery_address: deliveryAddress,
+        affiliate_code: affiliateCode
       };
 
       const response = await initializeMerchOrder(orderData);
@@ -282,7 +287,7 @@ export default function Merch() {
                   <div className={`merch-price${product.priceClass ? ' ' + product.priceClass : ''}`}>
                     {formatPrice(product.price)}
                     {product.originalPrice && (
-                      <span style={{ textDecoration: 'line-through', marginLeft: '8px' }}>
+                      <span style={{ textDecoration: 'line-through', marginLeft: '8px', marginRight: '8px', fontSize: '10px' }}>
                         {formatPrice(product.originalPrice)}
                       </span>
                     )}

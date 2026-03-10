@@ -1,4 +1,6 @@
 import './speakers.css';
+import { useState } from 'react';
+import AskQuestionModal from './AskQuestionModal';
 
 const speakers = [
   {
@@ -63,6 +65,17 @@ const socialIcons = {
 };
 
 export default function Speakers() {
+  const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+
+  function openQuestionModal(speaker) {
+    setSelectedSpeaker(speaker);
+  }
+
+  function closeQuestionModal() {
+    setSelectedSpeaker(null);
+  }
+
+
   return (
     <section className="speakers section" id="speakers">
       <div className="container">
@@ -125,7 +138,7 @@ export default function Speakers() {
                 )}
 
                 {/* ── Social links — remove this block to hide ── */}
-                {/*speaker.socials && Object.keys(speaker.socials).length > 0 && (
+                {speaker.socials && Object.keys(speaker.socials).length > 0 && (
                   <div className="speaker-socials">
                     {Object.entries(speaker.socials).map(([platform, url]) => (
                       <a
@@ -140,13 +153,28 @@ export default function Speakers() {
                       </a>
                     ))}
                   </div>
-                )*/}
+                )}
+                {speaker.name !== 'Coming Soon' && (
+                  <button 
+                    className="speaker-ask-btn"
+                    onClick={() => openQuestionModal(speaker)}
+                  >
+                    Ask Connexer {speaker.name.split(' ')[0]}
+                  </button>
+                )}
               </div>
             </div>
           ))}
         </div>
 
       </div>
+
+      {selectedSpeaker && (
+        <AskQuestionModal 
+          speaker={selectedSpeaker} 
+          onClose={closeQuestionModal}
+        />
+      )}
     </section>
   );
 }

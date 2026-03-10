@@ -221,6 +221,28 @@
   letter-spacing: 1px;
 }
 
+.speaker-ask-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--orange);
+  color: var(--black);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 16px;
+}
+
+.speaker-ask-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(245,166,35,0.4);
+}
+
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 1024px) {
   .speakers-grid {
