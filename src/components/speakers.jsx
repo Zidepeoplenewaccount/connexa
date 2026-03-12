@@ -2,6 +2,10 @@ import './speakers.css';
 import { useState } from 'react';
 import AskQuestionModal from './AskQuestionModal';
 
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaTiktok, FaXTwitter } from "react-icons/fa6";
+
+
 const speakers = [
   {
     id: 1,
@@ -58,11 +62,12 @@ const speakers = [
 ];
 
 const socialIcons = {
-  instagram: '📸',
-  twitter: '🐦',
-  linkedin: '💼',
-  tiktok: '🎵',
+  instagram: FaInstagram,
+  twitter: FaXTwitter,
+  linkedin: FaLinkedin,
+  tiktok: FaTiktok,
 };
+
 
 export default function Speakers() {
   const [selectedSpeaker, setSelectedSpeaker] = useState(null);
@@ -140,20 +145,25 @@ export default function Speakers() {
                 {/* ── Social links — remove this block to hide ── */}
                 {speaker.socials && Object.keys(speaker.socials).length > 0 && (
                   <div className="speaker-socials">
-                    {Object.entries(speaker.socials).map(([platform, url]) => (
-                      <a
-                        key={platform}
-                        href={url}
-                        className="speaker-social"
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={platform}
-                      >
-                        {socialIcons[platform] || '🔗'}
-                      </a>
-                    ))}
+                    {Object.entries(speaker.socials).map(([platform, url]) => {
+                      const Icon = socialIcons[platform];
+
+                      return (
+                        <a
+                          key={platform}
+                          href={url}
+                          className="speaker-social"
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={platform}
+                        >
+                          {Icon ? <Icon size={18} /> : '🔗'}
+                        </a>
+                      );
+                    })}
                   </div>
                 )}
+
                 {speaker.name !== 'Coming Soon' && (
                   <button 
                     className="speaker-ask-btn"

@@ -285,6 +285,31 @@
   }
 }
 
+.question-form-group select {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.question-form-group select:focus {
+  border-color: var(--orange);
+  background: rgba(255,255,255,0.06);
+}
+
+.question-form-group select option {
+  background: var(--surface-2);
+  color: var(--white);
+  padding: 10px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .question-modal {

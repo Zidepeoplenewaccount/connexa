@@ -646,12 +646,17 @@
     font-size: 2vh;
   }
   .countdown-item {
-    padding: 10px 12px;
-    min-width: 60px;
+    padding: 2px 4px;
+    min-width: 20px;
+    border-radius: 1vh;
   }
 
   .countdown-value {
-    font-size: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .countdown-label{
+    font-size: 8px;
   }
 
   .countdown-separator {

@@ -3,6 +3,7 @@ import { signupAffiliate } from '../services/api';
 import './affiliate-signup.css';
 
 export default function AffiliateSignup() {
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -19,7 +20,7 @@ export default function AffiliateSignup() {
   const [affiliateCode, setAffiliateCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [showConfirmModal, setShowConfirmModal] = useState(false); // ADD THIS
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
@@ -29,7 +30,6 @@ export default function AffiliateSignup() {
     }));
   }
 
-  // UPDATE THIS FUNCTION - Don't submit, show modal instead
   function handleFormSubmit(e) {
     e.preventDefault();
     setError('');
@@ -45,7 +45,6 @@ export default function AffiliateSignup() {
     setShowConfirmModal(true);
   }
 
-  // ADD THIS FUNCTION - Actual submission
   async function handleConfirmSubmit() {
     // Validate checkboxes
     if (!formData.agreeCommission || !formData.agreeNoMisrepresent) {
@@ -81,12 +80,32 @@ export default function AffiliateSignup() {
     }
   }
 
+  function closeAll() {
+    setShowModal(false);
+    setSubmitted(false);
+    setShowConfirmModal(false);
+    setFormData({
+      fullName: '',
+      email: '',
+      phone: '',
+      cityState: '',
+      socialMedia: '',
+      bankName: '',
+      accountName: '',
+      accountNumber: '',
+      agreeCommission: false,
+      agreeNoMisrepresent: false
+    });
+  }
+
   if (submitted) {
     const affiliateLink = `${window.location.origin}?ref=${affiliateCode}`;
 
     return (
-      <section className="affiliate-signup-section">
-        <div className="container">
+      <div className="affiliate-modal-overlay" onClick={closeAll}>
+        <div className="affiliate-modal affiliate-success-modal" onClick={(e) => e.stopPropagation()}>
+          <button className="affiliate-modal-close" onClick={closeAll}>×</button>
+          
           <div className="affiliate-success">
             <div className="affiliate-success-icon">🎉</div>
             <h2>Welcome to the Connexa Affiliate Program!</h2>
@@ -138,15 +157,12 @@ export default function AffiliateSignup() {
               </a>
             </div>
 
-            <button
-              onClick={() => window.location.reload()}
-              className="affiliate-btn-secondary"
-            >
-              Back to Home
+            <button onClick={closeAll} className="affiliate-btn-secondary">
+              Close
             </button>
           </div>
         </div>
-      </section>
+      </div>
     );
   }
 
@@ -191,128 +207,150 @@ export default function AffiliateSignup() {
           </div>
         </div>
 
-        <form className="affiliate-form" onSubmit={handleFormSubmit}>
-          <div className="affiliate-form-grid">
-            {/* Full Name */}
-            <div className="affiliate-form-group">
-              <label htmlFor="fullName">Full Name *</label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            {/* Email */}
-            <div className="affiliate-form-group">
-              <label htmlFor="email">Email Address *</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            {/* Phone */}
-            <div className="affiliate-form-group">
-              <label htmlFor="phone">Phone Number (WhatsApp) *</label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="+234..."
-                required
-              />
-            </div>
-
-            {/* City/State */}
-            <div className="affiliate-form-group">
-              <label htmlFor="cityState">City / State (optional)</label>
-              <input
-                type="text"
-                id="cityState"
-                name="cityState"
-                value={formData.cityState}
-                onChange={handleChange}
-                placeholder="Lagos, Nigeria"
-              />
-            </div>
-
-            {/* Social Media */}
-            <div className="affiliate-form-group affiliate-form-full">
-              <label htmlFor="socialMedia">Social Media Handle(s) (optional)</label>
-              <input
-                type="text"
-                id="socialMedia"
-                name="socialMedia"
-                value={formData.socialMedia}
-                onChange={handleChange}
-                placeholder="@yourusername or link"
-              />
-            </div>
-
-            {/* Bank Name */}
-            <div className="affiliate-form-group">
-              <label htmlFor="bankName">Bank Name *</label>
-              <input
-                type="text"
-                id="bankName"
-                name="bankName"
-                value={formData.bankName}
-                onChange={handleChange}
-                placeholder="e.g., Access Bank, GTBank, OPay"
-                required
-              />
-            </div>
-
-            {/* Account Name */}
-            <div className="affiliate-form-group">
-              <label htmlFor="accountName">Account Name *</label>
-              <input
-                type="text"
-                id="accountName"
-                name="accountName"
-                value={formData.accountName}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            {/* Account Number */}
-            <div className="affiliate-form-group">
-              <label htmlFor="accountNumber">Account Number *</label>
-              <input
-                type="text"
-                id="accountNumber"
-                name="accountNumber"
-                value={formData.accountNumber}
-                onChange={handleChange}
-                maxLength="10"
-                pattern="[0-9]{10}"
-                required
-              />
-            </div>
-          </div>
-
-          {/* Commission Info Box - UPDATED */}
-          <div className="affiliate-commission-notice">
-            <strong>💰 Commission Structure:</strong> Earn up to 20% commission on ticket sales. Commissions are calculated on the total payment amount and paid monthly via bank transfer.
-          </div>
-
-          <button type="submit" className="affiliate-btn">
-            Generate My Affiliate Link
+        {/* CTA Button */}
+        <div className="affiliate-cta">
+          <button onClick={() => setShowModal(true)} className="affiliate-cta-btn">
+            💰 Join the Affiliate Program
           </button>
-        </form>
+          <p className="affiliate-cta-subtext">Start earning commission on every ticket sale</p>
+        </div>
 
-        {/* ADD CONFIRMATION MODAL */}
+        {/* Form Modal */}
+        {showModal && (
+          <div className="affiliate-modal-overlay" onClick={() => setShowModal(false)}>
+            <div className="affiliate-modal" onClick={(e) => e.stopPropagation()}>
+              <button className="affiliate-modal-close" onClick={() => setShowModal(false)}>×</button>
+
+              <h2 className="affiliate-modal-title">Become an Affiliate</h2>
+              <p className="affiliate-modal-subtitle">Fill in your details to get your unique affiliate link</p>
+
+              <form className="affiliate-form" onSubmit={handleFormSubmit}>
+                <div className="affiliate-form-grid">
+                  {/* Full Name */}
+                  <div className="affiliate-form-group">
+                    <label htmlFor="fullName">Full Name *</label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div className="affiliate-form-group">
+                    <label htmlFor="email">Email Address *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  {/* Phone */}
+                  <div className="affiliate-form-group">
+                    <label htmlFor="phone">Phone Number (WhatsApp) *</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+234..."
+                      required
+                    />
+                  </div>
+
+                  {/* City/State */}
+                  <div className="affiliate-form-group">
+                    <label htmlFor="cityState">City / State (optional)</label>
+                    <input
+                      type="text"
+                      id="cityState"
+                      name="cityState"
+                      value={formData.cityState}
+                      onChange={handleChange}
+                      placeholder="Lagos, Nigeria"
+                    />
+                  </div>
+
+                  {/* Social Media */}
+                  <div className="affiliate-form-group affiliate-form-full">
+                    <label htmlFor="socialMedia">Social Media Handle(s) (optional)</label>
+                    <input
+                      type="text"
+                      id="socialMedia"
+                      name="socialMedia"
+                      value={formData.socialMedia}
+                      onChange={handleChange}
+                      placeholder="@yourusername or link"
+                    />
+                  </div>
+
+                  {/* Bank Name */}
+                  <div className="affiliate-form-group">
+                    <label htmlFor="bankName">Bank Name *</label>
+                    <input
+                      type="text"
+                      id="bankName"
+                      name="bankName"
+                      value={formData.bankName}
+                      onChange={handleChange}
+                      placeholder="e.g., Access Bank, GTBank, OPay"
+                      required
+                    />
+                  </div>
+
+                  {/* Account Name */}
+                  <div className="affiliate-form-group">
+                    <label htmlFor="accountName">Account Name *</label>
+                    <input
+                      type="text"
+                      id="accountName"
+                      name="accountName"
+                      value={formData.accountName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  {/* Account Number */}
+                  <div className="affiliate-form-group">
+                    <label htmlFor="accountNumber">Account Number *</label>
+                    <input
+                      type="text"
+                      id="accountNumber"
+                      name="accountNumber"
+                      value={formData.accountNumber}
+                      onChange={handleChange}
+                      maxLength="10"
+                      pattern="[0-9]{10}"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Commission Info Box */}
+                <div className="affiliate-commission-notice">
+                  <strong>💰 Commission Structure:</strong> Earn up to 20% commission on ticket sales. Commissions are calculated on the total payment amount and paid monthly via bank transfer.
+                </div>
+
+                {error && <div className="affiliate-error">{error}</div>}
+
+                <button type="submit" className="affiliate-btn">
+                  Generate My Affiliate Link
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Confirmation Modal */}
         {showConfirmModal && (
           <div 
             className="affiliate-modal-overlay"

@@ -177,7 +177,7 @@ export default function Hero() {
             </div>
             <div className="countdown-separator">:</div>
             <div className="countdown-item">
-              <div className="countdown-value">{timeLeft.days}</div>
+              <div className="countdown-value">{timeLeft.days}</div> 
               <div className="countdown-label">Days</div>
             </div>
             <div className="countdown-separator">:</div>

@@ -1,55 +1,40 @@
-import { useState, useEffect } from 'react';
-import { submitSpeakerQuestion, validateTicketId } from '../services/api';
-import './AskQuestionModal.css';
+import { useState } from 'react';
+import { submitSpeakerQuestion } from '../services/api';
+import './askQuestionModal.css';
+
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaTiktok, FaXTwitter } from "react-icons/fa6";
+
+const socialIcons = {
+  instagram: FaInstagram,
+  twitter: FaXTwitter,
+  linkedin: FaLinkedin,
+  tiktok: FaTiktok,
+};
+
 
 export default function AskQuestionModal({ speaker, onClose }) {
   const [formData, setFormData] = useState({
-    ticketId: '',
     name: '',
     email: '',
+    ticketType: '',
     question: ''
   });
-  const [ticketValidated, setTicketValidated] = useState(false);
-  const [ticketData, setTicketData] = useState(null);
-  const [validating, setValidating] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [showUpgradePrompt, setShowUpgradePrompt] = useState(false);
 
-  // Validate ticket when user enters ticket ID
-  useEffect(() => {
-    const validateTicket = async () => {
-      if (formData.ticketId.length >= 8) { // Assuming ticket IDs are at least 8 chars
-        setValidating(true);
-        setError('');
-        
-        try {
-          const data = await validateTicketId(formData.ticketId);
-          setTicketValidated(true);
-          setTicketData(data);
-          // Prefill name and email
-          setFormData(prev => ({
-            ...prev,
-            name: data.attendee_name,
-            email: data.email
-          }));
-        } catch (err) {
-          setTicketValidated(false);
-          setTicketData(null);
-          setError('Invalid ticket ID. Please check and try again.');
-        } finally {
-          setValidating(false);
-        }
-      } else {
-        setTicketValidated(false);
-        setTicketData(null);
-      }
-    };
-
-    const debounce = setTimeout(validateTicket, 500);
-    return () => clearTimeout(debounce);
-  }, [formData.ticketId]);
+  const ticketTypes = [
+    'General Access Ticket',
+    'Individual Pass — Regular',
+    'Connectors Pass',
+    'Individual Pass — VIP',
+    'Business Owner Pass',
+    'Showcase Vendor Pass',
+    'Market Vendor Pass',
+    'VIP Partner Pass'
+  ];
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -60,13 +45,8 @@ export default function AskQuestionModal({ speaker, onClose }) {
     e.preventDefault();
     setError('');
 
-    if (!ticketValidated) {
-      setError('Please enter a valid ticket ID');
-      return;
-    }
-
-    if (!formData.question.trim()) {
-      setError('Please enter your question');
+    if (!formData.name.trim() || !formData.email.trim() || !formData.ticketType || !formData.question.trim()) {
+      setError('Please fill in all fields');
       return;
     }
 
@@ -75,7 +55,7 @@ export default function AskQuestionModal({ speaker, onClose }) {
     try {
       await submitSpeakerQuestion({
         speaker_name: speaker.name,
-        ticket_id: formData.ticketId,
+        ticket_type: formData.ticketType,
         attendee_name: formData.name,
         attendee_email: formData.email,
         question_text: formData.question
@@ -90,7 +70,7 @@ export default function AskQuestionModal({ speaker, onClose }) {
         'Connectors Pass'
       ];
 
-      if (ticketData && lowerTierTickets.includes(ticketData.ticket_type)) {
+      if (lowerTierTickets.includes(formData.ticketType)) {
         setShowUpgradePrompt(true);
       }
     } catch (err) {
@@ -102,9 +82,8 @@ export default function AskQuestionModal({ speaker, onClose }) {
   }
 
   function handleUpgradeClick() {
-    // Close this modal and open upgrade modal
-    window.location.href = `#upgrade?ticket=${formData.ticketId}`;
-    onClose();
+    // Redirect to upgrade page
+    window.location.href = '/upgrade-ticket';
   }
 
   if (submitted) {
@@ -165,29 +144,7 @@ export default function AskQuestionModal({ speaker, onClose }) {
         </p>
 
         <form className="question-form" onSubmit={handleSubmit}>
-          {/* Ticket ID */}
-          <div className="question-form-group">
-            <label htmlFor="ticketId">Ticket ID *</label>
-            <input
-              type="text"
-              id="ticketId"
-              name="ticketId"
-              value={formData.ticketId}
-              onChange={handleChange}
-              placeholder="e.g., CONNEXA2026-ABC123"
-              required
-            />
-            {validating && (
-              <small className="question-validating">Validating ticket...</small>
-            )}
-            {ticketValidated && ticketData && (
-              <div className="question-ticket-valid">
-                ✓ Ticket verified: {ticketData.ticket_type} - {ticketData.attendee_name}
-              </div>
-            )}
-          </div>
-
-          {/* Name (prefilled) */}
+          {/* Name */}
           <div className="question-form-group">
             <label htmlFor="name">Name *</label>
             <input
@@ -196,12 +153,12 @@ export default function AskQuestionModal({ speaker, onClose }) {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              disabled={ticketValidated}
+              placeholder="Your full name"
               required
             />
           </div>
 
-          {/* Email (prefilled) */}
+          {/* Email */}
           <div className="question-form-group">
             <label htmlFor="email">Email *</label>
             <input
@@ -210,9 +167,28 @@ export default function AskQuestionModal({ speaker, onClose }) {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              disabled={ticketValidated}
+              placeholder="your.email@example.com"
               required
             />
+          </div>
+
+          {/* Ticket Type */}
+          <div className="question-form-group">
+            <label htmlFor="ticketType">Ticket Type *</label>
+            <select
+              id="ticketType"
+              name="ticketType"
+              value={formData.ticketType}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select your ticket type</option>
+              {ticketTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Question */}
@@ -234,7 +210,7 @@ export default function AskQuestionModal({ speaker, onClose }) {
           <button 
             type="submit" 
             className="question-submit-btn"
-            disabled={loading || !ticketValidated}
+            disabled={loading}
           >
             {loading ? 'Submitting...' : 'Submit Question'}
           </button>
@@ -242,6 +218,28 @@ export default function AskQuestionModal({ speaker, onClose }) {
 
         <div className="question-learn-more">
           <strong>Learn more about the Connexer before asking your question.</strong>
+          
+          {speaker.socials && Object.keys(speaker.socials).length > 0 && (
+            <div className="speaker-socials">
+              {Object.entries(speaker.socials).map(([platform, url]) => {
+                const Icon = socialIcons[platform];
+
+                return (
+                  <a
+                    key={platform}
+                    href={url}
+                    className="speaker-social"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={platform}
+                  >
+                    {Icon ? <Icon size={18} /> : '🔗'}
+                  </a>
+                );
+              })}
+            </div>
+          )}
+
           {speaker.topic && <p>Speaking on: {speaker.topic}</p>}
           {speaker.company && <p>{speaker.title} at {speaker.company}</p>}
         </div>
