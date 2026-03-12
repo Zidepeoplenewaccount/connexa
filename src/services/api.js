@@ -2,8 +2,8 @@ import axios from 'axios';
 
 //const PAYSTACK_SECRET_KEY = 'sk_live_c58363dfd6faf9bd2b81568330ecc563f02572c3';
 const PAYSTACK_SECRET_KEY = 'sk_test_41296c97d16db0d5baaca5e3589329542f292305';
-//const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
-const BACKEND_URL = 'http://127.0.0.1:8000';
+const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
+//const BACKEND_URL = 'http://127.0.0.1:8000';
 // Update initializePayment to include affiliate code
 export const initializePayment = async (paymentData) => {
   try {
