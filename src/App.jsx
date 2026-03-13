@@ -51,7 +51,7 @@ function HomePage() {
         <Gallery />
         <Tickets />
         <Awards />
-        <Voting />
+        {/*<Voting />*/}
         <Merch />
         <PartnerForm />
         <AffiliateSignup />
