@@ -62,6 +62,7 @@ const tickets = [
     price: 5000,
     available: 30,  // ADD THIS
     features: [
+      'Must purchase General access/Individual Regular ticket',
       'Gain entry to curated networking sessions',
       'Structured introductions to business owners and speakers',
       'Priority participation in connection circles',

@@ -26,12 +26,20 @@ export default function Footer() {
                 <a href="mailto:partnerships@zidepeople.com" className="footer-contact-link">
                   partnerships@zidepeople.com.
                 </a>
+
+                <a href="mailto:partnerships@zidepeople.com" className="footer-contact-link-mobile">
+                  ✉️ partnerships@zidepeople.com.
+                </a>
               </div>
 
               <div className="footer-contact-item">
                 <span className="footer-contact-icon">📞</span>
                 <a href="tel:+2348185577843" className="footer-contact-link">
-                  +234 818 557 7843
+                  (+234) 810 142 2732
+                </a>
+
+                <a href="tel:+2348185577843" className="footer-contact-link-mobile">
+                  📞 (+234) 810 142 2732
                 </a>
               </div>
             </div>

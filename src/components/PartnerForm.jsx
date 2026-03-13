@@ -99,7 +99,7 @@ export default function PartnerForm() {
               Our team will get back to you shortly, or you can reach us directly at:
             </p>
             <div className="partner-contact">
-              <div>📞 <a href="tel:+2348185577843">+234 818 557 7843</a></div>
+              <div>📞 <a href="tel:+2348185577843">+234 810 142 2732</a></div>
               <div>✉️ <a href="mailto:partnerships@zidepeople.com">partnerships@zidepeople.com</a></div>
             </div>
             <p className="partner-success-footer">

@@ -162,7 +162,7 @@
 }
 
 .footer-contact-item {
-  display: flex;
+  display: flex !important; 
   align-items: center;
   gap: 10px;
 }
@@ -185,6 +185,10 @@
 .footer-contact-link:hover {
   color: var(--orange);
   transform: translateX(2px);
+}
+
+.footer-contact-link-mobile {
+  display: none;
 }
 
 /* Remove old paragraph style - UPDATE THIS */
@@ -217,6 +221,27 @@
     flex-direction: column;
     text-align: center;
     gap: 16px;
+  }
+
+  .footer-contact-icon {
+    display: none;
+  }
+
+  .footer-contact-link{
+    display: none;
+  }
+
+  .footer-contact-link-mobile:hover {
+    color: var(--orange);
+    transform: translateX(2px);
+  }
+  
+  .footer-contact-link-mobile{
+    display: flex;
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: all 0.2s ease;
   }
 }
 
