@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import './Tickets.css';
-import { initializePayment } from '../services/api';
+import { initializePayment, validateTicketId } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
+import { isDiscountActive, calculateTicketPrice, getDiscountPercentage } from '../utils/discount';
 
 
 const tickets = [
@@ -65,9 +66,8 @@ const tickets = [
       'Must purchase General access/Individual Regular ticket',
       'Gain entry to curated networking sessions',
       'Structured introductions to business owners and speakers',
-      'Priority participation in connection circles',
+      'Participation in connection circles',
       'Access to all regular pass benefits',
-      'Focused relationship-building opportunities',
     ],
     bestFor: 'Professionals focused on strategic connections and partnerships.',
     cta: 'Get Connectors Pass',
@@ -236,6 +236,15 @@ export default function Tickets() {
   supportQuantity: 1
   });
   
+  // Connectors Pass state
+  const [connectorsTicketId, setConnectorsTicketId] = useState('');
+  const [connectorsValidating, setConnectorsValidating] = useState(false);
+  const [connectorsTicketValid, setConnectorsTicketValid] = useState(false);
+  const [connectorsTicketData, setConnectorsTicketData] = useState(null);
+  
+  // Check if discount is active
+  const discountActive = isDiscountActive();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -248,6 +257,26 @@ export default function Tickets() {
     if (ticket.passType === 'individual') {
       setQuantity(1);
       setAttendees([{ name: '', email: '' }]);
+
+      if (ticket.type === 'connectors') {
+        setConnectorsTicketId('');
+        setConnectorsValidating(false);
+        setConnectorsTicketValid(false);
+        setConnectorsTicketData(null);
+      }
+    } else if (ticket.passType === 'vendor') {
+      setVendorData({
+        fullName: '',
+        businessName: '',
+        whatsapp: '',
+        email: '',
+        instagramWebsite: '',
+        category: '',
+        needElectricity: 'no',
+        electricityAppliances: '',
+        supportAssistant: 'no',
+        supportQuantity: 1
+      });
     } else {
       setBusinessName('');
       setRepName('');
@@ -275,21 +304,80 @@ export default function Tickets() {
     setAttendees(newAttendees);
   }
 
+  // Validate Connectors Pass base ticket
+  async function validateConnectorsTicket(ticketId) {
+    if (!ticketId || ticketId.length < 8) {
+      setConnectorsTicketValid(false);
+      setConnectorsTicketData(null);
+      return;
+    }
+
+    setConnectorsValidating(true);
+    setError('');
+
+    try {
+      const data = await validateTicketId(ticketId);
+      
+      // Check if ticket is General Access or Individual Regular
+      const validTypes = ['General Access Ticket', 'Individual Pass — Regular'];
+      
+      if (validTypes.includes(data.ticket_type)) {
+        setConnectorsTicketValid(true);
+        setConnectorsTicketData(data);
+        // Pre-fill first attendee with validated ticket data
+        setAttendees([{ name: data.attendee_name, email: data.email }]);
+      } else {
+        setConnectorsTicketValid(false);
+        setConnectorsTicketData(null);
+        setError('Connectors Pass requires a General Access or Individual Regular ticket');
+      }
+    } catch (err) {
+      setConnectorsTicketValid(false);
+      setConnectorsTicketData(null);
+      setError('Invalid ticket ID. Please check and try again.');
+    } finally {
+      setConnectorsValidating(false);
+    }
+  }
+
+  // Debounced validation for Connectors Pass
+  function handleConnectorsTicketIdChange(value) {
+    setConnectorsTicketId(value);
+    
+    // Clear previous validation
+    setConnectorsTicketValid(false);
+    setConnectorsTicketData(null);
+    
+    // Debounce validation
+    clearTimeout(window.connectorsValidationTimeout);
+    window.connectorsValidationTimeout = setTimeout(() => {
+      validateConnectorsTicket(value);
+    }, 500);
+  }
+
   async function handleProceedToPayment(e) {
     e.preventDefault();
     setError('');
 
     const isIndividual = selectedTicket.passType === 'individual';
     const isVendor = selectedTicket.passType === 'vendor';
+    const isConnectors = selectedTicket.type === 'connectors';
 
     // Validation
-    if (isIndividual) {
+    if (isConnectors && !connectorsTicketValid) {
+      setError('Please enter a valid General Access or Individual Regular ticket ID');
+      return;
+    }
+
+    if (isIndividual && !isConnectors) {
       const allFilled = attendees.every(a => a.name.trim() && a.email.trim());
       if (!allFilled) {
         setError('Please fill in all attendee names and emails');
         return;
       }
-    } else if (isVendor) {
+    }
+
+    if (isVendor) {
       if (!vendorData.fullName.trim() || !vendorData.businessName.trim() || 
           !vendorData.whatsapp.trim() || !vendorData.email.trim() || 
           !vendorData.category.trim()) {
@@ -300,7 +388,9 @@ export default function Tickets() {
         setError('Please list appliances that need electricity');
         return;
       }
-    } else {
+    }
+
+    if (!isIndividual && !isVendor) {
       if (!businessName.trim() || !repName.trim() || !businessEmail.trim() || !businessPhone.trim()) {
         setError('Please fill in all business details');
         return;
@@ -313,24 +403,37 @@ export default function Tickets() {
       let totalAmount, metadata;
       const affiliateCode = getAffiliateCode();
 
+      // Calculate discounted price
+      const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
+      const discountPercentage = getDiscountPercentage(selectedTicket.name);
+
       if (isIndividual) {
-        const baseAmount = selectedTicket.price * quantity;
-        const discount = calculateDiscount(quantity);
-        totalAmount = baseAmount - discount;
+        const baseAmount = ticketPrice * quantity;
+        const groupDiscount = calculateDiscount(quantity);
+        totalAmount = baseAmount - groupDiscount;
 
         metadata = {
           ticket_type: selectedTicket.name,
           pass_type: 'individual',
           quantity,
-          discount,
+          original_price: selectedTicket.price,
+          discounted_price: ticketPrice,
+          discount_percentage: discountPercentage,
+          group_discount: groupDiscount,
           attendees: attendees.map(a => ({
             name: a.name,
             email: a.email
           })),
           affiliate_code: affiliateCode
         };
+
+        // Add base ticket ID for Connectors Pass
+        if (isConnectors) {
+          metadata.base_ticket_id = connectorsTicketId;
+          metadata.base_ticket_type = connectorsTicketData.ticket_type;
+        }
       } else if (isVendor) {
-        let baseAmount = selectedTicket.price;
+        let baseAmount = ticketPrice;
         
         // Add electricity cost
         if (vendorData.needElectricity === 'yes') {
@@ -347,6 +450,9 @@ export default function Tickets() {
         metadata = {
           ticket_type: selectedTicket.name,
           pass_type: 'vendor',
+          original_price: selectedTicket.price,
+          discounted_price: ticketPrice,
+          discount_percentage: discountPercentage,
           full_name: vendorData.fullName,
           business_name: vendorData.businessName,
           whatsapp: vendorData.whatsapp,
@@ -360,11 +466,14 @@ export default function Tickets() {
           affiliate_code: affiliateCode
         };
       } else {
-        totalAmount = selectedTicket.price;
+        totalAmount = ticketPrice;
 
         metadata = {
           ticket_type: selectedTicket.name,
           pass_type: 'business',
+          original_price: selectedTicket.price,
+          discounted_price: ticketPrice,
+          discount_percentage: discountPercentage,
           business_name: businessName,
           representative_name: repName,
           email: businessEmail,
@@ -397,6 +506,7 @@ export default function Tickets() {
     }
   }
 
+
   return (
     <section className="tickets section" id="tickets">
       <div className="container">
@@ -406,82 +516,79 @@ export default function Tickets() {
             Access. Opportunity. <span className="highlight-orange">Results.</span>
           </h2>
           <p>Connexa tickets are not about attendance — they're about what you get out of the room.</p>
+          
+          {/* Discount Banner */}
+          {discountActive && (
+            <div className="tickets-discount-banner">
+              🎉 <strong>20% OFF</strong> all tickets (except Connectors Pass) - Limited time!
+            </div>
+          )}
         </div>
 
         <div className="tickets-grid">
-          {tickets.map((ticket, i) => (
-            <div
-              key={ticket.type}
-              className={`ticket-card reveal${ticket.featured ? ' featured' : ''}`}
-              data-type={ticket.type}
-              style={{ transitionDelay: `${(i % 3) * 0.1}s` }}
-            >
-              {ticket.spotsLeft && (
-                <div className="ticket-card-badge badge-red">LIMITED</div>
-              )}
+          {tickets.map((ticket, i) => {
+            const discountedPrice = calculateTicketPrice(ticket.name, ticket.price);
+            const hasDiscount = discountedPrice < ticket.price;
 
-              {ticket.badge && !ticket.spotsLeft && (
-                <div className={`ticket-card-badge ${ticket.badgeClass || ''}`}>
-                  {ticket.badge}
-                </div>
-              )}
-
-              <div className={`ticket-icon ${ticket.iconClass}`}>
-                {ticket.icon}
-              </div>
-
-              <div className="ticket-type-label">{ticket.label}</div>
-              <h3 className="ticket-name">{ticket.name}</h3>
-              <p className="ticket-subtitle">{ticket.subtitle}</p>
-
-              {ticket.spotsLeft && (
-                <div className="ticket-spots">
-                  <div className="ticket-spots-text">
-                    <span>🔥 Only <strong>{ticket.spotsLeft} spots</strong> left</span>
-                  </div>
-                  <div className="ticket-spots-track">
-                    <div
-                      className="ticket-spots-fill"
-                      style={{ width: `${Math.min((ticket.spotsLeft / 100) * 100, 100)}%` }}
-                    />
-                  </div>
-                </div>
-              )}
-
-              <div className="ticket-divider" />
-
-              {ticket.comingSoon ? (
-                <div className="ticket-coming-soon">
-                  <span>✨</span>
-                  <p>Full details for this pass will be revealed soon. Grab your spot before it's gone.</p>
-                </div>
-              ) : (
-                <>
-                  <ul className="ticket-features">
-                    {ticket.features.map((f, j) => (
-                      <li key={j} className="ticket-feature">
-                        <span className="ticket-feature-dot" style={{ background: ticket.dotColor }} />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {ticket.bestFor && (
-                    <div className="ticket-best-for">
-                      <strong>Best for:</strong> {ticket.bestFor}
-                    </div>
-                  )}
-                </>
-              )}
-
-              <button
-                onClick={() => openModal(ticket)}
-                className={`ticket-cta ${ticket.ctaClass}`}
+            return (
+              <div
+                key={ticket.type}
+                className={`ticket-card reveal${ticket.featured ? ' featured' : ''}`}
+                data-type={ticket.type}
+                style={{ transitionDelay: `${(i % 3) * 0.1}s` }}
               >
-                {ticket.cta}
-              </button>
-            </div>
-          ))}
+                {hasDiscount && (
+                  <div className="ticket-card-badge badge-discount">20% OFF</div>
+                )}
+
+                {!hasDiscount && ticket.badge && (
+                  <div className={`ticket-card-badge ${ticket.badgeClass || ''}`}>
+                    {ticket.badge}
+                  </div>
+                )}
+
+                <div className={`ticket-icon ${ticket.iconClass}`}>
+                  {ticket.icon}
+                </div>
+
+                <div className="ticket-type-label">{ticket.label}</div>
+                <h3 className="ticket-name">{ticket.name}</h3>
+                <p className="ticket-subtitle">{ticket.subtitle}</p>
+
+                {/* Show discount pricing */}
+                {hasDiscount ? (
+                  <div className="ticket-price-container">
+                    <div className="ticket-price-original">₦{ticket.price.toLocaleString()}</div>
+                    <div className="ticket-price-discounted">₦{discountedPrice.toLocaleString()}</div>
+                  </div>
+                ) : null}
+
+                <div className="ticket-divider" />
+
+                <ul className="ticket-features">
+                  {ticket.features.map((f, j) => (
+                    <li key={j} className="ticket-feature">
+                      <span className="ticket-feature-dot" style={{ background: ticket.dotColor }} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                {ticket.bestFor && (
+                  <div className="ticket-best-for">
+                    <strong>Best for:</strong> {ticket.bestFor}
+                  </div>
+                )}
+
+                <button
+                  onClick={() => openModal(ticket)}
+                  className={`ticket-cta ${ticket.ctaClass}`}
+                >
+                  {ticket.cta}
+                </button>
+              </div>
+            );
+          })}
         </div>
 
         <p className="tickets-note reveal">
@@ -497,14 +604,59 @@ export default function Tickets() {
             <button className="ticket-modal-close" onClick={closeModal}>×</button>
 
             <h3 className="ticket-modal-title">{selectedTicket.name}</h3>
+            
+            {/* Show discount info */}
+            {getDiscountPercentage(selectedTicket.name) > 0 && (
+              <div className="ticket-modal-discount-badge">
+                🎉 20% OFF - Save ₦{(selectedTicket.price - calculateTicketPrice(selectedTicket.name, selectedTicket.price)).toLocaleString()}
+              </div>
+            )}
+
             <p className="ticket-modal-price">
-              ₦{selectedTicket.price.toLocaleString()} {selectedTicket.passType === 'individual' && 'per ticket'}
+              {getDiscountPercentage(selectedTicket.name) > 0 ? (
+                <>
+                  <span className="ticket-modal-price-original">₦{selectedTicket.price.toLocaleString()}</span>
+                  <span className="ticket-modal-price-discounted">₦{calculateTicketPrice(selectedTicket.name, selectedTicket.price).toLocaleString()}</span>
+                </>
+              ) : (
+                <>₦{selectedTicket.price.toLocaleString()}</>
+              )}
+              {selectedTicket.passType === 'individual' && ' per ticket'}
             </p>
 
             <form className="ticket-modal-form" onSubmit={handleProceedToPayment}>
               
-              {/* INDIVIDUAL PASS FORM */}
-              {selectedTicket.passType === 'individual' && (
+              {/* CONNECTORS PASS - TICKET VALIDATION */}
+              {selectedTicket.type === 'connectors' && (
+                <>
+                  <div className="ticket-connectors-info">
+                    ℹ️ <strong>Important:</strong> Connectors Pass requires a valid General Access or Individual Regular ticket.
+                  </div>
+
+                  <div className="ticket-input-group">
+                    <label>Your General/Regular Ticket ID *</label>
+                    <input
+                      type="text"
+                      className="ticket-input"
+                      placeholder="e.g., CNX2026-ABC123"
+                      value={connectorsTicketId}
+                      onChange={(e) => handleConnectorsTicketIdChange(e.target.value)}
+                      required
+                    />
+                    {connectorsValidating && (
+                      <small className="ticket-validating">Validating ticket...</small>
+                    )}
+                    {connectorsTicketValid && connectorsTicketData && (
+                      <div className="ticket-valid-badge">
+                        ✓ Valid {connectorsTicketData.ticket_type} - {connectorsTicketData.attendee_name}
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+
+              {/* INDIVIDUAL PASS FORM (Non-Connectors) */}
+              {selectedTicket.passType === 'individual' && selectedTicket.type !== 'connectors' && (
                 <>
                   <div className="ticket-group-promo">
                     💰 Purchase tickets for 2–5 people and save on your group admission to Connexa 2026.
@@ -560,17 +712,25 @@ export default function Tickets() {
                       {quantity >= 2 && (
                         <>
                           <div className="ticket-modal-subtotal">
-                            ₦{(selectedTicket.price * quantity).toLocaleString()}
+                            ₦{(calculateTicketPrice(selectedTicket.name, selectedTicket.price) * quantity).toLocaleString()}
                           </div>
                           <div className="ticket-modal-discount">
                             -₦{calculateDiscount(quantity).toLocaleString()}
                           </div>
                         </>
                       )}
-                      <strong>₦{((selectedTicket.price * quantity) - calculateDiscount(quantity)).toLocaleString()}</strong>
+                      <strong>₦{((calculateTicketPrice(selectedTicket.name, selectedTicket.price) * quantity) - calculateDiscount(quantity)).toLocaleString()}</strong>
                     </div>
                   </div>
                 </>
+              )}
+
+              {/* CONNECTORS PASS - Just show total (attendee already pre-filled) */}
+              {selectedTicket.type === 'connectors' && connectorsTicketValid && (
+                <div className="ticket-modal-total">
+                  <span>Total Amount</span>
+                  <strong>₦{selectedTicket.price.toLocaleString()}</strong>
+                </div>
               )}
 
               {/* BUSINESS PASS FORM */}
@@ -629,14 +789,15 @@ export default function Tickets() {
 
                   <div className="ticket-modal-total">
                     <span>Total Amount</span>
-                    <strong>₦{selectedTicket.price.toLocaleString()}</strong>
+                    <strong>₦{calculateTicketPrice(selectedTicket.name, selectedTicket.price).toLocaleString()}</strong>
                   </div>
                 </>
               )}
 
-              {/* VENDOR PASS FORM */}
+              {/* VENDOR PASS FORM - Keep existing vendor form */}
               {selectedTicket.passType === 'vendor' && (
                 <>
+                  {/* ... existing vendor form fields ... */}
                   <input
                     type="text"
                     placeholder="Full Name"
@@ -685,7 +846,6 @@ export default function Tickets() {
                     required
                   />
 
-                  {/* Electricity */}
                   <div className="ticket-radio-group">
                     <label>Do you need electricity?</label>
                     <div className="ticket-radio-options">
@@ -715,6 +875,7 @@ export default function Tickets() {
                   {vendorData.needElectricity === 'yes' && (
                     <textarea
                       placeholder="List appliances you need electricity for"
+                      className="ticket-input"
                       value={vendorData.electricityAppliances}
                       onChange={(e) => setVendorData({...vendorData, electricityAppliances: e.target.value})}
                       rows="3"
@@ -722,7 +883,6 @@ export default function Tickets() {
                     />
                   )}
 
-                  {/* Support Assistant */}
                   <div className="ticket-radio-group">
                     <label>Will you require a support assistant?</label>
                     <div className="ticket-radio-options">
@@ -759,7 +919,6 @@ export default function Tickets() {
                     </div>
                   </div>
 
-                  {/* ADD QUANTITY SELECTOR */}
                   {vendorData.supportAssistant === 'zidepeople' && (
                     <div className="ticket-quantity-group">
                       <label>How many support assistants do you need?</label>
@@ -807,48 +966,46 @@ export default function Tickets() {
                       ℹ️ Your assistant must register and purchase an individual ticket separately.
                     </div>
                   )}
+
+                  <div className="ticket-price-breakdown">
+                    <h4>Price Breakdown</h4>
+                    <div className="ticket-price-item">
+                      <span>Base Pass:</span>
+                      <span>₦{calculateTicketPrice(selectedTicket.name, selectedTicket.price).toLocaleString()}</span>
+                    </div>
+                    
+                    {vendorData.needElectricity === 'yes' && (
+                      <div className="ticket-price-item">
+                        <span>Electricity:</span>
+                        <span>+₦20,000</span>
+                      </div>
+                    )}
+                    
+                    {vendorData.supportAssistant === 'zidepeople' && (
+                      <div className="ticket-price-item">
+                        <span>Support ({vendorData.supportQuantity} assistant{vendorData.supportQuantity > 1 ? 's' : ''}):</span>
+                        <span>+₦{(vendorData.supportQuantity * 10000).toLocaleString()}</span>
+                      </div>
+                    )}
+                    
+                    <div className="ticket-price-total">
+                      <span>Total:</span>
+                      <span>₦{(
+                        calculateTicketPrice(selectedTicket.name, selectedTicket.price) + 
+                        (vendorData.needElectricity === 'yes' ? 20000 : 0) + 
+                        (vendorData.supportAssistant === 'zidepeople' ? vendorData.supportQuantity * 10000 : 0)
+                      ).toLocaleString()}</span>
+                    </div>
+                  </div>
                 </>
               )}
-
-              {selectedTicket.passType === 'vendor' && (
-              <div className="ticket-price-breakdown">
-                <h4>Price Breakdown</h4>
-                <div className="ticket-price-item">
-                  <span>Base Pass:</span>
-                  <span>₦{selectedTicket.price.toLocaleString()}</span>
-                </div>
-                
-                {vendorData.needElectricity === 'yes' && (
-                  <div className="ticket-price-item">
-                    <span>Electricity:</span>
-                    <span>+₦20,000</span>
-                  </div>
-                )}
-                
-                {vendorData.supportAssistant === 'zidepeople' && (
-                  <div className="ticket-price-item">
-                    <span>Support ({vendorData.supportQuantity} assistant{vendorData.supportQuantity > 1 ? 's' : ''}):</span>
-                    <span>+₦{(vendorData.supportQuantity * 10000).toLocaleString()}</span>
-                  </div>
-                )}
-                
-                <div className="ticket-price-total">
-                  <span>Total:</span>
-                  <span>₦{(
-                    selectedTicket.price + 
-                    (vendorData.needElectricity === 'yes' ? 20000 : 0) + 
-                    (vendorData.supportAssistant === 'zidepeople' ? vendorData.supportQuantity * 10000 : 0)
-                  ).toLocaleString()}</span>
-                </div>
-              </div>
-            )}
 
               {error && <div className="ticket-modal-error">{error}</div>}
 
               <button
                 type="submit"
                 className="ticket-modal-submit"
-                disabled={loading}
+                disabled={loading || (selectedTicket.type === 'connectors' && !connectorsTicketValid)}
               >
                 {loading ? 'Processing...' : 'Proceed to Payment →'}
               </button>

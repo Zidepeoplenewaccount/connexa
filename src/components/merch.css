@@ -485,6 +485,131 @@
   cursor: not-allowed;
 }
 
+/* Update merch image to handle both placeholder and actual images */
+.merch-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.merch-actual-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.merch-card:hover .merch-actual-image {
+  transform: scale(1.05);
+}
+
+.merch-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.02);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+}
+
+.merch-placeholder-icon {
+  font-size: 80px;
+  margin-bottom: 12px;
+  opacity: 0.3;
+}
+
+/* Remove the old placeholder text if it exists */
+.merch-placeholder-text {
+  display: none;
+}
+
+/* Header Section */
+.merch-header-section {
+  margin-bottom: 16px;
+}
+
+.merch-header {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.merch-tagline {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--orange);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Update description styling */
+.merch-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 20px;
+  min-height: 80px; /* Ensure consistent card heights */
+}
+
+/* Update category to be smaller */
+.merch-category {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 12px;
+}
+
+/* Remove old merch-name since we're using merch-header now */
+.merch-name {
+  display: none;
+}
+
+/* Original price styling */
+.merch-price-original {
+  text-decoration: line-through;
+  margin-left: 8px;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .merch-header {
+    font-size: 1.3rem;
+  }
+
+  .merch-tagline {
+    font-size: 0.85rem;
+  }
+
+  .merch-desc {
+    font-size: 13px;
+    min-height: auto;
+  }
+
+  .merch-placeholder-icon {
+    font-size: 60px;
+  }
+
+  .merch-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 480px) {
   .merch-modal {
     padding: 28px;
@@ -495,12 +620,6 @@
 @media (max-width: 1024px) {
   .merch-grid {
     grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .merch-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 

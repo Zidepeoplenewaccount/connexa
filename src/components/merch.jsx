@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './merch.css';
-import FaceCap from '../assets/IMG_6719.PNG'
+import FaceCap from '../assets/IMG_6719.PNG';
 import { initializeMerchOrder } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
 
@@ -11,11 +11,13 @@ const allProducts = [
   {
     id: 1,
     name: 'Connexa Official T-Shirt',
+    header: 'Official Connexa Shirt',
+    tagline: 'Wear the Movement',
     category: 'Apparel',
     filter: 'tees',
     price: 10000,
     icon: '👕',
-    desc: 'The official Connexa 2026 tee. Rep the brand, own the room.',
+    desc: 'Anyone who wants to represent the event. Clean, bold, and easy to wear, it lets you carry the Connexa energy wherever you go. If you believe in connections, opportunities, and big ideas, this shirt is for you.',
     cardClass: '',
     priceClass: '',
     buyClass: '',
@@ -23,11 +25,13 @@ const allProducts = [
   {
     id: 2,
     name: 'Connexa Official Face Cap',
+    header: 'Connexa Face Cap',
+    tagline: 'Complete the Look',
     category: 'Accessories',
     filter: 'caps',
     price: 7000,
     icon: FaceCap,
-    desc: 'Clean, bold, unmistakable. The Connexa cap you need.',
+    desc: 'Clean, bold, unmistakable. The Connexa cap you need to complete your look and rep the movement wherever you go.',
     cardClass: '',
     priceClass: '',
     buyClass: '',
@@ -35,12 +39,14 @@ const allProducts = [
   {
     id: 3,
     name: 'Connexa Drip Pack',
+    header: 'Connexa Drip Pack',
+    tagline: 'The Full Fit',
     category: 'Bundle',
     filter: 'packs',
     price: 15000,
     originalPrice: 17000,
     icon: '🎁',
-    desc: 'The full fit. Official T-shirt + Face Cap together.',
+    desc: 'Official T-shirt + Face Cap together. Get the complete Connexa look and save.',
     packItems: ['Official T-Shirt', 'Face Cap'],
     badge: 'pack',
     cardClass: 'featured',
@@ -50,11 +56,13 @@ const allProducts = [
   {
     id: 4,
     name: 'Connexa Builder T-Shirt',
+    header: 'Builder Shirt',
+    tagline: 'Create What\'s Next',
     category: 'Apparel',
     filter: 'tees',
     price: 15000,
     icon: '👕',
-    desc: 'For the ones building something real. Limited edition builder colourway.',
+    desc: 'The Builder Shirt is for entrepreneurs, founders, and business owners in the room to create opportunities. It represents ambition, action, and the drive to build something meaningful. Wear it if you\'re coming to Connexa to connect, collaborate, and grow.',
     badge: 'new',
     cardClass: '',
     priceClass: '',
@@ -63,11 +71,13 @@ const allProducts = [
   {
     id: 5,
     name: 'Connexa Talent T-Shirt',
+    header: 'Talent Shirt',
+    tagline: 'Show Up Ready',
     category: 'Apparel',
     filter: 'tees',
     price: 12000,
     icon: '👕',
-    desc: 'Designed for the creatives, the skilled, the ones who show up differently.',
+    desc: 'The Talent Shirt is for professionals and individuals ready to showcase their skills and explore new opportunities. It represents curiosity, learning, and growth. Wear it if you\'re coming to Connexa to meet the people and opportunities that move your career forward.',
     cardClass: '',
     priceClass: '',
     buyClass: '',
@@ -75,6 +85,8 @@ const allProducts = [
   {
     id: 6,
     name: 'Connexa Builder Pack',
+    header: 'Builder Pack',
+    tagline: 'Build in Style',
     category: 'Bundle',
     filter: 'packs',
     price: 20000,
@@ -90,6 +102,8 @@ const allProducts = [
   {
     id: 7,
     name: 'Connexa Talent Pack',
+    header: 'Talent Pack',
+    tagline: 'Show Up, Stand Out',
     category: 'Bundle',
     filter: 'packs',
     price: 18000,
@@ -249,11 +263,13 @@ export default function Merch() {
             >
               {/* Image / Placeholder */}
               <div className="merch-image">
-                <div className="merch-image-placeholder">
-                  {/*<span className="merch-placeholder-icon">{product.icon}</span>*/}
-                  <img src={product.icon} className="merch-placeholder-icon" alt='merch' />
-                  {/*<span className="merch-placeholder-text">Image Coming Soon</span>*/}
-                </div>
+                {typeof product.icon === 'string' && product.icon.length <= 2 ? (
+                  <div className="merch-image-placeholder">
+                    <span className="merch-placeholder-icon">{product.icon}</span>
+                  </div>
+                ) : (
+                  <img src={product.icon} className="merch-actual-image" alt={product.name} />
+                )}
 
                 {/* Badges */}
                 <div className="merch-badges">
@@ -272,7 +288,13 @@ export default function Merch() {
               {/* Body */}
               <div className="merch-body">
                 <div className="merch-category">{product.category}</div>
-                <div className="merch-name">{product.name}</div>
+                
+                {/* Header and Tagline */}
+                <div className="merch-header-section">
+                  <h3 className="merch-header">{product.header}</h3>
+                  <p className="merch-tagline">{product.tagline}</p>
+                </div>
+
                 <p className="merch-desc">{product.desc}</p>
 
                 {product.packItems && (
@@ -287,7 +309,7 @@ export default function Merch() {
                   <div className={`merch-price${product.priceClass ? ' ' + product.priceClass : ''}`}>
                     {formatPrice(product.price)}
                     {product.originalPrice && (
-                      <span style={{ textDecoration: 'line-through', marginLeft: '8px', marginRight: '8px', fontSize: '10px' }}>
+                      <span className="merch-price-original">
                         {formatPrice(product.originalPrice)}
                       </span>
                     )}
