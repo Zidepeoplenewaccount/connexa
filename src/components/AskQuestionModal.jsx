@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { submitSpeakerQuestion } from '../services/api';
-import './askQuestionModal.css';
+import './AskQuestionModal.css';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
