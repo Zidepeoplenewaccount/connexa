@@ -895,6 +895,100 @@
   transform: none !important;
 }
 
+/* Option 1: Global Notice Banner */
+.tickets-notice-banner {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: rgba(245,166,35,0.1);
+  border: 1px solid rgba(245,166,35,0.3);
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+}
+
+.tickets-notice-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.tickets-notice-content {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.8);
+}
+
+.tickets-notice-content strong {
+  color: var(--orange);
+  font-weight: 700;
+}
+
+/* Option 2: Per-Ticket Notice */
+.ticket-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(245,166,35,0.08);
+  border: 1px solid rgba(245,166,35,0.2);
+  border-radius: var(--radius-sm);
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.ticket-notice-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.ticket-notice-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.7);
+}
+
+/* Option 3: Section Notices */
+.tickets-notices {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 24px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.tickets-notice-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+}
+
+.notice-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tickets-notice-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 16px;
+  }
+
+  .tickets-notices {
+    padding: 16px;
+  }
+
+  .tickets-notice-item {
+    font-size: 13px;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .tickets-discount-banner {

@@ -93,6 +93,7 @@ const tickets = [
       'Access to VIP-only areas and sessions',
       'Eligibility for Individual Awards & Recognition',
       'Public acknowledgment and premium event experience',
+      'Includes connectors pass',
     ],
     bestFor: 'Professionals who want visibility, status, and recognition.',
     cta: 'Get VIP Pass',
@@ -132,7 +133,7 @@ const tickets = [
     label: 'Brand Visibility',
     name: 'Showcase Vendor Pass',
     subtitle: 'Build visibility, trust, and partnerships — bring your own booth',
-    price: 100000,
+    price: 110000,
     available: 70,  // ADD THIS
     features: [
       'Bring your own booth setup',
@@ -142,9 +143,14 @@ const tickets = [
       'Access to business advisors and speaker sessions',
       'Eligibility for Brand Recognition Award',
       'Brand positioning without sales pressure',
+      'Maximum of 2 staff members per booth',
+      'Staff access tickets are included in your booth package',
+      'Allowed booth sizes: 3ft × 3ft (height: 8ft) 5ft × 5ft (height: 8ft). Only these specified booth sizes are permitted',
+      'Limited to one booth per brand'
     ],
     bestFor: 'Tech startups, service brands, platforms, and businesses focused on visibility.',
     cta: 'Get Showcase Pass',
+    notice: 'Not suitable for large physical product displaysNot suitable for large physical product displays',
     ctaClass: 'cta-blue',
     dotColor: 'var(--blue)',
   },
@@ -577,6 +583,14 @@ export default function Tickets() {
                 {ticket.bestFor && (
                   <div className="ticket-best-for">
                     <strong>Best for:</strong> {ticket.bestFor}
+                  </div>
+                )}
+
+                {/* TICKET-SPECIFIC NOTICE */}
+                {ticket?.notice && (
+                  <div className="ticket-notice">
+                    <span className="ticket-notice-icon">⚠️</span>
+                    <span className="ticket-notice-text">{ticket.notice}</span>
                   </div>
                 )}
 

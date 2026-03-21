@@ -6,6 +6,7 @@ import {
   markCommissionPaid,
   bulkMarkCommissionsPaid,
   toggleAffiliate,
+  createAffiliate,
   deleteAffiliate 
 } from '../../services/adminApi';
 import AdminLayout from '../../components/admin/AdminLayout';
@@ -20,6 +21,8 @@ export default function AdminAffiliates() {
   const [selectedCommissions, setSelectedCommissions] = useState([]);
   const [filterStatus, setFilterStatus] = useState('');
   const [showModal, setShowModal] = useState(false);  
+  const [showDetailsModal, setShowDetailsModal] = useState(false);  
+  const [selectedAffiliate, setSelectedAffiliate] = useState(null);  
   const [formData, setFormData] = useState({  
     fullName: '',
     email: '',
@@ -30,26 +33,6 @@ export default function AdminAffiliates() {
     accountName: '',
     accountNumber: ''
   });
-
-  const nigerianBanks = [  
-    'Access Bank',
-    'GTBank',
-    'First Bank',
-    'UBA',
-    'Zenith Bank',
-    'Fidelity Bank',
-    'Union Bank',
-    'Sterling Bank',
-    'Stanbic IBTC',
-    'FCMB',
-    'Ecobank',
-    'Wema Bank',
-    'OPay',
-    'PalmPay',
-    'Kuda Bank',
-    'Other'
-  ];
-
 
   useEffect(() => {
     if (activeTab === 'affiliates') {
@@ -66,6 +49,7 @@ export default function AdminAffiliates() {
         getAllAffiliates(),
         getAffiliateStats()
       ]);
+      console.log('Affiliates:', affiliatesData);
       setAffiliates(affiliatesData);
       setStats(statsData);
     } catch (error) {
@@ -164,7 +148,18 @@ export default function AdminAffiliates() {
     setShowModal(true);
   }
 
-  // ADD THIS FUNCTION
+  function viewAffiliateDetails(code) {
+    const affiliate = affiliates.find(a => a.code === code);
+    const affiliateStats = stats.find(s => s.code === code);
+    
+    setSelectedAffiliate({
+      ...affiliate,
+      ...affiliateStats
+    });
+    setShowDetailsModal(true);
+  }
+
+  
   async function handleCreateAffiliate(e) {
     e.preventDefault();
     
@@ -329,6 +324,14 @@ export default function AdminAffiliates() {
                         )}
                       </td>
                       <td>
+                        <button 
+                          className="admin-table-btn"
+                          onClick={() => viewAffiliateDetails(affiliate.code)}
+                          style={{ marginRight: '8px' }}
+                          title="View Details"
+                        >
+                          Details
+                        </button>
                         <button 
                           className="admin-table-btn"
                           onClick={() => handleToggleAffiliate(affiliate.code)}
@@ -702,6 +705,192 @@ export default function AdminAffiliates() {
           </div>
         </div>
       )}
+
+      {/* ADD AFFILIATE DETAILS MODAL */}
+      {showDetailsModal && selectedAffiliate && (
+        <div 
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: '20px'
+          }}
+          onClick={(e) => e.target === e.currentTarget && setShowDetailsModal(false)}
+        >
+          <div style={{
+            background: '#1a1a1a',
+            border: '1px solid #333',
+            borderRadius: '12px',
+            padding: '32px',
+            width: '100%',
+            maxWidth: '600px',
+            maxHeight: '90vh',
+            overflowY: 'auto'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <h2>Affiliate Details</h2>
+              <button 
+                onClick={() => setShowDetailsModal(false)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#fff',
+                  fontSize: '24px',
+                  cursor: 'pointer'
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            <div style={{ display: 'grid', gap: '20px' }}>
+              {/* Personal Info */}
+              <div>
+                <h3 style={{ fontSize: '14px', color: '#f5a623', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  Personal Information
+                </h3>
+                <div style={{ background: '#0a0a0a', padding: '16px', borderRadius: '8px', display: 'grid', gap: '12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Affiliate Code:</span>
+                    <code style={{ 
+                      background: 'rgba(245,166,35,0.2)', 
+                      padding: '4px 8px', 
+                      borderRadius: '4px',
+                      color: '#f5a623',
+                      fontWeight: '700'
+                    }}>
+                      {selectedAffiliate.code}
+                    </code>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Full Name:</span>
+                    <strong>{selectedAffiliate.full_name}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Email:</span>
+                    <span>{selectedAffiliate.email}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Phone:</span>
+                    <span>{selectedAffiliate.phone}</span>
+                  </div>
+                  {selectedAffiliate.city_state && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.5)' }}>Location:</span>
+                      <span>{selectedAffiliate.city_state}</span>
+                    </div>
+                  )}
+                  {selectedAffiliate.social_media && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.5)' }}>Social Media:</span>
+                      <span>{selectedAffiliate.social_media}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Bank Details */}
+              <div>
+                <h3 style={{ fontSize: '14px', color: '#2db84b', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  Bank Account Details
+                </h3>
+                <div style={{ background: '#0a0a0a', padding: '16px', borderRadius: '8px', display: 'grid', gap: '12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Bank Name:</span>
+                    <strong>{selectedAffiliate.bank_name}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Account Name:</span>
+                    <strong>{selectedAffiliate.account_name}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Account Number:</span>
+                    <code style={{ 
+                      background: 'rgba(45,184,75,0.2)', 
+                      padding: '4px 8px', 
+                      borderRadius: '4px',
+                      color: '#2db84b',
+                      fontWeight: '700',
+                      fontSize: '16px'
+                    }}>
+                      {selectedAffiliate.account_number}
+                    </code>
+                  </div>
+                </div>
+              </div>
+
+              {/* Commission Stats */}
+              <div>
+                <h3 style={{ fontSize: '14px', color: '#fff', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  Commission Summary
+                </h3>
+                <div style={{ background: '#0a0a0a', padding: '16px', borderRadius: '8px', display: 'grid', gap: '12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Total Sales:</span>
+                    <strong>{selectedAffiliate.total_sales}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Total Earned:</span>
+                    <strong>₦{selectedAffiliate.total_earned.toLocaleString()}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Total Paid:</span>
+                    <strong style={{ color: '#2db84b' }}>₦{selectedAffiliate.total_paid.toLocaleString()}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Pending:</span>
+                    <strong style={{ color: '#f5a623' }}>₦{selectedAffiliate.pending.toLocaleString()}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Status:</span>
+                    {selectedAffiliate.is_active ? (
+                      <span style={{
+                        padding: '4px 10px',
+                        borderRadius: '6px',
+                        fontSize: '12px',
+                        fontWeight: '600',
+                        background: 'rgba(45,184,75,0.15)',
+                        color: '#2db84b'
+                      }}>
+                        Active
+                      </span>
+                    ) : (
+                      <span style={{
+                        padding: '4px 10px',
+                        borderRadius: '6px',
+                        fontSize: '12px',
+                        fontWeight: '600',
+                        background: 'rgba(232,49,42,0.15)',
+                        color: '#e8312a'
+                      }}>
+                        Inactive
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>Joined:</span>
+                    <span>{new Date(selectedAffiliate.created_at).toLocaleDateString()}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => setShowDetailsModal(false)}
+              className="admin-btn"
+              style={{ width: '100%', marginTop: '24px' }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+
     </AdminLayout>
   );
 }
