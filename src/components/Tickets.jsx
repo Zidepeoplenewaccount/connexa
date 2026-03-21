@@ -860,31 +860,33 @@ export default function Tickets() {
                     required
                   />
 
-                  <div className="ticket-radio-group">
-                    <label>Do you need electricity?</label>
-                    <div className="ticket-radio-options">
-                      <label>
-                        <input
-                          type="radio"
-                          name="electricity"
-                          value="no"
-                          checked={vendorData.needElectricity === 'no'}
-                          onChange={(e) => setVendorData({...vendorData, needElectricity: e.target.value})}
-                        />
-                        No
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          name="electricity"
-                          value="yes"
-                          checked={vendorData.needElectricity === 'yes'}
-                          onChange={(e) => setVendorData({...vendorData, needElectricity: e.target.value})}
-                        />
-                        Yes (+₦20,000)
-                      </label>
+                  {selectedTicket.type !== 'showcase' &&(
+                    <div className="ticket-radio-group">
+                      <label>Do you need electricity?</label>
+                      <div className="ticket-radio-options">
+                        <label>
+                          <input
+                            type="radio"
+                            name="electricity"
+                            value="no"
+                            checked={vendorData.needElectricity === 'no'}
+                            onChange={(e) => setVendorData({...vendorData, needElectricity: e.target.value})}
+                          />
+                          No
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="electricity"
+                            value="yes"
+                            checked={vendorData.needElectricity === 'yes'}
+                            onChange={(e) => setVendorData({...vendorData, needElectricity: e.target.value})}
+                          />
+                          Yes (+₦20,000)
+                        </label>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {vendorData.needElectricity === 'yes' && (
                     <textarea
@@ -897,41 +899,43 @@ export default function Tickets() {
                     />
                   )}
 
-                  <div className="ticket-radio-group">
-                    <label>Will you require a support assistant?</label>
-                    <div className="ticket-radio-options">
-                      <label>
-                        <input
-                          type="radio"
-                          name="support"
-                          value="no"
-                          checked={vendorData.supportAssistant === 'no'}
-                          onChange={(e) => setVendorData({...vendorData, supportAssistant: e.target.value})}
-                        />
-                        No, I do not require support
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          name="support"
-                          value="zidepeople"
-                          checked={vendorData.supportAssistant === 'zidepeople'}
-                          onChange={(e) => setVendorData({...vendorData, supportAssistant: e.target.value})}
-                        />
-                        Yes – Zidepeople assistant (₦10,000 each)
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          name="support"
-                          value="own"
-                          checked={vendorData.supportAssistant === 'own'}
-                          onChange={(e) => setVendorData({...vendorData, supportAssistant: e.target.value})}
-                        />
-                        Yes – Bringing my own assistant
-                      </label>
+                  {selectedTicket.type !== 'showcase' &&(
+                    <div className="ticket-radio-group">
+                      <label>Will you require a support assistant?</label>
+                      <div className="ticket-radio-options">
+                        <label>
+                          <input
+                            type="radio"
+                            name="support"
+                            value="no"
+                            checked={vendorData.supportAssistant === 'no'}
+                            onChange={(e) => setVendorData({...vendorData, supportAssistant: e.target.value})}
+                          />
+                          No, I do not require support
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="support"
+                            value="zidepeople"
+                            checked={vendorData.supportAssistant === 'zidepeople'}
+                            onChange={(e) => setVendorData({...vendorData, supportAssistant: e.target.value})}
+                          />
+                          Yes – Zidepeople assistant (₦10,000 each)
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="support"
+                            value="own"
+                            checked={vendorData.supportAssistant === 'own'}
+                            onChange={(e) => setVendorData({...vendorData, supportAssistant: e.target.value})}
+                          />
+                          Yes – Bringing my own assistant
+                        </label>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {vendorData.supportAssistant === 'zidepeople' && (
                     <div className="ticket-quantity-group">

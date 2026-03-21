@@ -47,7 +47,7 @@ function HomePage() {
       <main>
         <Hero />
         <About />
-        <Speakers />
+        {/*<Speakers />*/}
         <Gallery />
         <Tickets />
         <Awards />

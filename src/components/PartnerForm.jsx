@@ -157,6 +157,18 @@ export default function PartnerForm() {
           <p className="partner-email-text">
             For more info email us at <a href="mailto:partnerships@zidepeople.com">partnerships@zidepeople.com</a>
           </p>
+          
+          {/* ADD THIS */}
+          <div className="partner-portfolio-wrapper">
+            <a 
+              href="https://drive.google.com/drive/folders/1ZdjV1IzeEQe02cUyNi1-nWf9IGVbBK_w" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="partner-portfolio-btn"
+            >
+              Connexa Partnership Portfolio
+            </a>
+          </div>
         </div>
 
         {/* Form Modal */}

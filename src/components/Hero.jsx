@@ -161,7 +161,7 @@ export default function Hero() {
                   <line x1="3" y1="10" x2="21" y2="10"/>
                 </svg>
               </span>
-              <span className="hero-detail-text">November, 2026</span>
+              <span className="hero-detail-text">28th November, 2026</span>
             </div>
             <div className="hero-detail-item">
               <span className="hero-detail-icon">🕐</span>
