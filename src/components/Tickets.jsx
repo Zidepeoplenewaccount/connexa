@@ -15,7 +15,7 @@ const tickets = [
     label: 'Open Access',
     name: 'General Access Ticket',
     subtitle: 'Experience the future of flexible work',
-    price: 100,
+    price: 3000,
     available: 100,  // ADD THIS
     features: [
       'Access to main event space',
