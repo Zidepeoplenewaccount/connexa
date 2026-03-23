@@ -4,7 +4,7 @@ import zideLogo from '../assets/IMG_6707.PNG';
 const highlights = [
   { icon: '🛒', title: 'Live Marketplace', desc: 'Real buyers, real sellers, real transactions on the day' },
   { icon: '🎤', title: 'Speaker Sessions', desc: 'Insights from top founders and industry leaders' },
-  { icon: '🤝', title: 'Networking', desc: 'Connect with founders, talents, and decision-makers' },
+  { icon: '🤝', title: 'Opportunities', desc: 'Connect with founders, talents, and decision-makers' },
   { icon: '🏆', title: 'Awards & Recognition', desc: 'Win visibility, prizes, and public acknowledgment' },
 ];
 
