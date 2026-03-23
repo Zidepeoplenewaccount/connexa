@@ -860,6 +860,8 @@
 
   .merch-tagline {
     font-size: 0.85rem;
+    align-self: center;
+    justify-self: center;
   }
 
   .merch-desc {
