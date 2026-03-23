@@ -13,13 +13,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4        # ← fixed from v3
         with:
           node-version: '20'
 
@@ -34,13 +34,14 @@ jobs:
         with:
           name: node-app
           path: .
+          retention-days: 1              # ← fixes storage quota buildup
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
@@ -55,13 +56,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4E0FA9A08808478DBCA4E9A7E3B664FE }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_85E6BA9E050342869D10C340116E0723 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'connexa'
           slot-name: 'Production'
           package: .
-
-          
-
