@@ -50,7 +50,7 @@ function HomePage() {
         {/*<Speakers />*/}
         <Gallery />
         <Tickets />
-        <Awards />
+        {/*<Awards />*/}
         {/*<Voting />*/}
         <Merch />
         <PartnerForm />

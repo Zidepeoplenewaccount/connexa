@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 import './merch.css';
 import FaceCap from '../assets/IMG_6719.PNG';
+
+import OfficialTshirtWhite from '../assets/IMG_7761.PNG';
+import OfficialTshirtBlack from '../assets/IMG_7760.PNG';
+import BuildersTshirtBlack from '../assets/IMG_7767.PNG';
+import BuildersTshirtWhite from '../assets/IMG_7768.PNG';
+import TalentTshirtBlack from '../assets/IMG_7769.PNG';
+import TalentTshirtWhite from '../assets/IMG_7770.PNG';
+import VendorTshirtWhite from '../assets/IMG_7806.PNG';
+import VendorTshirtBlack from '../assets/IMG_7807.PNG';
 import { initializeMerchOrder } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
 import { validateTicketId } from '../services/api';
@@ -17,8 +26,8 @@ const allProducts = [
     desc: 'Anyone who wants to represent the event. Clean, bold, and easy to wear, it lets you carry the Connexa energy wherever you go.',
     hasSize: true,
     colors: [
-      { name: 'Black', value: 'black', image: '👕' }, // Replace with actual image path
-      { name: 'White', value: 'white', image: '👕' }, // Replace with actual image path
+      { name: 'Black', value: 'black', image: OfficialTshirtBlack }, // Replace with actual image path
+      { name: 'White', value: 'white', image: OfficialTshirtWhite }, // Replace with actual image path
     ],
     cardClass: '',
     priceClass: '',
@@ -35,8 +44,7 @@ const allProducts = [
     desc: 'Clean, bold, unmistakable. The Connexa cap you need to complete your look.',
     hasSize: false,
     colors: [
-      { name: 'Black', value: 'black', image: FaceCap },
-      { name: 'White', value: 'white', image: FaceCap }, // Replace with white cap image
+      { name: 'Black', value: 'black', image: FaceCap }
     ],
     cardClass: '',
     priceClass: '',
@@ -58,8 +66,8 @@ const allProducts = [
         name: 'Official T-Shirt',
         hasSize: true,
         colors: [
-          { name: 'Black', value: 'black', image: '👕' },
-          { name: 'White', value: 'white', image: '👕' },
+          { name: 'Black', value: 'black', image: OfficialTshirtBlack },
+          { name: 'White', value: 'white', image: OfficialTshirtWhite },
         ],
       },
       {
@@ -87,8 +95,8 @@ const allProducts = [
     desc: 'For entrepreneurs, founders, and business owners. It represents ambition, action, and the drive to build something meaningful.',
     hasSize: true,
     colors: [
-      { name: 'Black', value: 'black', image: '👕' },
-      { name: 'White', value: 'white', image: '👕' },
+      { name: 'Black', value: 'black', image: BuildersTshirtBlack },
+      { name: 'White', value: 'white', image: BuildersTshirtWhite },
     ],
     badge: 'new',
     cardClass: '',
@@ -106,8 +114,8 @@ const allProducts = [
     desc: 'For professionals ready to showcase their skills. It represents curiosity, learning, and growth.',
     hasSize: true,
     colors: [
-      { name: 'Black', value: 'black', image: '👕' },
-      { name: 'White', value: 'white', image: '👕' },
+      { name: 'Black', value: 'black', image: TalentTshirtBlack },
+      { name: 'White', value: 'white', image: TalentTshirtWhite },
     ],
     cardClass: '',
     priceClass: '',
@@ -129,8 +137,8 @@ const allProducts = [
         name: 'Builder T-Shirt',
         hasSize: true,
         colors: [
-          { name: 'Black', value: 'black', image: '👕' },
-          { name: 'White', value: 'white', image: '👕' },
+          { name: 'Black', value: 'black', image: BuildersTshirtBlack },
+          { name: 'White', value: 'white', image: BuildersTshirtWhite },
         ],
       },
       {
@@ -163,8 +171,8 @@ const allProducts = [
         name: 'Talent T-Shirt',
         hasSize: true,
         colors: [
-          { name: 'Black', value: 'black', image: '👕' },
-          { name: 'White', value: 'white', image: '👕' },
+          { name: 'Black', value: 'black', image: TalentTshirtBlack },
+          { name: 'White', value: 'white', image: TalentTshirtWhite },
         ],
       },
       {
@@ -180,6 +188,24 @@ const allProducts = [
     cardClass: 'featured',
     priceClass: 'price-orange',
     buyClass: 'buy-orange',
+  },
+  {
+    id: 8,
+    name: 'Connexa Vendor T-Shirt',
+    header: 'Vendor Shirt',
+    tagline: '',
+    category: 'Apparel',
+    filter: 'tees',
+    price: 12000,
+    desc: '',
+    hasSize: true,
+    colors: [
+      { name: 'Black', value: 'black', image: VendorTshirtBlack },
+      { name: 'White', value: 'white', image: VendorTshirtWhite },
+    ],
+    cardClass: '',
+    priceClass: '',
+    buyClass: '',
   },
 ];
 

@@ -255,6 +255,14 @@
   gap: 24px;
 }
 
+.partner-form-header {
+  padding-top: 5%;
+}
+
+.partner-form-header p {
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
 /* Form Group */
 .partner-form-group {
   display: flex;

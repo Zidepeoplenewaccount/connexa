@@ -219,7 +219,7 @@ export default function AffiliateSignup() {
         {showModal && (
           <div className="affiliate-modal-overlay" onClick={() => setShowModal(false)}>
             <div className="affiliate-modal" onClick={(e) => e.stopPropagation()}>
-              <button className="affiliate-modal-close" onClick={() => setShowModal(false)}>×</button>
+              {/*<button className="affiliate-modal-close" onClick={() => setShowModal(false)}>×</button>*/}
 
               <h2 className="affiliate-modal-title">Become an Affiliate</h2>
               <p className="affiliate-modal-subtitle">Fill in your details to get your unique affiliate link</p>
