@@ -7,7 +7,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Speakers from './components/speakers';
 import Tickets from './components/Tickets';
-import Awards from './components/Awards';
+// import Awards from './components/Awards';
 import Voting from './components/Voting';
 import Merch from './components/merch';
 import Footer from './components/Footer';
