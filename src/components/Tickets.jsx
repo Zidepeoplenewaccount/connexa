@@ -24,7 +24,7 @@ const tickets = [
       'Networking opportunities with vendors',
       'Experience the energy of the Opportunity Playground,
     ],
-    bestFor: 'Anyone curious about flexible work and community building.',
+    bestFor: 'Anyone who wants to shop with vendors and feel the energy of the Opportunity Playground',
     cta: 'Get Marketplace Pass ',
     ctaClass: '',
     dotColor: 'rgba(255,255,255,0.5)',
