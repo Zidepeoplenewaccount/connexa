@@ -13,8 +13,8 @@ const tickets = [
     icon: '🎫',
     iconClass: 'ticket-icon-white',
     label: 'Open Access',
-    name: 'General Access Ticket',
-    subtitle: 'Experience the future of flexible work',
+    name: 'Marketplace Access',
+    subtitle: 'Access the Connexa Showcase Floor, shop from 100+ vendors, discover new brands, and experience the energy of the Opportunity Playground.',
     price: 3000,
     available: 100,  // ADD THIS
     features: [
@@ -24,7 +24,7 @@ const tickets = [
       'Entry into a high-energy environment',
     ],
     bestFor: 'Anyone curious about flexible work and community building.',
-    cta: 'Get General Pass',
+    cta: 'Get Marketplace Ticket ',
     ctaClass: '',
     dotColor: 'rgba(255,255,255,0.5)',
   },
