@@ -25,7 +25,7 @@ const tickets = [
       'Experience the energy of the Opportunity Playground,
     ],
     bestFor: 'Anyone who wants to shop with vendors and feel the energy of the Opportunity Playground',
-    cta: 'Get Marketplace Pass ',
+    cta: 'Get Marketplace Access',
     ctaClass: '',
     dotColor: 'rgba(255,255,255,0.5)',
   },
