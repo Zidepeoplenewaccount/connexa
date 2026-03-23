@@ -117,7 +117,7 @@ export default function Hero() {
         <div className="hero-floating-tags">
           <div className="hero-tag hero-tag-1">🏪 Market Vendors</div>
           <div className="hero-tag hero-tag-2">💡 Startups & Brands</div>
-          <div className="hero-tag hero-tag-3">🤝 Networking</div>
+          <div className="hero-tag hero-tag-3">🤝 Oportunities</div>
           <div className="hero-tag hero-tag-4">🏆 Awards & Recognition</div>
         </div>
 

@@ -9,7 +9,19 @@ import BuildersTshirtWhite from '../assets/IMG_7768.PNG';
 import TalentTshirtBlack from '../assets/IMG_7769.PNG';
 import TalentTshirtWhite from '../assets/IMG_7770.PNG';
 import VendorTshirtWhite from '../assets/IMG_7806.PNG';
-import VendorTshirtBlack from '../assets/IMG_7807.PNG';
+import VendorTshirtBlack from '../assets/IMG_7764.PNG';
+import VendorTshirtNavy from '../assets/IMG_7807.PNG';
+
+import OfficialTshirtBundleWhite from '../assets/IMG_7990.PNG';
+import OfficialTshirtBundleBlack from '../assets/IMG_7989.PNG';
+import TalentTshirtBundleBlack from '../assets/IMG_7991.PNG';
+import TalentTshirtBundleWhite from '../assets/IMG_7992.PNG';
+import VendorTshirtBundleWhite from '../assets/IMG_7994.PNG';
+import VendorTshirtBundleBlack from '../assets/IMG_7993.PNG';
+import VendorTshirtBundleNavy from '../assets/IMG_7995.PNG';
+import BuildersTshirtBundleBlack from '../assets/IMG_7996.PNG';
+import BuildersTshirtBundleWhite from '../assets/IMG_7997.PNG';
+
 import { initializeMerchOrder } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
 import { validateTicketId } from '../services/api';
@@ -66,8 +78,8 @@ const allProducts = [
         name: 'Official T-Shirt',
         hasSize: true,
         colors: [
-          { name: 'Black', value: 'black', image: OfficialTshirtBlack },
-          { name: 'White', value: 'white', image: OfficialTshirtWhite },
+          { name: 'Black', value: 'black', image: OfficialTshirtBundleBlack },
+          { name: 'White', value: 'white', image: OfficialTshirtBundleWhite },
         ],
       },
       {
@@ -123,6 +135,25 @@ const allProducts = [
   },
   {
     id: 6,
+    name: 'Connexa Vendor T-Shirt',
+    header: 'Vendor Shirt',
+    tagline: 'Vendor t-shirt',
+    category: 'Apparel',
+    filter: 'tees',
+    price: 12000,
+    desc: 'rep it at the opportunity playground.',
+    hasSize: true,
+    colors: [
+      { name: 'Black', value: 'black', image: VendorTshirtBlack },
+      { name: 'White', value: 'white', image: VendorTshirtWhite },
+      { name: 'Navy', value: 'navy', image: VendorTshirtNavy },
+    ],
+    cardClass: '',
+    priceClass: '',
+    buyClass: '',
+  },
+  {
+    id: 7,
     name: 'Connexa Builder Pack',
     header: 'Builder Pack',
     tagline: 'Build in Style',
@@ -137,42 +168,8 @@ const allProducts = [
         name: 'Builder T-Shirt',
         hasSize: true,
         colors: [
-          { name: 'Black', value: 'black', image: BuildersTshirtBlack },
-          { name: 'White', value: 'white', image: BuildersTshirtWhite },
-        ],
-      },
-      {
-        name: 'Face Cap',
-        hasSize: false,
-        colors: [
-          { name: 'Black', value: 'black', image: FaceCap },
-          { name: 'White', value: 'white', image: FaceCap },
-        ],
-      },
-    ],
-    badge: 'pack',
-    cardClass: 'featured',
-    priceClass: 'price-orange',
-    buyClass: 'buy-orange',
-  },
-  {
-    id: 7,
-    name: 'Connexa Talent Pack',
-    header: 'Talent Pack',
-    tagline: 'Show Up, Stand Out',
-    category: 'Bundle',
-    filter: 'packs',
-    price: 18000,
-    originalPrice: 19000,
-    desc: 'Talent T-Shirt + Face Cap. Show up, stand out.',
-    isBundle: true,
-    bundleItems: [
-      {
-        name: 'Talent T-Shirt',
-        hasSize: true,
-        colors: [
-          { name: 'Black', value: 'black', image: TalentTshirtBlack },
-          { name: 'White', value: 'white', image: TalentTshirtWhite },
+          { name: 'Black', value: 'black', image: BuildersTshirtBundleBlack },
+          { name: 'White', value: 'white', image: BuildersTshirtBundleWhite },
         ],
       },
       {
@@ -191,21 +188,72 @@ const allProducts = [
   },
   {
     id: 8,
-    name: 'Connexa Vendor T-Shirt',
-    header: 'Vendor Shirt',
-    tagline: '',
-    category: 'Apparel',
-    filter: 'tees',
-    price: 12000,
-    desc: '',
-    hasSize: true,
-    colors: [
-      { name: 'Black', value: 'black', image: VendorTshirtBlack },
-      { name: 'White', value: 'white', image: VendorTshirtWhite },
+    name: 'Connexa Talent Pack',
+    header: 'Talent Pack',
+    tagline: 'Show Up, Stand Out',
+    category: 'Bundle',
+    filter: 'packs',
+    price: 18000,
+    originalPrice: 19000,
+    desc: 'Talent T-Shirt + Face Cap. Show up, stand out.',
+    isBundle: true,
+    bundleItems: [
+      {
+        name: 'Talent T-Shirt',
+        hasSize: true,
+        colors: [
+          { name: 'White', value: 'white', image: TalentTshirtBundleWhite },
+          { name: 'Black', value: 'black', image: TalentTshirtBundleBlack },
+        ],
+      },
+      {
+        name: 'Face Cap',
+        hasSize: false,
+        colors: [
+          { name: 'Black', value: 'black', image: FaceCap },
+          { name: 'White', value: 'white', image: FaceCap },
+        ],
+      },
     ],
-    cardClass: '',
-    priceClass: '',
-    buyClass: '',
+    badge: 'pack',
+    cardClass: 'featured',
+    priceClass: 'price-orange',
+    buyClass: 'buy-orange',
+  },
+  {
+    id: 9,
+    name: 'Connexa Vendor Pack',
+    header: 'Vendor Pack',
+    tagline: 'Represent the Movement',
+    category: 'Bundle',
+    filter: 'packs',
+    price: 18000,
+    originalPrice: 19000,
+    desc: 'Vendor T-Shirt + Face Cap.',
+    isBundle: true,
+    bundleItems: [
+      {
+        name: 'Vendor T-Shirt',
+        hasSize: true,
+        colors: [
+          { name: 'Black', value: 'black', image: VendorTshirtBundleBlack },
+          { name: 'White', value: 'white', image: VendorTshirtBundleWhite },
+          { name: 'Navy', value: 'navy', image: VendorTshirtBundleNavy },
+        ],
+      },
+      {
+        name: 'Face Cap',
+        hasSize: false,
+        colors: [
+          { name: 'Black', value: 'black', image: FaceCap },
+          { name: 'White', value: 'white', image: FaceCap },
+        ],
+      },
+    ],
+    badge: 'pack',
+    cardClass: 'featured',
+    priceClass: 'price-orange',
+    buyClass: 'buy-orange',
   },
 ];
 
