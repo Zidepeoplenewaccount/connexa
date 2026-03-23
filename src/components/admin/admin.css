@@ -1,0 +1,451 @@
+/* ===================== ADMIN RESET ===================== */
+.admin-root {
+  all: initial; /* Reset everything */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #fff;
+  background: #0a0a0a;
+  min-height: 100vh;
+  display: block;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.admin-root *,
+.admin-root *::before,
+.admin-root *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===================== ADMIN GRID ===================== */
+.admin-wrapper {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  background: #0a0a0a;
+}
+
+/* ===================== SIDEBAR ===================== */
+.admin-sidebar {
+  width: 250px;
+  background: #1a1a1a;
+  border-right: 1px solid #333;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+.admin-logo h2 {
+  color: #f5a623;
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0 0 32px 0;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.admin-nav a {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.admin-nav a:hover,
+.admin-nav a.active {
+  background: rgba(245,166,35,0.15);
+  color: #f5a623;
+}
+
+.admin-nav-footer {
+  border-top: 1px solid #333;
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+.admin-nav-footer a,
+.admin-nav-footer button {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #333;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.admin-nav-footer a:hover,
+.admin-nav-footer button:hover {
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+}
+
+/* ===================== MAIN CONTENT ===================== */
+.admin-content-wrapper {
+  margin-left: 250px;
+  width: calc(100vw - 250px);
+  min-height: 100vh;
+  padding: 32px;
+  background: #0a0a0a;
+}
+
+.admin-page-inner {
+  width: 100%;
+  max-width: none;
+}
+
+.admin-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.admin-page-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+/* ===================== STATS GRID ===================== */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.admin-stat-card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+}
+
+.admin-stat-icon {
+  font-size: 32px;
+}
+
+.admin-stat-info {
+  flex: 1;
+}
+
+.admin-stat-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.admin-stat-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  display: block;
+}
+
+/* ===================== BUTTONS ===================== */
+.admin-btn {
+  padding: 12px 24px;
+  background: #f5a623;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245,166,35,0.4);
+}
+
+/* ===================== SEARCH ===================== */
+.admin-search-bar {
+  width: 100%;
+  padding: 12px 16px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.admin-search-bar:focus {
+  border-color: #f5a623;
+}
+
+/* ===================== TABLE ===================== */
+.admin-card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.admin-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 20px 0;
+}
+
+.admin-table-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+  color: #fff;
+  font-size: 14px;
+}
+
+.admin-table th {
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.admin-table code {
+  background: rgba(245,166,35,0.1);
+  color: #f5a623;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.admin-table-btn {
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.admin-table-btn:hover {
+  background: rgba(232,49,42,0.15);
+  border-color: #e8312a;
+}
+
+/* ===================== LOGIN PAGE ===================== */
+.admin-login-wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  padding: 20px;
+}
+
+.admin-login-box {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 48px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.admin-login-box h1 {
+  color: #f5a623;
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.admin-login-box input {
+  width: 100%;
+  padding: 14px 16px;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 16px;
+  outline: none;
+}
+
+.admin-login-box input:focus {
+  border-color: #f5a623;
+}
+
+.admin-login-box button {
+  width: 100%;
+  padding: 14px;
+  background: #f5a623;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.admin-login-box a {
+  display: block;
+  margin-top: 20px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  text-align: center;
+  font-size: 14px;
+}
+
+.admin-error-msg {
+  background: rgba(232,49,42,0.1);
+  border: 1px solid rgba(232,49,42,0.3);
+  padding: 12px;
+  border-radius: 8px;
+  color: #e8312a;
+  margin-bottom: 16px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.admin-loading-msg {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255,255,255,0.5);
+  font-size: 16px;
+}
+
+/* ===================== MOBILE ===================== */
+.admin-mobile-toggle {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  padding: 10px 16px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.admin-stat-card {
+  background: #1a1a1a;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-4px);
+  border-color: #f5a623;
+}
+
+.admin-stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #f5a623;
+  margin-bottom: 8px;
+}
+
+.admin-stat-label {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.admin-btn-outline {
+  background: transparent;
+  border: 2px solid #333;
+  color: #fff;
+}
+
+.admin-btn-outline:hover {
+  background: #1a1a1a;
+  border-color: #f5a623;
+}
+
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    position: fixed;
+    left: -100%;
+    transition: left 0.3s;
+    z-index: 1000;
+  }
+
+  .admin-sidebar.menu-open {
+    left: 0;
+  }
+
+  .admin-content-wrapper {
+    margin-left: 0;
+    width: 100vw;
+    padding: 80px 20px 20px 20px;
+  }
+
+  .admin-mobile-toggle {
+    display: block;
+  }
+
+  .admin-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,296 @@
+.upgrade-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.upgrade-modal {
+  background: var(--surface-2);
+  border: 2px solid var(--orange);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.upgrade-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  color: var(--white);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upgrade-modal-close:hover {
+  background: var(--red);
+  border-color: var(--red);
+  transform: rotate(90deg);
+}
+
+.upgrade-modal-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+
+.upgrade-modal-subtitle {
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.upgrade-form-group {
+  margin-bottom: 24px;
+}
+
+.upgrade-form-group label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.upgrade-form-group input {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.upgrade-form-group input:focus {
+  border-color: var(--orange);
+  background: rgba(255,255,255,0.06);
+}
+
+.upgrade-form-group small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+
+.upgrade-error {
+  background: rgba(232,49,42,0.15);
+  border: 1px solid rgba(232,49,42,0.3);
+  color: var(--red);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.upgrade-submit-btn {
+  width: 100%;
+  padding: 16px 32px;
+  background: var(--orange);
+  color: var(--black);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upgrade-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(245,166,35,0.5);
+}
+
+.upgrade-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.upgrade-current {
+  margin-bottom: 32px;
+}
+
+.upgrade-current h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 12px;
+}
+
+.upgrade-current-card {
+  padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.upgrade-ticket-type {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.upgrade-attendee {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 4px;
+}
+
+.upgrade-ticket-id {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  font-family: monospace;
+}
+
+.upgrade-options-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.upgrade-options-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.upgrade-option-card {
+  padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.upgrade-option-card:hover {
+  border-color: var(--orange);
+  transform: translateX(4px);
+}
+
+.upgrade-option-card.selected {
+  border-color: var(--orange);
+  background: rgba(245,166,35,0.1);
+}
+
+.upgrade-option-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.upgrade-option-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.upgrade-option-price {
+  text-align: right;
+}
+
+.upgrade-full-price {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: line-through;
+}
+
+.upgrade-option-difference {
+  font-size: 15px;
+  color: rgba(255,255,255,0.7);
+}
+
+.upgrade-option-difference strong {
+  color: var(--orange);
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.upgrade-option-selected {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 12px;
+  background: var(--orange);
+  color: var(--black);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.upgrade-back-btn {
+  width: 100%;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--white);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 12px;
+}
+
+.upgrade-back-btn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.upgrade-no-options {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.upgrade-no-options p {
+  font-size: 1.2rem;
+  color: var(--green);
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .upgrade-modal {
+    padding: 32px 24px;
+  }
+
+  .upgrade-modal-title {
+    font-size: 1.5rem;
+  }
+}
