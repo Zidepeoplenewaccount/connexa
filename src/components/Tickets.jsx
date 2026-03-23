@@ -22,7 +22,7 @@ const tickets = [
       'Shop from 100+ vendors and businesses',
       'Discover and support new brands on the spot',
       'Networking opportunities with vendors',
-      'Experience the energy of the Opportunity Playground,
+      'Experience the energy of the Opportunity Playground',
     ],
     bestFor: 'Anyone who wants to shop with vendors and feel the energy of the Opportunity Playground.',
     cta: 'Get Marketplace Access',
