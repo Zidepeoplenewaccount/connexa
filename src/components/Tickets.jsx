@@ -13,7 +13,7 @@ const tickets = [
     icon: '🎫',
     iconClass: 'ticket-icon-white',
     label: 'Open Access',
-    name: 'Marketplace Access',
+    name: 'Marketplace Pass',
     subtitle: 'Access the Connexa Showcase Floor, shop from 100+ vendors, discover new brands, and experience the energy of the Opportunity Playground.',
     price: 3000,
     available: 100,  // ADD THIS
@@ -25,7 +25,7 @@ const tickets = [
       'Experience the energy of the Opportunity Playground',
     ],
     bestFor: 'Anyone who wants to shop with vendors and feel the energy of the Opportunity Playground.',
-    cta: 'Get Marketplace Access',
+    cta: 'Get Marketplace Pass',
     ctaClass: '',
     dotColor: 'rgba(255,255,255,0.5)',
   },
