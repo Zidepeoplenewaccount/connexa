@@ -209,8 +209,8 @@ const tickets = [
 
 // Calculate group discount for individual passes
 function calculateDiscount(quantity) {
-  if (quantity >= 5) return 5000;
-  if (quantity >= 2) return 2000;
+  if (quantity === 5) return 5000;
+  if (quantity >= 2 && quantity < 5) return 2000;
   return 0;
 }
 
@@ -415,7 +415,7 @@ export default function Tickets() {
 
       if (isIndividual) {
         const baseAmount = ticketPrice * quantity;
-        const groupDiscount = calculateDiscount(quantity);
+        const groupDiscount = selectedTicket.name === 'General Access Ticket' ? 0 : calculateDiscount(quantity);
         totalAmount = baseAmount - groupDiscount;
 
         metadata = {
@@ -714,26 +714,40 @@ export default function Tickets() {
                     ))}
                   </div>
 
-                  {quantity >= 2 && (
+                  {(quantity >= 2 && quantity <= 5 ) && selectedTicket.name !== 'General Access Ticket' ? (
                     <div className="ticket-discount-badge">
                       🎉 Group Discount: -₦{calculateDiscount(quantity).toLocaleString()}
                     </div>
-                  )}
+                  ) : null}
 
                   <div className="ticket-modal-total">
                     <span>Total Amount</span>
                     <div className="ticket-modal-total-breakdown">
-                      {quantity >= 2 && (
-                        <>
-                          <div className="ticket-modal-subtotal">
-                            ₦{(calculateTicketPrice(selectedTicket.name, selectedTicket.price) * quantity).toLocaleString()}
-                          </div>
-                          <div className="ticket-modal-discount">
-                            -₦{calculateDiscount(quantity).toLocaleString()}
-                          </div>
-                        </>
-                      )}
-                      <strong>₦{((calculateTicketPrice(selectedTicket.name, selectedTicket.price) * quantity) - calculateDiscount(quantity)).toLocaleString()}</strong>
+                      {(() => {
+                        // Calculate all values
+                        const isGeneralAccess = selectedTicket.name === 'General Access Ticket';
+                        const groupDiscount = isGeneralAccess ? 0 : calculateDiscount(quantity);
+                        const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
+                        const subtotal = ticketPrice * quantity;
+                        const total = subtotal - groupDiscount;
+
+                        return (
+                          <>
+                            {/* Only show breakdown if discount exists */}
+                            {groupDiscount > 0 && (
+                              <>
+                                <div className="ticket-modal-subtotal">
+                                  ₦{subtotal.toLocaleString()}
+                                </div>
+                                <div className="ticket-modal-discount">
+                                  -₦{groupDiscount.toLocaleString()}
+                                </div>
+                              </>
+                            )}
+                            <strong>₦{total.toLocaleString()}</strong>
+                          </>
+                        );
+                      })()}
                     </div>
                   </div>
                 </>
