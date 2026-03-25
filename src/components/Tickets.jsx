@@ -326,7 +326,7 @@ export default function Tickets() {
       const data = await validateTicketId(ticketId);
       
       // Check if ticket is General Access or Individual Regular
-      const validTypes = ['General Access Ticket', 'Individual Pass — Regular'];
+      const validTypes = ['Marketplace Pass', 'Individual Pass — Regular'];
       
       if (validTypes.includes(data.ticket_type)) {
         setConnectorsTicketValid(true);
@@ -336,7 +336,7 @@ export default function Tickets() {
       } else {
         setConnectorsTicketValid(false);
         setConnectorsTicketData(null);
-        setError('Connectors Pass requires a General Access or Individual Regular ticket');
+        setError('Connectors Pass requires a Marketplace or Individual Regular ticket');
       }
     } catch (err) {
       setConnectorsTicketValid(false);
@@ -416,7 +416,7 @@ export default function Tickets() {
 
       if (isIndividual) {
         const baseAmount = ticketPrice * quantity;
-        const groupDiscount = selectedTicket.name === 'General Access Ticket' ? 0 : calculateDiscount(quantity);
+        const groupDiscount = selectedTicket.name === 'Marketplace Pass' ? 0 : calculateDiscount(quantity);
         totalAmount = baseAmount - groupDiscount;
 
         metadata = {
@@ -715,7 +715,7 @@ export default function Tickets() {
                     ))}
                   </div>
 
-                  {(quantity >= 2 && quantity <= 5 ) && selectedTicket.name !== 'General Access Ticket' ? (
+                  {(quantity >= 2 && quantity <= 5 ) && selectedTicket.name !== 'Marketplace Pass' ? (
                     <div className="ticket-discount-badge">
                       🎉 Group Discount: -₦{calculateDiscount(quantity).toLocaleString()}
                     </div>
@@ -726,8 +726,8 @@ export default function Tickets() {
                     <div className="ticket-modal-total-breakdown">
                       {(() => {
                         // Calculate all values
-                        const isGeneralAccess = selectedTicket.name === 'General Access Ticket';
-                        const groupDiscount = isGeneralAccess ? 0 : calculateDiscount(quantity);
+                        const isMarketplacePass = selectedTicket.name === 'Marketplace Pass';
+                        const groupDiscount = isMarketplacePass ? 0 : calculateDiscount(quantity);
                         const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
                         const subtotal = ticketPrice * quantity;
                         const total = subtotal - groupDiscount;
