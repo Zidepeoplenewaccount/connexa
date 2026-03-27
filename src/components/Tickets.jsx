@@ -146,7 +146,7 @@ const tickets = [
       'Brand positioning without sales pressure',
       'Maximum of 2 staff members per booth',
       'Staff access tickets are included in your booth package',
-      'Allowed booth sizes: 3ft × 3ft (height: 8ft) 5ft × 5ft (height: 8ft). Only these specified booth sizes are permitted',
+      'Allowed booth sizes: 2m × 2m and 2m x 3m. Only these specified booth sizes are permitted',
       'Limited to one booth per brand'
     ],
     bestFor: 'Tech startups, service brands, platforms, and businesses focused on visibility.',
