@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const PAYSTACK_SECRET_KEY = 'sk_live_c58363dfd6faf9bd2b81568330ecc563f02572c3';
 //const PAYSTACK_SECRET_KEY = 'sk_test_41296c97d16db0d5baaca5e3589329542f292305';
-const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
-//const BACKEND_URL = 'http://127.0.0.1:8000';
+//const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
+const BACKEND_URL = 'http://127.0.0.1:8000';
 // Update initializePayment to include affiliate code
 export const initializePayment = async (paymentData) => {
   try {
@@ -48,6 +48,17 @@ export const verifyPayment = async (reference) => {
     return response.data;
   } catch (error) {
     console.error('Payment verification failed:', error);
+    throw error;
+  }
+};
+
+// Create free order (100% discount)
+export const createFreeOrder = async (orderData) => {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/payments/free-order`, orderData);
+    return response.data;
+  } catch (error) {
+    console.error('Free order creation failed:', error);
     throw error;
   }
 };
@@ -200,12 +211,11 @@ export const getAffiliateCode = () => {
   
   // Store in localStorage for persistence across navigation
   if (ref) {
-    localStorage.setItem('affiliate_code', ref);
     return ref;
   }
   
   // Retrieve stored code if exists
-  return localStorage.getItem('affiliate_code') || null;
+  return null;
 };
 
 export const submitPartnership = async (formData) => {
@@ -311,6 +321,22 @@ export const initializeUpgrade = async (upgradeData) => {
     return response.data;
   } catch (error) {
     console.error('Upgrade initialization failed:', error);
+    throw error;
+  }
+};
+
+// Validate discount code
+export const validateDiscountCode = async (code, userEmail, amount, discountType) => {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/discount-codes/validate`, {
+      code: code,
+      user_email: userEmail,
+      amount: amount,
+      discount_type: discountType  // "tickets" or "merch"
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Discount code validation failed:', error);
     throw error;
   }
 };

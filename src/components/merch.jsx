@@ -24,7 +24,7 @@ import BuildersTshirtBundleWhite from '../assets/IMG_7997.PNG';
 
 import { initializeMerchOrder } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
-import { validateTicketId } from '../services/api';
+import { validateTicketId, validateDiscountCode } from '../services/api';
 
 const allProducts = [
   {
@@ -295,6 +295,13 @@ export default function Merch() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Discount code state
+  const [discountCode, setDiscountCode] = useState('');
+  const [discountValidating, setDiscountValidating] = useState(false);
+  const [discountValid, setDiscountValid] = useState(false);
+  const [discountData, setDiscountData] = useState(null);
+  const [discountError, setDiscountError] = useState('');
+
   // Initialize card color selections
   useEffect(() => {
     const initialSelections = {};
@@ -366,6 +373,62 @@ export default function Merch() {
     }, 500);
   }
 
+  async function validateDiscount(code, amount) {
+    if (!code || code.length < 3) {
+      setDiscountValid(false);
+      setDiscountData(null);
+      setDiscountError('');
+      return;
+    }
+
+    setDiscountValidating(true);
+    setDiscountError('');
+
+    try {
+      const userEmail = ticketData?.email || buyerEmail;
+
+      if (!userEmail) {
+        setDiscountError('Please validate ticket first');
+        setDiscountValidating(false);
+        return;
+      }
+
+      const data = await validateDiscountCode(code, userEmail, amount, 'merch');
+      
+      if (data.valid) {
+        setDiscountValid(true);
+        setDiscountData(data);
+        setDiscountError('');
+      } else {
+        setDiscountValid(false);
+        setDiscountData(null);
+        setDiscountError(data.message);
+      }
+    } catch (err) {
+      setDiscountValid(false);
+      setDiscountData(null);
+      setDiscountError('Invalid discount code');
+    } finally {
+      setDiscountValidating(false);
+    }
+  }
+
+  // Debounced discount validation
+  function handleDiscountCodeChange(value) {
+    setDiscountCode(value);
+    setDiscountValid(false);
+    setDiscountData(null);
+    setDiscountError('');
+    
+    clearTimeout(window.merchDiscountValidationTimeout);
+    
+    if (value.length >= 3 && selectedProduct) {
+      window.merchDiscountValidationTimeout = setTimeout(() => {
+        validateDiscount(value, selectedProduct.price);
+      }, 500);
+    }
+  }
+
   function openBuyModal(product) {
     setSelectedProduct(product);
     setModalOpen(true);
@@ -378,6 +441,12 @@ export default function Merch() {
     setError('');
     setTicketValid(false);
     setTicketData(null);
+
+    // Reset discount code
+    setDiscountCode('');
+    setDiscountValid(false);
+    setDiscountData(null);
+    setDiscountError('');
     
     if (product.isBundle) {
       // Initialize bundle selections
@@ -453,6 +522,12 @@ export default function Merch() {
         productDetails += ` (${selectedColor}${selectedSize ? `, ${selectedSize}` : ''})`;
       }
 
+      // Reset discount code
+      setDiscountCode('');
+      setDiscountValid(false);
+      setDiscountData(null);
+      setDiscountError('');
+
       const orderData = {
         buyer_name: buyerName,
         buyer_email: ticketData.email,
@@ -464,8 +539,28 @@ export default function Merch() {
         total_amount: selectedProduct.price,
         delivery_address: deliveryAddress,
         ticket_id: ticketId,
+        discount_code: discountValid ? discountCode.toUpperCase() : null,
+        discount_code_percentage: discountValid ? discountData.discount_percentage : null,
+        discount_code_amount: discountValid ? codeDiscountAmount : null,
         affiliate_code: affiliateCode
       };
+
+      if (totalAmount <= 0) {
+        const response = await createFreeOrder({
+          buyerEmail: ticketData.email,
+          metadata: {
+            type: 'merch',
+            // ... all merch metadata
+          }
+        });
+
+        if (response.status) {
+          window.location.href = `/payment-success?reference=${response.reference}`;
+        } else {
+          setError('Order creation failed. Please try again.');
+        }
+        return;
+      }
 
       const response = await initializeMerchOrder(orderData);
 
@@ -776,6 +871,31 @@ export default function Merch() {
                     rows="3"
                     required
                   />
+                </div>
+
+                <div className="merch-input-group">
+                  <label>Discount Code (Optional)</label>
+                  <input
+                    type="text"
+                    className="merch-input"
+                    placeholder="Enter discount code"
+                    value={discountCode}
+                    onChange={(e) => handleDiscountCodeChange(e.target.value.toUpperCase())}
+                    style={{ textTransform: 'uppercase' }}
+                  />
+                  {discountValidating && (
+                    <small className="merch-validating">Validating code...</small>
+                  )}
+                  {discountValid && discountData && (
+                    <div className="merch-valid-badge">
+                      ✓ {discountData.discount_percentage}% discount applied! Save ₦{(selectedProduct.price * (discountData.discount_percentage / 100)).toLocaleString()}
+                    </div>
+                  )}
+                  {discountError && (
+                    <div className="merch-error-badge">
+                      ✗ {discountError}
+                    </div>
+                  )}
                 </div>
 
                 {error && <div className="merch-modal-error">{error}</div>}

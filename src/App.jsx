@@ -26,6 +26,8 @@ import AdminVotes from './pages/admin/AdminVotes';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminPayments from './pages/admin/AdminPayments';
 import AdminAffiliates from './pages/admin/AdminAffiliates';
+import AdminDiscountCodes from './pages/admin/AdminDiscountCodes';
+
 import ProtectedRoute from './components/admin/protectedRoute';
 import PartnerForm from './components/PartnerForm';
 import Gallery from './components/Gallery';
@@ -136,6 +138,11 @@ export default function App() {
         <Route 
           path="/admin/questions" 
           element={<ProtectedRoute><AdminQuestions /></ProtectedRoute>} 
+        />
+
+        <Route 
+          path="/admin/discount-codes" 
+          element={<AdminDiscountCodes />} 
         />
       </Routes>
     </BrowserRouter>

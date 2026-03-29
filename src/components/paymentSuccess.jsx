@@ -26,6 +26,15 @@ export default function PaymentSuccess() {
 
   async function handleVerification(reference) {
     try {
+      if (reference.startsWith('FREE-')) {
+        console.log('Free order detected, skipping Paystack verification');
+
+        setStatus('success');
+        setMessage('Free order completed successfully!');
+        return;
+      }
+
+
       const data = await verifyPayment(reference);
 
       // Handle both 'success' and 'already_processed' as success

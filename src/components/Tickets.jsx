@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './Tickets.css';
-import { initializePayment, validateTicketId } from '../services/api';
+import { initializePayment, validateTicketId, validateDiscountCode, createFreeOrder } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
 import { isDiscountActive, calculateTicketPrice, getDiscountPercentage } from '../utils/discount';
 
@@ -248,17 +248,110 @@ export default function Tickets() {
   const [connectorsValidating, setConnectorsValidating] = useState(false);
   const [connectorsTicketValid, setConnectorsTicketValid] = useState(false);
   const [connectorsTicketData, setConnectorsTicketData] = useState(null);
+
+  // Discount code state
+  const [discountCode, setDiscountCode] = useState('');
+  const [discountValidating, setDiscountValidating] = useState(false);
+  const [discountValid, setDiscountValid] = useState(false);
+  const [discountData, setDiscountData] = useState(null);
+  const [discountError, setDiscountError] = useState('');
+
+
   
   // Check if discount is active
   const discountActive = isDiscountActive();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  
+  async function validateDiscount(code, amount) {
+    if (!code || code.length < 3) {
+      setDiscountValid(false);
+      setDiscountData(null);
+      setDiscountError('');
+      return;
+    }
+
+    setDiscountValidating(true);
+    setDiscountError('');
+
+    try {
+      const userEmail = selectedTicket.passType === 'individual' 
+        ? attendees[0]?.email 
+        : selectedTicket.passType === 'vendor' 
+          ? vendorData.email 
+          : businessEmail;
+
+      if (!userEmail) {
+        setDiscountError('Please fill in email first');
+        setDiscountValidating(false);
+        return;
+      }
+
+      const data = await validateDiscountCode(code, userEmail, amount, 'tickets');
+      
+      if (data.valid) {
+        setDiscountValid(true);
+        setDiscountData(data);
+        setDiscountError('');
+      } else {
+        setDiscountValid(false);
+        setDiscountData(null);
+        setDiscountError(data.message);
+      }
+    } catch (err) {
+      setDiscountValid(false);
+      setDiscountData(null);
+      setDiscountError('Invalid discount code');
+    } finally {
+      setDiscountValidating(false);
+    }
+  }
+
+  // Debounced discount validation
+  function handleDiscountCodeChange(value) {
+    setDiscountCode(value);
+    setDiscountValid(false);
+    setDiscountData(null);
+    setDiscountError('');
+    
+    clearTimeout(window.discountValidationTimeout);
+    
+    if (value.length >= 3) {
+      window.discountValidationTimeout = setTimeout(() => {
+        // Calculate amount before discount code
+        let amount = 0;
+        
+        if (selectedTicket.passType === 'individual') {
+          const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
+          const baseAmount = ticketPrice * quantity;
+          const groupDiscount = selectedTicket.name === 'General Access Ticket' ? 0 : calculateDiscount(quantity);
+          amount = baseAmount - groupDiscount;
+        } else if (selectedTicket.passType === 'vendor') {
+          const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
+          amount = ticketPrice;
+          if (vendorData.needElectricity === 'yes') amount += 20000;
+          if (vendorData.supportAssistant === 'zidepeople') amount += (vendorData.supportQuantity * 10000);
+        } else {
+          amount = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
+        }
+        
+        validateDiscount(value, amount);
+      }, 500);
+    }
+  }
+
 
   function openModal(ticket) {
     setSelectedTicket(ticket);
     setModalOpen(true);
     setError('');
+
+    // Reset discount code
+    setDiscountCode('');
+    setDiscountValid(false);
+    setDiscountData(null);
+    setDiscountError('');
     
     // Reset state based on pass type
     if (ticket.passType === 'individual') {
@@ -417,7 +510,16 @@ export default function Tickets() {
       if (isIndividual) {
         const baseAmount = ticketPrice * quantity;
         const groupDiscount = selectedTicket.name === 'Marketplace Pass' ? 0 : calculateDiscount(quantity);
-        totalAmount = baseAmount - groupDiscount;
+        let subtotal = baseAmount - groupDiscount;
+        
+        // Apply discount code if valid
+        let codeDiscountAmount = 0;
+        if (discountValid && discountData) {
+          codeDiscountAmount = subtotal * (discountData.discount_percentage / 100);
+          subtotal -= codeDiscountAmount;
+        }
+        
+        totalAmount = subtotal;
 
         metadata = {
           ticket_type: selectedTicket.name,
@@ -427,6 +529,9 @@ export default function Tickets() {
           discounted_price: ticketPrice,
           discount_percentage: discountPercentage,
           group_discount: groupDiscount,
+          discount_code: discountValid ? discountCode.toUpperCase() : null,
+          discount_code_percentage: discountValid ? discountData.discount_percentage : null,
+          discount_code_amount: discountValid ? codeDiscountAmount : null,
           attendees: attendees.map(a => ({
             name: a.name,
             email: a.email
@@ -451,6 +556,13 @@ export default function Tickets() {
         if (vendorData.supportAssistant === 'zidepeople') {
           baseAmount += (vendorData.supportQuantity * 10000);
         }
+
+        // Apply discount code if valid
+        let codeDiscountAmount = 0;
+        if (discountValid && discountData) {
+          codeDiscountAmount = baseAmount * (discountData.discount_percentage / 100);
+          baseAmount -= codeDiscountAmount;
+        }
         
         totalAmount = baseAmount;
 
@@ -460,6 +572,9 @@ export default function Tickets() {
           original_price: selectedTicket.price,
           discounted_price: ticketPrice,
           discount_percentage: discountPercentage,
+          discount_code: discountValid ? discountCode.toUpperCase() : null,
+          discount_code_percentage: discountValid ? discountData.discount_percentage : null,
+          discount_code_amount: discountValid ? codeDiscountAmount : null,
           full_name: vendorData.fullName,
           business_name: vendorData.businessName,
           whatsapp: vendorData.whatsapp,
@@ -473,7 +588,16 @@ export default function Tickets() {
           affiliate_code: affiliateCode
         };
       } else {
-        totalAmount = ticketPrice;
+        let baseAmount = ticketPrice;
+        
+        // Apply discount code if valid
+        let codeDiscountAmount = 0;
+        if (discountValid && discountData) {
+          codeDiscountAmount = baseAmount * (discountData.discount_percentage / 100);
+          baseAmount -= codeDiscountAmount;
+        }
+
+        totalAmount = baseAmount;
 
         metadata = {
           ticket_type: selectedTicket.name,
@@ -481,12 +605,34 @@ export default function Tickets() {
           original_price: selectedTicket.price,
           discounted_price: ticketPrice,
           discount_percentage: discountPercentage,
+          discount_code: discountValid ? discountCode.toUpperCase() : null,
+          discount_code_percentage: discountValid ? discountData.discount_percentage : null,
+          discount_code_amount: discountValid ? codeDiscountAmount : null,
           business_name: businessName,
           representative_name: repName,
           email: businessEmail,
           phone: businessPhone,
           affiliate_code: affiliateCode
         };
+      }
+
+      if (totalAmount <= 0) {
+        // Create tickets directly without Paystack
+        const response = await createFreeOrder({
+          buyerEmail: isIndividual ? attendees[0].email : isVendor ? vendorData.email : businessEmail,
+          ticketType: selectedTicket.name,
+          ticketNames: isIndividual ? attendees.map(a => a.name) : [isVendor ? vendorData.fullName : repName],
+          quantity: isIndividual ? quantity : 1,
+          metadata
+        });
+
+        if (response.status) {
+          // Redirect to success page
+          window.location.href = `/payment-success?reference=${response.reference}`;
+        } else {
+          setError('Order creation failed. Please try again.');
+        }
+        return;
       }
 
       const paymentData = {
@@ -721,6 +867,31 @@ export default function Tickets() {
                     </div>
                   ) : null}
 
+                  <div className="ticket-input-group">
+                    <label>Discount Code (Optional)</label>
+                    <input
+                      type="text"
+                      className="ticket-input"
+                      placeholder="Enter discount code"
+                      value={discountCode}
+                      onChange={(e) => handleDiscountCodeChange(e.target.value.toUpperCase())}
+                      style={{ textTransform: 'uppercase' }}
+                    />
+                    {discountValidating && (
+                      <small className="ticket-validating">Validating code...</small>
+                    )}
+                    {discountValid && discountData && (
+                      <div className="ticket-valid-badge">
+                        ✓ {discountData.discount_percentage}% discount applied!
+                      </div>
+                    )}
+                    {discountError && (
+                      <div className="ticket-error-badge">
+                        ✗ {discountError}
+                      </div>
+                    )}
+                  </div>
+
                   <div className="ticket-modal-total">
                     <span>Total Amount</span>
                     <div className="ticket-modal-total-breakdown">
@@ -731,6 +902,14 @@ export default function Tickets() {
                         const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
                         const subtotal = ticketPrice * quantity;
                         const total = subtotal - groupDiscount;
+
+                        // Calculate discount code amount
+                        let codeDiscountAmount = 0;
+                        if (discountValid && discountData) {
+                          codeDiscountAmount = total * (discountData.discount_percentage / 100);
+                        }
+                        
+                        const finalTotal = total - codeDiscountAmount;
 
                         return (
                           <>
@@ -745,7 +924,12 @@ export default function Tickets() {
                                 </div>
                               </>
                             )}
-                            <strong>₦{total.toLocaleString()}</strong>
+                            {codeDiscountAmount > 0 && (
+                              <div className="ticket-modal-discount" style={{ color: 'var(--green)' }}>
+                                Code: -₦{codeDiscountAmount.toLocaleString()}
+                              </div>
+                            )}
+                            <strong>₦{finalTotal.toLocaleString()}</strong>
                           </>
                         );
                       })()}
@@ -756,10 +940,58 @@ export default function Tickets() {
 
               {/* CONNECTORS PASS - Just show total (attendee already pre-filled) */}
               {selectedTicket.type === 'connectors' && connectorsTicketValid && (
-                <div className="ticket-modal-total">
-                  <span>Total Amount</span>
-                  <strong>₦{selectedTicket.price.toLocaleString()}</strong>
-                </div>
+                <>
+                  <div className="ticket-input-group">
+                    <label>Discount Code (Optional)</label>
+                    <input
+                      type="text"
+                      className="ticket-input"
+                      placeholder="Enter discount code"
+                      value={discountCode}
+                      onChange={(e) => handleDiscountCodeChange(e.target.value.toUpperCase())}
+                      style={{ textTransform: 'uppercase' }}
+                    />
+                    {discountValidating && (
+                      <small className="ticket-validating">Validating code...</small>
+                    )}
+                    {discountValid && discountData && (
+                      <div className="ticket-valid-badge">
+                        ✓ {discountData.discount_percentage}% discount applied!
+                      </div>
+                    )}
+                    {discountError && (
+                      <div className="ticket-error-badge">
+                        ✗ {discountError}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="ticket-modal-total">
+                    <span>Total Amount</span>
+                    <div className="ticket-modal-total-breakdown">
+                      {/* Show breakdown if discount code is applied */}
+                      {discountValid && discountData && (
+                        <>
+                          <div className="ticket-modal-subtotal">
+                            ₦{selectedTicket.price.toLocaleString()}
+                          </div>
+                          <div className="ticket-modal-discount" style={{ color: 'var(--green)' }}>
+                            Code: -₦{(selectedTicket.price * (discountData.discount_percentage / 100)).toLocaleString()}
+                          </div>
+                        </>
+                      )}
+                      <strong>
+                        ₦{(() => {
+                          if (discountValid && discountData) {
+                            const discountAmount = selectedTicket.price * (discountData.discount_percentage / 100);
+                            return (selectedTicket.price - discountAmount).toLocaleString();
+                          }
+                          return selectedTicket.price.toLocaleString();
+                        })()}
+                      </strong>
+                    </div>
+                  </div>
+                </>
               )}
 
               {/* BUSINESS PASS FORM */}
@@ -816,9 +1048,72 @@ export default function Tickets() {
                     />
                   </div>
 
+                  <div className="ticket-input-group">
+                    <label>Discount Code (Optional)</label>
+                    <input
+                      type="text"
+                      className="ticket-input"
+                      placeholder="Enter discount code"
+                      value={discountCode}
+                      onChange={(e) => handleDiscountCodeChange(e.target.value.toUpperCase())}
+                      style={{ textTransform: 'uppercase' }}
+                    />
+                    {discountValidating && (
+                      <small className="ticket-validating">Validating code...</small>
+                    )}
+                    {discountValid && discountData && (
+                      <div className="ticket-valid-badge">
+                        ✓ {discountData.discount_percentage}% discount applied!
+                      </div>
+                    )}
+                    {discountError && (
+                      <div className="ticket-error-badge">
+                        ✗ {discountError}
+                      </div>
+                    )}
+                  </div>
+                  
+
                   <div className="ticket-modal-total">
                     <span>Total Amount</span>
-                    <strong>₦{calculateTicketPrice(selectedTicket.name, selectedTicket.price).toLocaleString()}</strong>
+                    <div className="ticket-modal-total-breakdown">
+                      {(() => {
+                        const isGeneralAccess = selectedTicket.name === 'General Access Ticket';
+                        const groupDiscount = isGeneralAccess ? 0 : calculateDiscount(quantity);
+                        const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
+                        const subtotal = ticketPrice * quantity;
+                        let total = subtotal - groupDiscount;
+                        
+                        // Calculate discount code amount
+                        let codeDiscountAmount = 0;
+                        if (discountValid && discountData) {
+                          codeDiscountAmount = total * (discountData.discount_percentage / 100);
+                        }
+                        
+                        const finalTotal = total - codeDiscountAmount;
+
+                        return (
+                          <>
+                            {groupDiscount > 0 && (
+                              <>
+                                <div className="ticket-modal-subtotal">
+                                  ₦{subtotal.toLocaleString()}
+                                </div>
+                                <div className="ticket-modal-discount">
+                                  -₦{groupDiscount.toLocaleString()}
+                                </div>
+                              </>
+                            )}
+                            {codeDiscountAmount > 0 && (
+                              <div className="ticket-modal-discount" style={{ color: 'var(--green)' }}>
+                                Code: -₦{codeDiscountAmount.toLocaleString()}
+                              </div>
+                            )}
+                            <strong>₦{finalTotal.toLocaleString()}</strong>
+                          </>
+                        );
+                      })()}
+                    </div>
                   </div>
                 </>
               )}
@@ -1020,14 +1315,68 @@ export default function Tickets() {
                         <span>+₦{(vendorData.supportQuantity * 10000).toLocaleString()}</span>
                       </div>
                     )}
+
+                    <div className="ticket-input-group">
+                      <label>Discount Code (Optional)</label>
+                      <input
+                        type="text"
+                        className="ticket-input"
+                        placeholder="Enter discount code"
+                        value={discountCode}
+                        onChange={(e) => handleDiscountCodeChange(e.target.value.toUpperCase())}
+                        style={{ textTransform: 'uppercase' }}
+                      />
+                      {discountValidating && (
+                        <small className="ticket-validating">Validating code...</small>
+                      )}
+                      {discountValid && discountData && (
+                        <div className="ticket-valid-badge">
+                          ✓ {discountData.discount_percentage}% discount applied!
+                        </div>
+                      )}
+                      {discountError && (
+                        <div className="ticket-error-badge">
+                          ✗ {discountError}
+                        </div>
+                      )}
+                    </div>
+                    
+                    {discountValid && discountData && (
+                      <>
+                        <div className="ticket-price-item" style={{ paddingTop: '12px', marginTop: '12px', borderTop: '1px solid var(--border)' }}>
+                          <span>Subtotal:</span>
+                          <span>₦{(
+                            calculateTicketPrice(selectedTicket.name, selectedTicket.price) + 
+                            (vendorData.needElectricity === 'yes' ? 20000 : 0) + 
+                            (vendorData.supportAssistant === 'zidepeople' ? vendorData.supportQuantity * 10000 : 0)
+                          ).toLocaleString()}</span>
+                        </div>
+                        <div className="ticket-price-item" style={{ color: 'var(--green)' }}>
+                          <span>Discount ({discountData.discount_percentage}%):</span>
+                          <span>-₦{(() => {
+                            const subtotal = calculateTicketPrice(selectedTicket.name, selectedTicket.price) + 
+                              (vendorData.needElectricity === 'yes' ? 20000 : 0) + 
+                              (vendorData.supportAssistant === 'zidepeople' ? vendorData.supportQuantity * 10000 : 0);
+                            return (subtotal * (discountData.discount_percentage / 100)).toLocaleString();
+                          })()}</span>
+                        </div>
+                      </>
+                    )}
                     
                     <div className="ticket-price-total">
                       <span>Total:</span>
-                      <span>₦{(
-                        calculateTicketPrice(selectedTicket.name, selectedTicket.price) + 
-                        (vendorData.needElectricity === 'yes' ? 20000 : 0) + 
-                        (vendorData.supportAssistant === 'zidepeople' ? vendorData.supportQuantity * 10000 : 0)
-                      ).toLocaleString()}</span>
+                      <span>₦{(() => {
+                        const baseTotal = calculateTicketPrice(selectedTicket.name, selectedTicket.price) + 
+                          (vendorData.needElectricity === 'yes' ? 20000 : 0) + 
+                          (vendorData.supportAssistant === 'zidepeople' ? vendorData.supportQuantity * 10000 : 0);
+                        
+                        if (discountValid && discountData) {
+                          const discountAmount = baseTotal * (discountData.discount_percentage / 100);
+                          return (baseTotal - discountAmount).toLocaleString();
+                        }
+                        
+                        return baseTotal.toLocaleString();
+                      })()}</span>
                     </div>
                   </div>
                 </>

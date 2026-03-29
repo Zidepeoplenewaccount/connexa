@@ -187,3 +187,40 @@ export const deleteQuestion = async (questionId) => {
   const response = await adminAxios.delete(`/speaker-questions/admin/${questionId}`);
   return response.data;
 };
+
+
+// Discount Codes
+export const createDiscountCode = async (codeData) => {
+  const response = await axios.post(`${BACKEND_URL}/discount-codes/create`, codeData, {
+    headers: { Authorization: getAuthToken() }
+  });
+  return response.data;
+};
+
+export const getAllDiscountCodes = async () => {
+  const response = await axios.get(`${BACKEND_URL}/discount-codes/all`, {
+    headers: { Authorization: getAuthToken() }
+  });
+  return response.data;
+};
+
+export const updateDiscountCode = async (code, updateData) => {
+  const response = await axios.patch(`${BACKEND_URL}/discount-codes/${code}`, updateData, {
+    headers: { Authorization: getAuthToken() }
+  });
+  return response.data;
+};
+
+export const deleteDiscountCode = async (code) => {
+  const response = await axios.delete(`${BACKEND_URL}/discount-codes/${code}`, {
+    headers: { Authorization: getAuthToken() }
+  });
+  return response.data;
+};
+
+export const getDiscountStats = async () => {
+  const response = await axios.get(`${BACKEND_URL}/discount-codes/stats/summary`, {
+    headers: { Authorization: getAuthToken() }
+  });
+  return response.data;
+};
