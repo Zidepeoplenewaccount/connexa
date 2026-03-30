@@ -419,7 +419,7 @@ export default function Tickets() {
       const data = await validateTicketId(ticketId);
       
       // Check if ticket is General Access or Individual Regular
-      const validTypes = ['Marketplace Pass', 'Individual Pass — Regular'];
+      const validTypes = ['Marketplace Pass', 'Talent Pass — Regular'];
       
       if (validTypes.includes(data.ticket_type)) {
         setConnectorsTicketValid(true);
