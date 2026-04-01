@@ -102,7 +102,7 @@ export default function AdminTickets() {
                     <td>{ticket.attendee_name}</td>
                     <td>{ticket.buyer_email}</td>
                     <td>{ticket.ticket_type}</td>
-                    <td>₦{ticket.amount_paid?.toLocaleString()}</td>
+                    <td>₦{ticket.amount?.toLocaleString()}</td>
                     <td>
                       <button 
                         className="admin-table-btn"

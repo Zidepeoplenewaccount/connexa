@@ -288,7 +288,14 @@ export default function Tickets() {
         return;
       }
 
-      const data = await validateDiscountCode(code, userEmail, amount, 'tickets');
+      // ADD ticket_type parameter
+      const data = await validateDiscountCode(
+        code, 
+        userEmail, 
+        amount, 
+        'tickets',
+        selectedTicket.name  // Pass ticket type
+      );
       
       if (data.valid) {
         setDiscountValid(true);
@@ -307,6 +314,7 @@ export default function Tickets() {
       setDiscountValidating(false);
     }
   }
+
 
   // Debounced discount validation
   function handleDiscountCodeChange(value) {

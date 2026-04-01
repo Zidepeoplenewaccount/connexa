@@ -14,12 +14,30 @@ export default function AdminDiscountCodes() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showUsesModal, setShowUsesModal] = useState(false);  
+  const [selectedCodeUses, setSelectedCodeUses] = useState([]);  
+  const [selectedCodeName, setSelectedCodeName] = useState('');  
   const [formData, setFormData] = useState({
     code: '',
     discount_percentage: 10,
     applies_to: 'both',
-    auto_generate: false
+    auto_generate: false,
+    max_uses: null,
+    specific_ticket_type: '',
   });
+
+  // Available ticket types for dropdown
+  const ticketTypes = [
+    'All Tickets',  // This means no restriction
+    'General Access Ticket',
+    'Individual Pass — Regular',
+    'Connectors Pass',
+    'Individual Pass — VIP',
+    'Business Owner Pass',
+    'Showcase Vendor Pass',
+    'Market Vendor Pass',
+    'VIP Partner Pass'
+  ];
 
   useEffect(() => {
     fetchData();
@@ -66,6 +84,17 @@ export default function AdminDiscountCodes() {
       fetchData();
     } catch (error) {
       alert('Failed to create discount code: ' + (error.response?.data?.detail || error.message));
+    }
+  }
+
+  async function viewCodeUses(code) {
+    try {
+      const uses = await getDiscountCodeUses(code);
+      setSelectedCodeUses(uses);
+      setSelectedCodeName(code);
+      setShowUsesModal(true);
+    } catch (error) {
+      alert('Failed to fetch code uses');
     }
   }
 
@@ -120,12 +149,12 @@ export default function AdminDiscountCodes() {
             <div className="admin-stat-label">Active Codes</div>
           </div>
           <div className="admin-stat-card" style={{ borderColor: '#f5a623' }}>
-            <div className="admin-stat-value" style={{ color: '#f5a623' }}>{stats.used_codes}</div>
-            <div className="admin-stat-label">Used Codes</div>
+            <div className="admin-stat-value" style={{ color: '#f5a623' }}>{stats.exhausted_codes || 0}</div>
+            <div className="admin-stat-label">Exhausted Codes</div>
           </div>
           <div className="admin-stat-card" style={{ borderColor: '#1a73e8' }}>
-            <div className="admin-stat-value" style={{ color: '#1a73e8' }}>{stats.unused_codes}</div>
-            <div className="admin-stat-label">Unused Codes</div>
+            <div className="admin-stat-value" style={{ color: '#1a73e8' }}>{stats.total_uses || 0}</div>
+            <div className="admin-stat-label">Total Uses</div>
           </div>
         </div>
       )}
@@ -139,17 +168,16 @@ export default function AdminDiscountCodes() {
                 <th>Code</th>
                 <th>Discount</th>
                 <th>Applies To</th>
+                <th>Ticket Type</th>
+                <th>Usage</th>
                 <th>Status</th>
-                <th>Used By</th>
-                <th>Used At</th>
-                <th>Order Ref</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {codes.length === 0 ? (
                 <tr>
-                  <td colSpan="8" style={{ textAlign: 'center', padding: '40px' }}>
+                  <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>
                     No discount codes found
                   </td>
                 </tr>
@@ -193,7 +221,35 @@ export default function AdminDiscountCodes() {
                       </span>
                     </td>
                     <td>
-                      {code.is_used ? (
+                      <small style={{ color: 'rgba(255,255,255,0.6)' }}>
+                        {code.specific_ticket_type || 'All Tickets'}
+                      </small>
+                    </td>
+                    <td>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <span style={{ fontWeight: '700' }}>
+                          {code.times_used} {code.max_uses ? `/ ${code.max_uses}` : ''}
+                        </span>
+                        {code.times_used > 0 && (
+                          <button
+                            onClick={() => viewCodeUses(code.code)}
+                            style={{
+                              padding: '4px 8px',
+                              fontSize: '11px',
+                              background: 'rgba(26,115,232,0.15)',
+                              border: '1px solid rgba(26,115,232,0.3)',
+                              borderRadius: '4px',
+                              color: '#1a73e8',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            View Uses
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                    <td>
+                      {(code.max_uses && code.times_used >= code.max_uses) || code.is_used ? (
                         <span style={{
                           padding: '4px 10px',
                           borderRadius: '6px',
@@ -202,9 +258,9 @@ export default function AdminDiscountCodes() {
                           background: 'rgba(232,49,42,0.15)',
                           color: '#e8312a'
                         }}>
-                          Used
+                          Exhausted
                         </span>
-                      ) : code.is_active ? (
+                      ) : code.is_active && !code.is_used ? (
                         <span style={{
                           padding: '4px 10px',
                           borderRadius: '6px',
@@ -228,33 +284,22 @@ export default function AdminDiscountCodes() {
                         </span>
                       )}
                     </td>
-                    <td>{code.used_by_email || '—'}</td>
-                    <td>{code.used_at ? new Date(code.used_at).toLocaleDateString() : '—'}</td>
                     <td>
-                      {code.order_reference ? (
-                        <code style={{ fontSize: '11px' }}>{code.order_reference.substring(0, 12)}...</code>
-                      ) : '—'}
-                    </td>
-                    <td>
-                      {!code.is_used && (
-                        <>
-                          <button 
-                            className="admin-table-btn"
-                            onClick={() => handleToggleActive(code.code, code.is_active)}
-                            style={{ marginRight: '8px' }}
-                            title={code.is_active ? 'Deactivate' : 'Activate'}
-                          >
-                            {code.is_active ? '🚫' : '✅'}
-                          </button>
-                          <button 
-                            className="admin-table-btn"
-                            onClick={() => handleDelete(code.code)}
-                            title="Delete"
-                          >
-                            🗑️
-                          </button>
-                        </>
-                      )}
+                      <button 
+                        className="admin-table-btn"
+                        onClick={() => handleToggleActive(code.code, code.is_active)}
+                        style={{ marginRight: '8px' }}
+                        title={code.is_active ? 'Deactivate' : 'Activate'}
+                      >
+                        {code.is_active ? '🚫' : '✅'}
+                      </button>
+                      <button 
+                        className="admin-table-btn"
+                        onClick={() => handleDelete(code.code)}
+                        title="Delete"
+                      >
+                        🗑️
+                      </button>
                     </td>
                   </tr>
                 ))
@@ -264,7 +309,7 @@ export default function AdminDiscountCodes() {
         </div>
       </div>
 
-      {/* Create Modal */}
+      {/* CREATE MODAL */}
       {showModal && (
         <div 
           style={{
@@ -275,7 +320,8 @@ export default function AdminDiscountCodes() {
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 9999,
-            padding: '20px'
+            padding: '20px',
+            overflowY: 'auto'
           }}
           onClick={(e) => e.target === e.currentTarget && setShowModal(false)}
         >
@@ -285,7 +331,9 @@ export default function AdminDiscountCodes() {
             borderRadius: '12px',
             padding: '32px',
             width: '100%',
-            maxWidth: '500px'
+            maxWidth: '500px',
+            maxHeight: '90vh',
+            overflowY: 'auto'
           }}>
             <h2 style={{ marginBottom: '24px' }}>Create Discount Code</h2>
             
@@ -350,7 +398,29 @@ export default function AdminDiscountCodes() {
                 />
               </div>
 
-              <div style={{ marginBottom: '24px' }}>
+              {/* ADD MAX USES */}
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}>
+                  Max Uses (leave empty for unlimited)
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  value={formData.max_uses || ''}
+                  onChange={(e) => setFormData({...formData, max_uses: e.target.value})}
+                  placeholder="Unlimited"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: '#0a0a0a',
+                    border: '1px solid #333',
+                    borderRadius: '8px',
+                    color: '#fff'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
                 <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}>
                   Applies To *
                 </label>
@@ -374,6 +444,32 @@ export default function AdminDiscountCodes() {
                 </select>
               </div>
 
+              {/* ADD SPECIFIC TICKET TYPE */}
+              {formData.applies_to !== 'merch' && (
+                <div style={{ marginBottom: '24px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}>
+                    Specific Ticket Type (optional)
+                  </label>
+                  <select
+                    value={formData.specific_ticket_type}
+                    onChange={(e) => setFormData({...formData, specific_ticket_type: e.target.value})}
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      background: '#0a0a0a',
+                      border: '1px solid #333',
+                      borderRadius: '8px',
+                      color: '#fff',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {ticketTypes.map(type => (
+                      <option key={type} value={type}>{type}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               <div style={{ display: 'flex', gap: '12px' }}>
                 <button type="submit" className="admin-btn" style={{ flex: 1 }}>
                   Create Code
@@ -395,6 +491,102 @@ export default function AdminDiscountCodes() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* USES MODAL */}
+      {showUsesModal && (
+        <div 
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: '20px'
+          }}
+          onClick={(e) => e.target === e.currentTarget && setShowUsesModal(false)}
+        >
+          <div style={{
+            background: '#1a1a1a',
+            border: '1px solid #333',
+            borderRadius: '12px',
+            padding: '32px',
+            width: '100%',
+            maxWidth: '900px',
+            maxHeight: '90vh',
+            overflowY: 'auto'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <h2>Uses of Code: {selectedCodeName}</h2>
+              <button 
+                onClick={() => setShowUsesModal(false)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#fff',
+                  fontSize: '24px',
+                  cursor: 'pointer'
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            {selectedCodeUses.length === 0 ? (
+              <p style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.5)' }}>
+                This code has not been used yet.
+              </p>
+            ) : (
+              <div className="admin-table-scroll">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>User</th>
+                      <th>Type</th>
+                      <th>Item</th>
+                      <th>Original</th>
+                      <th>Discount</th>
+                      <th>Final</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selectedCodeUses.map((use) => (
+                      <tr key={use.id}>
+                        <td>{new Date(use.used_at).toLocaleDateString()}</td>
+                        <td>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            <strong>{use.user_name}</strong>
+                            <small style={{ color: 'rgba(255,255,255,0.5)' }}>{use.user_email}</small>
+                          </div>
+                        </td>
+                        <td>
+                          <span style={{
+                            padding: '4px 8px',
+                            borderRadius: '4px',
+                            fontSize: '12px',
+                            background: use.order_type === 'ticket' ? 'rgba(245,166,35,0.15)' : 'rgba(45,184,75,0.15)',
+                            color: use.order_type === 'ticket' ? '#f5a623' : '#2db84b'
+                          }}>
+                            {use.order_type}
+                          </span>
+                        </td>
+                        <td>
+                          <small>{use.ticket_type || use.product_name}</small>
+                        </td>
+                        <td>₦{use.original_amount.toLocaleString()}</td>
+                        <td style={{ color: '#e8312a' }}>-₦{use.discount_amount.toLocaleString()}</td>
+                        <td style={{ fontWeight: '700' }}>₦{use.final_amount.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       )}

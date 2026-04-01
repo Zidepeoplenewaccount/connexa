@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net'; // TODO: Replace with actual backend URL
-//const BACKEND_URL = 'http://127.0.0.1:8000';
+//const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net'; // TODO: Replace with actual backend URL
+const BACKEND_URL = 'http://127.0.0.1:8000';
 
 const getAuthToken = () => localStorage.getItem('admin_token');
 
@@ -35,6 +35,7 @@ export const getDashboardStats = async () => {
 // Tickets
 export const getAllTickets = async (filters = {}) => {
   const response = await adminAxios.get('/admin/tickets', { params: filters });
+  console.log('Fetched tickets:', response.data);
   return response.data;
 };
 
@@ -197,10 +198,19 @@ export const createDiscountCode = async (codeData) => {
   return response.data;
 };
 
+export const getDiscountCodeUses = async (code) => {
+  const response = await axios.get(`${BACKEND_URL}/discount-codes/${code}/uses`, {
+    headers: { Authorization: getAuthToken() }
+  });
+  return response.data;
+};
+
+
 export const getAllDiscountCodes = async () => {
   const response = await axios.get(`${BACKEND_URL}/discount-codes/all`, {
     headers: { Authorization: getAuthToken() }
   });
+  console.log('Fetched discount codes:', response.data);
   return response.data;
 };
 
