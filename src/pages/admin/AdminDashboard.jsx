@@ -40,8 +40,16 @@ export default function AdminDashboard() {
         <div className="admin-stat-card">
           <div className="admin-stat-icon">🎟️</div>
           <div className="admin-stat-info">
-            <span className="admin-stat-label">Tickets</span>
-            <span className="admin-stat-value">{stats?.tickets.total || 0}</span>
+            <span className="admin-stat-label">Tickets Bought</span>
+            <span className="admin-stat-value">{stats?.tickets.bought ?? stats?.tickets.total ?? 0}</span>
+          </div>
+        </div>
+
+        <div className="admin-stat-card">
+          <div className="admin-stat-icon">✅</div>
+          <div className="admin-stat-info">
+            <span className="admin-stat-label">Tickets Used</span>
+            <span className="admin-stat-value">{stats?.tickets.used ?? stats?.tickets.scanned ?? 0}</span>
           </div>
         </div>
 
