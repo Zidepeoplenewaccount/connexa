@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-//const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net'; // TODO: Replace with actual backend URL
-const BACKEND_URL = 'http://127.0.0.1:8000';
+const BACKEND_URL =
+  import.meta.env.VITE_BACKEND_URL ||
+  'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
 
 const getAuthToken = () => localStorage.getItem('admin_token');
 
