@@ -110,6 +110,66 @@
   background: #0a0a0a;
 }
 
+.admin-top-status-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.admin-api-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  border: 1px solid #333;
+  background: #161616;
+  color: #fff;
+}
+
+.admin-api-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #9ca3af;
+}
+
+.admin-api-badge.connected {
+  border-color: rgba(16, 185, 129, 0.45);
+  background: rgba(16, 185, 129, 0.14);
+}
+
+.admin-api-badge.connected .admin-api-dot {
+  background: #10b981;
+}
+
+.admin-api-badge.checking {
+  border-color: rgba(245, 166, 35, 0.5);
+  background: rgba(245, 166, 35, 0.16);
+}
+
+.admin-api-badge.checking .admin-api-dot {
+  background: #f5a623;
+}
+
+.admin-api-badge.auth,
+.admin-api-badge.offline {
+  border-color: rgba(232, 49, 42, 0.5);
+  background: rgba(232, 49, 42, 0.16);
+}
+
+.admin-api-badge.auth .admin-api-dot,
+.admin-api-badge.offline .admin-api-dot {
+  background: #e8312a;
+}
+
+.admin-api-host {
+  opacity: 0.75;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 8px;
+}
+
 .admin-page-inner {
   width: 100%;
   max-width: none;
@@ -439,6 +499,10 @@
     margin-left: 0;
     width: 100vw;
     padding: 80px 20px 20px 20px;
+  }
+
+  .admin-top-status-row {
+    justify-content: flex-start;
   }
 
   .admin-mobile-toggle {

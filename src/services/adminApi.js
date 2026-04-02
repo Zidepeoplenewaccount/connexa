@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const BACKEND_URL =
+export const ADMIN_API_BASE_URL =
   import.meta.env.VITE_BACKEND_URL ||
   'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
 
 const getAuthToken = () => localStorage.getItem('admin_token');
 
-const adminAxios = axios.create({ baseURL: BACKEND_URL });
+const adminAxios = axios.create({ baseURL: ADMIN_API_BASE_URL });
 
 adminAxios.interceptors.request.use((config) => {
   const token = getAuthToken();
@@ -193,14 +193,14 @@ export const deleteQuestion = async (questionId) => {
 
 // Discount Codes
 export const createDiscountCode = async (codeData) => {
-  const response = await axios.post(`${BACKEND_URL}/discount-codes/create`, codeData, {
+  const response = await axios.post(`${ADMIN_API_BASE_URL}/discount-codes/create`, codeData, {
     headers: { Authorization: getAuthToken() }
   });
   return response.data;
 };
 
 export const getDiscountCodeUses = async (code) => {
-  const response = await axios.get(`${BACKEND_URL}/discount-codes/${code}/uses`, {
+  const response = await axios.get(`${ADMIN_API_BASE_URL}/discount-codes/${code}/uses`, {
     headers: { Authorization: getAuthToken() }
   });
   return response.data;
@@ -208,7 +208,7 @@ export const getDiscountCodeUses = async (code) => {
 
 
 export const getAllDiscountCodes = async () => {
-  const response = await axios.get(`${BACKEND_URL}/discount-codes/all`, {
+  const response = await axios.get(`${ADMIN_API_BASE_URL}/discount-codes/all`, {
     headers: { Authorization: getAuthToken() }
   });
   console.log('Fetched discount codes:', response.data);
@@ -216,21 +216,21 @@ export const getAllDiscountCodes = async () => {
 };
 
 export const updateDiscountCode = async (code, updateData) => {
-  const response = await axios.patch(`${BACKEND_URL}/discount-codes/${code}`, updateData, {
+  const response = await axios.patch(`${ADMIN_API_BASE_URL}/discount-codes/${code}`, updateData, {
     headers: { Authorization: getAuthToken() }
   });
   return response.data;
 };
 
 export const deleteDiscountCode = async (code) => {
-  const response = await axios.delete(`${BACKEND_URL}/discount-codes/${code}`, {
+  const response = await axios.delete(`${ADMIN_API_BASE_URL}/discount-codes/${code}`, {
     headers: { Authorization: getAuthToken() }
   });
   return response.data;
 };
 
 export const getDiscountStats = async () => {
-  const response = await axios.get(`${BACKEND_URL}/discount-codes/stats/summary`, {
+  const response = await axios.get(`${ADMIN_API_BASE_URL}/discount-codes/stats/summary`, {
     headers: { Authorization: getAuthToken() }
   });
   return response.data;
