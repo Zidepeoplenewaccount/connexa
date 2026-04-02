@@ -838,7 +838,7 @@ export default function Tickets() {
               {selectedTicket.type === 'connectors' && (
                 <>
                   <div className="ticket-connectors-info">
-                    ℹ️ <strong>Important:</strong> Connectors Pass requires a valid General Access or Individual Regular ticket.
+                    ℹ️ <strong>Important:</strong> Connectors Pass requires a valid Marketplace or Talent Regular ticket.
                   </div>
 
                   <div className="ticket-input-group">

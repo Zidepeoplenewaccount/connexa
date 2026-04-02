@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net'; 
-//const BACKEND_URL = 'http://127.0.0.1:8000';
+//const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net'; 
+const BACKEND_URL = 'http://127.0.0.1:8000';
 
 const getAuthToken = () => localStorage.getItem('admin_token');
 
@@ -195,6 +195,8 @@ export const createDiscountCode = async (codeData) => {
   const response = await axios.post(`${BACKEND_URL}/discount-codes/create`, codeData, {
     headers: { Authorization: getAuthToken() }
   });
+  console.log('Request data for creating discount code:', codeData);
+  console.log('Created discount code:', response.data);
   return response.data;
 };
 

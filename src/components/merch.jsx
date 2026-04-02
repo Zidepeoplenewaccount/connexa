@@ -528,15 +528,55 @@ export default function Merch() {
       setDiscountData(null);
       setDiscountError('');
 
+      // Calculate total with discount code
+      let totalAmount = selectedProduct.price;
+      let codeDiscountAmount = 0;
+      
+      if (discountValid && discountData) {
+        codeDiscountAmount = totalAmount * (discountData.discount_percentage / 100);
+        totalAmount -= codeDiscountAmount;
+      }
+
+      // If total is ₦0, create order directly without Paystack
+      if (totalAmount <= 0) {
+        const response = await createFreeOrder({
+          buyerEmail: ticketData.email,
+          metadata: {
+            type: 'merch',
+            product_name: productDetails,
+            product_details: productDetails,
+            quantity: 1,
+            unit_price: selectedProduct.price,
+            total_amount: 0,
+            buyer_name: buyerName,
+            buyer_email: ticketData.email,
+            buyer_phone: buyerPhone,
+            delivery_address: deliveryAddress,
+            ticket_id: ticketId,
+            discount_code: discountCode.toUpperCase(),
+            discount_code_percentage: discountData.discount_percentage,
+            discount_code_amount: codeDiscountAmount,
+            affiliate_code: affiliateCode
+          }
+        });
+
+        if (response.status) {
+          window.location.href = `/payment-success?reference=${response.reference}`;
+        } else {
+          setError('Order creation failed. Please try again.');
+        }
+        return;
+      }
+
       const orderData = {
         buyer_name: buyerName,
         buyer_email: ticketData.email,
         buyer_phone: buyerPhone,
-        product_name: productDetails,
-        product_details: orderData.product_details,
+        product_name: productDetails,  
+        product_details: productDetails,  
         quantity: 1,
         unit_price: selectedProduct.price,
-        total_amount: selectedProduct.price,
+        total_amount: totalAmount, 
         delivery_address: deliveryAddress,
         ticket_id: ticketId,
         discount_code: discountValid ? discountCode.toUpperCase() : null,

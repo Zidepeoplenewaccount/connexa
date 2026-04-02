@@ -4,7 +4,8 @@ import {
   createDiscountCode,
   updateDiscountCode,
   deleteDiscountCode,
-  getDiscountStats
+  getDiscountStats,
+  getDiscountCodeUses
 } from '../../services/adminApi';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
@@ -76,7 +77,9 @@ export default function AdminDiscountCodes() {
       await createDiscountCode({
         code: formData.auto_generate ? null : formData.code.toUpperCase(),
         discount_percentage: parseFloat(formData.discount_percentage),
-        applies_to: formData.applies_to
+        applies_to: formData.applies_to,
+        max_uses: formData.max_uses ? parseInt(formData.max_uses) : null,
+        specific_ticket_type: formData.specific_ticket_type && formData.specific_ticket_type !== 'All Tickets' ? formData.specific_ticket_type : null,
       });
       
       alert('Discount code created successfully!');
