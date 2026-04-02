@@ -215,6 +215,14 @@ function calculateDiscount(quantity) {
   return 0;
 }
 
+function normalizeEmail(email) {
+  return (email || '').trim().toLowerCase();
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeEmail(email));
+}
+
 export default function Tickets() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
@@ -282,19 +290,25 @@ export default function Tickets() {
           ? vendorData.email 
           : businessEmail;
 
-      if (!userEmail) {
+      const normalizedUserEmail = normalizeEmail(userEmail);
+      if (!normalizedUserEmail) {
         setDiscountError('Please fill in email first');
         setDiscountValidating(false);
         return;
       }
 
-      // ADD ticket_type parameter
+      if (!isValidEmail(normalizedUserEmail)) {
+        setDiscountError('Please enter a valid email first');
+        setDiscountValidating(false);
+        return;
+      }
+
       const data = await validateDiscountCode(
-        code, 
-        userEmail, 
-        amount, 
+        code,
+        normalizedUserEmail,
+        amount,
         'tickets',
-        selectedTicket.name  // Pass ticket type
+        selectedTicket.name
       );
       
       if (data.valid) {
@@ -477,10 +491,21 @@ export default function Tickets() {
       return;
     }
 
-    if (isIndividual && !isConnectors) {
+    if (isIndividual) {
       const allFilled = attendees.every(a => a.name.trim() && a.email.trim());
       if (!allFilled) {
         setError('Please fill in all attendee names and emails');
+        return;
+      }
+
+      const invalidAttendeeIndex = attendees.findIndex(a => !isValidEmail(a.email));
+      if (invalidAttendeeIndex !== -1) {
+        setError(`Please enter a valid email for attendee ${invalidAttendeeIndex + 1}`);
+        return;
+      }
+
+      if (isConnectors && !attendees[0]?.email) {
+        setError('A valid email is required for Connectors Pass');
         return;
       }
     }
@@ -496,11 +521,19 @@ export default function Tickets() {
         setError('Please list appliances that need electricity');
         return;
       }
+      if (!isValidEmail(vendorData.email)) {
+        setError('Please enter a valid vendor email');
+        return;
+      }
     }
 
     if (!isIndividual && !isVendor) {
       if (!businessName.trim() || !repName.trim() || !businessEmail.trim() || !businessPhone.trim()) {
         setError('Please fill in all business details');
+        return;
+      }
+      if (!isValidEmail(businessEmail)) {
+        setError('Please enter a valid business email');
         return;
       }
     }
@@ -541,8 +574,8 @@ export default function Tickets() {
           discount_code_percentage: discountValid ? discountData.discount_percentage : null,
           discount_code_amount: discountValid ? codeDiscountAmount : null,
           attendees: attendees.map(a => ({
-            name: a.name,
-            email: a.email
+            name: a.name.trim(),
+            email: normalizeEmail(a.email)
           })),
           affiliate_code: affiliateCode
         };
@@ -586,7 +619,7 @@ export default function Tickets() {
           full_name: vendorData.fullName,
           business_name: vendorData.businessName,
           whatsapp: vendorData.whatsapp,
-          email: vendorData.email,
+          email: normalizeEmail(vendorData.email),
           instagram_website: vendorData.instagramWebsite || null,
           category: vendorData.category,
           need_electricity: vendorData.needElectricity,
@@ -618,16 +651,22 @@ export default function Tickets() {
           discount_code_amount: discountValid ? codeDiscountAmount : null,
           business_name: businessName,
           representative_name: repName,
-          email: businessEmail,
+          email: normalizeEmail(businessEmail),
           phone: businessPhone,
           affiliate_code: affiliateCode
         };
       }
 
+      const buyerEmail = isIndividual
+        ? normalizeEmail(attendees[0].email)
+        : isVendor
+          ? normalizeEmail(vendorData.email)
+          : normalizeEmail(businessEmail);
+
       if (totalAmount <= 0) {
         // Create tickets directly without Paystack
         const response = await createFreeOrder({
-          buyerEmail: isIndividual ? attendees[0].email : isVendor ? vendorData.email : businessEmail,
+          buyerEmail,
           ticketType: selectedTicket.name,
           ticketNames: isIndividual ? attendees.map(a => a.name) : [isVendor ? vendorData.fullName : repName],
           quantity: isIndividual ? quantity : 1,
@@ -644,7 +683,7 @@ export default function Tickets() {
       }
 
       const paymentData = {
-        buyerEmail: isIndividual ? attendees[0].email : isVendor ? vendorData.email : businessEmail,
+        buyerEmail,
         amount: totalAmount,
         ticketType: selectedTicket.name,
         ticketNames: isIndividual ? attendees.map(a => a.name) : [isVendor ? vendorData.fullName : repName],
