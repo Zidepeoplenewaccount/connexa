@@ -724,8 +724,9 @@ export default function Tickets() {
         });
 
         if (response.status) {
-          // Redirect to success page
-          window.location.href = `/payment-success?reference=${response.reference}`;
+          // Redirect to success page with email delivery status for transparent messaging
+          const failedCount = response?.email_delivery?.failed_count || 0;
+          window.location.href = `/payment-success?reference=${response.reference}&email_failed_count=${failedCount}`;
         } else {
           setError('Order creation failed. Please try again.');
         }

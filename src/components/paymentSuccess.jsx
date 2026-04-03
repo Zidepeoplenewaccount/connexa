@@ -140,6 +140,7 @@ export default function PaymentSuccess() {
   const [message, setMessage] = useState('');
   const [tickets, setTickets] = useState([]);
   const [reference, setReference] = useState('');
+  const [emailFailedCount, setEmailFailedCount] = useState(0);
   const hasVerified = useRef(false);
 
   useEffect(() => {
@@ -159,6 +160,8 @@ export default function PaymentSuccess() {
   async function handleVerification(ref) {
     try {
       if (ref.startsWith('FREE-')) {
+        const freeFailedCount = parseInt(searchParams.get('email_failed_count') || '0', 10) || 0;
+        setEmailFailedCount(freeFailedCount);
         setStatus('success');
         setMessage('Your free ticket has been issued!');
         return;
@@ -170,6 +173,7 @@ export default function PaymentSuccess() {
         setStatus('success');
         setMessage(data.message || 'Payment successful!');
         setTickets(data.tickets || []);
+        setEmailFailedCount(data?.email_delivery?.failed_count || 0);
       } else {
         setStatus('error');
         setMessage('Payment verification failed');
@@ -262,7 +266,9 @@ export default function PaymentSuccess() {
 
               {/* Email note */}
               <div style={s.emailNote}>
-                ✉️ Your ticket has been sent to your email. Check your inbox (and spam folder).
+                {emailFailedCount > 0
+                  ? '⚠️ Your payment was successful, but we could not deliver some confirmation email(s) yet. Please contact support with your payment reference below.'
+                  : '✉️ Your ticket has been sent to your email. Check your inbox (and spam folder).'}
               </div>
 
               <a href="/" style={s.btn}>Back to Home</a>
