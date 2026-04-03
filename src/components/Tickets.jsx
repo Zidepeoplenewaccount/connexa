@@ -962,10 +962,11 @@ export default function Tickets() {
                       value={quantity}
                       onChange={(e) => handleQuantityChange(parseInt(e.target.value))}
                     >
-                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                      {[1, 2, 3, 4, 5].map(num => (
                         <option key={num} value={num}>{num}</option>
                       ))}
                     </select>
+                    <small className="ticket-validating">Group purchase is limited to 2-5 tickets per checkout.</small>
                   </div>
 
                   <div className="ticket-attendees">
