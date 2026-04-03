@@ -966,7 +966,7 @@ export default function Tickets() {
                         <option key={num} value={num}>{num}</option>
                       ))}
                     </select>
-                    <small className="ticket-validating">Group purchase is limited to 2-5 tickets per checkout.</small>
+                    <small className="ticket-validating">You can buy 1-5 tickets per checkout. Group discount applies to 2-5 tickets.</small>
                   </div>
 
                   <div className="ticket-attendees">
