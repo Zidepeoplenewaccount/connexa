@@ -1,49 +1,176 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { verifyPayment } from '../services/api';
+import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.png';
+
+const s = {
+  page: {
+    minHeight: '100vh',
+    background: '#0a0a0a',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '32px 16px',
+    fontFamily: 'system-ui, Avenir, Helvetica, Arial, sans-serif',
+    color: 'rgba(255,255,255,0.87)',
+  },
+  logo: {
+    width: '140px',
+    marginBottom: '32px',
+    filter: 'invert(1)',
+  },
+  card: {
+    background: '#141414',
+    border: '1px solid rgba(255,255,255,0.08)',
+    borderRadius: '16px',
+    padding: '40px 32px',
+    maxWidth: '520px',
+    width: '100%',
+    textAlign: 'center',
+  },
+  icon: {
+    fontSize: '48px',
+    marginBottom: '16px',
+  },
+  title: {
+    fontSize: '24px',
+    fontWeight: '700',
+    marginBottom: '8px',
+  },
+  subtitle: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: '15px',
+    marginBottom: '24px',
+  },
+  divider: {
+    borderColor: 'rgba(255,255,255,0.08)',
+    margin: '24px 0',
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '8px 0',
+    fontSize: '14px',
+    borderBottom: '1px solid rgba(255,255,255,0.05)',
+    textAlign: 'left',
+  },
+  rowLabel: {
+    color: 'rgba(255,255,255,0.45)',
+    minWidth: '100px',
+  },
+  rowValue: {
+    fontWeight: '600',
+    wordBreak: 'break-all',
+    textAlign: 'right',
+    marginLeft: '12px',
+  },
+  ticketBlock: {
+    background: 'rgba(245,166,35,0.06)',
+    border: '1px solid rgba(245,166,35,0.2)',
+    borderRadius: '10px',
+    padding: '12px 16px',
+    marginBottom: '10px',
+    textAlign: 'left',
+  },
+  ticketId: {
+    fontFamily: 'monospace',
+    fontSize: '13px',
+    color: '#f5a623',
+    fontWeight: '700',
+    letterSpacing: '0.5px',
+  },
+  ticketName: {
+    fontSize: '14px',
+    marginTop: '4px',
+    color: 'rgba(255,255,255,0.75)',
+  },
+  emailNote: {
+    background: 'rgba(45,184,75,0.08)',
+    border: '1px solid rgba(45,184,75,0.2)',
+    borderRadius: '8px',
+    padding: '12px 16px',
+    fontSize: '13px',
+    color: 'rgba(45,184,75,0.9)',
+    marginTop: '20px',
+    textAlign: 'left',
+  },
+  btn: {
+    display: 'inline-block',
+    marginTop: '24px',
+    padding: '14px 32px',
+    background: '#f5a623',
+    color: '#000',
+    borderRadius: '8px',
+    textDecoration: 'none',
+    fontWeight: '700',
+    fontSize: '15px',
+    width: '100%',
+    boxSizing: 'border-box',
+  },
+  btnOutline: {
+    display: 'inline-block',
+    marginTop: '12px',
+    padding: '12px 32px',
+    background: 'transparent',
+    color: 'rgba(255,255,255,0.6)',
+    border: '1px solid rgba(255,255,255,0.15)',
+    borderRadius: '8px',
+    textDecoration: 'none',
+    fontWeight: '600',
+    fontSize: '14px',
+    width: '100%',
+    boxSizing: 'border-box',
+  },
+  spinner: {
+    width: '40px',
+    height: '40px',
+    border: '3px solid rgba(255,255,255,0.1)',
+    borderTop: '3px solid #f5a623',
+    borderRadius: '50%',
+    animation: 'spin 0.8s linear infinite',
+    margin: '0 auto 20px',
+  },
+};
 
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState('verifying');
   const [message, setMessage] = useState('');
-  const hasVerified = useRef(false); // Track if verification already happened
+  const [tickets, setTickets] = useState([]);
+  const [reference, setReference] = useState('');
+  const hasVerified = useRef(false);
 
   useEffect(() => {
-    const reference = searchParams.get('reference');
-    
-    if (!reference) {
+    const ref = searchParams.get('reference');
+    if (!ref) {
       setStatus('error');
       setMessage('No payment reference found');
       return;
     }
-
-    // Only verify once
+    setReference(ref);
     if (!hasVerified.current) {
       hasVerified.current = true;
-      handleVerification(reference);
+      handleVerification(ref);
     }
   }, [searchParams]);
 
-  async function handleVerification(reference) {
+  async function handleVerification(ref) {
     try {
-      if (reference.startsWith('FREE-')) {
-        console.log('Free order detected, skipping Paystack verification');
-
+      if (ref.startsWith('FREE-')) {
         setStatus('success');
-        setMessage('Free order completed successfully!');
+        setMessage('Your free ticket has been issued!');
         return;
       }
 
+      const data = await verifyPayment(ref);
 
-      const data = await verifyPayment(reference);
-
-      // Handle both 'success' and 'already_processed' as success
       if (data.status === 'success' || data.status === 'already_processed') {
-        console.log('Payment verified:', data);
         setStatus('success');
         setMessage(data.message || 'Payment successful!');
+        setTickets(data.tickets || []);
       } else {
-        console.error('Payment verification failed:', data);
         setStatus('error');
         setMessage('Payment verification failed');
       }
@@ -54,60 +181,106 @@ export default function PaymentSuccess() {
     }
   }
 
+  const ticketItems = tickets.filter(t => t.ticket_id && t.ticket_type !== 'upgrade');
+  const upgradeItems = tickets.filter(t => t.type === 'upgrade');
+  const voteItems = tickets.filter(t => t.type === 'vote');
+  const merchItems = tickets.filter(t => t.type === 'merch');
+
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center',
-      padding: '24px',
-      textAlign: 'center'
-    }}>
-      {status === 'verifying' && (
-        <div>
-          <h1>Verifying Payment...</h1>
-          <p>Please wait while we confirm your payment.</p>
-        </div>
-      )}
+    <>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      <div style={s.page}>
+        <img src={connexaLogo} alt="Connexa" style={s.logo} />
 
-      {status === 'success' && (
-        <div>
-          <h1 style={{ color: '#2db84b' }}>✅ Payment Successful!</h1>
-          <p>{message}</p>
-          <p>Check your email for ticket details.</p>
-          <a href="/" style={{ 
-            display: 'inline-block', 
-            marginTop: '20px',
-            padding: '12px 24px',
-            background: '#f5a623',
-            color: '#000',
-            borderRadius: '8px',
-            textDecoration: 'none',
-            fontWeight: 'bold'
-          }}>
-            Back to Home
-          </a>
-        </div>
-      )}
+        <div style={s.card}>
+          {status === 'verifying' && (
+            <>
+              <div style={s.spinner} />
+              <h2 style={s.title}>Verifying Payment…</h2>
+              <p style={s.subtitle}>Please wait while we confirm your payment.</p>
+            </>
+          )}
 
-      {status === 'error' && (
-        <div>
-          <h1 style={{ color: '#e8312a' }}>❌ Payment Failed</h1>
-          <p>{message}</p>
-          <a href="/#tickets" style={{ 
-            display: 'inline-block', 
-            marginTop: '20px',
-            padding: '12px 24px',
-            background: '#f5a623',
-            color: '#000',
-            borderRadius: '8px',
-            textDecoration: 'none',
-            fontWeight: 'bold'
-          }}>
-            Try Again
-          </a>
+          {status === 'success' && (
+            <>
+              <div style={s.icon}>🎉</div>
+              <h2 style={{ ...s.title, color: '#2db84b' }}>Payment Confirmed!</h2>
+              <p style={s.subtitle}>{message}</p>
+
+              {/* Ticket summaries */}
+              {ticketItems.length > 0 && (
+                <>
+                  <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '10px', textAlign: 'left' }}>
+                    YOUR TICKET{ticketItems.length > 1 ? 'S' : ''}
+                  </p>
+                  {ticketItems.map((t, i) => (
+                    <div key={i} style={s.ticketBlock}>
+                      <div style={s.ticketId}>{t.ticket_id}</div>
+                      <div style={s.ticketName}>
+                        {t.attendee_name || t.business_name || t.full_name || ''}
+                        {t.ticket_type ? ` · ${t.ticket_type}` : ''}
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {upgradeItems.length > 0 && (
+                <>
+                  <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '10px', textAlign: 'left' }}>
+                    UPGRADED TICKET
+                  </p>
+                  {upgradeItems.map((t, i) => (
+                    <div key={i} style={s.ticketBlock}>
+                      <div style={s.ticketId}>{t.ticket_id}</div>
+                      <div style={s.ticketName}>Upgraded to {t.upgraded_to}</div>
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {voteItems.length > 0 && (
+                <div style={s.ticketBlock}>
+                  <div style={s.ticketId}>🗳️ {voteItems.length} Vote{voteItems.length > 1 ? 's' : ''} Recorded</div>
+                </div>
+              )}
+
+              {merchItems.length > 0 && merchItems.map((t, i) => (
+                <div key={i} style={s.ticketBlock}>
+                  <div style={s.ticketId}>Order #{t.order_id}</div>
+                  <div style={s.ticketName}>{t.product_name}</div>
+                </div>
+              ))}
+
+              {/* Reference */}
+              <div style={{ marginTop: '20px' }}>
+                <div style={s.row}>
+                  <span style={s.rowLabel}>Reference</span>
+                  <span style={{ ...s.rowValue, fontFamily: 'monospace', fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>{reference}</span>
+                </div>
+              </div>
+
+              {/* Email note */}
+              <div style={s.emailNote}>
+                ✉️ Your ticket has been sent to your email. Check your inbox (and spam folder).
+              </div>
+
+              <a href="/" style={s.btn}>Back to Home</a>
+              <a href="/#tickets" style={s.btnOutline}>Buy More Tickets</a>
+            </>
+          )}
+
+          {status === 'error' && (
+            <>
+              <div style={s.icon}>❌</div>
+              <h2 style={{ ...s.title, color: '#e8312a' }}>Payment Failed</h2>
+              <p style={s.subtitle}>{message}</p>
+              <a href="/#tickets" style={s.btn}>Try Again</a>
+              <a href="/" style={s.btnOutline}>Back to Home</a>
+            </>
+          )}
         </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 }
