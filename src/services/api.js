@@ -1,35 +1,23 @@
 import axios from 'axios';
 
-const PAYSTACK_SECRET_KEY = 'sk_live_c58363dfd6faf9bd2b81568330ecc563f02572c3';
-//const PAYSTACK_SECRET_KEY = 'sk_test_41296c97d16db0d5baaca5e3589329542f292305';
 const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
 //const BACKEND_URL = 'http://127.0.0.1:8000';
-// Update initializePayment to include affiliate code
+
 export const initializePayment = async (paymentData) => {
   try {
     const affiliateCode = getAffiliateCode();
-    
-    // Merge the passed metadata with affiliate_code
+
     const metadata = {
-      ...paymentData.metadata,  // Use the metadata from Tickets.jsx
+      ...paymentData.metadata,
       affiliate_code: affiliateCode,
     };
-    
-    const response = await axios.post(
-      'https://api.paystack.co/transaction/initialize',
-      {
-        email: paymentData.buyerEmail,
-        amount: paymentData.amount * 100,
-        metadata: metadata,  // Use the merged metadata
-        callback_url: `${window.location.origin}/payment-success`,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+
+    const response = await axios.post(`${BACKEND_URL}/payments/initialize`, {
+      email: paymentData.buyerEmail,
+      amount: paymentData.amount,
+      metadata,
+      callback_url: `${window.location.origin}/payment-success`,
+    });
 
     return response.data;
   } catch (error) {
@@ -89,26 +77,17 @@ export const getCandidate = async (candidateId) => {
 // ===================== VOTING =====================
 export const initializeVote = async (voteData) => {
   try {
-    // Step 1: Initialize vote on backend
-    const response = await axios.post(`${BACKEND_URL}/votes/initialize`, voteData);
-    const { amount, metadata, voter_email } = response.data;
+    // Step 1: Initialize vote on backend to get metadata/amount
+    const initResponse = await axios.post(`${BACKEND_URL}/votes/initialize`, voteData);
+    const { amount, metadata, voter_email } = initResponse.data;
 
-    // Step 2: Initialize Paystack payment
-    const paystackResponse = await axios.post(
-      'https://api.paystack.co/transaction/initialize',
-      {
-        email: voter_email,
-        amount: amount * 100, // Use the amount from backend response
-        metadata: metadata,
-        callback_url: `${window.location.origin}/vote-success`,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    // Step 2: Initialize Paystack payment via backend (secret key stays server-side)
+    const paystackResponse = await axios.post(`${BACKEND_URL}/payments/initialize`, {
+      email: voter_email,
+      amount,
+      metadata,
+      callback_url: `${window.location.origin}/vote-success`,
+    });
 
     return paystackResponse.data;
   } catch (error) {
@@ -153,26 +132,17 @@ export const getVotingStats = async (candidateType = null) => {
 // ===================== MERCH =====================
 export const initializeMerchOrder = async (orderData) => {
   try {
-    // Step 1: Initialize order on backend
-    const response = await axios.post(`${BACKEND_URL}/merch/initialize`, orderData);
-    const { amount, metadata, buyer_email } = response.data;
+    // Step 1: Initialize order on backend to get metadata/amount
+    const initResponse = await axios.post(`${BACKEND_URL}/merch/initialize`, orderData);
+    const { amount, metadata, buyer_email } = initResponse.data;
 
-    // Step 2: Initialize Paystack payment
-    const paystackResponse = await axios.post(
-      'https://api.paystack.co/transaction/initialize',
-      {
-        email: buyer_email,
-        amount: amount * 100, // Convert to kobo
-        metadata: metadata,
-        callback_url: `${window.location.origin}/merch-success`,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    // Step 2: Initialize Paystack payment via backend (secret key stays server-side)
+    const paystackResponse = await axios.post(`${BACKEND_URL}/payments/initialize`, {
+      email: buyer_email,
+      amount,
+      metadata,
+      callback_url: `${window.location.origin}/merch-success`,
+    });
 
     return paystackResponse.data;
   } catch (error) {
