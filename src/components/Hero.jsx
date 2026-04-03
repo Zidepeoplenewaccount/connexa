@@ -135,7 +135,7 @@ export default function Hero() {
             <span className="highlight-blue">X</span>
             <span>A</span>
           </h1>
-          <span className="hero-subtitle">The Future of Flexible Work</span>
+          <span className="hero-subtitle">The Opportunity Playground</span>
 
           <p className="hero-title-sub">BUSINESS · TALENT · CONNECTIONS</p>
 

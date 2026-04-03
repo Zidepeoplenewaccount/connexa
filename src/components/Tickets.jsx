@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './Tickets.css';
-import { initializePayment, validateTicketId, validateDiscountCode, createFreeOrder } from '../services/api';
+import { initializePayment, validateTicketId, validateDiscountCode, createFreeOrder, findTicketsByEmail } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
 import { isDiscountActive, calculateTicketPrice, getDiscountPercentage } from '../utils/discount';
 
@@ -151,7 +151,7 @@ const tickets = [
     ],
     bestFor: 'Tech startups, service brands, platforms, and businesses focused on visibility.',
     cta: 'Get Showcase Pass',
-    notice: 'Not suitable for large physical product displaysNot suitable for large physical product displays',
+    notice: 'Not suitable for large physical product displays',
     ctaClass: 'cta-blue',
     dotColor: 'var(--blue)',
   },
@@ -229,7 +229,7 @@ export default function Tickets() {
   
   // Individual pass state
   const [quantity, setQuantity] = useState(1);
-  const [attendees, setAttendees] = useState([{ name: '', email: '' }]);
+  const [attendees, setAttendees] = useState([{ name: '', email: '', phone: '' }]);
   
   // Business pass state
   const [businessName, setBusinessName] = useState('');
@@ -256,6 +256,10 @@ export default function Tickets() {
   const [connectorsValidating, setConnectorsValidating] = useState(false);
   const [connectorsTicketValid, setConnectorsTicketValid] = useState(false);
   const [connectorsTicketData, setConnectorsTicketData] = useState(null);
+  const [connectorsLookupEmail, setConnectorsLookupEmail] = useState('');
+  const [connectorsLookupLoading, setConnectorsLookupLoading] = useState(false);
+  const [connectorsLookupResults, setConnectorsLookupResults] = useState([]);
+  const [connectorsLookupError, setConnectorsLookupError] = useState('');
 
   // Discount code state
   const [discountCode, setDiscountCode] = useState('');
@@ -292,7 +296,7 @@ export default function Tickets() {
 
       const normalizedUserEmail = normalizeEmail(userEmail);
       if (!normalizedUserEmail) {
-        setDiscountError('Please fill in email first');
+        setDiscountError('Please enter your email first to validate the discount code');
         setDiscountValidating(false);
         return;
       }
@@ -347,7 +351,7 @@ export default function Tickets() {
         if (selectedTicket.passType === 'individual') {
           const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
           const baseAmount = ticketPrice * quantity;
-          const groupDiscount = selectedTicket.name === 'General Access Ticket' ? 0 : calculateDiscount(quantity);
+          const groupDiscount = selectedTicket.name === 'Marketplace Pass' ? 0 : calculateDiscount(quantity);
           amount = baseAmount - groupDiscount;
         } else if (selectedTicket.passType === 'vendor') {
           const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
@@ -378,13 +382,17 @@ export default function Tickets() {
     // Reset state based on pass type
     if (ticket.passType === 'individual') {
       setQuantity(1);
-      setAttendees([{ name: '', email: '' }]);
+      setAttendees([{ name: '', email: '', phone: '' }]);
 
       if (ticket.type === 'connectors') {
         setConnectorsTicketId('');
         setConnectorsValidating(false);
         setConnectorsTicketValid(false);
         setConnectorsTicketData(null);
+        setConnectorsLookupEmail('');
+        setConnectorsLookupLoading(false);
+        setConnectorsLookupResults([]);
+        setConnectorsLookupError('');
       }
     } else if (ticket.passType === 'vendor') {
       setVendorData({
@@ -415,7 +423,7 @@ export default function Tickets() {
   function handleQuantityChange(newQuantity) {
     setQuantity(newQuantity);
     const newAttendees = Array(newQuantity).fill(null).map((_, i) => 
-      attendees[i] || { name: '', email: '' }
+      attendees[i] || { name: '', email: '', phone: '' }
     );
     setAttendees(newAttendees);
   }
@@ -440,14 +448,19 @@ export default function Tickets() {
     try {
       const data = await validateTicketId(ticketId);
       
-      // Check if ticket is General Access or Individual Regular
-      const validTypes = ['Marketplace Pass', 'Talent Pass — Regular'];
+      // Accept both current and legacy names for regular/base tickets
+      const validTypes = [
+        'Marketplace Pass',
+        'Talent Pass — Regular',
+        'Individual Pass — Regular',
+        'General Access Ticket',
+      ];
       
       if (validTypes.includes(data.ticket_type)) {
         setConnectorsTicketValid(true);
         setConnectorsTicketData(data);
         // Pre-fill first attendee with validated ticket data
-        setAttendees([{ name: data.attendee_name, email: data.email }]);
+        setAttendees([{ name: data.attendee_name, email: data.email, phone: '' }]);
       } else {
         setConnectorsTicketValid(false);
         setConnectorsTicketData(null);
@@ -459,6 +472,42 @@ export default function Tickets() {
       setError('Invalid ticket ID. Please check and try again.');
     } finally {
       setConnectorsValidating(false);
+    }
+  }
+
+  async function handleFindConnectorsTickets() {
+    const email = normalizeEmail(connectorsLookupEmail);
+    setConnectorsLookupError('');
+    setConnectorsLookupResults([]);
+
+    if (!email) {
+      setConnectorsLookupError('Please enter your email first.');
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setConnectorsLookupError('Please enter a valid email.');
+      return;
+    }
+
+    try {
+      setConnectorsLookupLoading(true);
+      const result = await findTicketsByEmail(email);
+      if (!result.tickets || result.tickets.length === 0) {
+        setConnectorsLookupError('No Marketplace or Talent Regular ticket found for this email.');
+        return;
+      }
+      setConnectorsLookupResults(result.tickets);
+    } catch (err) {
+      const detail = err?.response?.data?.detail;
+      if (typeof detail === 'string' && detail.trim()) {
+        setConnectorsLookupError(detail);
+      } else if (Array.isArray(detail) && detail.length > 0) {
+        setConnectorsLookupError('Please check your email format and try again.');
+      } else {
+        setConnectorsLookupError('Unable to check tickets right now. You can still enter your ticket ID manually.');
+      }
+    } finally {
+      setConnectorsLookupLoading(false);
     }
   }
 
@@ -492,9 +541,9 @@ export default function Tickets() {
     }
 
     if (isIndividual) {
-      const allFilled = attendees.every(a => a.name.trim() && a.email.trim());
+      const allFilled = attendees.every(a => a.name.trim() && a.email.trim() && a.phone.trim());
       if (!allFilled) {
-        setError('Please fill in all attendee names and emails');
+        setError('Please fill in all attendee names, emails and WhatsApp numbers');
         return;
       }
 
@@ -575,7 +624,8 @@ export default function Tickets() {
           discount_code_amount: discountValid ? codeDiscountAmount : null,
           attendees: attendees.map(a => ({
             name: a.name.trim(),
-            email: normalizeEmail(a.email)
+            email: normalizeEmail(a.email),
+            phone: a.phone.trim()
           })),
           affiliate_code: affiliateCode
         };
@@ -674,8 +724,9 @@ export default function Tickets() {
         });
 
         if (response.status) {
-          // Redirect to success page
-          window.location.href = `/payment-success?reference=${response.reference}`;
+          // Redirect to success page with email delivery status for transparent messaging
+          const failedCount = response?.email_delivery?.failed_count || 0;
+          window.location.href = `/payment-success?reference=${response.reference}&email_failed_count=${failedCount}`;
         } else {
           setError('Order creation failed. Please try again.');
         }
@@ -860,6 +911,53 @@ export default function Tickets() {
                       </div>
                     )}
                   </div>
+
+                  <div className="ticket-input-group">
+                    <label>Don't have your ticket ID? Find it by email</label>
+                    <input
+                      type="email"
+                      className="ticket-input"
+                      placeholder="Enter the email used for your base ticket"
+                      value={connectorsLookupEmail}
+                      onChange={(e) => setConnectorsLookupEmail(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="ticket-cta cta-orange"
+                      style={{ marginTop: '10px', width: '100%' }}
+                      onClick={handleFindConnectorsTickets}
+                      disabled={connectorsLookupLoading}
+                    >
+                      {connectorsLookupLoading ? 'Finding...' : 'Find My Ticket ID'}
+                    </button>
+                    {connectorsLookupError && (
+                      <div className="ticket-error-badge">✗ {connectorsLookupError}</div>
+                    )}
+                    {connectorsLookupResults.length > 0 && (
+                      <div style={{ marginTop: '10px' }}>
+                        {connectorsLookupResults.map((ticket) => (
+                          <button
+                            key={ticket.ticket_id}
+                            type="button"
+                            className="ticket-input"
+                            style={{
+                              display: 'block',
+                              width: '100%',
+                              textAlign: 'left',
+                              cursor: 'pointer',
+                              marginBottom: '8px',
+                              background: 'rgba(255,255,255,0.04)'
+                            }}
+                            onClick={() => handleConnectorsTicketIdChange(ticket.ticket_id)}
+                          >
+                            <strong>{ticket.ticket_id}</strong>
+                            <br />
+                            <small>{ticket.attendee_name} · {ticket.ticket_type}</small>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </>
               )}
 
@@ -877,10 +975,11 @@ export default function Tickets() {
                       value={quantity}
                       onChange={(e) => handleQuantityChange(parseInt(e.target.value))}
                     >
-                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                      {[1, 2, 3, 4, 5].map(num => (
                         <option key={num} value={num}>{num}</option>
                       ))}
                     </select>
+                    <small className="ticket-validating">You can buy 1-5 tickets per checkout. Group discount applies to 2-5 tickets.</small>
                   </div>
 
                   <div className="ticket-attendees">
@@ -902,6 +1001,14 @@ export default function Tickets() {
                           placeholder="Email Address"
                           value={attendee.email}
                           onChange={(e) => handleAttendeeChange(index, 'email', e.target.value)}
+                          required
+                        />
+                        <input
+                          type="tel"
+                          className="ticket-input"
+                          placeholder="WhatsApp Number"
+                          value={attendee.phone}
+                          onChange={(e) => handleAttendeeChange(index, 'phone', e.target.value)}
                           required
                         />
                       </div>
@@ -988,6 +1095,32 @@ export default function Tickets() {
               {/* CONNECTORS PASS - Just show total (attendee already pre-filled) */}
               {selectedTicket.type === 'connectors' && connectorsTicketValid && (
                 <>
+                  <div className="ticket-attendees">
+                    <label>Your Details</label>
+                    <div className="ticket-attendee-group">
+                      <input
+                        type="text"
+                        className="ticket-input"
+                        value={attendees[0]?.name || ''}
+                        disabled
+                      />
+                      <input
+                        type="email"
+                        className="ticket-input"
+                        value={attendees[0]?.email || ''}
+                        disabled
+                      />
+                      <input
+                        type="tel"
+                        className="ticket-input"
+                        placeholder="WhatsApp Number"
+                        value={attendees[0]?.phone || ''}
+                        onChange={(e) => handleAttendeeChange(0, 'phone', e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
                   <div className="ticket-input-group">
                     <label>Discount Code (Optional)</label>
                     <input
@@ -1125,8 +1258,8 @@ export default function Tickets() {
                     <span>Total Amount</span>
                     <div className="ticket-modal-total-breakdown">
                       {(() => {
-                        const isGeneralAccess = selectedTicket.name === 'General Access Ticket';
-                        const groupDiscount = isGeneralAccess ? 0 : calculateDiscount(quantity);
+                        const isMarketplacePass = selectedTicket.name === 'Marketplace Pass';
+                        const groupDiscount = isMarketplacePass ? 0 : calculateDiscount(quantity);
                         const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
                         const subtotal = ticketPrice * quantity;
                         let total = subtotal - groupDiscount;
