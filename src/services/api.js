@@ -265,6 +265,18 @@ export const validateTicketId = async (ticketId) => {
   }
 };
 
+export const findTicketsByEmail = async (email) => {
+  try {
+    const response = await axios.get(`${BACKEND_URL}/speaker-questions/find-ticket-by-email`, {
+      params: { email }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Find ticket by email failed:', error);
+    throw error;
+  }
+};
+
 // Ticket Upgrades
 export const getUpgradeOptions = async (ticketId) => {
   try {
