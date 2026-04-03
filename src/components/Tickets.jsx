@@ -448,8 +448,13 @@ export default function Tickets() {
     try {
       const data = await validateTicketId(ticketId);
       
-      // Check if ticket is General Access or Individual Regular
-      const validTypes = ['Marketplace Pass', 'Talent Pass — Regular'];
+      // Accept both current and legacy names for regular/base tickets
+      const validTypes = [
+        'Marketplace Pass',
+        'Talent Pass — Regular',
+        'Individual Pass — Regular',
+        'General Access Ticket',
+      ];
       
       if (validTypes.includes(data.ticket_type)) {
         setConnectorsTicketValid(true);
@@ -493,7 +498,14 @@ export default function Tickets() {
       }
       setConnectorsLookupResults(result.tickets);
     } catch (err) {
-      setConnectorsLookupError(err?.response?.data?.detail || 'Unable to find tickets right now.');
+      const detail = err?.response?.data?.detail;
+      if (typeof detail === 'string' && detail.trim()) {
+        setConnectorsLookupError(detail);
+      } else if (Array.isArray(detail) && detail.length > 0) {
+        setConnectorsLookupError('Please check your email format and try again.');
+      } else {
+        setConnectorsLookupError('Unable to check tickets right now. You can still enter your ticket ID manually.');
+      }
     } finally {
       setConnectorsLookupLoading(false);
     }
