@@ -229,7 +229,7 @@ export default function Tickets() {
   
   // Individual pass state
   const [quantity, setQuantity] = useState(1);
-  const [attendees, setAttendees] = useState([{ name: '', email: '' }]);
+  const [attendees, setAttendees] = useState([{ name: '', email: '', phone: '' }]);
   
   // Business pass state
   const [businessName, setBusinessName] = useState('');
@@ -378,7 +378,7 @@ export default function Tickets() {
     // Reset state based on pass type
     if (ticket.passType === 'individual') {
       setQuantity(1);
-      setAttendees([{ name: '', email: '' }]);
+      setAttendees([{ name: '', email: '', phone: '' }]);
 
       if (ticket.type === 'connectors') {
         setConnectorsTicketId('');
@@ -415,7 +415,7 @@ export default function Tickets() {
   function handleQuantityChange(newQuantity) {
     setQuantity(newQuantity);
     const newAttendees = Array(newQuantity).fill(null).map((_, i) => 
-      attendees[i] || { name: '', email: '' }
+      attendees[i] || { name: '', email: '', phone: '' }
     );
     setAttendees(newAttendees);
   }
@@ -492,9 +492,9 @@ export default function Tickets() {
     }
 
     if (isIndividual) {
-      const allFilled = attendees.every(a => a.name.trim() && a.email.trim());
+      const allFilled = attendees.every(a => a.name.trim() && a.email.trim() && a.phone.trim());
       if (!allFilled) {
-        setError('Please fill in all attendee names and emails');
+        setError('Please fill in all attendee names, emails and WhatsApp numbers');
         return;
       }
 
@@ -575,7 +575,8 @@ export default function Tickets() {
           discount_code_amount: discountValid ? codeDiscountAmount : null,
           attendees: attendees.map(a => ({
             name: a.name.trim(),
-            email: normalizeEmail(a.email)
+            email: normalizeEmail(a.email),
+            phone: a.phone.trim()
           })),
           affiliate_code: affiliateCode
         };
@@ -902,6 +903,14 @@ export default function Tickets() {
                           placeholder="Email Address"
                           value={attendee.email}
                           onChange={(e) => handleAttendeeChange(index, 'email', e.target.value)}
+                          required
+                        />
+                        <input
+                          type="tel"
+                          className="ticket-input"
+                          placeholder="WhatsApp Number"
+                          value={attendee.phone}
+                          onChange={(e) => handleAttendeeChange(index, 'phone', e.target.value)}
                           required
                         />
                       </div>
