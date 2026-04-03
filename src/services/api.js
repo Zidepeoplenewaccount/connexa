@@ -3,6 +3,13 @@ import axios from 'axios';
 const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
 //const BACKEND_URL = 'http://127.0.0.1:8000';
 
+export const getAffiliateCode = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const ref = urlParams.get('ref');
+  if (ref) return ref;
+  return null;
+};
+
 export const initializePayment = async (paymentData) => {
   try {
     const affiliateCode = getAffiliateCode();
@@ -173,20 +180,6 @@ export const getBuyerOrders = async (email) => {
 
 
 
-
-// Add this helper function at the top
-export const getAffiliateCode = () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const ref = urlParams.get('ref');
-  
-  // Store in localStorage for persistence across navigation
-  if (ref) {
-    return ref;
-  }
-  
-  // Retrieve stored code if exists
-  return null;
-};
 
 export const submitPartnership = async (formData) => {
   try {
