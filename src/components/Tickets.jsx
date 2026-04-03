@@ -151,7 +151,7 @@ const tickets = [
     ],
     bestFor: 'Tech startups, service brands, platforms, and businesses focused on visibility.',
     cta: 'Get Showcase Pass',
-    notice: 'Not suitable for large physical product displaysNot suitable for large physical product displays',
+    notice: 'Not suitable for large physical product displays',
     ctaClass: 'cta-blue',
     dotColor: 'var(--blue)',
   },
@@ -292,7 +292,7 @@ export default function Tickets() {
 
       const normalizedUserEmail = normalizeEmail(userEmail);
       if (!normalizedUserEmail) {
-        setDiscountError('Please fill in email first');
+        setDiscountError('Please enter your email first to validate the discount code');
         setDiscountValidating(false);
         return;
       }
@@ -347,7 +347,7 @@ export default function Tickets() {
         if (selectedTicket.passType === 'individual') {
           const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
           const baseAmount = ticketPrice * quantity;
-          const groupDiscount = selectedTicket.name === 'General Access Ticket' ? 0 : calculateDiscount(quantity);
+          const groupDiscount = selectedTicket.name === 'Marketplace Pass' ? 0 : calculateDiscount(quantity);
           amount = baseAmount - groupDiscount;
         } else if (selectedTicket.passType === 'vendor') {
           const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
@@ -1134,8 +1134,8 @@ export default function Tickets() {
                     <span>Total Amount</span>
                     <div className="ticket-modal-total-breakdown">
                       {(() => {
-                        const isGeneralAccess = selectedTicket.name === 'General Access Ticket';
-                        const groupDiscount = isGeneralAccess ? 0 : calculateDiscount(quantity);
+                        const isMarketplacePass = selectedTicket.name === 'Marketplace Pass';
+                        const groupDiscount = isMarketplacePass ? 0 : calculateDiscount(quantity);
                         const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
                         const subtotal = ticketPrice * quantity;
                         let total = subtotal - groupDiscount;
