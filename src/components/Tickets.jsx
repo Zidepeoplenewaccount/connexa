@@ -322,22 +322,46 @@ export default function Tickets() {
         return;
       }
 
-      const data = await validateDiscountCode(
-        code,
-        normalizedUserEmail,
-        amount,
-        'tickets',
-        selectedTicket.name
-      );
+      // Try regular discount code first
+      let data;
+      let isConnexerCode = false;
+      try {
+        data = await validateDiscountCode(
+          code,
+          normalizedUserEmail,
+          amount,
+          'tickets',
+          selectedTicket.name
+        );
+      } catch {
+        data = null;
+      }
+
+      // If regular code failed, try as connexer code
+      if (!data || !data.valid) {
+        try {
+          const speakerResult = await validateSpeakerCode(code, amount);
+          if (speakerResult && speakerResult.valid) {
+            data = speakerResult;
+            isConnexerCode = true;
+          }
+        } catch {
+          // neither worked
+        }
+      }
       
-      if (data.valid) {
+      if (data && data.valid) {
         setDiscountValid(true);
         setDiscountData(data);
         setDiscountError('');
+        if (isConnexerCode) {
+          setSpeakerCode(code);
+          setSpeakerData(data);
+        }
       } else {
         setDiscountValid(false);
         setDiscountData(null);
-        setDiscountError(data.message);
+        setDiscountError(data?.message || 'Invalid discount code');
       }
     } catch (err) {
       setDiscountValid(false);
