@@ -139,24 +139,49 @@ export default function SpeakerDashboard() {
           </div>
         </section>
 
-        {/* Stats Cards */}
-        <section className="speaker-stats-grid">
-          <div className="speaker-stat-card">
-            <span className="speaker-stat-label">Tickets Sold</span>
-            <span className="speaker-stat-value">{stats?.total_uses ?? 0}</span>
+        {/* Questions Section */}
+        <section className="speaker-questions-section">
+          <div className="speaker-questions-header">
+            <h2>Questions for You {questions.length > 0 && <span className="speaker-questions-count">{questions.length}</span>}</h2>
+            <div className="speaker-questions-tabs">
+              <button className={questionTab === 'talent' ? 'active' : ''} onClick={() => setQuestionTab('talent')}>
+                🎤 Talent Category
+              </button>
+              <button className={questionTab === 'business' ? 'active' : ''} onClick={() => setQuestionTab('business')}>
+                💼 Business Category
+              </button>
+            </div>
           </div>
-          <div className="speaker-stat-card accent-green">
-            <span className="speaker-stat-label">Total Earned</span>
-            <span className="speaker-stat-value">₦{(stats?.total_earned ?? 0).toLocaleString()}</span>
-          </div>
-          <div className="speaker-stat-card accent-orange">
-            <span className="speaker-stat-label">Pending Payout</span>
-            <span className="speaker-stat-value">₦{(stats?.pending ?? 0).toLocaleString()}</span>
-          </div>
-          <div className="speaker-stat-card accent-blue">
-            <span className="speaker-stat-label">Total Paid</span>
-            <span className="speaker-stat-value">₦{(stats?.total_paid ?? 0).toLocaleString()}</span>
-          </div>
+          {(() => {
+            const BUSINESS_TYPES = ['Business Owner Pass', 'Vendor Pass'];
+            const filtered = questions.filter(q => {
+              const isBusiness = BUSINESS_TYPES.some(bt => q.ticket_type?.includes(bt));
+              return questionTab === 'business' ? isBusiness : !isBusiness;
+            });
+            return filtered.length === 0 ? (
+              <div className="speaker-empty">
+                <p>No {questionTab === 'talent' ? 'talent' : 'business'} questions yet.</p>
+              </div>
+            ) : (
+              <div className="speaker-questions-list">
+                {filtered.map((q) => (
+                  <div key={q.id} className="speaker-question-card">
+                    <div className="speaker-question-meta">
+                      <span className="speaker-question-from">{q.attendee_name}</span>
+                      <span className={`speaker-badge ${q.status}`}>
+                        {q.status === 'selected' ? '⭐ Selected' : q.status === 'answered' ? '✓ Answered' : q.status}
+                      </span>
+                    </div>
+                    <p className="speaker-question-text">"{q.question_text}"</p>
+                    <div className="speaker-question-footer">
+                      <span>{q.ticket_type}</span>
+                      <span>{new Date(q.created_at).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
         </section>
 
         {/* Account Details */}
