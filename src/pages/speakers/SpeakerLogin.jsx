@@ -17,7 +17,7 @@ export default function SpeakerLogin() {
 
     try {
       await speakerLogin(email.trim(), password);
-      navigate('/speakers/dashboard');
+      navigate('/connexers/dashboard');
     } catch (err) {
       setError(err.response?.data?.detail || 'Invalid email or password');
     } finally {
@@ -30,7 +30,7 @@ export default function SpeakerLogin() {
       <div className="speaker-login-wrapper">
         <div className="speaker-login-box">
           <div className="speaker-login-logo">CONNEXA</div>
-          <h1>Speaker Portal</h1>
+          <h1>Connexer Portal</h1>
           <p className="speaker-login-subtitle">Log in with the credentials provided to you</p>
 
           <form onSubmit={handleSubmit}>

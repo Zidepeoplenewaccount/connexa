@@ -22,7 +22,7 @@ export default function SpeakerDashboard() {
 
   const loadData = useCallback(async () => {
     if (!isSpeakerAuthenticated()) {
-      navigate('/speakers/login', { replace: true });
+      navigate('/connexers/login', { replace: true });
       return;
     }
     try {
@@ -37,7 +37,7 @@ export default function SpeakerDashboard() {
       setCommissions(c);
       setAnalytics(a);
     } catch {
-      navigate('/speakers/login', { replace: true });
+      navigate('/connexers/login', { replace: true });
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ export default function SpeakerDashboard() {
 
   async function handleLogout() {
     await speakerLogout();
-    navigate('/speakers/login', { replace: true });
+    navigate('/connexers/login', { replace: true });
   }
 
   function copyCode() {
@@ -81,7 +81,7 @@ export default function SpeakerDashboard() {
         <header className="speaker-dash-header">
           <div>
             <div className="speaker-dash-logo">CONNEXA</div>
-            <h1>Speaker Dashboard</h1>
+            <h1>Connexer Dashboard</h1>
           </div>
           <div className="speaker-dash-header-right">
             <span className="speaker-dash-name">{profile?.name}</span>

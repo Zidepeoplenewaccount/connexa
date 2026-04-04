@@ -149,13 +149,13 @@ export default function App() {
           element={<AdminDiscountCodes />} 
         />
 
-        {/* Speaker Portal */}
-        <Route path="/speakers/login" element={<SpeakerLogin />} />
-        <Route path="/speakers/dashboard" element={<SpeakerDashboard />} />
+        {/* Connexer Portal */}
+        <Route path="/connexers/login" element={<SpeakerLogin />} />
+        <Route path="/connexers/dashboard" element={<SpeakerDashboard />} />
 
-        {/* Admin Speakers */}
+        {/* Admin Connexers */}
         <Route
-          path="/admin/speakers"
+          path="/admin/connexers"
           element={
             <ProtectedRoute>
               <AdminSpeakers />
