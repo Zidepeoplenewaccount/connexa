@@ -55,3 +55,8 @@ export const fetchSpeakerCommissions = async () => {
   const response = await speakerAxios.get('/speakers/me/commissions');
   return response.data;
 };
+
+export const fetchSpeakerAnalytics = async () => {
+  const response = await speakerAxios.get('/speakers/me/analytics');
+  return response.data;
+};

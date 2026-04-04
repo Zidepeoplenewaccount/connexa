@@ -4,6 +4,7 @@ import {
   fetchSpeakerProfile,
   fetchSpeakerStats,
   fetchSpeakerCommissions,
+  fetchSpeakerAnalytics,
   speakerLogout,
   isSpeakerAuthenticated,
 } from '../../services/speakerApi';
@@ -14,8 +15,10 @@ export default function SpeakerDashboard() {
   const [profile, setProfile] = useState(null);
   const [stats, setStats] = useState(null);
   const [commissions, setCommissions] = useState([]);
+  const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [activeChart, setActiveChart] = useState('earnings'); // 'earnings' | 'tickets'
 
   const loadData = useCallback(async () => {
     if (!isSpeakerAuthenticated()) {
@@ -23,14 +26,16 @@ export default function SpeakerDashboard() {
       return;
     }
     try {
-      const [p, s, c] = await Promise.all([
+      const [p, s, c, a] = await Promise.all([
         fetchSpeakerProfile(),
         fetchSpeakerStats(),
         fetchSpeakerCommissions(),
+        fetchSpeakerAnalytics(),
       ]);
       setProfile(p);
       setStats(s);
       setCommissions(c);
+      setAnalytics(a);
     } catch {
       navigate('/speakers/login', { replace: true });
     } finally {
@@ -127,6 +132,51 @@ export default function SpeakerDashboard() {
           </div>
         </section>
 
+        {/* Analytics Chart */}
+        {analytics && analytics.daily && (
+          <section className="speaker-analytics-section">
+            <div className="speaker-analytics-header">
+              <h2>Sales Analytics (Last 30 Days)</h2>
+              <div className="speaker-chart-toggle">
+                <button
+                  className={activeChart === 'earnings' ? 'active' : ''}
+                  onClick={() => setActiveChart('earnings')}
+                >Earnings</button>
+                <button
+                  className={activeChart === 'tickets' ? 'active' : ''}
+                  onClick={() => setActiveChart('tickets')}
+                >Tickets</button>
+              </div>
+            </div>
+            <SalesChart data={analytics.daily} metric={activeChart} />
+
+            {/* Ticket Type Breakdown */}
+            {analytics.by_ticket_type && analytics.by_ticket_type.length > 0 && (
+              <div className="speaker-type-breakdown">
+                <h3>Sales by Ticket Type</h3>
+                <div className="speaker-type-bars">
+                  {(() => {
+                    const maxCount = Math.max(...analytics.by_ticket_type.map(t => t.count), 1);
+                    return analytics.by_ticket_type.map((t) => (
+                      <div key={t.ticket_type} className="speaker-type-bar-row">
+                        <span className="speaker-type-label">{t.ticket_type}</span>
+                        <div className="speaker-type-bar-track">
+                          <div
+                            className="speaker-type-bar-fill"
+                            style={{ width: `${(t.count / maxCount) * 100}%` }}
+                          />
+                        </div>
+                        <span className="speaker-type-count">{t.count} sold</span>
+                        <span className="speaker-type-earnings">₦{t.earnings.toLocaleString()}</span>
+                      </div>
+                    ));
+                  })()}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
         {/* Commission Table */}
         <section className="speaker-table-section">
           <h2>Ticket Sales History</h2>
@@ -172,6 +222,97 @@ export default function SpeakerDashboard() {
             </div>
           )}
         </section>
+      </div>
+    </div>
+  );
+}
+
+
+/* ── Lightweight bar chart (pure SVG, no dependencies) ────────── */
+
+function SalesChart({ data, metric }) {
+  if (!data || data.length === 0) return null;
+
+  const values = data.map(d => metric === 'earnings' ? d.earnings : d.tickets);
+  const maxVal = Math.max(...values, 1);
+  const chartW = 700;
+  const chartH = 200;
+  const barGap = 2;
+  const barW = Math.max((chartW - barGap * data.length) / data.length, 2);
+
+  // Build Y-axis labels
+  const ySteps = 4;
+  const yLabels = Array.from({ length: ySteps + 1 }, (_, i) => {
+    const val = (maxVal / ySteps) * (ySteps - i);
+    return metric === 'earnings' ? `₦${val >= 1000 ? `${(val / 1000).toFixed(0)}k` : val.toFixed(0)}` : val.toFixed(0);
+  });
+
+  return (
+    <div className="speaker-chart-container">
+      <div className="speaker-chart-y-axis">
+        {yLabels.map((l, i) => (
+          <span key={i}>{l}</span>
+        ))}
+      </div>
+      <div className="speaker-chart-scroll">
+        <svg
+          viewBox={`0 0 ${chartW} ${chartH + 24}`}
+          preserveAspectRatio="none"
+          className="speaker-chart-svg"
+        >
+          {/* Grid lines */}
+          {Array.from({ length: ySteps + 1 }, (_, i) => {
+            const y = (chartH / ySteps) * i;
+            return <line key={i} x1={0} y1={y} x2={chartW} y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth={1} />;
+          })}
+
+          {/* Bars */}
+          {data.map((d, i) => {
+            const val = metric === 'earnings' ? d.earnings : d.tickets;
+            const h = maxVal > 0 ? (val / maxVal) * chartH : 0;
+            const x = i * (barW + barGap);
+            const y = chartH - h;
+            const isWeekStart = new Date(d.date).getDay() === 1;
+            return (
+              <g key={d.date}>
+                <rect
+                  x={x}
+                  y={y}
+                  width={barW}
+                  height={Math.max(h, 0)}
+                  rx={2}
+                  fill={val > 0 ? (metric === 'earnings' ? '#2db84b' : '#f5a623') : 'rgba(255,255,255,0.04)'}
+                  opacity={val > 0 ? 0.85 : 1}
+                >
+                  <title>{d.date}: {metric === 'earnings' ? `₦${val.toLocaleString()}` : `${val} tickets`}</title>
+                </rect>
+                {isWeekStart && (
+                  <text
+                    x={x + barW / 2}
+                    y={chartH + 16}
+                    textAnchor="middle"
+                    fill="rgba(255,255,255,0.35)"
+                    fontSize="9"
+                  >
+                    {new Date(d.date).toLocaleDateString('en', { month: 'short', day: 'numeric' })}
+                  </text>
+                )}
+              </g>
+            );
+          })}
+        </svg>
+      </div>
+      <div className="speaker-chart-summary">
+        <span>
+          Total: {metric === 'earnings'
+            ? `₦${values.reduce((a, b) => a + b, 0).toLocaleString()}`
+            : `${values.reduce((a, b) => a + b, 0)} tickets`}
+        </span>
+        <span>
+          Daily Avg: {metric === 'earnings'
+            ? `₦${Math.round(values.reduce((a, b) => a + b, 0) / data.length).toLocaleString()}`
+            : `${(values.reduce((a, b) => a + b, 0) / data.length).toFixed(1)} tickets`}
+        </span>
       </div>
     </div>
   );
