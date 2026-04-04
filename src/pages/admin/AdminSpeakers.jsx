@@ -22,7 +22,7 @@ export default function AdminSpeakers() {
       const res = await axios.get(`${BACKEND_URL}/connexers/admin/all`, getAuth());
       setSpeakers(res.data);
     } catch (err) {
-      console.error('Failed to load speakers', err);
+      console.error('Failed to load connexers', err);
     } finally {
       setLoading(false);
     }
@@ -68,7 +68,7 @@ export default function AdminSpeakers() {
   }
 
   async function deleteSpeaker(speaker) {
-    if (!confirm(`Delete speaker ${speaker.name}? This cannot be undone.`)) return;
+    if (!confirm(`Delete connexer ${speaker.name}? This cannot be undone.`)) return;
     try {
       await axios.delete(`${BACKEND_URL}/connexers/admin/${speaker.id}`, getAuth());
       loadSpeakers();
@@ -101,7 +101,7 @@ export default function AdminSpeakers() {
     <AdminLayout>
       <div style={{ padding: 32 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-          <h1 style={{ fontSize: 24, fontWeight: 800, color: '#fff' }}>Speakers</h1>
+          <h1 style={{ fontSize: 24, fontWeight: 800, color: '#fff' }}>Connexers</h1>
           <button
             onClick={() => setShowCreate(!showCreate)}
             style={{
@@ -109,7 +109,7 @@ export default function AdminSpeakers() {
               background: '#f5a623', color: '#000', fontWeight: 700, cursor: 'pointer',
             }}
           >
-            {showCreate ? 'Cancel' : '+ Create Speaker'}
+            {showCreate ? 'Cancel' : '+ Create Connexer'}
           </button>
         </div>
 
@@ -119,7 +119,7 @@ export default function AdminSpeakers() {
             background: '#1a1a1a', border: '1px solid #333', borderRadius: 12,
             padding: 24, marginBottom: 24,
           }}>
-            <h3 style={{ color: '#fff', marginBottom: 16 }}>New Speaker</h3>
+            <h3 style={{ color: '#fff', marginBottom: 16 }}>New Connexer</h3>
             <form onSubmit={handleCreate}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 {[
@@ -154,7 +154,7 @@ export default function AdminSpeakers() {
                   background: '#2db84b', color: '#fff', fontWeight: 700, cursor: 'pointer',
                 }}
               >
-                {creating ? 'Creating...' : 'Create Speaker Account'}
+                {creating ? 'Creating...' : 'Create Connexer Account'}
               </button>
             </form>
           </div>
@@ -164,7 +164,7 @@ export default function AdminSpeakers() {
         {loading ? (
           <p style={{ color: 'rgba(255,255,255,0.4)' }}>Loading...</p>
         ) : speakers.length === 0 ? (
-          <p style={{ color: 'rgba(255,255,255,0.4)', textAlign: 'center', padding: 48 }}>No speakers created yet</p>
+          <p style={{ color: 'rgba(255,255,255,0.4)', textAlign: 'center', padding: 48 }}>No connexers created yet</p>
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
