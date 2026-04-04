@@ -4,7 +4,7 @@
  */
 export function getSpeakerCode() {
   const params = new URLSearchParams(window.location.search);
-  const urlCode = params.get('speaker');
+  const urlCode = params.get('connexer');
 
   if (urlCode) {
     localStorage.setItem('speaker_code', urlCode);

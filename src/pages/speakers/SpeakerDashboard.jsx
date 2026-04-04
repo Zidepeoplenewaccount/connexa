@@ -52,7 +52,7 @@ export default function SpeakerDashboard() {
 
   function copyCode() {
     if (!profile) return;
-    const link = `${window.location.origin}?speaker=${profile.discount_code}`;
+    const link = `${window.location.origin}?connexer=${profile.discount_code}`;
     navigator.clipboard.writeText(profile.discount_code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -60,7 +60,7 @@ export default function SpeakerDashboard() {
 
   function copyLink() {
     if (!profile) return;
-    const link = `${window.location.origin}?speaker=${profile.discount_code}`;
+    const link = `${window.location.origin}?connexer=${profile.discount_code}`;
     navigator.clipboard.writeText(link);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -105,7 +105,7 @@ export default function SpeakerDashboard() {
           <div className="speaker-link-row">
             <input
               readOnly
-              value={`${window.location.origin}?speaker=${profile?.discount_code}`}
+              value={`${window.location.origin}?connexer=${profile?.discount_code}`}
               onClick={(e) => e.target.select()}
             />
             <button onClick={copyLink} className="speaker-btn-copy">Copy Link</button>
