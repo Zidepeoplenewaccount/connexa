@@ -19,7 +19,7 @@ export default function AdminSpeakers() {
 
   async function loadSpeakers() {
     try {
-      const res = await axios.get(`${BACKEND_URL}/speakers/admin/all`, getAuth());
+      const res = await axios.get(`${BACKEND_URL}/connexers/admin/all`, getAuth());
       setSpeakers(res.data);
     } catch (err) {
       console.error('Failed to load speakers', err);
@@ -30,7 +30,7 @@ export default function AdminSpeakers() {
 
   async function loadCommissions(speakerId) {
     try {
-      const res = await axios.get(`${BACKEND_URL}/speakers/admin/commissions`, {
+      const res = await axios.get(`${BACKEND_URL}/connexers/admin/commissions`, {
         ...getAuth(),
         params: speakerId ? { speaker_id: speakerId } : {},
       });
@@ -47,7 +47,7 @@ export default function AdminSpeakers() {
     setError('');
     setCreating(true);
     try {
-      await axios.post(`${BACKEND_URL}/speakers/admin/create`, form, getAuth());
+      await axios.post(`${BACKEND_URL}/connexers/admin/create`, form, getAuth());
       setShowCreate(false);
       setForm({ name: '', email: '', password: '', discount_percentage: 5, commission_rate: 75, account_number: '', bank_name: '' });
       loadSpeakers();
@@ -60,7 +60,7 @@ export default function AdminSpeakers() {
 
   async function toggleActive(speaker) {
     try {
-      await axios.patch(`${BACKEND_URL}/speakers/admin/${speaker.id}`, { is_active: !speaker.is_active }, getAuth());
+      await axios.patch(`${BACKEND_URL}/connexers/admin/${speaker.id}`, { is_active: !speaker.is_active }, getAuth());
       loadSpeakers();
     } catch (err) {
       alert('Failed to update speaker');
@@ -70,7 +70,7 @@ export default function AdminSpeakers() {
   async function deleteSpeaker(speaker) {
     if (!confirm(`Delete speaker ${speaker.name}? This cannot be undone.`)) return;
     try {
-      await axios.delete(`${BACKEND_URL}/speakers/admin/${speaker.id}`, getAuth());
+      await axios.delete(`${BACKEND_URL}/connexers/admin/${speaker.id}`, getAuth());
       loadSpeakers();
     } catch (err) {
       alert(err.response?.data?.detail || 'Failed to delete speaker');
@@ -79,7 +79,7 @@ export default function AdminSpeakers() {
 
   async function markPaid(commissionId) {
     try {
-      await axios.patch(`${BACKEND_URL}/speakers/admin/commissions/${commissionId}/mark-paid`, null, getAuth());
+      await axios.patch(`${BACKEND_URL}/connexers/admin/commissions/${commissionId}/mark-paid`, null, getAuth());
       if (expandedSpeaker) loadCommissions(expandedSpeaker);
       loadSpeakers();
     } catch (err) {
