@@ -148,6 +148,20 @@ export default function App() {
           path="/admin/discount-codes" 
           element={<AdminDiscountCodes />} 
         />
+
+        {/* Speaker Portal */}
+        <Route path="/speakers/login" element={<SpeakerLogin />} />
+        <Route path="/speakers/dashboard" element={<SpeakerDashboard />} />
+
+        {/* Admin Speakers */}
+        <Route
+          path="/admin/speakers"
+          element={
+            <ProtectedRoute>
+              <AdminSpeakers />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
