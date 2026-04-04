@@ -5,20 +5,29 @@ import {
   fetchSpeakerStats,
   fetchSpeakerCommissions,
   fetchSpeakerAnalytics,
+  fetchSpeakerQuestions,
+  updateSpeakerAccount,
   speakerLogout,
   isSpeakerAuthenticated,
+  getSpeakerProfile,
 } from '../../services/speakerApi';
 import './speaker-portal.css';
 
 export default function SpeakerDashboard() {
   const navigate = useNavigate();
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState(() => getSpeakerProfile());
   const [stats, setStats] = useState(null);
   const [commissions, setCommissions] = useState([]);
   const [analytics, setAnalytics] = useState(null);
+  const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
-  const [activeChart, setActiveChart] = useState('earnings'); // 'earnings' | 'tickets'
+  const [activeChart, setActiveChart] = useState('earnings');
+
+  // Account number editing
+  const [editingAccount, setEditingAccount] = useState(false);
+  const [accountForm, setAccountForm] = useState({ account_number: '', bank_name: '' });
+  const [savingAccount, setSavingAccount] = useState(false);
 
   const loadData = useCallback(async () => {
     if (!isSpeakerAuthenticated()) {
@@ -26,16 +35,19 @@ export default function SpeakerDashboard() {
       return;
     }
     try {
-      const [p, s, c, a] = await Promise.all([
+      const [p, s, c, a, q] = await Promise.all([
         fetchSpeakerProfile(),
         fetchSpeakerStats(),
         fetchSpeakerCommissions(),
         fetchSpeakerAnalytics(),
+        fetchSpeakerQuestions(),
       ]);
       setProfile(p);
       setStats(s);
       setCommissions(c);
       setAnalytics(a);
+      setQuestions(q);
+      setAccountForm({ account_number: p.account_number || '', bank_name: p.bank_name || '' });
     } catch {
       navigate('/connexers/login', { replace: true });
     } finally {
@@ -48,6 +60,20 @@ export default function SpeakerDashboard() {
   async function handleLogout() {
     await speakerLogout();
     navigate('/connexers/login', { replace: true });
+  }
+
+  async function handleSaveAccount(e) {
+    e.preventDefault();
+    setSavingAccount(true);
+    try {
+      const updated = await updateSpeakerAccount(accountForm);
+      setProfile(updated);
+      setEditingAccount(false);
+    } catch {
+      alert('Failed to save account details');
+    } finally {
+      setSavingAccount(false);
+    }
   }
 
   function copyCode() {
@@ -66,7 +92,7 @@ export default function SpeakerDashboard() {
     setTimeout(() => setCopied(false), 2000);
   }
 
-  if (loading) {
+  if (loading && !profile) {
     return (
       <div className="speaker-portal-root">
         <div className="speaker-loading">Loading dashboard...</div>
