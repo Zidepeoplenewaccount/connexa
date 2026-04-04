@@ -236,29 +236,25 @@ export default function SpeakerDashboard() {
           )}
         </section>
 
-        {/* Approved Questions */}
-        {questions.length > 0 && (
-          <section className="speaker-questions-section">
-            <h2>Questions for You ({questions.length})</h2>
-            <div className="speaker-questions-list">
-              {questions.map((q) => (
-                <div key={q.id} className="speaker-question-card">
-                  <div className="speaker-question-meta">
-                    <span className="speaker-question-from">{q.attendee_name}</span>
-                    <span className={`speaker-badge ${q.status}`}>
-                      {q.status === 'selected' ? '⭐ Selected' : q.status === 'answered' ? '✓ Answered' : q.status}
-                    </span>
-                  </div>
-                  <p className="speaker-question-text">"{q.question_text}"</p>
-                  <div className="speaker-question-footer">
-                    <span>{q.ticket_type}</span>
-                    <span>{new Date(q.created_at).toLocaleDateString()}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+        {/* Stats Cards */}
+        <section className="speaker-stats-grid">
+          <div className="speaker-stat-card">
+            <span className="speaker-stat-label">Tickets Sold</span>
+            <span className="speaker-stat-value">{stats?.total_uses ?? 0}</span>
+          </div>
+          <div className="speaker-stat-card accent-green">
+            <span className="speaker-stat-label">Total Earned</span>
+            <span className="speaker-stat-value">₦{(stats?.total_earned ?? 0).toLocaleString()}</span>
+          </div>
+          <div className="speaker-stat-card accent-orange">
+            <span className="speaker-stat-label">Pending Payout</span>
+            <span className="speaker-stat-value">₦{(stats?.pending ?? 0).toLocaleString()}</span>
+          </div>
+          <div className="speaker-stat-card accent-blue">
+            <span className="speaker-stat-label">Total Paid</span>
+            <span className="speaker-stat-value">₦{(stats?.total_paid ?? 0).toLocaleString()}</span>
+          </div>
+        </section>
 
         {/* Analytics Chart */}
         {analytics && analytics.daily && (
