@@ -60,3 +60,14 @@ export const fetchSpeakerAnalytics = async () => {
   const response = await speakerAxios.get('/connexers/me/analytics');
   return response.data;
 };
+
+export const fetchSpeakerQuestions = async () => {
+  const response = await speakerAxios.get('/connexers/me/questions');
+  return response.data;
+};
+
+export const updateSpeakerAccount = async ({ account_number, bank_name }) => {
+  const response = await speakerAxios.patch('/connexers/me', { account_number, bank_name });
+  localStorage.setItem('speaker_profile', JSON.stringify(response.data));
+  return response.data;
+};
