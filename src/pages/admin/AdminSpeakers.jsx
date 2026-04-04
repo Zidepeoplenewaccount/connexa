@@ -13,7 +13,7 @@ export default function AdminSpeakers() {
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
   const [expandedSpeaker, setExpandedSpeaker] = useState(null);
-  const [form, setForm] = useState({ name: '', email: '', password: '', discount_percentage: 5, commission_rate: 75 });
+  const [form, setForm] = useState({ name: '', email: '', password: '', discount_percentage: 5, commission_rate: 75, account_number: '', bank_name: '' });
   const [error, setError] = useState('');
   const [creating, setCreating] = useState(false);
 
@@ -49,7 +49,7 @@ export default function AdminSpeakers() {
     try {
       await axios.post(`${BACKEND_URL}/speakers/admin/create`, form, getAuth());
       setShowCreate(false);
-      setForm({ name: '', email: '', password: '', discount_percentage: 5, commission_rate: 75 });
+      setForm({ name: '', email: '', password: '', discount_percentage: 5, commission_rate: 75, account_number: '', bank_name: '' });
       loadSpeakers();
     } catch (err) {
       setError(err.response?.data?.detail || 'Failed to create speaker');
@@ -128,6 +128,8 @@ export default function AdminSpeakers() {
                   { label: 'Password', name: 'password', type: 'text', required: true, placeholder: 'Generate a password for them' },
                   { label: 'Discount %', name: 'discount_percentage', type: 'number', step: '0.1' },
                   { label: 'Commission %', name: 'commission_rate', type: 'number', step: '0.1' },
+                  { label: 'Account Number', name: 'account_number', type: 'text', placeholder: 'Bank account number' },
+                  { label: 'Bank Name', name: 'bank_name', type: 'text', placeholder: 'e.g. GTBank, Access Bank' },
                 ].map(({ label, name, ...props }) => (
                   <div key={name}>
                     <label style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>{label}</label>
@@ -168,7 +170,7 @@ export default function AdminSpeakers() {
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
-                  {['Name', 'Email', 'Code', 'Discount', 'Commission', 'Uses', 'Earned', 'Pending', 'Status', 'Actions'].map(h => (
+                  {['Name', 'Email', 'Code', 'Account', 'Discount', 'Commission', 'Uses', 'Earned', 'Pending', 'Status', 'Actions'].map(h => (
                     <th key={h} style={{
                       textAlign: 'left', padding: '12px 14px', fontSize: 11, fontWeight: 700,
                       color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: 1,
@@ -185,6 +187,14 @@ export default function AdminSpeakers() {
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>{s.email}</td>
                       <td style={{ padding: '14px' }}>
                         <code style={{ color: '#f5a623', fontWeight: 700, fontSize: 13 }}>{s.discount_code}</code>
+                      </td>
+                      <td style={{ padding: '14px', color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>
+                        {s.account_number ? (
+                          <div>
+                            <div style={{ fontWeight: 600, color: 'rgba(255,255,255,0.8)' }}>{s.account_number}</div>
+                            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{s.bank_name || '—'}</div>
+                          </div>
+                        ) : <span style={{ color: 'rgba(255,255,255,0.2)' }}>—</span>}
                       </td>
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.7)' }}>{s.discount_percentage}%</td>
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.7)' }}>{s.commission_rate}%</td>
@@ -215,7 +225,7 @@ export default function AdminSpeakers() {
                     {/* Expanded commissions */}
                     {expandedSpeaker === s.id && (
                       <tr key={`${s.id}-detail`}>
-                        <td colSpan={10} style={{ padding: '0 14px 14px', background: '#111' }}>
+                        <td colSpan={11} style={{ padding: '0 14px 14px', background: '#111' }}>
                           <h4 style={{ color: 'rgba(255,255,255,0.5)', padding: '12px 0 8px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 1 }}>
                             Sales by {s.name}
                           </h4>
