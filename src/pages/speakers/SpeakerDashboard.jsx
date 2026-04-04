@@ -158,6 +158,82 @@ export default function SpeakerDashboard() {
           </div>
         </section>
 
+        {/* Account Details */}
+        <section className="speaker-account-section">
+          <div className="speaker-account-header">
+            <h2>Payout Account</h2>
+            {!editingAccount && (
+              <button onClick={() => { setEditingAccount(true); setAccountForm({ account_number: profile?.account_number || '', bank_name: profile?.bank_name || '' }); }} className="speaker-btn-outline-sm">
+                {profile?.account_number ? '✏️ Edit' : '+ Add Account'}
+              </button>
+            )}
+          </div>
+          {editingAccount ? (
+            <form onSubmit={handleSaveAccount} className="speaker-account-form">
+              <div className="speaker-account-fields">
+                <div className="speaker-form-group">
+                  <label>Account Number</label>
+                  <input
+                    type="text"
+                    value={accountForm.account_number}
+                    onChange={(e) => setAccountForm({ ...accountForm, account_number: e.target.value })}
+                    placeholder="Enter your account number"
+                    required
+                    maxLength={20}
+                  />
+                </div>
+                <div className="speaker-form-group">
+                  <label>Bank Name</label>
+                  <input
+                    type="text"
+                    value={accountForm.bank_name}
+                    onChange={(e) => setAccountForm({ ...accountForm, bank_name: e.target.value })}
+                    placeholder="e.g. GTBank, Access Bank"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="speaker-account-actions">
+                <button type="submit" className="speaker-btn-save" disabled={savingAccount}>
+                  {savingAccount ? 'Saving...' : 'Save Account'}
+                </button>
+                <button type="button" onClick={() => setEditingAccount(false)} className="speaker-btn-outline-sm">Cancel</button>
+              </div>
+            </form>
+          ) : profile?.account_number ? (
+            <div className="speaker-account-info">
+              <div><span className="speaker-account-label">Account</span> <strong>{profile.account_number}</strong></div>
+              <div><span className="speaker-account-label">Bank</span> <strong>{profile.bank_name || '—'}</strong></div>
+            </div>
+          ) : (
+            <p className="speaker-account-empty">No payout account added yet. Add your bank details to receive payouts.</p>
+          )}
+        </section>
+
+        {/* Approved Questions */}
+        {questions.length > 0 && (
+          <section className="speaker-questions-section">
+            <h2>Questions for You ({questions.length})</h2>
+            <div className="speaker-questions-list">
+              {questions.map((q) => (
+                <div key={q.id} className="speaker-question-card">
+                  <div className="speaker-question-meta">
+                    <span className="speaker-question-from">{q.attendee_name}</span>
+                    <span className={`speaker-badge ${q.status}`}>
+                      {q.status === 'selected' ? '⭐ Selected' : q.status === 'answered' ? '✓ Answered' : q.status}
+                    </span>
+                  </div>
+                  <p className="speaker-question-text">"{q.question_text}"</p>
+                  <div className="speaker-question-footer">
+                    <span>{q.ticket_type}</span>
+                    <span>{new Date(q.created_at).toLocaleDateString()}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Analytics Chart */}
         {analytics && analytics.daily && (
           <section className="speaker-analytics-section">
