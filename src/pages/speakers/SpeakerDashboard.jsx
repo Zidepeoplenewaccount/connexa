@@ -23,6 +23,7 @@ export default function SpeakerDashboard() {
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [activeChart, setActiveChart] = useState('earnings');
+  const [questionTab, setQuestionTab] = useState('talent'); // 'talent' | 'business'
 
   // Account number editing
   const [editingAccount, setEditingAccount] = useState(false);
