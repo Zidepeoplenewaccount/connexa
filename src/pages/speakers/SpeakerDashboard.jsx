@@ -36,19 +36,22 @@ export default function SpeakerDashboard() {
       return;
     }
     try {
-      const [p, s, c, a, q] = await Promise.all([
-        fetchSpeakerProfile(),
+      // Profile fetch is the auth check — if this fails, redirect to login
+      const p = await fetchSpeakerProfile();
+      setProfile(p);
+      setAccountForm({ account_number: p.account_number || '', bank_name: p.bank_name || '' });
+
+      // Load the rest in parallel — failures here don't mean auth is bad
+      const results = await Promise.allSettled([
         fetchSpeakerStats(),
         fetchSpeakerCommissions(),
         fetchSpeakerAnalytics(),
         fetchSpeakerQuestions(),
       ]);
-      setProfile(p);
-      setStats(s);
-      setCommissions(c);
-      setAnalytics(a);
-      setQuestions(q);
-      setAccountForm({ account_number: p.account_number || '', bank_name: p.bank_name || '' });
+      if (results[0].status === 'fulfilled') setStats(results[0].value);
+      if (results[1].status === 'fulfilled') setCommissions(results[1].value);
+      if (results[2].status === 'fulfilled') setAnalytics(results[2].value);
+      if (results[3].status === 'fulfilled') setQuestions(results[3].value);
     } catch {
       navigate('/connexers/login', { replace: true });
     } finally {
