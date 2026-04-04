@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Tickets.css';
-import { initializePayment, validateTicketId, validateDiscountCode, createFreeOrder, findTicketsByEmail } from '../services/api';
+import { initializePayment, validateTicketId, validateDiscountCode, validateSpeakerCode, createFreeOrder, findTicketsByEmail } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
+import { getSpeakerCode } from '../utils/speaker';
 import { isDiscountActive, calculateTicketPrice, getDiscountPercentage } from '../utils/discount';
 
 
@@ -267,6 +268,20 @@ export default function Tickets() {
   const [discountValid, setDiscountValid] = useState(false);
   const [discountData, setDiscountData] = useState(null);
   const [discountError, setDiscountError] = useState('');
+
+  // Speaker code state (auto-detected from URL ?speaker=SPK-XXX)
+  const [speakerCode, setSpeakerCode] = useState(null);
+  const [speakerData, setSpeakerData] = useState(null);
+
+  useEffect(() => {
+    const code = getSpeakerCode();
+    if (code) {
+      setSpeakerCode(code);
+      validateSpeakerCode(code, 10000).then(data => {
+        if (data.valid) setSpeakerData(data);
+      }).catch(() => {});
+    }
+  }, []);
 
 
   
@@ -607,6 +622,10 @@ export default function Tickets() {
         if (discountValid && discountData) {
           codeDiscountAmount = subtotal * (discountData.discount_percentage / 100);
           subtotal -= codeDiscountAmount;
+        } else if (speakerData && speakerCode) {
+          // Apply speaker discount when no other discount code is used
+          codeDiscountAmount = subtotal * (speakerData.discount_percentage / 100);
+          subtotal -= codeDiscountAmount;
         }
         
         totalAmount = subtotal;
@@ -622,6 +641,8 @@ export default function Tickets() {
           discount_code: discountValid ? discountCode.toUpperCase() : null,
           discount_code_percentage: discountValid ? discountData.discount_percentage : null,
           discount_code_amount: discountValid ? codeDiscountAmount : null,
+          speaker_code: speakerCode || null,
+          speaker_discount_applied: !discountValid && speakerData ? codeDiscountAmount : null,
           attendees: attendees.map(a => ({
             name: a.name.trim(),
             email: normalizeEmail(a.email),
@@ -653,6 +674,9 @@ export default function Tickets() {
         if (discountValid && discountData) {
           codeDiscountAmount = baseAmount * (discountData.discount_percentage / 100);
           baseAmount -= codeDiscountAmount;
+        } else if (speakerData && speakerCode) {
+          codeDiscountAmount = baseAmount * (speakerData.discount_percentage / 100);
+          baseAmount -= codeDiscountAmount;
         }
         
         totalAmount = baseAmount;
@@ -666,6 +690,8 @@ export default function Tickets() {
           discount_code: discountValid ? discountCode.toUpperCase() : null,
           discount_code_percentage: discountValid ? discountData.discount_percentage : null,
           discount_code_amount: discountValid ? codeDiscountAmount : null,
+          speaker_code: speakerCode || null,
+          speaker_discount_applied: !discountValid && speakerData ? codeDiscountAmount : null,
           full_name: vendorData.fullName,
           business_name: vendorData.businessName,
           whatsapp: vendorData.whatsapp,
@@ -686,6 +712,9 @@ export default function Tickets() {
         if (discountValid && discountData) {
           codeDiscountAmount = baseAmount * (discountData.discount_percentage / 100);
           baseAmount -= codeDiscountAmount;
+        } else if (speakerData && speakerCode) {
+          codeDiscountAmount = baseAmount * (speakerData.discount_percentage / 100);
+          baseAmount -= codeDiscountAmount;
         }
 
         totalAmount = baseAmount;
@@ -699,6 +728,8 @@ export default function Tickets() {
           discount_code: discountValid ? discountCode.toUpperCase() : null,
           discount_code_percentage: discountValid ? discountData.discount_percentage : null,
           discount_code_amount: discountValid ? codeDiscountAmount : null,
+          speaker_code: speakerCode || null,
+          speaker_discount_applied: !discountValid && speakerData ? codeDiscountAmount : null,
           business_name: businessName,
           representative_name: repName,
           email: normalizeEmail(businessEmail),
