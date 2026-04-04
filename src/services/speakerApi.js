@@ -15,7 +15,7 @@ speakerAxios.interceptors.request.use((config) => {
 
 // Auth
 export const speakerLogin = async (email, password) => {
-  const response = await axios.post(`${BACKEND_URL}/speakers/login`, { email, password });
+  const response = await axios.post(`${BACKEND_URL}/connexers/login`, { email, password });
   const { token, speaker } = response.data;
   localStorage.setItem('speaker_token', token);
   localStorage.setItem('speaker_profile', JSON.stringify(speaker));
@@ -24,7 +24,7 @@ export const speakerLogin = async (email, password) => {
 
 export const speakerLogout = async () => {
   try {
-    await speakerAxios.post('/speakers/logout');
+    await speakerAxios.post('/connexers/logout');
   } catch {
     // ignore
   }
@@ -41,22 +41,22 @@ export const getSpeakerProfile = () => {
 
 // Dashboard
 export const fetchSpeakerProfile = async () => {
-  const response = await speakerAxios.get('/speakers/me');
+  const response = await speakerAxios.get('/connexers/me');
   localStorage.setItem('speaker_profile', JSON.stringify(response.data));
   return response.data;
 };
 
 export const fetchSpeakerStats = async () => {
-  const response = await speakerAxios.get('/speakers/me/stats');
+  const response = await speakerAxios.get('/connexers/me/stats');
   return response.data;
 };
 
 export const fetchSpeakerCommissions = async () => {
-  const response = await speakerAxios.get('/speakers/me/commissions');
+  const response = await speakerAxios.get('/connexers/me/commissions');
   return response.data;
 };
 
 export const fetchSpeakerAnalytics = async () => {
-  const response = await speakerAxios.get('/speakers/me/analytics');
+  const response = await speakerAxios.get('/connexers/me/analytics');
   return response.data;
 };

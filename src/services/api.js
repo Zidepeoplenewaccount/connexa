@@ -320,7 +320,7 @@ export const validateDiscountCode = async (code, userEmail, amount, discountType
 
 export const validateSpeakerCode = async (code, amount) => {
   try {
-    const response = await axios.post(`${BACKEND_URL}/speakers/validate-code?code=${encodeURIComponent(code)}&amount=${amount}`);
+    const response = await axios.post(`${BACKEND_URL}/connexers/validate-code?code=${encodeURIComponent(code)}&amount=${amount}`);
     return response.data;
   } catch (error) {
     console.error('Speaker code validation failed:', error);
