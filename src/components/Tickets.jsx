@@ -269,7 +269,7 @@ export default function Tickets() {
   const [discountData, setDiscountData] = useState(null);
   const [discountError, setDiscountError] = useState('');
 
-  // Speaker code state (auto-detected from URL ?speaker=SPK-XXX)
+  // Speaker code state (auto-detected from URL ?connexer=SPK-XXX)
   const [speakerCode, setSpeakerCode] = useState(null);
   const [speakerData, setSpeakerData] = useState(null);
 
