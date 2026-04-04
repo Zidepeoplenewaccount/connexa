@@ -27,6 +27,10 @@ import AdminOrders from './pages/admin/AdminOrders';
 import AdminPayments from './pages/admin/AdminPayments';
 import AdminAffiliates from './pages/admin/AdminAffiliates';
 import AdminDiscountCodes from './pages/admin/AdminDiscountCodes';
+import AdminSpeakers from './pages/admin/AdminSpeakers';
+
+import SpeakerLogin from './pages/speakers/SpeakerLogin';
+import SpeakerDashboard from './pages/speakers/SpeakerDashboard';
 
 import ProtectedRoute from './components/admin/protectedRoute';
 import PartnerForm from './components/PartnerForm';
