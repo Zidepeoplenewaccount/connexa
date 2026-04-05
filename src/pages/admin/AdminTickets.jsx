@@ -29,8 +29,20 @@ export default function AdminTickets() {
         const metadata = payment.metadata || {};
         const discountCode = (metadata.discount_code || '').trim().toUpperCase();
         const speakerCode = (metadata.speaker_code || '').trim().toUpperCase();
-        const appliedCode = discountCode || speakerCode;
-        if (!appliedCode) return;
+        const hasDiscount = Boolean(discountCode || speakerCode);
+        if (!hasDiscount) return;
+
+        let percentage = null;
+        if (metadata.discount_code_percentage !== null && metadata.discount_code_percentage !== undefined) {
+          percentage = Number(metadata.discount_code_percentage);
+        } else {
+          const speakerDiscountApplied = Number(metadata.speaker_discount_applied || 0);
+          const finalAmount = Number(payment.amount || 0);
+          const baseBeforeSpeakerDiscount = finalAmount + speakerDiscountApplied;
+          if (speakerDiscountApplied > 0 && baseBeforeSpeakerDiscount > 0) {
+            percentage = (speakerDiscountApplied / baseBeforeSpeakerDiscount) * 100;
+          }
+        }
 
         const email = (payment.buyer_email || '').trim().toLowerCase();
         const ticketType = (metadata.ticket_type || '').trim().toLowerCase();
@@ -38,7 +50,7 @@ export default function AdminTickets() {
         const key = `${email}|${ticketType}|${amount}`;
 
         lookup[key] = {
-          code: appliedCode,
+          percentage,
           source: discountCode ? 'discount' : 'connexer',
         };
       });
@@ -52,9 +64,9 @@ export default function AdminTickets() {
   }
 
   function resolveTicketDiscount(ticket) {
-    if (ticket.used_discount_code && ticket.applied_discount_code) {
+    if (ticket.used_discount_code && ticket.discount_percentage !== undefined && ticket.discount_percentage !== null) {
       return {
-        code: ticket.applied_discount_code,
+        percentage: Number(ticket.discount_percentage),
         source: ticket.discount_code_source || 'discount',
       };
     }
@@ -164,7 +176,11 @@ export default function AdminTickets() {
                           }}>
                             Used
                           </span>
-                          <code>{resolvedDiscount.code}</code>
+                          <span style={{ fontWeight: 700 }}>
+                            {resolvedDiscount.percentage !== null && resolvedDiscount.percentage !== undefined
+                              ? `${resolvedDiscount.percentage.toFixed(1).replace(/\.0$/, '')}%`
+                              : 'Applied'}
+                          </span>
                           {resolvedDiscount.source && (
                             <small style={{ color: 'rgba(255,255,255,0.55)' }}>
                               {resolvedDiscount.source === 'connexer' ? 'Connexer code' : 'Discount code'}
