@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { getAllTickets, deleteTicket, exportTickets } from '../../services/adminApi';
+import { getAllTickets, getAllPayments, deleteTicket, exportTickets } from '../../services/adminApi';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
 
 
 export default function AdminTickets() {
   const [tickets, setTickets] = useState([]);
+  const [discountLookup, setDiscountLookup] = useState({});
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
@@ -15,13 +16,54 @@ export default function AdminTickets() {
 
   async function fetchTickets() {
     try {
-      const data = await getAllTickets();
-      setTickets(data.attendees || []);
+      const [ticketData, paymentData] = await Promise.all([
+        getAllTickets(),
+        getAllPayments({ limit: 1000 }),
+      ]);
+      setTickets(ticketData.attendees || []);
+
+      const lookup = {};
+      const payments = paymentData.payments || [];
+
+      payments.forEach((payment) => {
+        const metadata = payment.metadata || {};
+        const discountCode = (metadata.discount_code || '').trim().toUpperCase();
+        const speakerCode = (metadata.speaker_code || '').trim().toUpperCase();
+        const appliedCode = discountCode || speakerCode;
+        if (!appliedCode) return;
+
+        const email = (payment.buyer_email || '').trim().toLowerCase();
+        const ticketType = (metadata.ticket_type || '').trim().toLowerCase();
+        const amount = Number(payment.amount || 0).toFixed(2);
+        const key = `${email}|${ticketType}|${amount}`;
+
+        lookup[key] = {
+          code: appliedCode,
+          source: discountCode ? 'discount' : 'connexer',
+        };
+      });
+
+      setDiscountLookup(lookup);
     } catch (error) {
       console.error('Failed to fetch tickets:', error);
     } finally {
       setLoading(false);
     }
+  }
+
+  function resolveTicketDiscount(ticket) {
+    if (ticket.used_discount_code && ticket.applied_discount_code) {
+      return {
+        code: ticket.applied_discount_code,
+        source: ticket.discount_code_source || 'discount',
+      };
+    }
+
+    const email = (ticket.buyer_email || '').trim().toLowerCase();
+    const ticketType = (ticket.ticket_type || '').trim().toLowerCase();
+    const amount = Number(ticket.amount || 0).toFixed(2);
+    const key = `${email}|${ticketType}|${amount}`;
+    return discountLookup[key] || null;
   }
 
   async function handleDelete(ticketId) {
@@ -97,7 +139,10 @@ export default function AdminTickets() {
                   </td>
                 </tr>
               ) : (
-                filtered.map((ticket) => (
+                filtered.map((ticket) => {
+                  const resolvedDiscount = resolveTicketDiscount(ticket);
+
+                  return (
                   <tr key={ticket.ticket_id}>
                     <td><code>{ticket.ticket_id}</code></td>
                     <td>{ticket.attendee_name}</td>
@@ -105,7 +150,7 @@ export default function AdminTickets() {
                     <td>{ticket.ticket_type}</td>
                     <td>₦{ticket.amount?.toLocaleString()}</td>
                     <td>
-                      {ticket.used_discount_code ? (
+                      {resolvedDiscount ? (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                           <span style={{
                             display: 'inline-block',
@@ -119,10 +164,10 @@ export default function AdminTickets() {
                           }}>
                             Used
                           </span>
-                          <code>{ticket.applied_discount_code}</code>
-                          {ticket.discount_code_source && (
+                          <code>{resolvedDiscount.code}</code>
+                          {resolvedDiscount.source && (
                             <small style={{ color: 'rgba(255,255,255,0.55)' }}>
-                              {ticket.discount_code_source === 'connexer' ? 'Connexer code' : 'Discount code'}
+                              {resolvedDiscount.source === 'connexer' ? 'Connexer code' : 'Discount code'}
                             </small>
                           )}
                         </div>
@@ -139,7 +184,8 @@ export default function AdminTickets() {
                       </button>
                     </td>
                   </tr>
-                ))
+                );
+                })
               )}
             </tbody>
           </table>
