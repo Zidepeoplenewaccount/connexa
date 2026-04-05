@@ -85,13 +85,14 @@ export default function AdminTickets() {
                 <th>Email</th>
                 <th>Type</th>
                 <th>Amount</th>
+                <th>Discount</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan="6" style={{ textAlign: 'center', padding: '40px' }}>
+                  <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>
                     No tickets found
                   </td>
                 </tr>
@@ -103,6 +104,32 @@ export default function AdminTickets() {
                     <td>{ticket.buyer_email}</td>
                     <td>{ticket.ticket_type}</td>
                     <td>₦{ticket.amount?.toLocaleString()}</td>
+                    <td>
+                      {ticket.used_discount_code ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          <span style={{
+                            display: 'inline-block',
+                            padding: '3px 8px',
+                            borderRadius: '999px',
+                            fontSize: '11px',
+                            fontWeight: 700,
+                            width: 'fit-content',
+                            background: 'rgba(45,184,75,0.15)',
+                            color: '#2db84b',
+                          }}>
+                            Used
+                          </span>
+                          <code>{ticket.applied_discount_code}</code>
+                          {ticket.discount_code_source && (
+                            <small style={{ color: 'rgba(255,255,255,0.55)' }}>
+                              {ticket.discount_code_source === 'connexer' ? 'Connexer code' : 'Discount code'}
+                            </small>
+                          )}
+                        </div>
+                      ) : (
+                        <span style={{ color: 'rgba(255,255,255,0.45)' }}>None</span>
+                      )}
+                    </td>
                     <td>
                       <button 
                         className="admin-table-btn"
