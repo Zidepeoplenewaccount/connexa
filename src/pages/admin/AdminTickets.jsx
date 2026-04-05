@@ -29,8 +29,6 @@ export default function AdminTickets() {
         const metadata = payment.metadata || {};
         const discountCode = (metadata.discount_code || '').trim().toUpperCase();
         const speakerCode = (metadata.speaker_code || '').trim().toUpperCase();
-        const hasDiscount = Boolean(discountCode || speakerCode);
-        if (!hasDiscount) return;
 
         let percentage = null;
         if (metadata.discount_code_percentage !== null && metadata.discount_code_percentage !== undefined) {
@@ -44,6 +42,13 @@ export default function AdminTickets() {
           }
         }
 
+        if ((percentage === null || Number.isNaN(percentage)) && metadata.discount_percentage !== null && metadata.discount_percentage !== undefined) {
+          percentage = Number(metadata.discount_percentage);
+        }
+
+        const hasDiscount = percentage !== null && !Number.isNaN(percentage) && percentage > 0;
+        if (!hasDiscount) return;
+
         const email = (payment.buyer_email || '').trim().toLowerCase();
         const ticketType = (metadata.ticket_type || '').trim().toLowerCase();
         const amount = Number(payment.amount || 0).toFixed(2);
@@ -51,7 +56,7 @@ export default function AdminTickets() {
 
         lookup[key] = {
           percentage,
-          source: discountCode ? 'discount' : 'connexer',
+          source: discountCode ? 'discount' : (speakerCode ? 'connexer' : 'pricing'),
         };
       });
 
@@ -64,9 +69,19 @@ export default function AdminTickets() {
   }
 
   function resolveTicketDiscount(ticket) {
-    if (ticket.used_discount_code && ticket.discount_percentage !== undefined && ticket.discount_percentage !== null) {
+    if (ticket.discount_percentage !== undefined && ticket.discount_percentage !== null) {
+      const directPercentage = Number(ticket.discount_percentage);
+      if (!Number.isNaN(directPercentage) && directPercentage > 0) {
+        return {
+          percentage: directPercentage,
+          source: ticket.discount_code_source || 'pricing',
+        };
+      }
+    }
+
+    if (ticket.used_discount_code && ticket.applied_discount_code) {
       return {
-        percentage: Number(ticket.discount_percentage),
+        percentage: null,
         source: ticket.discount_code_source || 'discount',
       };
     }
@@ -163,30 +178,11 @@ export default function AdminTickets() {
                     <td>₦{ticket.amount?.toLocaleString()}</td>
                     <td>
                       {resolvedDiscount ? (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <span style={{
-                            display: 'inline-block',
-                            padding: '3px 8px',
-                            borderRadius: '999px',
-                            fontSize: '11px',
-                            fontWeight: 700,
-                            width: 'fit-content',
-                            background: 'rgba(45,184,75,0.15)',
-                            color: '#2db84b',
-                          }}>
-                            Used
-                          </span>
-                          <span style={{ fontWeight: 700 }}>
-                            {resolvedDiscount.percentage !== null && resolvedDiscount.percentage !== undefined
-                              ? `${resolvedDiscount.percentage.toFixed(1).replace(/\.0$/, '')}%`
-                              : 'Applied'}
-                          </span>
-                          {resolvedDiscount.source && (
-                            <small style={{ color: 'rgba(255,255,255,0.55)' }}>
-                              {resolvedDiscount.source === 'connexer' ? 'Connexer code' : 'Discount code'}
-                            </small>
-                          )}
-                        </div>
+                        <span style={{ fontWeight: 700 }}>
+                          {resolvedDiscount.percentage !== null && resolvedDiscount.percentage !== undefined
+                            ? `${resolvedDiscount.percentage.toFixed(1).replace(/\.0$/, '')}%`
+                            : 'Applied'}
+                        </span>
                       ) : (
                         <span style={{ color: 'rgba(255,255,255,0.45)' }}>None</span>
                       )}
