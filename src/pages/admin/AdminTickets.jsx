@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAllTickets, getAllPayments, deleteTicket, exportTickets } from '../../services/adminApi';
+import { getAllTickets, getAllPayments, getAllDiscountCodes, deleteTicket, exportTickets } from '../../services/adminApi';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
 
@@ -7,6 +7,7 @@ import '../../components/admin/admin.css';
 export default function AdminTickets() {
   const [tickets, setTickets] = useState([]);
   const [discountLookup, setDiscountLookup] = useState({});
+  const [discountCodeMap, setDiscountCodeMap] = useState({});
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
@@ -16,14 +17,24 @@ export default function AdminTickets() {
 
   async function fetchTickets() {
     try {
-      const [ticketData, paymentData] = await Promise.all([
+      const [ticketData, paymentData, discountCodeData] = await Promise.all([
         getAllTickets(),
         getAllPayments({ limit: 1000 }),
+        getAllDiscountCodes(),
       ]);
       setTickets(ticketData.attendees || []);
 
       const lookup = {};
       const payments = paymentData.payments || [];
+      const codeMap = {};
+
+      (discountCodeData || []).forEach((entry) => {
+        const code = (entry.code || '').trim().toUpperCase();
+        const percentage = Number(entry.discount_percentage);
+        if (code && !Number.isNaN(percentage) && percentage > 0) {
+          codeMap[code] = percentage;
+        }
+      });
 
       payments.forEach((payment) => {
         const metadata = payment.metadata || {};
@@ -61,6 +72,7 @@ export default function AdminTickets() {
       });
 
       setDiscountLookup(lookup);
+      setDiscountCodeMap(codeMap);
     } catch (error) {
       console.error('Failed to fetch tickets:', error);
     } finally {
@@ -79,18 +91,32 @@ export default function AdminTickets() {
       }
     }
 
+    const email = (ticket.buyer_email || '').trim().toLowerCase();
+    const ticketType = (ticket.ticket_type || '').trim().toLowerCase();
+    const amount = Number(ticket.amount || 0).toFixed(2);
+    const key = `${email}|${ticketType}|${amount}`;
+    const resolvedFromPayment = discountLookup[key] || null;
+    if (resolvedFromPayment) {
+      return resolvedFromPayment;
+    }
+
     if (ticket.used_discount_code && ticket.applied_discount_code) {
+      const code = (ticket.applied_discount_code || '').trim().toUpperCase();
+      const percentageFromCode = discountCodeMap[code];
+      if (percentageFromCode !== undefined) {
+        return {
+          percentage: percentageFromCode,
+          source: ticket.discount_code_source || 'discount',
+        };
+      }
+
       return {
         percentage: null,
         source: ticket.discount_code_source || 'discount',
       };
     }
 
-    const email = (ticket.buyer_email || '').trim().toLowerCase();
-    const ticketType = (ticket.ticket_type || '').trim().toLowerCase();
-    const amount = Number(ticket.amount || 0).toFixed(2);
-    const key = `${email}|${ticketType}|${amount}`;
-    return discountLookup[key] || null;
+    return null;
   }
 
   async function handleDelete(ticketId) {
@@ -177,11 +203,9 @@ export default function AdminTickets() {
                     <td>{ticket.ticket_type}</td>
                     <td>₦{ticket.amount?.toLocaleString()}</td>
                     <td>
-                      {resolvedDiscount ? (
+                      {resolvedDiscount && resolvedDiscount.percentage !== null && resolvedDiscount.percentage !== undefined ? (
                         <span style={{ fontWeight: 700 }}>
-                          {resolvedDiscount.percentage !== null && resolvedDiscount.percentage !== undefined
-                            ? `${resolvedDiscount.percentage.toFixed(1).replace(/\.0$/, '')}%`
-                            : 'Applied'}
+                          {`${resolvedDiscount.percentage.toFixed(1).replace(/\.0$/, '')}%`}
                         </span>
                       ) : (
                         <span style={{ color: 'rgba(255,255,255,0.45)' }}>None</span>
