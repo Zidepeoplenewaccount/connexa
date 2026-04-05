@@ -22,6 +22,14 @@ export const speakerLogin = async (email, password) => {
   return response.data;
 };
 
+export const speakerSignup = async (payload) => {
+  const response = await axios.post(`${BACKEND_URL}/connexers/signup`, payload);
+  const { token, speaker } = response.data;
+  localStorage.setItem('speaker_token', token);
+  localStorage.setItem('speaker_profile', JSON.stringify(speaker));
+  return response.data;
+};
+
 export const speakerLogout = async () => {
   try {
     await speakerAxios.post('/connexers/logout');

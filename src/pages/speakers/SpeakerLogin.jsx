@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { speakerLogin } from '../../services/speakerApi';
+import { speakerLogin, speakerSignup } from '../../services/speakerApi';
 import './speaker-portal.css';
 
 export default function SpeakerLogin() {
+  const [mode, setMode] = useState('login');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [discountCode, setDiscountCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const isSignup = mode === 'signup';
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -16,13 +21,28 @@ export default function SpeakerLogin() {
     setLoading(true);
 
     try {
-      await speakerLogin(email.trim(), password);
+      if (isSignup) {
+        const normalizedCode = discountCode.trim().toUpperCase().replace(/\s+/g, '-');
+        await speakerSignup({
+          name: name.trim(),
+          email: email.trim(),
+          password,
+          discount_code: normalizedCode,
+        });
+      } else {
+        await speakerLogin(email.trim(), password);
+      }
       navigate('/connexers/dashboard');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Invalid email or password');
+      setError(err.response?.data?.detail || 'Unable to continue. Please check your details.');
     } finally {
       setLoading(false);
     }
+  }
+
+  function switchMode(nextMode) {
+    setMode(nextMode);
+    setError('');
   }
 
   return (
@@ -30,10 +50,46 @@ export default function SpeakerLogin() {
       <div className="speaker-login-wrapper">
         <div className="speaker-login-box">
           <div className="speaker-login-logo">CONNEXA</div>
-          <h1>Connexer Portal</h1>
-          <p className="speaker-login-subtitle">Log in with the credentials provided to you</p>
+          <h1>{isSignup ? 'Create Connexer Account' : 'Connexer Portal'}</h1>
+          <p className="speaker-login-subtitle">
+            {isSignup
+              ? 'Choose your code once. It will be valid for ticket discounts and visible in Admin Discount Codes.'
+              : 'Log in to access your connexer dashboard.'}
+          </p>
+
+          <div className="speaker-auth-switch">
+            <button
+              type="button"
+              className={mode === 'login' ? 'active' : ''}
+              onClick={() => switchMode('login')}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              className={mode === 'signup' ? 'active' : ''}
+              onClick={() => switchMode('signup')}
+            >
+              Sign Up
+            </button>
+          </div>
 
           <form onSubmit={handleSubmit}>
+            {isSignup && (
+              <div className="speaker-form-group">
+                <label htmlFor="name">Full Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your full name"
+                  required
+                  autoComplete="name"
+                />
+              </div>
+            )}
+
             <div className="speaker-form-group">
               <label htmlFor="email">Email Address</label>
               <input
@@ -46,6 +102,23 @@ export default function SpeakerLogin() {
                 autoComplete="email"
               />
             </div>
+
+            {isSignup && (
+              <div className="speaker-form-group">
+                <label htmlFor="discountCode">Your Discount Code</label>
+                <input
+                  id="discountCode"
+                  type="text"
+                  value={discountCode}
+                  onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                  placeholder="e.g. SPK-ANNA01"
+                  required
+                  minLength={4}
+                  maxLength={30}
+                />
+                <small className="speaker-field-help">Only letters, numbers and dashes are allowed.</small>
+              </div>
+            )}
 
             <div className="speaker-form-group">
               <label htmlFor="password">Password</label>
@@ -63,12 +136,14 @@ export default function SpeakerLogin() {
             {error && <div className="speaker-error">{error}</div>}
 
             <button type="submit" className="speaker-btn-primary" disabled={loading}>
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? (isSignup ? 'Creating account...' : 'Signing in...') : (isSignup ? 'Create Account' : 'Sign In')}
             </button>
           </form>
 
           <p className="speaker-login-footer">
-            Don't have an account? Contact the Connexa team.
+            {isSignup
+              ? 'Already have a connexer account? Switch to Sign In.'
+              : 'No account yet? Switch to Sign Up and create one.'}
           </p>
         </div>
       </div>

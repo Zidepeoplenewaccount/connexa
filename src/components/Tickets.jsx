@@ -324,33 +324,36 @@ export default function Tickets() {
         return;
       }
 
-      // Try regular discount code first
+      // Try connexer code first so speaker commissions are preserved even when the
+      // same code is mirrored in admin discount-codes.
       let data;
       let isConnexerCode = false;
       let codeType = null;
       try {
-        data = await validateDiscountCode(
-          code,
-          normalizedUserEmail,
-          amount,
-          'tickets',
-          selectedTicket.name
-        );
-        if (data && data.valid) {
-          codeType = 'discount';
+        const speakerResult = await validateSpeakerCode(code, amount);
+        if (speakerResult && speakerResult.valid) {
+          data = speakerResult;
+          isConnexerCode = true;
+          codeType = 'connexer';
+        } else {
+          data = null;
         }
       } catch {
         data = null;
       }
 
-      // If regular code failed, try as connexer code
+      // Fall back to regular admin discount code
       if (!data || !data.valid) {
         try {
-          const speakerResult = await validateSpeakerCode(code, amount);
-          if (speakerResult && speakerResult.valid) {
-            data = speakerResult;
-            isConnexerCode = true;
-            codeType = 'connexer';
+          data = await validateDiscountCode(
+            code,
+            normalizedUserEmail,
+            amount,
+            'tickets',
+            selectedTicket.name
+          );
+          if (data && data.valid) {
+            codeType = 'discount';
           }
         } catch {
           // neither worked
