@@ -31,6 +31,7 @@ import AdminSpeakers from './pages/admin/AdminSpeakers';
 
 import SpeakerLogin from './pages/speakers/SpeakerLogin';
 import SpeakerDashboard from './pages/speakers/SpeakerDashboard';
+import SpeakerResetPassword from './pages/speakers/SpeakerResetPassword';
 
 import ProtectedRoute from './components/admin/protectedRoute';
 import PartnerForm from './components/PartnerForm';
@@ -151,6 +152,7 @@ export default function App() {
 
         {/* Connexer Portal */}
         <Route path="/connexers/login" element={<SpeakerLogin />} />
+        <Route path="/connexers/reset-password" element={<SpeakerResetPassword />} />
         <Route path="/connexers/dashboard" element={<SpeakerDashboard />} />
 
         {/* Admin Connexers */}

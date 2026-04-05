@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { speakerLogin, speakerSignup } from '../../services/speakerApi';
+import { speakerLogin, speakerSignup, speakerForgotPassword } from '../../services/speakerApi';
 import './speaker-portal.css';
 
 export default function SpeakerLogin() {
@@ -9,6 +9,10 @@ export default function SpeakerLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [discountCode, setDiscountCode] = useState('');
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotMessage, setForgotMessage] = useState('');
+  const [forgotLoading, setForgotLoading] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -43,6 +47,24 @@ export default function SpeakerLogin() {
   function switchMode(nextMode) {
     setMode(nextMode);
     setError('');
+    setForgotMessage('');
+    setShowForgotPassword(false);
+  }
+
+  async function handleForgotPassword(e) {
+    e.preventDefault();
+    setError('');
+    setForgotMessage('');
+    setForgotLoading(true);
+
+    try {
+      await speakerForgotPassword((forgotEmail || email).trim());
+      setForgotMessage('If this email is registered, a reset link has been sent.');
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Unable to send reset email right now.');
+    } finally {
+      setForgotLoading(false);
+    }
   }
 
   return (
@@ -132,6 +154,40 @@ export default function SpeakerLogin() {
                 autoComplete="current-password"
               />
             </div>
+
+            {!isSignup && (
+              <div className="speaker-forgot-wrap">
+                <button
+                  type="button"
+                  className="speaker-forgot-btn"
+                  onClick={() => { setShowForgotPassword((prev) => !prev); setForgotMessage(''); }}
+                >
+                  Forgot password?
+                </button>
+              </div>
+            )}
+
+            {!isSignup && showForgotPassword && (
+              <div className="speaker-forgot-box">
+                <form onSubmit={handleForgotPassword}>
+                  <div className="speaker-form-group" style={{ marginBottom: 12 }}>
+                    <label htmlFor="forgotEmail">Reset Email</label>
+                    <input
+                      id="forgotEmail"
+                      type="email"
+                      value={forgotEmail}
+                      onChange={(e) => setForgotEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </div>
+                  <button type="submit" className="speaker-btn-outline-full" disabled={forgotLoading}>
+                    {forgotLoading ? 'Sending...' : 'Send Reset Link'}
+                  </button>
+                </form>
+                {forgotMessage && <div className="speaker-info-msg">{forgotMessage}</div>}
+              </div>
+            )}
 
             {error && <div className="speaker-error">{error}</div>}
 

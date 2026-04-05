@@ -30,6 +30,16 @@ export const speakerSignup = async (payload) => {
   return response.data;
 };
 
+export const speakerForgotPassword = async (email) => {
+  const response = await axios.post(`${BACKEND_URL}/connexers/forgot-password`, { email });
+  return response.data;
+};
+
+export const speakerResetPassword = async ({ token, new_password }) => {
+  const response = await axios.post(`${BACKEND_URL}/connexers/reset-password`, { token, new_password });
+  return response.data;
+};
+
 export const speakerLogout = async () => {
   try {
     await speakerAxios.post('/connexers/logout');
