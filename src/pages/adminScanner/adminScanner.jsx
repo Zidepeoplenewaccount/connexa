@@ -95,7 +95,7 @@ export default function AdminScanner() {
             const scannerName = localStorage.getItem('scanner_name') || 'Scanner Staff';
             
             const response = await fetch(
-            `${import.meta.env.VITE_BACKEND_URL || 'http://10.250.9.87:8000'}/tickets/${ticketId}/scan?scanned_by=${encodeURIComponent(scannerName)}`, 
+            `${'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net'}/tickets/${ticketId}/scan?scanned_by=${encodeURIComponent(scannerName)}`, 
             {
                 method: 'PATCH',
                 headers: {
