@@ -56,6 +56,10 @@
   flex: 1;
 }
 
+.admin-nav::-webkit-scrollbar {
+  width: 0px;
+}
+
 .admin-nav a {
   display: block;
   padding: 12px 16px;

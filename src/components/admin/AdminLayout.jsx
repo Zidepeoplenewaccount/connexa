@@ -7,10 +7,18 @@ export default function AdminLayout({ children }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const role = localStorage.getItem('admin_role');
 
   function handleLogout() {
     adminLogout();
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin_role');
     navigate('/admin/login');
+  }
+
+  if (role === 'scanner') {
+    navigate('/admin/scanner');
+    return null;
   }
 
   const isActive = (path) => location.pathname === path;
@@ -57,6 +65,9 @@ export default function AdminLayout({ children }) {
             </Link>
             <Link to="/admin/discount-codes" className="admin-nav-link">
               🎟️ Discount Codes
+            </Link>
+            <Link to="/admin/scanner" className="admin-nav-link">
+              📷 Scanner
             </Link>
           </nav>
 

@@ -35,6 +35,8 @@ import AffiliateSignup from './components/AffiliateSignup';
 import UpgradeSuccess from './pages/UpgradeSuccess';
 import AdminQuestions from './pages/admin/AdminQuestions';
 import UpgradeTicket from './pages/UpgradeTicket';
+import AdminScanner from './pages/adminScanner/adminScanner';
+import ScannerProtectedRoute from './pages/adminScanner/scannerProtectedRoute';
 
 
 
@@ -143,6 +145,15 @@ export default function App() {
         <Route 
           path="/admin/discount-codes" 
           element={<AdminDiscountCodes />} 
+        />
+
+        <Route 
+          path="/admin/scanner" 
+          element={
+          <ScannerProtectedRoute>
+            <AdminScanner />
+          </ScannerProtectedRoute>
+          } 
         />
       </Routes>
     </BrowserRouter>

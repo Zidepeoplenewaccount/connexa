@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
-//const BACKEND_URL = 'http://127.0.0.1:8000';
+//const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
+const BACKEND_URL = 'http://127.0.0.1:8000';
 
 export const getAffiliateCode = () => {
   const urlParams = new URLSearchParams(window.location.search);
