@@ -66,6 +66,9 @@ export default function AdminLayout({ children }) {
             <Link to="/admin/discount-codes" className="admin-nav-link">
               🎟️ Discount Codes
             </Link>
+            <Link to="/admin/connexers" className={isActive('/admin/connexers') ? 'active' : ''}>
+              🎤 Connexers
+            </Link>
             <Link to="/admin/scanner" className="admin-nav-link">
               📷 Scanner
             </Link>

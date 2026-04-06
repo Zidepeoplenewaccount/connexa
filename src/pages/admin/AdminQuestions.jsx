@@ -87,7 +87,7 @@ export default function AdminQuestions() {
   return (
     <AdminLayout>
       <div className="admin-page-header">
-        <h1>Speaker Questions</h1>
+        <h1>Connexer Questions</h1>
         <div style={{ display: 'flex', gap: '12px' }}>
           <select 
             value={filterSpeaker} 
@@ -299,12 +299,32 @@ export default function AdminQuestions() {
                       </small>
                     </td>
                     <td>
-                      <button 
-                        className="admin-table-btn"
-                        onClick={() => handleDelete(question.id)}
-                      >
-                        🗑️ Delete
-                      </button>
+                      <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                        {question.status === 'pending' && (
+                          <button
+                            onClick={() => handleStatusChange(question.id, 'selected')}
+                            style={{
+                              padding: '6px 14px',
+                              background: '#2db84b',
+                              border: 'none',
+                              borderRadius: '6px',
+                              color: '#fff',
+                              fontSize: '12px',
+                              fontWeight: '700',
+                              cursor: 'pointer',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            ✓ Approve
+                          </button>
+                        )}
+                        <button 
+                          className="admin-table-btn"
+                          onClick={() => handleDelete(question.id)}
+                        >
+                          🗑️
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

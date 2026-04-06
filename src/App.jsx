@@ -27,6 +27,11 @@ import AdminOrders from './pages/admin/AdminOrders';
 import AdminPayments from './pages/admin/AdminPayments';
 import AdminAffiliates from './pages/admin/AdminAffiliates';
 import AdminDiscountCodes from './pages/admin/AdminDiscountCodes';
+import AdminSpeakers from './pages/admin/AdminSpeakers';
+
+import SpeakerLogin from './pages/speakers/SpeakerLogin';
+import SpeakerDashboard from './pages/speakers/SpeakerDashboard';
+import SpeakerResetPassword from './pages/speakers/SpeakerResetPassword';
 
 import ProtectedRoute from './components/admin/protectedRoute';
 import PartnerForm from './components/PartnerForm';
@@ -145,6 +150,21 @@ export default function App() {
         <Route 
           path="/admin/discount-codes" 
           element={<AdminDiscountCodes />} 
+        />
+
+        {/* Connexer Portal */}
+        <Route path="/connexers/login" element={<SpeakerLogin />} />
+        <Route path="/connexers/reset-password" element={<SpeakerResetPassword />} />
+        <Route path="/connexers/dashboard" element={<SpeakerDashboard />} />
+
+        {/* Admin Connexers */}
+        <Route
+          path="/admin/connexers"
+          element={
+            <ProtectedRoute>
+              <AdminSpeakers />
+            </ProtectedRoute>
+          }
         />
 
         <Route 

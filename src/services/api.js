@@ -317,3 +317,13 @@ export const validateDiscountCode = async (code, userEmail, amount, discountType
     throw error;
   }
 };
+
+export const validateSpeakerCode = async (code, amount) => {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/connexers/validate-code?code=${encodeURIComponent(code)}&amount=${amount}`);
+    return response.data;
+  } catch (error) {
+    console.error('Speaker code validation failed:', error);
+    throw error;
+  }
+};

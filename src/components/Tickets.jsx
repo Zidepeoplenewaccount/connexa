@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Tickets.css';
-import { initializePayment, validateTicketId, validateDiscountCode, createFreeOrder, findTicketsByEmail } from '../services/api';
+import { initializePayment, validateTicketId, validateDiscountCode, validateSpeakerCode, createFreeOrder, findTicketsByEmail } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
+import { getSpeakerCode } from '../utils/speaker';
 import { isDiscountActive, calculateTicketPrice, getDiscountPercentage } from '../utils/discount';
 
 
@@ -267,6 +268,21 @@ export default function Tickets() {
   const [discountValid, setDiscountValid] = useState(false);
   const [discountData, setDiscountData] = useState(null);
   const [discountError, setDiscountError] = useState('');
+  const [validatedCodeType, setValidatedCodeType] = useState(null);
+
+  // Speaker code state (auto-detected from URL ?connexer=SPK-XXX)
+  const [speakerCode, setSpeakerCode] = useState(null);
+  const [speakerData, setSpeakerData] = useState(null);
+
+  useEffect(() => {
+    const code = getSpeakerCode();
+    if (code) {
+      setSpeakerCode(code);
+      validateSpeakerCode(code, 10000).then(data => {
+        if (data.valid) setSpeakerData(data);
+      }).catch(() => {});
+    }
+  }, []);
 
 
   
@@ -281,6 +297,7 @@ export default function Tickets() {
       setDiscountValid(false);
       setDiscountData(null);
       setDiscountError('');
+      setValidatedCodeType(null);
       return;
     }
 
@@ -307,27 +324,62 @@ export default function Tickets() {
         return;
       }
 
-      const data = await validateDiscountCode(
-        code,
-        normalizedUserEmail,
-        amount,
-        'tickets',
-        selectedTicket.name
-      );
+      // Try connexer code first so speaker commissions are preserved even when the
+      // same code is mirrored in admin discount-codes.
+      let data;
+      let isConnexerCode = false;
+      let codeType = null;
+      try {
+        const speakerResult = await validateSpeakerCode(code, amount);
+        if (speakerResult && speakerResult.valid) {
+          data = speakerResult;
+          isConnexerCode = true;
+          codeType = 'connexer';
+        } else {
+          data = null;
+        }
+      } catch {
+        data = null;
+      }
+
+      // Fall back to regular admin discount code
+      if (!data || !data.valid) {
+        try {
+          data = await validateDiscountCode(
+            code,
+            normalizedUserEmail,
+            amount,
+            'tickets',
+            selectedTicket.name
+          );
+          if (data && data.valid) {
+            codeType = 'discount';
+          }
+        } catch {
+          // neither worked
+        }
+      }
       
-      if (data.valid) {
+      if (data && data.valid) {
         setDiscountValid(true);
         setDiscountData(data);
         setDiscountError('');
+        setValidatedCodeType(codeType);
+        if (isConnexerCode) {
+          setSpeakerCode(code.trim());
+          setSpeakerData(data);
+        }
       } else {
         setDiscountValid(false);
         setDiscountData(null);
-        setDiscountError(data.message);
+        setDiscountError(data?.message || 'Invalid discount code');
+        setValidatedCodeType(null);
       }
     } catch (err) {
       setDiscountValid(false);
       setDiscountData(null);
       setDiscountError('Invalid discount code');
+      setValidatedCodeType(null);
     } finally {
       setDiscountValidating(false);
     }
@@ -340,6 +392,7 @@ export default function Tickets() {
     setDiscountValid(false);
     setDiscountData(null);
     setDiscountError('');
+    setValidatedCodeType(null);
     
     clearTimeout(window.discountValidationTimeout);
     
@@ -378,6 +431,7 @@ export default function Tickets() {
     setDiscountValid(false);
     setDiscountData(null);
     setDiscountError('');
+    setValidatedCodeType(null);
     
     // Reset state based on pass type
     if (ticket.passType === 'individual') {
@@ -601,11 +655,17 @@ export default function Tickets() {
         const baseAmount = ticketPrice * quantity;
         const groupDiscount = selectedTicket.name === 'Marketplace Pass' ? 0 : calculateDiscount(quantity);
         let subtotal = baseAmount - groupDiscount;
+        const isRegularDiscountCodeApplied = discountValid && validatedCodeType === 'discount';
+        const isSpeakerCodeApplied = (discountValid && validatedCodeType === 'connexer') || (!discountValid && speakerData && speakerCode);
         
         // Apply discount code if valid
         let codeDiscountAmount = 0;
         if (discountValid && discountData) {
           codeDiscountAmount = subtotal * (discountData.discount_percentage / 100);
+          subtotal -= codeDiscountAmount;
+        } else if (speakerData && speakerCode) {
+          // Apply speaker discount when no other discount code is used
+          codeDiscountAmount = subtotal * (speakerData.discount_percentage / 100);
           subtotal -= codeDiscountAmount;
         }
         
@@ -619,9 +679,11 @@ export default function Tickets() {
           discounted_price: ticketPrice,
           discount_percentage: discountPercentage,
           group_discount: groupDiscount,
-          discount_code: discountValid ? discountCode.toUpperCase() : null,
-          discount_code_percentage: discountValid ? discountData.discount_percentage : null,
-          discount_code_amount: discountValid ? codeDiscountAmount : null,
+          discount_code: isRegularDiscountCodeApplied ? discountCode.toUpperCase() : null,
+          discount_code_percentage: isRegularDiscountCodeApplied ? discountData.discount_percentage : null,
+          discount_code_amount: isRegularDiscountCodeApplied ? codeDiscountAmount : null,
+          speaker_code: isSpeakerCodeApplied ? (speakerCode || discountCode.trim()) : null,
+          speaker_discount_applied: isSpeakerCodeApplied ? codeDiscountAmount : null,
           attendees: attendees.map(a => ({
             name: a.name.trim(),
             email: normalizeEmail(a.email),
@@ -637,6 +699,8 @@ export default function Tickets() {
         }
       } else if (isVendor) {
         let baseAmount = ticketPrice;
+        const isRegularDiscountCodeApplied = discountValid && validatedCodeType === 'discount';
+        const isSpeakerCodeApplied = (discountValid && validatedCodeType === 'connexer') || (!discountValid && speakerData && speakerCode);
         
         // Add electricity cost
         if (vendorData.needElectricity === 'yes') {
@@ -653,6 +717,9 @@ export default function Tickets() {
         if (discountValid && discountData) {
           codeDiscountAmount = baseAmount * (discountData.discount_percentage / 100);
           baseAmount -= codeDiscountAmount;
+        } else if (speakerData && speakerCode) {
+          codeDiscountAmount = baseAmount * (speakerData.discount_percentage / 100);
+          baseAmount -= codeDiscountAmount;
         }
         
         totalAmount = baseAmount;
@@ -663,9 +730,11 @@ export default function Tickets() {
           original_price: selectedTicket.price,
           discounted_price: ticketPrice,
           discount_percentage: discountPercentage,
-          discount_code: discountValid ? discountCode.toUpperCase() : null,
-          discount_code_percentage: discountValid ? discountData.discount_percentage : null,
-          discount_code_amount: discountValid ? codeDiscountAmount : null,
+          discount_code: isRegularDiscountCodeApplied ? discountCode.toUpperCase() : null,
+          discount_code_percentage: isRegularDiscountCodeApplied ? discountData.discount_percentage : null,
+          discount_code_amount: isRegularDiscountCodeApplied ? codeDiscountAmount : null,
+          speaker_code: isSpeakerCodeApplied ? (speakerCode || discountCode.trim()) : null,
+          speaker_discount_applied: isSpeakerCodeApplied ? codeDiscountAmount : null,
           full_name: vendorData.fullName,
           business_name: vendorData.businessName,
           whatsapp: vendorData.whatsapp,
@@ -680,11 +749,16 @@ export default function Tickets() {
         };
       } else {
         let baseAmount = ticketPrice;
+        const isRegularDiscountCodeApplied = discountValid && validatedCodeType === 'discount';
+        const isSpeakerCodeApplied = (discountValid && validatedCodeType === 'connexer') || (!discountValid && speakerData && speakerCode);
         
         // Apply discount code if valid
         let codeDiscountAmount = 0;
         if (discountValid && discountData) {
           codeDiscountAmount = baseAmount * (discountData.discount_percentage / 100);
+          baseAmount -= codeDiscountAmount;
+        } else if (speakerData && speakerCode) {
+          codeDiscountAmount = baseAmount * (speakerData.discount_percentage / 100);
           baseAmount -= codeDiscountAmount;
         }
 
@@ -696,9 +770,11 @@ export default function Tickets() {
           original_price: selectedTicket.price,
           discounted_price: ticketPrice,
           discount_percentage: discountPercentage,
-          discount_code: discountValid ? discountCode.toUpperCase() : null,
-          discount_code_percentage: discountValid ? discountData.discount_percentage : null,
-          discount_code_amount: discountValid ? codeDiscountAmount : null,
+          discount_code: isRegularDiscountCodeApplied ? discountCode.toUpperCase() : null,
+          discount_code_percentage: isRegularDiscountCodeApplied ? discountData.discount_percentage : null,
+          discount_code_amount: isRegularDiscountCodeApplied ? codeDiscountAmount : null,
+          speaker_code: isSpeakerCodeApplied ? (speakerCode || discountCode.trim()) : null,
+          speaker_discount_applied: isSpeakerCodeApplied ? codeDiscountAmount : null,
           business_name: businessName,
           representative_name: repName,
           email: normalizeEmail(businessEmail),

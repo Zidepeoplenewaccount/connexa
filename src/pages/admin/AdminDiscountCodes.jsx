@@ -123,6 +123,38 @@ export default function AdminDiscountCodes() {
     }
   }
 
+  function getCodeSource(code) {
+    const createdBy = (code.created_by || '').toLowerCase();
+
+    if (createdBy.startsWith('connexer-signup:')) {
+      return {
+        label: 'Connexer Signup',
+        style: {
+          background: 'rgba(45,184,75,0.15)',
+          color: '#2db84b',
+        },
+      };
+    }
+
+    if (createdBy.startsWith('admin:')) {
+      return {
+        label: 'Admin',
+        style: {
+          background: 'rgba(26,115,232,0.15)',
+          color: '#1a73e8',
+        },
+      };
+    }
+
+    return {
+      label: 'Admin',
+      style: {
+        background: 'rgba(255,255,255,0.1)',
+        color: 'rgba(255,255,255,0.75)',
+      },
+    };
+  }
+
   if (loading) {
     return (
       <AdminLayout>
@@ -169,6 +201,7 @@ export default function AdminDiscountCodes() {
             <thead>
               <tr>
                 <th>Code</th>
+                <th>Source</th>
                 <th>Discount</th>
                 <th>Applies To</th>
                 <th>Ticket Type</th>
@@ -180,7 +213,7 @@ export default function AdminDiscountCodes() {
             <tbody>
               {codes.length === 0 ? (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>
+                  <td colSpan="8" style={{ textAlign: 'center', padding: '40px' }}>
                     No discount codes found
                   </td>
                 </tr>
@@ -199,6 +232,24 @@ export default function AdminDiscountCodes() {
                       }}>
                         {code.code}
                       </code>
+                    </td>
+                    <td>
+                      {(() => {
+                        const source = getCodeSource(code);
+                        return (
+                          <span
+                            style={{
+                              padding: '4px 10px',
+                              borderRadius: '6px',
+                              fontSize: '12px',
+                              fontWeight: '600',
+                              ...source.style,
+                            }}
+                          >
+                            {source.label}
+                          </span>
+                        );
+                      })()}
                     </td>
                     <td style={{ color: '#2db84b', fontWeight: '700' }}>
                       {code.discount_percentage}%
