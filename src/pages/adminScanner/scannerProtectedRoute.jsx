@@ -10,7 +10,7 @@ export default function ScannerProtectedRoute({ children }) {
   
   // Both full admin and scanner can access
   if (role !== 'full' && role !== 'scanner') {
-    return <Navigate to="/admin" replace />;
+    return <Navigate to="/" replace />;
   }
   
   return children;
