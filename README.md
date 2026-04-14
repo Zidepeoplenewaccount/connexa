@@ -1,16 +1,34 @@
-# React + Vite
+# Connexa Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository is a Vite + React frontend application.
 
-Currently, two official plugins are available:
+## Active Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Active app source: `src/`
+- Active scripts: root `package.json`
+- Build tool: Vite
+- Hosting: static frontend deployment (for example Azure Static Web Apps)
 
-## React Compiler
+This project is not a backend monolith. API/backend services run in separate repositories (for example FastAPI services) and are called over HTTP.
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## Run Locally
 
-## Expanding the ESLint configuration
+```bash
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## About `client/` and `server/`
+
+`client/` and `server/` are legacy scaffolding kept for reference only. They are not part of the active runtime path for this app.
+
+- Do not use `client/` as the main source of truth.
+- Do not use `server/index.js` as the backend API.
+- Keep feature work in root `src/` and root Vite config/files.
