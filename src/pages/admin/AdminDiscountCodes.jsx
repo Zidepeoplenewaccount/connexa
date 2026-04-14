@@ -31,7 +31,7 @@ export default function AdminDiscountCodes() {
   const ticketTypes = [
     'All Tickets',  // This means no restriction
     'General Access Ticket',
-    'Talent Pass — Regular',  // ✅ CHANGED
+    'Talent Pass — Regular', 
   'Connectors Pass',
   'Talent Pass — VIP',
     'Business Owner Pass',

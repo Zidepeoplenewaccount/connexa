@@ -141,7 +141,7 @@ const allProducts = [
     category: 'Apparel',
     filter: 'tees',
     price: 12000,
-    desc: 'rep it at the opportunity playground.',
+    desc: 'Rep it at the opportunity playground.',
     hasSize: true,
     colors: [
       { name: 'Black', value: 'black', image: VendorTshirtBlack },

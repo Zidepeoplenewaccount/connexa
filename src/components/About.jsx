@@ -45,7 +45,7 @@ export default function About() {
             <div className="about-card-stack">
               <div className="about-floating-card about-floating-card-1">
                 <div className="about-card-label">Market Vendors</div>
-                <div className="about-card-title">Sell to 500+ buyers in one day</div>
+                <div className="about-card-title">Sell to 2000+ buyers in one day</div>
                 <div className="about-card-text">
                   High foot traffic, ready-to-buy audience, and real revenue opportunity.
                 </div>
