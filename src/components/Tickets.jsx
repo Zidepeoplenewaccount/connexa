@@ -843,6 +843,11 @@ export default function Tickets() {
             Access. Opportunity. <span className="highlight-orange">Results.</span>
           </h2>
           <p>Connexa tickets are not about attendance — they're about what you get out of the room.</p>
+
+          <div className="tickets-upgrade-strip">
+            <span>Already bought a ticket?</span>
+            <a href="/upgrade-ticket" className="tickets-upgrade-link">Upgrade now</a>
+          </div>
           
           {/* Discount Banner */}
           {discountActive && (

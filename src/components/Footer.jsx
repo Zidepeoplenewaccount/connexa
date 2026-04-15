@@ -58,6 +58,7 @@ export default function Footer() {
             <div className="footer-col-links">
               <a href="#about">About</a>
               <a href="#tickets">Tickets</a>
+              <a href="/upgrade-ticket">Upgrade Ticket</a>
               <a href="#awards">Awards</a>
               <a href="#voting">Vote</a>
               <a href="#merch">Merch</a>

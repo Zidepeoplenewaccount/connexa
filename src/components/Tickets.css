@@ -27,6 +27,41 @@
   margin: 16px auto 0;
 }
 
+.tickets-upgrade-strip {
+  margin: 20px auto 0;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(245,166,35,0.25);
+  background: linear-gradient(135deg, rgba(245,166,35,0.12), rgba(26,115,232,0.1));
+  color: rgba(255,255,255,0.86);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.tickets-upgrade-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: var(--orange);
+  color: var(--black);
+  font-weight: 700;
+  font-size: 13px;
+  transition: transform var(--transition), box-shadow 0.3s ease;
+}
+
+.tickets-upgrade-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(245,166,35,0.3);
+}
+
 .tickets-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -283,6 +318,10 @@
 }
 
 @media (max-width: 640px) {
+  .tickets-upgrade-strip {
+    flex-direction: column;
+  }
+
   .tickets-grid {
     grid-template-columns: 1fr;
   }

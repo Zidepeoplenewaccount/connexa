@@ -96,6 +96,16 @@ const s = {
     marginTop: '20px',
     textAlign: 'left',
   },
+  upgradeNote: {
+    background: 'rgba(245,166,35,0.08)',
+    border: '1px solid rgba(245,166,35,0.25)',
+    borderRadius: '8px',
+    padding: '12px 16px',
+    fontSize: '13px',
+    color: 'rgba(255,255,255,0.86)',
+    marginTop: '12px',
+    textAlign: 'left',
+  },
   btn: {
     display: 'inline-block',
     marginTop: '24px',
@@ -190,6 +200,15 @@ export default function PaymentSuccess() {
   const voteItems = tickets.filter(t => t.type === 'vote');
   const merchItems = tickets.filter(t => t.type === 'merch');
 
+  const nonUpgradeableTypes = new Set(['Connectors Pass', 'VIP Partner Pass']);
+  const eligibleUpgradeTicket = ticketItems.find((t) => {
+    const ticketType = t?.ticket_type || '';
+    return Boolean(t?.ticket_id) && !nonUpgradeableTypes.has(ticketType);
+  });
+  const upgradeUrl = eligibleUpgradeTicket
+    ? `/upgrade-ticket?ticket=${encodeURIComponent(eligibleUpgradeTicket.ticket_id)}`
+    : null;
+
   return (
     <>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
@@ -271,8 +290,15 @@ export default function PaymentSuccess() {
                   : '✉️ Your ticket has been sent to your email. Check your inbox (and spam folder).'}
               </div>
 
+              {upgradeUrl && (
+                <div style={s.upgradeNote}>
+                  Want more access? Upgrade your ticket and pay only the difference.
+                </div>
+              )}
+
               <a href="/" style={s.btn}>Back to Home</a>
               <a href="/#tickets" style={s.btnOutline}>Buy More Tickets</a>
+              {upgradeUrl && <a href={upgradeUrl} style={s.btnOutline}>Upgrade My Ticket</a>}
             </>
           )}
 
