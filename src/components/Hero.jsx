@@ -25,7 +25,7 @@ const sponsors = [
   { name: '', logo: RightEvents },
   { name: '', logo: zideLogo },
   { name: '', logo: ArcLogo },
-  { name: '', logo: RightEvents },o
+  { name: '', logo: RightEvents },
 ];
 
 export default function Hero() {
