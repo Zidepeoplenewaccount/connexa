@@ -33,6 +33,7 @@ export default function UpgradeTicket() {
     try {
       const data = await getUpgradeOptions(id);
       setUpgradeOptions(data);
+      setSelectedUpgrade(data.available_upgrades?.[0] || null);
       
       if (data.available_upgrades.length === 0) {
         setError('No upgrades available for this ticket type. You may already have the highest tier!');
@@ -161,59 +162,73 @@ export default function UpgradeTicket() {
               {upgradeOptions.available_upgrades.length > 0 ? (
                 <>
                   <h3 className="upgrade-options-heading">Available Upgrades</h3>
-                  <p className="upgrade-options-subtext">Select the tier you'd like to upgrade to</p>
+                  <p className="upgrade-options-subtext">Choose the ticket type you want to upgrade to</p>
 
-                  <div className="upgrade-options-list">
-                    {upgradeOptions.available_upgrades.map((upgrade) => (
-                      <div
-                        key={upgrade.ticket_type}
-                        className={`upgrade-option ${selectedUpgrade?.ticket_type === upgrade.ticket_type ? 'selected' : ''}`}
-                        onClick={() => setSelectedUpgrade(upgrade)}
-                      >
-                        <div className="upgrade-option-content">
-                          <div className="upgrade-option-header">
-                            <h4>{upgrade.ticket_type}</h4>
-                            {selectedUpgrade?.ticket_type === upgrade.ticket_type && (
-                              <span className="upgrade-selected-badge">✓ Selected</span>
-                            )}
-                          </div>
-                          
-                          <div className="upgrade-option-pricing">
-                            <div className="upgrade-option-original">
-                              Full price: <span className="strikethrough">₦{upgrade.price.toLocaleString()}</span>
-                            </div>
-                            <div className="upgrade-option-pay">
-                              You pay: <span className="upgrade-price">₦{upgrade.upgrade_amount.toLocaleString()}</span>
-                            </div>
-                          </div>
+                  <div className="upgrade-page-input-group">
+                    <label htmlFor="upgradeType">Select Ticket Type</label>
+                    <select
+                      id="upgradeType"
+                      value={selectedUpgrade?.ticket_type || ''}
+                      onChange={(e) => {
+                        const selected = upgradeOptions.available_upgrades.find(
+                          (upgrade) => upgrade.ticket_type === e.target.value
+                        );
+                        setSelectedUpgrade(selected || null);
+                      }}
+                    >
+                      {upgradeOptions.available_upgrades.map((upgrade) => (
+                        <option key={upgrade.ticket_type} value={upgrade.ticket_type}>
+                          {upgrade.ticket_type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                          {/* Show benefits based on ticket type */}
-                          <div className="upgrade-option-benefits">
-                            {upgrade.ticket_type.includes('VIP') && (
-                              <>
-                                <span>✓ VIP seating & areas</span>
-                                <span>✓ Priority Q&A selection</span>
-                                <span>✓ Exclusive networking</span>
-                              </>
-                            )}
-                            {upgrade.ticket_type.includes('Business Owner') && (
-                              <>
-                                <span>✓ Business owner sessions</span>
-                                <span>✓ Advisory access</span>
-                                <span>✓ Peer networking</span>
-                              </>
-                            )}
-                            {upgrade.ticket_type.includes('VIP Partner') && (
-                              <>
-                                <span>✓ Prime positioning</span>
-                                <span>✓ On-stage recognition</span>
-                                <span>✓ Maximum visibility</span>
-                              </>
-                            )}
+                  {selectedUpgrade && (
+                    <div className="upgrade-option selected">
+                      <div className="upgrade-option-content">
+                        <div className="upgrade-option-header">
+                          <h4>{selectedUpgrade.ticket_type}</h4>
+                          <span className="upgrade-selected-badge">✓ Selected</span>
+                        </div>
+
+                        <div className="upgrade-option-pricing">
+                          <div className="upgrade-option-original">
+                            Full price: <span className="strikethrough">₦{selectedUpgrade.price.toLocaleString()}</span>
+                          </div>
+                          <div className="upgrade-option-pay">
+                            You pay: <span className="upgrade-price">₦{selectedUpgrade.upgrade_amount.toLocaleString()}</span>
                           </div>
                         </div>
+
+                        <div className="upgrade-option-benefits">
+                          {selectedUpgrade.ticket_type.includes('VIP') && (
+                            <>
+                              <span>✓ VIP seating & areas</span>
+                              <span>✓ Priority Q&A selection</span>
+                              <span>✓ Exclusive networking</span>
+                            </>
+                          )}
+                          {selectedUpgrade.ticket_type.includes('Business Owner') && (
+                            <>
+                              <span>✓ Business owner sessions</span>
+                              <span>✓ Advisory access</span>
+                              <span>✓ Peer networking</span>
+                            </>
+                          )}
+                          {selectedUpgrade.ticket_type.includes('VIP Partner') && (
+                            <>
+                              <span>✓ Prime positioning</span>
+                              <span>✓ On-stage recognition</span>
+                              <span>✓ Maximum visibility</span>
+                            </>
+                          )}
+                        </div>
                       </div>
-                    ))}
+                    </div>
+                  )}
+
+                  <div className="upgrade-options-list">
                   </div>
 
                   {error && <div className="upgrade-page-error">{error}</div>}
