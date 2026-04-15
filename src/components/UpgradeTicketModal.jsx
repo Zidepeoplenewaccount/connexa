@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getUpgradeOptions, initializeUpgrade } from '../services/api';
-import './upgrade-ticket-modal.css';
+import './UpgradeTicketModal.css';
 
 export default function UpgradeTicketModal({ initialTicketId = '', onClose }) {
   const [ticketId, setTicketId] = useState(initialTicketId);
@@ -24,6 +24,7 @@ export default function UpgradeTicketModal({ initialTicketId = '', onClose }) {
     try {
       const data = await getUpgradeOptions(id);
       setUpgradeOptions(data);
+      setSelectedUpgrade(data.available_upgrades?.[0] || null);
       
       if (data.available_upgrades.length === 0) {
         setError('No upgrades available for this ticket type.');
@@ -117,28 +118,43 @@ export default function UpgradeTicketModal({ initialTicketId = '', onClose }) {
             {upgradeOptions.available_upgrades.length > 0 ? (
               <>
                 <h3 className="upgrade-options-title">Available Upgrades</h3>
-                <div className="upgrade-options-grid">
-                  {upgradeOptions.available_upgrades.map((upgrade) => (
-                    <div
-                      key={upgrade.ticket_type}
-                      className={`upgrade-option-card ${selectedUpgrade?.ticket_type === upgrade.ticket_type ? 'selected' : ''}`}
-                      onClick={() => setSelectedUpgrade(upgrade)}
-                    >
+
+                <div className="upgrade-form-group">
+                  <label htmlFor="modalUpgradeType">Select Ticket Type</label>
+                  <select
+                    id="modalUpgradeType"
+                    value={selectedUpgrade?.ticket_type || ''}
+                    onChange={(e) => {
+                      const selected = upgradeOptions.available_upgrades.find(
+                        (upgrade) => upgrade.ticket_type === e.target.value
+                      );
+                      setSelectedUpgrade(selected || null);
+                    }}
+                  >
+                    {upgradeOptions.available_upgrades.map((upgrade) => (
+                      <option key={upgrade.ticket_type} value={upgrade.ticket_type}>
+                        {upgrade.ticket_type}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {selectedUpgrade && (
+                  <div className="upgrade-options-grid">
+                    <div className="upgrade-option-card selected">
                       <div className="upgrade-option-header">
-                        <div className="upgrade-option-name">{upgrade.ticket_type}</div>
+                        <div className="upgrade-option-name">{selectedUpgrade.ticket_type}</div>
                         <div className="upgrade-option-price">
-                          <span className="upgrade-full-price">₦{upgrade.price.toLocaleString()}</span>
+                          <span className="upgrade-full-price">₦{selectedUpgrade.price.toLocaleString()}</span>
                         </div>
                       </div>
                       <div className="upgrade-option-difference">
-                        Pay only: <strong>₦{upgrade.upgrade_amount.toLocaleString()}</strong>
+                        Pay only: <strong>₦{selectedUpgrade.upgrade_amount.toLocaleString()}</strong>
                       </div>
-                      {selectedUpgrade?.ticket_type === upgrade.ticket_type && (
-                        <div className="upgrade-option-selected">✓ Selected</div>
-                      )}
+                      <div className="upgrade-option-selected">✓ Selected</div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
 
                 {error && <div className="upgrade-error">{error}</div>}
 

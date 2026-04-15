@@ -162,7 +162,7 @@ export default function UpgradeTicket() {
               {upgradeOptions.available_upgrades.length > 0 ? (
                 <>
                   <h3 className="upgrade-options-heading">Available Upgrades</h3>
-                  <p className="upgrade-options-subtext">Choose the ticket type you want to upgrade to</p>
+                  <p className="upgrade-options-subtext">Choose any available non-Connexa pass ticket type to upgrade to</p>
 
                   <div className="upgrade-page-input-group">
                     <label htmlFor="upgradeType">Select Ticket Type</label>
@@ -227,9 +227,6 @@ export default function UpgradeTicket() {
                       </div>
                     </div>
                   )}
-
-                  <div className="upgrade-options-list">
-                  </div>
 
                   {error && <div className="upgrade-page-error">{error}</div>}
 
