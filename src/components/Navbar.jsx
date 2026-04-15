@@ -21,6 +21,7 @@ export default function Navbar() {
     { label: 'Vote', href: '#voting' },
     { label: 'Merch', href: '#merch' },
     { label: 'Become A Sponsor', href: '#partner-form' },
+    { label: 'Contact Us', href: 'tel:+2348101422732' },
   ];
 
   const navLinksMobile = [
@@ -30,6 +31,7 @@ export default function Navbar() {
     { label: 'Vote', href: '#voting' },
     { label: 'Merch', href: '#merch' },
     { label: 'Become A Sponsor', href: '#partner-form' },
+    { label: 'Contact Us', href: 'tel:+2348101422732' },
   ];
 
   return (
