@@ -15,6 +15,10 @@ export default function AdminScanner() {
     localStorage.getItem('scanner_name') || ''
   );
   const [showNameInput, setShowNameInput] = useState(!localStorage.getItem('scanner_name'));
+
+  const [manualCode, setManualCode] = useState('');
+  const [manualScanning, setManualScanning] = useState(false);
+
   
   const scannerRef = useRef(null);
   const html5QrCodeRef = useRef(null);
@@ -151,6 +155,21 @@ export default function AdminScanner() {
     URL.revokeObjectURL(url);
   }
 
+  async function handleManualScan(e) {
+    e.preventDefault();
+    
+    if (!manualCode.trim()) {
+      setScanError('Please enter a ticket ID or Connectors Pass code');
+      return;
+    }
+
+    setManualScanning(true);
+    await scanTicket(manualCode.trim());
+    setManualCode(''); // Clear input after scan
+    setManualScanning(false);
+  }
+
+
   function logout() {
     localStorage.removeItem('admin_token');
     localStorage.removeItem('admin_role');
@@ -267,27 +286,125 @@ export default function AdminScanner() {
       {/* Scanner Section */}
       <div className="scanner-section">
         {!scanning ? (
-          <button onClick={startScanning} className="scanner-btn scanner-btn-primary">
-            📷 Start Scanning
-          </button>
+          <>
+            <button onClick={startScanning} className="scanner-btn scanner-btn-primary">
+              📷 Start Camera Scanning
+            </button>
+            
+            {/* ADD MANUAL INPUT SECTION */}
+            <div className="scanner-divider">
+              <span>OR</span>
+            </div>
+
+            <form onSubmit={handleManualScan} className="scanner-manual-form">
+              <h3 style={{ marginBottom: '16px', color: 'var(--orange)' }}>
+                Manual Entry
+              </h3>
+              <p style={{ marginBottom: '20px', fontSize: '14px', color: 'rgba(255,255,255,0.6)' }}>
+                Enter ticket ID or Connectors Pass code manually
+              </p>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <input
+                  type="text"
+                  value={manualCode}
+                  onChange={(e) => setManualCode(e.target.value.toUpperCase())}
+                  placeholder="e.g., CNX2026-ABC123 or CNX-CONNECT-XYZ789"
+                  className="scanner-manual-input"
+                  style={{
+                    flex: 1,
+                    padding: '14px',
+                    fontSize: '16px',
+                    background: '#0a0a0a',
+                    border: '2px solid #333',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    fontFamily: 'monospace'
+                  }}
+                  disabled={manualScanning}
+                  autoFocus
+                />
+                <button 
+                  type="submit"
+                  className="scanner-btn scanner-btn-primary"
+                  disabled={manualScanning || !manualCode.trim()}
+                  style={{
+                    minWidth: '140px',
+                    padding: '14px 24px'
+                  }}
+                >
+                  {manualScanning ? 'Checking...' : '🔍 Verify'}
+                </button>
+              </div>
+              <small style={{ 
+                display: 'block', 
+                marginTop: '12px', 
+                color: 'rgba(255,255,255,0.5)',
+                fontSize: '13px'
+              }}>
+                💡 Tip: Use this when QR code won't scan or for Connectors Pass codes
+              </small>
+            </form>
+          </>
         ) : (
           <div>
             <div id="qr-reader" ref={scannerRef}></div>
             <button onClick={stopScanning} className="scanner-btn scanner-btn-danger" style={{ marginTop: '16px' }}>
-              ❌ Stop Scanning
+              ❌ Stop Camera
             </button>
+            
+            {/* ADD MANUAL INPUT WHILE SCANNING */}
+            <div className="scanner-divider" style={{ margin: '24px 0' }}>
+              <span>OR</span>
+            </div>
+            
+            <form onSubmit={handleManualScan} style={{ marginTop: '20px' }}>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <input
+                  type="text"
+                  value={manualCode}
+                  onChange={(e) => setManualCode(e.target.value.toUpperCase())}
+                  placeholder="Enter code manually"
+                  className="scanner-manual-input"
+                  style={{
+                    flex: 1,
+                    padding: '12px',
+                    fontSize: '14px',
+                    background: '#0a0a0a',
+                    border: '2px solid #333',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    textTransform: 'uppercase',
+                    fontFamily: 'monospace'
+                  }}
+                  disabled={manualScanning}
+                />
+                <button 
+                  type="submit"
+                  className="scanner-btn scanner-btn-primary"
+                  disabled={manualScanning || !manualCode.trim()}
+                  style={{ minWidth: '120px' }}
+                >
+                  {manualScanning ? 'Checking...' : 'Verify'}
+                </button>
+              </div>
+            </form>
           </div>
         )}
 
-        {/* Success Animation */}
         {showSuccess && scanResult && (
           <div className="scan-success-overlay">
             <div className="scan-success-card">
               <div className="scan-success-icon">✅</div>
-              <h2 style={{ color: '#2db84b', marginBottom: '24px' }}>ENTRY APPROVED!</h2>
+              <h2 style={{ color: '#2db84b', marginBottom: '24px' }}>
+                {scanResult.is_connectors_pass ? 'CONNECTORS PASS VALID!' : 'ENTRY APPROVED!'}
+              </h2>
               <div className="scan-ticket-info">
                 <div className="scan-info-row">
-                  <span className="scan-info-label">Ticket ID:</span>
+                  <span className="scan-info-label">
+                    {scanResult.is_connectors_pass ? 'Code:' : 'Ticket ID:'}
+                  </span>
                   <span className="scan-info-value">{scanResult.ticket_id}</span>
                 </div>
                 <div className="scan-info-row">
@@ -298,10 +415,18 @@ export default function AdminScanner() {
                   <span className="scan-info-label">Email:</span>
                   <span className="scan-info-value">{scanResult.buyer_email}</span>
                 </div>
-                <div className="scan-info-row">
-                  <span className="scan-info-label">Type:</span>
-                  <span className="scan-info-value">{scanResult.ticket_type}</span>
-                </div>
+                {scanResult.is_connectors_pass && scanResult.base_ticket_id && (
+                  <div className="scan-info-row">
+                    <span className="scan-info-label">Base Ticket:</span>
+                    <span className="scan-info-value">{scanResult.base_ticket_id}</span>
+                  </div>
+                )}
+                {!scanResult.is_connectors_pass && scanResult.ticket_type && (
+                  <div className="scan-info-row">
+                    <span className="scan-info-label">Type:</span>
+                    <span className="scan-info-value">{scanResult.ticket_type}</span>
+                  </div>
+                )}
                 {scanResult.business_name && (
                   <div className="scan-info-row">
                     <span className="scan-info-label">Business:</span>
@@ -321,7 +446,7 @@ export default function AdminScanner() {
             <button 
               onClick={() => {
                 setScanError('');
-                startScanning();
+                setManualCode('');
               }} 
               className="scanner-btn scanner-btn-primary"
               style={{ marginTop: '16px' }}
@@ -352,54 +477,63 @@ export default function AdminScanner() {
                 </tr>
                 </thead>
                 <tbody>
-                {tickets.map((ticket) => (
+                  {tickets.map((ticket) => (
                     <tr key={ticket.id}>
-                    <td>
+                      <td>
                         <code style={{ 
-                        background: 'rgba(245,166,35,0.2)', 
-                        padding: '4px 8px', 
-                        borderRadius: '4px',
-                        fontSize: '12px'
+                          background: ticket.is_connectors_pass ? 'rgba(26,115,232,0.2)' : 'rgba(245,166,35,0.2)', 
+                          padding: '4px 8px', 
+                          borderRadius: '4px',
+                          fontSize: '12px',
+                          color: ticket.is_connectors_pass ? '#1a73e8' : '#f5a623'
                         }}>
-                        {ticket.ticket_id}
+                          {ticket.is_connectors_pass && '🔗 '}
+                          {ticket.ticket_id}
                         </code>
-                    </td>
-                    <td>{ticket.attendee_name}</td>
-                    <td>{ticket.buyer_email}</td>
-                    <td><small>{ticket.ticket_type}</small></td>
-                    <td>
+                      </td>
+                      <td>{ticket.attendee_name}</td>
+                      <td>{ticket.buyer_email}</td>
+                      <td>
+                        <small>{ticket.ticket_type}</small>
+                        {ticket.is_connectors_pass && ticket.base_ticket_id && (
+                          <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', marginTop: '4px' }}>
+                            Base: {ticket.base_ticket_id}
+                          </div>
+                        )}
+                      </td>
+                      <td>
                         {ticket.scanned_at ? (
-                        <span style={{
+                          <span style={{
                             padding: '4px 10px',
                             borderRadius: '6px',
                             fontSize: '12px',
                             fontWeight: '600',
                             background: 'rgba(45,184,75,0.15)',
                             color: '#2db84b'
-                        }}>
+                          }}>
                             ✅ Checked In
-                        </span>
+                          </span>
                         ) : (
-                        <span style={{
+                          <span style={{
                             padding: '4px 10px',
                             borderRadius: '6px',
                             fontSize: '12px',
                             fontWeight: '600',
                             background: 'rgba(255,255,255,0.1)',
                             color: 'rgba(255,255,255,0.5)'
-                        }}>
+                          }}>
                             ⏳ Pending
-                        </span>
+                          </span>
                         )}
-                    </td>
-                    <td>
+                      </td>
+                      <td>
                         {ticket.scanned_at ? new Date(ticket.scanned_at).toLocaleString() : '—'}
-                    </td>
-                    <td>
+                      </td>
+                      <td>
                         {ticket.scanned_by || '—'}
-                    </td>
+                      </td>
                     </tr>
-                ))}
+                  ))}
                 </tbody>
             </table>
           </div>
