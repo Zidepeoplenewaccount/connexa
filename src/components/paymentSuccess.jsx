@@ -200,7 +200,7 @@ export default function PaymentSuccess() {
   const voteItems = tickets.filter(t => t.type === 'vote');
   const merchItems = tickets.filter(t => t.type === 'merch');
 
-  const nonUpgradeableTypes = new Set(['Connectors Pass', 'VIP Partner Pass']);
+  const nonUpgradeableTypes = new Set(['Connectors Pass', 'Connexa Pass']);
   const eligibleUpgradeTicket = ticketItems.find((t) => {
     const ticketType = t?.ticket_type || '';
     return Boolean(t?.ticket_id) && !nonUpgradeableTypes.has(ticketType);
