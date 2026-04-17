@@ -39,7 +39,7 @@ export default function Hero() {
   });
 
   useEffect(() => {
-    const eventDate = new Date('2026-11-28T10:00:00');
+    const eventDate = new Date('2026-11-28T08:00:00');
 
     function calculateTimeLeft() {
       const now = new Date();
@@ -121,7 +121,7 @@ export default function Hero() {
         <div className="hero-floating-tags">
           <div className="hero-tag hero-tag-1">🏪 Market Vendors</div>
           <div className="hero-tag hero-tag-2">💡 Startups & Brands</div>
-          <div className="hero-tag hero-tag-3">🤝 Oportunities</div>
+          <div className="hero-tag hero-tag-3">🤝 Opportunities</div>
           <div className="hero-tag hero-tag-4">🏆 Awards & Recognition</div>
         </div>
 
@@ -154,7 +154,7 @@ export default function Hero() {
           <div className="hero-details">
             <div className="hero-detail-item">
               <span className="hero-detail-icon">📍</span>
-              <span className="hero-detail-text">Lagos, Nigeria</span>
+              <span className="hero-detail-text">University of Lagos</span>
             </div>
             <div className="hero-detail-item">
               <span className="hero-detail-icon">
@@ -169,7 +169,7 @@ export default function Hero() {
             </div>
             <div className="hero-detail-item">
               <span className="hero-detail-icon">🕐</span>
-              <span className="hero-detail-text">10:00 AM</span>
+              <span className="hero-detail-text">Doors open 8:00 AM</span>
             </div>
           </div>
 

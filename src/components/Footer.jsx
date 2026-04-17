@@ -33,7 +33,7 @@ export default function Footer() {
               </div>
 
               <div className="footer-contact-item">
-                <span className="footer-contact-icon">�</span>
+                <span className="footer-contact-icon">💬</span>
                 <a href="https://wa.me/+2349067756473" target="_blank" rel="noreferrer" className="footer-contact-link">
                   Chat with us
                 </a>
@@ -44,7 +44,7 @@ export default function Footer() {
               </div>
 
               <div className="footer-contact-item">
-                <span className="footer-contact-icon">�📞</span>
+                <span className="footer-contact-icon">📞</span>
                 <a href="tel:+2348185577843" className="footer-contact-link">
                   (+234) 810 142 2732
                 </a>
@@ -79,7 +79,7 @@ export default function Footer() {
           <div>
             <div className="footer-col-title">Event</div>
             <div className="footer-col-links">
-              <p href="#">Lagos, Nigeria</p>
+              <p href="#">University of Lagos</p>
               <p href="#">2026</p>
             </div>
           </div>

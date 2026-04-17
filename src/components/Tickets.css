@@ -191,6 +191,21 @@
   font-style: italic;
 }
 
+.ticket-low-stock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(232,49,42,0.35);
+  background: rgba(232,49,42,0.12);
+  color: #ff938e;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
 .ticket-divider {
   height: 1px;
   background: var(--border);

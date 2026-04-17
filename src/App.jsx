@@ -1,22 +1,24 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { useScrollReveal } from './hooks/ScrollReveal';
+
 import Loader from './components/Loader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import Speakers from './components/speakers';
+import Gallery from './components/Gallery';
 import Tickets from './components/Tickets';
-import Awards from './components/Awards';
-import Voting from './components/Voting';
+import FAQ from './components/FAQ';
 import Merch from './components/merch';
+import PartnerForm from './components/PartnerForm';
+import AffiliateSignup from './components/AffiliateSignup';
 import Footer from './components/Footer';
+
 import PaymentSuccess from './components/paymentSuccess';
 import VoteSuccess from './pages/VoteSuccess';
 import MerchSuccess from './pages/MerchSuccess';
-
-
-
+import UpgradeSuccess from './pages/UpgradeSuccess';
+import UpgradeTicket from './pages/UpgradeTicket';
 
 import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -28,27 +30,19 @@ import AdminPayments from './pages/admin/AdminPayments';
 import AdminAffiliates from './pages/admin/AdminAffiliates';
 import AdminDiscountCodes from './pages/admin/AdminDiscountCodes';
 import AdminSpeakers from './pages/admin/AdminSpeakers';
+import AdminQuestions from './pages/admin/AdminQuestions';
 
 import SpeakerLogin from './pages/speakers/SpeakerLogin';
 import SpeakerDashboard from './pages/speakers/SpeakerDashboard';
 import SpeakerResetPassword from './pages/speakers/SpeakerResetPassword';
 
 import ProtectedRoute from './components/admin/protectedRoute';
-import PartnerForm from './components/PartnerForm';
-import Gallery from './components/Gallery';
-import AffiliateSignup from './components/AffiliateSignup';
-import UpgradeSuccess from './pages/UpgradeSuccess';
-import AdminQuestions from './pages/admin/AdminQuestions';
-import UpgradeTicket from './pages/UpgradeTicket';
 import AdminScanner from './pages/adminScanner/adminScanner';
 import ScannerProtectedRoute from './pages/adminScanner/scannerProtectedRoute';
 
-
-
-
 function HomePage() {
   useScrollReveal();
-  
+
   return (
     <>
       <Loader />
@@ -56,15 +50,34 @@ function HomePage() {
       <main>
         <Hero />
         <About />
-        {/*<Speakers />*/}
         <Gallery />
         <Tickets />
-        {/*<Awards />*/}
-        {/*<Voting />*/}
+
+        <section className="affiliate-spotlight section reveal" id="share-earn">
+          <div className="container">
+            <div className="affiliate-spotlight-inner">
+              <div>
+                <p className="affiliate-spotlight-tag">Word-of-mouth works in Lagos</p>
+                <h3>Earn by sharing Connexa tickets</h3>
+                <p>
+                  Get your affiliate link in minutes and earn commission on every successful ticket referral.
+                </p>
+              </div>
+              <a href="#affiliate" className="affiliate-spotlight-btn">Join Affiliate Program</a>
+            </div>
+          </div>
+        </section>
+
+        <FAQ />
         <Merch />
         <PartnerForm />
         <AffiliateSignup />
       </main>
+
+      <a href="#tickets" className="mobile-sticky-ticket-cta" aria-label="Get tickets">
+        Get Tickets from ₦3,000 →
+      </a>
+
       <Footer />
     </>
   );
@@ -79,8 +92,8 @@ export default function App() {
         <Route path="/vote-success" element={<VoteSuccess />} />
         <Route path="/merch-success" element={<MerchSuccess />} />
         <Route path="/upgrade-ticket" element={<UpgradeTicket />} />
+        <Route path="/upgrade-success" element={<UpgradeSuccess />} />
 
-        {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
           path="/admin/dashboard"
@@ -138,26 +151,15 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        <Route 
-          path="/upgrade-success" 
-          element={<UpgradeSuccess />} 
+        <Route
+          path="/admin/questions"
+          element={
+            <ProtectedRoute>
+              <AdminQuestions />
+            </ProtectedRoute>
+          }
         />
-        <Route 
-          path="/admin/questions" 
-          element={<ProtectedRoute><AdminQuestions /></ProtectedRoute>} 
-        />
-
-        <Route 
-          path="/admin/discount-codes" 
-          element={<AdminDiscountCodes />} 
-        />
-
-        {/* Connexer Portal */}
-        <Route path="/connexers/login" element={<SpeakerLogin />} />
-        <Route path="/connexers/reset-password" element={<SpeakerResetPassword />} />
-        <Route path="/connexers/dashboard" element={<SpeakerDashboard />} />
-
-        {/* Admin Connexers */}
+        <Route path="/admin/discount-codes" element={<AdminDiscountCodes />} />
         <Route
           path="/admin/connexers"
           element={
@@ -167,13 +169,17 @@ export default function App() {
           }
         />
 
-        <Route 
-          path="/admin/scanner" 
+        <Route path="/connexers/login" element={<SpeakerLogin />} />
+        <Route path="/connexers/reset-password" element={<SpeakerResetPassword />} />
+        <Route path="/connexers/dashboard" element={<SpeakerDashboard />} />
+
+        <Route
+          path="/admin/scanner"
           element={
-          <ScannerProtectedRoute>
-            <AdminScanner />
-          </ScannerProtectedRoute>
-          } 
+            <ScannerProtectedRoute>
+              <AdminScanner />
+            </ScannerProtectedRoute>
+          }
         />
       </Routes>
     </BrowserRouter>

@@ -3,7 +3,7 @@ import zideLogo from '../assets/IMG_6707.PNG';
 
 const highlights = [
   { icon: '🛒', title: 'Live Marketplace', desc: 'Real buyers, real sellers, real transactions on the day' },
-  { icon: '🎤', title: 'Speaker Sessions', desc: 'Insights from top founders and industry leaders' },
+  { icon: '🎤', title: 'Connexer Sessions', desc: 'No regular speakers here. Connexers deliver a completely different experience.' },
   { icon: '🤝', title: 'Opportunities', desc: 'Connect with founders, talents, and decision-makers' },
   { icon: '🏆', title: 'Awards & Recognition', desc: 'Win visibility, prizes, and public acknowledgment' },
 ];
@@ -20,14 +20,14 @@ export default function About() {
               <span className="highlight-orange">Meets Opportunity</span>
             </h2>
             <p>
-              Connexa 2026 is Lagos' most energetic one-day business event —
-              designed for vendors, startups, brands, and professionals who
-              are serious about growth.
+              Connexa 2026 is the first Opportunity Playground in Nigeria,
+              happening in Lagos for talents, founders, vendors, startups,
+              and professionals serious about growth.
             </p>
             <p>
               Whether you're selling products, showcasing your platform,
-              looking to learn, or hunting for your next opportunity — Connexa
-              puts you in the room where things happen.
+              looking to learn, or hunting for your next opportunity, Connexa
+              connects talents directly to businesses where opportunities can happen on the spot.
             </p>
 
             <div className="about-highlights">

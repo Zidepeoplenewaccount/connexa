@@ -210,6 +210,8 @@ const tickets = [
   },
 ];
 
+const LOW_STOCK_THRESHOLD = 100;
+
 // Calculate group discount for individual passes
 function calculateDiscount(quantity) {
   if (quantity === 5) return 5000;
@@ -860,6 +862,7 @@ export default function Tickets() {
           {tickets.map((ticket, i) => {
             const discountedPrice = calculateTicketPrice(ticket.name, ticket.price);
             const hasDiscount = discountedPrice < ticket.price;
+            const hasLowStock = typeof ticket.available === 'number' && ticket.available > 0 && ticket.available <= LOW_STOCK_THRESHOLD;
 
             return (
               <div
@@ -885,6 +888,12 @@ export default function Tickets() {
                 <div className="ticket-type-label">{ticket.label}</div>
                 <h3 className="ticket-name">{ticket.name}</h3>
                 <p className="ticket-subtitle">{ticket.subtitle}</p>
+
+                {hasLowStock && (
+                  <div className="ticket-low-stock-badge">
+                    Only {ticket.available} spot{ticket.available === 1 ? '' : 's'} left
+                  </div>
+                )}
 
                 {/* Show discount pricing */}
                 {hasDiscount ? (
