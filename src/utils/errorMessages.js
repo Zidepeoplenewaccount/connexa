@@ -118,6 +118,7 @@ export function setupAxiosErrorHandling(instance = axios) {
         error.response.data.error = friendlyMessage;
       }
 
+      error.message = friendlyMessage;
       error.userMessage = friendlyMessage;
       return Promise.reject(error);
     }
