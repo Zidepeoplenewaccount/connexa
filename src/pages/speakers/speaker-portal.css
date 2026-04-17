@@ -91,7 +91,7 @@
   background: #f5a623; color: #000; font-size: 15px; font-weight: 700;
   cursor: pointer; transition: all 0.2s;
 }
-.speaker-btn-primary:hover { background: #e6991a; transform: translateY(-1px); }
+.speaker-btn-primary:hover:not(:disabled) { background: #e6991a; transform: translateY(-1px); }
 .speaker-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 .speaker-forgot-wrap {
   display: flex;
