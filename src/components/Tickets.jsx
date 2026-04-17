@@ -644,6 +644,23 @@ export default function Tickets() {
 
     setLoading(true);
 
+    const debugApi =
+      window.__CONNEXA_WEB_DEBUG__ ||
+      window.__ZIDE_ADMIN_WEB_DEBUG__ ||
+      window.__ZIDE_WEB_DEBUG__;
+
+    debugApi?.addManualLog?.({
+      tag: 'REGISTRATION',
+      level: 'info',
+      phase: 'manual_intent',
+      message: 'User started ticket checkout',
+      payload: {
+        ticket_type: selectedTicket?.name,
+        pass_type: selectedTicket?.passType,
+        quantity,
+      },
+    });
+
     try {
       let totalAmount, metadata;
       const affiliateCode = getAffiliateCode();
@@ -821,6 +838,17 @@ export default function Tickets() {
 
       const response = await initializePayment(paymentData);
 
+      debugApi?.addManualLog?.({
+        tag: 'REGISTRATION',
+        level: 'info',
+        phase: 'manual_result',
+        message: 'Ticket payment initialization completed',
+        payload: {
+          ticket_type: selectedTicket?.name,
+          has_authorization_url: Boolean(response?.data?.authorization_url),
+        },
+      });
+
       if (response.status && response.data.authorization_url) {
         window.location.href = response.data.authorization_url;
       } else {
@@ -828,6 +856,16 @@ export default function Tickets() {
       }
     } catch (err) {
       console.error('Payment error:', err);
+      debugApi?.addManualLog?.({
+        tag: 'REGISTRATION',
+        level: 'error',
+        phase: 'manual_error',
+        message: 'Ticket checkout failed before redirect',
+        payload: {
+          ticket_type: selectedTicket?.name,
+          error: err?.message || 'unknown_error',
+        },
+      });
       setError('Something went wrong. Please try again.');
     } finally {
       setLoading(false);
