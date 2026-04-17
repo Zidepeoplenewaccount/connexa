@@ -16,9 +16,19 @@ function jsonView(value) {
 }
 
 export default function DebugPanel() {
+  const LOG_VIEW_KEY = 'connexa_website_debug_log_view';
+  const EXPORT_PREFIX = 'connexa-website-debug-logs';
   const [open, setOpen] = useState(false);
   const [state, setState] = useState(getStateSnapshot());
   const [jobId, setJobId] = useState('');
+  const [logView, setLogView] = useState(() => {
+    try {
+      const saved = window.localStorage.getItem(LOG_VIEW_KEY);
+      return saved === 'manual' ? 'manual' : 'all';
+    } catch (err) {
+      return 'all';
+    }
+  });
 
   useEffect(() => subscribeDebugState(setState), []);
 
@@ -47,6 +57,51 @@ export default function DebugPanel() {
       logic: state.pricingLogicInspectors[key] || null,
     };
   }, [jobId, state]);
+
+  const filteredLogs = useMemo(() => {
+    if (logView === 'manual') {
+      return state.logs.filter((entry) => String(entry?.phase || '').startsWith('manual_'));
+    }
+    return state.logs;
+  }, [logView, state.logs]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(LOG_VIEW_KEY, logView);
+    } catch (err) {
+      // Ignore storage write failures in private mode or restricted contexts.
+    }
+  }, [logView]);
+
+  const handleExportVisibleLogs = () => {
+    const exportData = {
+      exported_at: new Date().toISOString(),
+      view: logView,
+      visible_count: filteredLogs.length,
+      total_count: state.logs.length,
+      logs: filteredLogs,
+    };
+    const serialized = JSON.stringify(exportData, null, 2);
+
+    try {
+      const blob = new Blob([serialized], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `${EXPORT_PREFIX}-${Date.now()}.json`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      try {
+        window.navigator.clipboard.writeText(serialized);
+        window.alert('Visible logs copied to clipboard.');
+      } catch (clipboardErr) {
+        window.alert('Unable to export logs in this browser context.');
+      }
+    }
+  };
 
   if (!open) return null;
 
@@ -88,14 +143,37 @@ export default function DebugPanel() {
       </div>
 
       <div style={styles.section}>
-        <div style={styles.cardTitle}>Network Logs ({state.logs.length})</div>
+        <div style={styles.logsHeader}>
+          <div style={styles.cardTitle}>Network Logs ({filteredLogs.length}/{state.logs.length})</div>
+          <div style={styles.logsControls}>
+            <button style={styles.filterBtn} onClick={handleExportVisibleLogs}>Export Visible Logs</button>
+          <div style={styles.filterGroup}>
+            <button
+              style={logView === 'all' ? styles.filterBtnActive : styles.filterBtn}
+              onClick={() => setLogView('all')}
+            >
+              All
+            </button>
+            <button
+              style={logView === 'manual' ? styles.filterBtnActive : styles.filterBtn}
+              onClick={() => setLogView('manual')}
+            >
+              Manual Only
+            </button>
+          </div>
+          </div>
+        </div>
         <div style={styles.logList}>
-          {[...state.logs].reverse().map((entry, index) => (
+          {[...filteredLogs].reverse().map((entry, index) => (
             <div key={`${entry.at}-${index}`} style={styles.logItem}>
               <div style={styles.logMeta}>
                 [{entry.tag || 'HTTP'}][{entry.level || 'info'}] {entry.phase || 'event'} {entry.method || ''} {entry.status || ''}
               </div>
               <div style={styles.logUrl}>{entry.url || ''}</div>
+              {entry.message ? <div style={styles.logMessage}>{entry.message}</div> : null}
+              {entry.payload !== undefined ? (
+                <pre style={styles.logPayload}>{jsonView(entry.payload)}</pre>
+              ) : null}
               {entry.error ? <div style={styles.logError}>{entry.error}</div> : null}
             </div>
           ))}
@@ -190,6 +268,42 @@ const styles = {
     display: 'grid',
     gap: 8,
   },
+  logsHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: 8,
+    alignItems: 'center',
+    marginBottom: 8,
+    flexWrap: 'wrap',
+  },
+  logsControls: {
+    display: 'flex',
+    gap: 8,
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+  filterGroup: {
+    display: 'flex',
+    gap: 6,
+  },
+  filterBtn: {
+    border: '1px solid #334155',
+    background: '#0f172a',
+    color: '#cbd5e1',
+    borderRadius: 999,
+    padding: '4px 10px',
+    cursor: 'pointer',
+    fontSize: 11,
+  },
+  filterBtnActive: {
+    border: '1px solid #60a5fa',
+    background: '#1e3a8a',
+    color: '#eff6ff',
+    borderRadius: 999,
+    padding: '4px 10px',
+    cursor: 'pointer',
+    fontSize: 11,
+  },
   logItem: {
     border: '1px solid #1f2937',
     background: '#0f172a',
@@ -203,6 +317,20 @@ const styles = {
   logUrl: {
     color: '#93c5fd',
     marginBottom: 4,
+  },
+  logMessage: {
+    color: '#e5e7eb',
+    marginBottom: 4,
+  },
+  logPayload: {
+    margin: '4px 0',
+    padding: '6px 8px',
+    borderRadius: 6,
+    border: '1px solid #233044',
+    background: '#0b1323',
+    color: '#cbd5e1',
+    whiteSpace: 'pre-wrap',
+    wordBreak: 'break-word',
   },
   logError: {
     color: '#fca5a5',

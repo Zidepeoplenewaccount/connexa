@@ -22,8 +22,23 @@ export default function SpeakerLogin() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const debugApi =
+      window.__CONNEXA_WEB_DEBUG__ ||
+      window.__ZIDE_ADMIN_WEB_DEBUG__ ||
+      window.__ZIDE_WEB_DEBUG__;
     setError('');
     setLoading(true);
+
+    debugApi?.addManualLog?.({
+      tag: 'REGISTRATION',
+      level: 'info',
+      phase: 'manual_intent',
+      message: isSignup ? 'Speaker signup initiated' : 'Speaker login initiated',
+      payload: {
+        mode,
+        email_domain: email.includes('@') ? email.split('@')[1] : null,
+      },
+    });
 
     try {
       if (isSignup) {
@@ -37,9 +52,26 @@ export default function SpeakerLogin() {
       } else {
         await speakerLogin(email.trim(), password);
       }
+      debugApi?.addManualLog?.({
+        tag: 'REGISTRATION',
+        level: 'info',
+        phase: 'manual_result',
+        message: isSignup ? 'Speaker signup successful' : 'Speaker login successful',
+        payload: { mode },
+      });
       navigate('/connexers/dashboard');
     } catch (err) {
       logTechnicalError(err, 'SPEAKER_LOGIN_OR_SIGNUP');
+      debugApi?.addManualLog?.({
+        tag: 'REGISTRATION',
+        level: 'error',
+        phase: 'manual_error',
+        message: isSignup ? 'Speaker signup failed' : 'Speaker login failed',
+        payload: {
+          mode,
+          error: err?.message || 'unknown_error',
+        },
+      });
       setError(getUserFriendlyError(err));
     } finally {
       setLoading(false);
@@ -55,15 +87,46 @@ export default function SpeakerLogin() {
 
   async function handleForgotPassword(e) {
     e.preventDefault();
+    const debugApi =
+      window.__CONNEXA_WEB_DEBUG__ ||
+      window.__ZIDE_ADMIN_WEB_DEBUG__ ||
+      window.__ZIDE_WEB_DEBUG__;
     setError('');
     setForgotMessage('');
     setForgotLoading(true);
 
+    debugApi?.addManualLog?.({
+      tag: 'REGISTRATION',
+      level: 'info',
+      phase: 'manual_intent',
+      message: 'Speaker forgot-password initiated',
+      payload: {
+        email_domain: (forgotEmail || email).includes('@')
+          ? (forgotEmail || email).split('@')[1]
+          : null,
+      },
+    });
+
     try {
       await speakerForgotPassword((forgotEmail || email).trim());
+      debugApi?.addManualLog?.({
+        tag: 'REGISTRATION',
+        level: 'info',
+        phase: 'manual_result',
+        message: 'Speaker forgot-password request sent',
+      });
       setForgotMessage('If this email is registered, a reset link has been sent.');
     } catch (err) {
       logTechnicalError(err, 'SPEAKER_FORGOT_PASSWORD');
+      debugApi?.addManualLog?.({
+        tag: 'REGISTRATION',
+        level: 'error',
+        phase: 'manual_error',
+        message: 'Speaker forgot-password failed',
+        payload: {
+          error: err?.message || 'unknown_error',
+        },
+      });
       setError(getUserFriendlyError(err));
     } finally {
       setForgotLoading(false);

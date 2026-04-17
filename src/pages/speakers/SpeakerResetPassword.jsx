@@ -16,6 +16,10 @@ export default function SpeakerResetPassword() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const debugApi =
+      window.__CONNEXA_WEB_DEBUG__ ||
+      window.__ZIDE_ADMIN_WEB_DEBUG__ ||
+      window.__ZIDE_WEB_DEBUG__;
     setError('');
     setSuccess('');
 
@@ -33,12 +37,36 @@ export default function SpeakerResetPassword() {
     }
 
     setLoading(true);
+    debugApi?.addManualLog?.({
+      tag: 'REGISTRATION',
+      level: 'info',
+      phase: 'manual_intent',
+      message: 'Speaker reset-password initiated',
+      payload: {
+        token_present: Boolean(token),
+      },
+    });
     try {
       await speakerResetPassword({ token, new_password: newPassword });
+      debugApi?.addManualLog?.({
+        tag: 'REGISTRATION',
+        level: 'info',
+        phase: 'manual_result',
+        message: 'Speaker reset-password successful',
+      });
       setSuccess('Password reset successful. You can now sign in.');
       setTimeout(() => navigate('/connexers/login', { replace: true }), 1200);
     } catch (err) {
       logTechnicalError(err, 'SPEAKER_RESET_PASSWORD');
+      debugApi?.addManualLog?.({
+        tag: 'REGISTRATION',
+        level: 'error',
+        phase: 'manual_error',
+        message: 'Speaker reset-password failed',
+        payload: {
+          error: err?.message || 'unknown_error',
+        },
+      });
       setError(getUserFriendlyError(err));
     } finally {
       setLoading(false);
