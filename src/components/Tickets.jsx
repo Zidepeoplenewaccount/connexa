@@ -111,7 +111,7 @@ const tickets = [
     iconClass: 'ticket-icon-green',
     label: 'Business Owners',
     name: 'Business Owner Pass',
-    subtitle: "Learn what works. Fix what's not working. Grow faster.",
+    subtitle: "Learn what works. Fix what's not working. Grow faster. (Only 100 spots)",
     price: 30000,
     available: 500,  // ADD THIS
     features: [
