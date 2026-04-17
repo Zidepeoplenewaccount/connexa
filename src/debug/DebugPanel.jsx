@@ -21,6 +21,7 @@ export default function DebugPanel() {
   const [open, setOpen] = useState(false);
   const [state, setState] = useState(getStateSnapshot());
   const [jobId, setJobId] = useState('');
+  const [toast, setToast] = useState('');
   const [logView, setLogView] = useState(() => {
     try {
       const saved = window.localStorage.getItem(LOG_VIEW_KEY);
@@ -73,6 +74,12 @@ export default function DebugPanel() {
     }
   }, [logView]);
 
+  useEffect(() => {
+    if (!toast) return undefined;
+    const timeout = window.setTimeout(() => setToast(''), 2200);
+    return () => window.clearTimeout(timeout);
+  }, [toast]);
+
   const handleExportVisibleLogs = () => {
     const exportData = {
       exported_at: new Date().toISOString(),
@@ -93,12 +100,13 @@ export default function DebugPanel() {
       anchor.click();
       document.body.removeChild(anchor);
       URL.revokeObjectURL(url);
+      setToast('Visible logs exported.');
     } catch (err) {
       try {
         window.navigator.clipboard.writeText(serialized);
-        window.alert('Visible logs copied to clipboard.');
+        setToast('Visible logs copied to clipboard.');
       } catch (clipboardErr) {
-        window.alert('Unable to export logs in this browser context.');
+        setToast('Unable to export logs in this browser context.');
       }
     }
   };
@@ -117,6 +125,8 @@ export default function DebugPanel() {
           <button style={styles.btn} onClick={() => setOpen(false)}>Close</button>
         </div>
       </div>
+
+      {toast ? <div style={styles.toast}>{toast}</div> : null}
 
       <div style={styles.section}>
         <label style={styles.label}>Job ID Inspector</label>
@@ -214,6 +224,15 @@ const styles = {
   headerActions: {
     display: 'flex',
     gap: 6,
+  },
+  toast: {
+    margin: '8px 12px 0',
+    border: '1px solid #1d4ed8',
+    background: '#172554',
+    color: '#dbeafe',
+    borderRadius: 8,
+    padding: '6px 10px',
+    fontSize: 11,
   },
   btn: {
     border: '1px solid #334155',
