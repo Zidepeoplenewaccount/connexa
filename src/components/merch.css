@@ -16,9 +16,21 @@
 }
 
 .merch-header {
-  text-align: left;
+  text-align: center;
   margin-bottom: 64px;
   font-size: 2.5vh !important;
+}
+
+.merch-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.merch-title-row .section-title {
+  margin: 0;
 }
 
 .merch-header p {
@@ -26,10 +38,11 @@
   font-size: 1.1rem;
   max-width: 720px;
   margin: 16px auto 0;
+  text-align: center;
 }
 
 .merch-delivery-badge {
-  margin: 14px auto 0;
+  margin: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -41,6 +54,7 @@
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .merch-disclaimer {

@@ -626,11 +626,13 @@ export default function Merch() {
       <div className="container">
         <div className="merch-header reveal">
           <div className="section-tag">Merch Store</div>
-          <h2 className="section-title">
-            Wear the <span className="highlight-green">Movement</span>
-          </h2>
+          <div className="merch-title-row">
+            <h2 className="section-title">
+              Wear the <span className="highlight-green">Movement</span>
+            </h2>
+            <div className="merch-delivery-badge">FREE DELIVERY WITHIN LAGOS</div>
+          </div>
           <p>Official Connexa 2026 merchandise. Limited quantities — order early.</p>
-          <div className="merch-delivery-badge">FREE DELIVERY WITHIN LAGOS</div>
         </div>
 
         <div className="merch-disclaimer">
