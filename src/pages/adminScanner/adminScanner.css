@@ -243,3 +243,59 @@
   margin-bottom: 24px;
   color: var(--orange);
 }
+
+/* 📱 Mobile Responsiveness */
+@media (max-width: 768px) {
+  .scanner-manual-form {
+    padding: 20px;
+    margin-top: 16px;
+  }
+
+  .scanner-manual-form h3 {
+    font-size: 18px;
+  }
+
+  .scanner-manual-form p {
+    font-size: 13px;
+  }
+
+  /* Stack input and button */
+  .scanner-manual-form > div {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .scanner-manual-input {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .scanner-btn {
+    width: 100%;
+    min-width: unset;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  small {
+    font-size: 12px;
+  }
+}
+
+/* 📱 Extra small devices (tiny phones) */
+@media (max-width: 480px) {
+  .scanner-manual-form {
+    padding: 16px;
+  }
+
+  .scanner-manual-input {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .scanner-btn {
+    font-size: 13px;
+    padding: 10px;
+  }
+}
