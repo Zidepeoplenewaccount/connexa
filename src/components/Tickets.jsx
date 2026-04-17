@@ -30,6 +30,7 @@ const tickets = [
     cta: 'Get Marketplace Pass',
     ctaClass: '',
     dotColor: 'rgba(255,255,255,0.5)',
+    hideLowStockBadge: true,
   },
   {
     id: 2,
@@ -900,7 +901,11 @@ export default function Tickets() {
           {tickets.map((ticket, i) => {
             const discountedPrice = calculateTicketPrice(ticket.name, ticket.price);
             const hasDiscount = discountedPrice < ticket.price;
-            const hasLowStock = typeof ticket.available === 'number' && ticket.available > 0 && ticket.available <= LOW_STOCK_THRESHOLD;
+            const hasLowStock =
+              !ticket.hideLowStockBadge &&
+              typeof ticket.available === 'number' &&
+              ticket.available > 0 &&
+              ticket.available <= LOW_STOCK_THRESHOLD;
 
             return (
               <div
