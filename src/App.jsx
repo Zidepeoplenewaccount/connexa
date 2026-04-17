@@ -35,6 +35,7 @@ import AdminQuestions from './pages/admin/AdminQuestions';
 import SpeakerLogin from './pages/speakers/SpeakerLogin';
 import SpeakerDashboard from './pages/speakers/SpeakerDashboard';
 import SpeakerResetPassword from './pages/speakers/SpeakerResetPassword';
+import DebugPanel from './debug/DebugPanel';
 
 import ProtectedRoute from './components/admin/protectedRoute';
 import AdminScanner from './pages/adminScanner/adminScanner';
@@ -57,7 +58,7 @@ function HomePage() {
           <div className="container">
             <div className="affiliate-spotlight-inner">
               <div>
-                <p className="affiliate-spotlight-tag">Word-of-mouth works in Lagos</p>
+                <p className="affiliate-spotlight-tag">Be part of the team.</p>
                 <h3>Earn by sharing Connexa tickets</h3>
                 <p>
                   Get your affiliate link in minutes and earn commission on every successful ticket referral.
@@ -182,6 +183,7 @@ export default function App() {
           }
         />
       </Routes>
+      <DebugPanel />
     </BrowserRouter>
   );
 }

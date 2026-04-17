@@ -630,6 +630,7 @@ export default function Merch() {
             Wear the <span className="highlight-green">Movement</span>
           </h2>
           <p>Official Connexa 2026 merchandise. Limited quantities — order early.</p>
+          <div className="merch-delivery-badge">FREE DELIVERY WITHIN LAGOS</div>
         </div>
 
         <div className="merch-disclaimer">
@@ -666,7 +667,7 @@ export default function Merch() {
                       <span className="merch-placeholder-icon">{currentImage}</span>
                     </div>
                   ) : (
-                    <img src={currentImage} className="merch-actual-image" alt={product.name} />
+                    <img src={currentImage} className="merch-actual-image" alt={product.name} loading="lazy" decoding="async" />
                   )}
 
                   {/* Badges */}

@@ -18,7 +18,7 @@ const tickets = [
     name: 'Marketplace Pass',
     subtitle: 'Access the Connexa Showcase Floor, shop from 100+ vendors, discover new brands, and experience the energy of the Opportunity Playground.',
     price: 3000,
-    available: 100,  // ADD THIS
+    available: 52,
     features: [
       'Access to outdoor vendor marketplace',
       'Shop from 100+ vendors and businesses',
@@ -137,7 +137,7 @@ const tickets = [
     name: 'Showcase Vendor Pass',
     subtitle: 'Build visibility, trust, and partnerships — bring your own booth',
     price: 110000,
-    available: 70,  // ADD THIS
+    available: 35,
     features: [
       'Bring your own booth setup',
       'Dedicated space to showcase your brand, app, or service',
@@ -167,7 +167,7 @@ const tickets = [
     name: 'Market Vendor Pass',
     subtitle: 'Sell directly to a high-intent audience — tent provided',
     price: 120000,
-    available: 100,  // ADD THIS
+    available: 52,
     features: [
       'Tent and booth setup provided by us',
       'Physical marketplace presence with real buyers',

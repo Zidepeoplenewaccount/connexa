@@ -8,7 +8,7 @@ const faqs = [
   },
   {
     question: 'Is Connexa really different from regular events?',
-    answer: 'Yes. This is the first Opportunity Playground in Nigeria, and it is happening in Lagos. You need to be in the room.'
+    answer: 'Yes. This is the first Opportunity Playground in Nigeria, and it is happening in Lagos. You need to be in the playground.'
   },
   {
     question: 'What time do doors open?',
@@ -32,11 +32,31 @@ const faqs = [
   },
   {
     question: 'Will there be refreshments?',
-    answer: 'Yes, refreshments will be available during the event.'
+    answer: 'Refreshments are available for certain ticket types.'
   },
   {
     question: 'Are there speakers?',
     answer: 'There are no speakers. We have Connexers, and they will be doing something different.'
+  },
+  {
+    question: 'Can I earn before the event?',
+    answer: 'Yes. Sign up to be an affiliate and earn by referring ticket buyers before the event.'
+  },
+  {
+    question: 'How many vendors are allowed on the playground?',
+    answer: 'It is limited because not all vendors are Connexa vendors. Vendor slots are curated and capped.'
+  },
+  {
+    question: 'Why are there different tickets?',
+    answer: 'Different tickets are designed for different experiences inside the Opportunity Playground.'
+  },
+  {
+    question: 'What is the difference between Business Owner and Vendor tickets?',
+    answer: 'Business Owners are coming primarily to learn and grow. Vendors are coming to learn and also sell.'
+  },
+  {
+    question: 'When will ticket sales close?',
+    answer: 'Tickets close one month before the event so the team can prepare properly, though sales may reopen in special circumstances.'
   }
 ];
 
@@ -48,10 +68,7 @@ export default function FAQ() {
       <div className="container">
         <div className="faq-header reveal">
           <div className="section-tag">FAQ</div>
-          <h2 className="section-title">
-            Before You Buy, <span className="highlight-orange">Know This</span>
-          </h2>
-          <p>Everything attendees ask before securing their Connexa ticket.</p>
+          <h2 className="section-title faq-title">FAQ</h2>
         </div>
 
         <div className="faq-list reveal">

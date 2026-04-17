@@ -28,6 +28,21 @@
   margin: 16px auto 0;
 }
 
+.merch-delivery-badge {
+  margin: 14px auto 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(45,184,75,0.32);
+  background: rgba(45,184,75,0.14);
+  color: #90f0a6;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
 .merch-disclaimer {
   background: rgba(232,49,42,0.08);
   border: 1px solid rgba(232,49,42,0.2);
