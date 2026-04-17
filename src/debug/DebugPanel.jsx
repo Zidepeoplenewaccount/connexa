@@ -22,6 +22,7 @@ export default function DebugPanel() {
   const [state, setState] = useState(getStateSnapshot());
   const [jobId, setJobId] = useState('');
   const [toast, setToast] = useState('');
+  const [tagFilter, setTagFilter] = useState('all');
   const [logView, setLogView] = useState(() => {
     try {
       const saved = window.localStorage.getItem(LOG_VIEW_KEY);
@@ -59,12 +60,25 @@ export default function DebugPanel() {
     };
   }, [jobId, state]);
 
-  const filteredLogs = useMemo(() => {
+  const phaseScopedLogs = useMemo(() => {
     if (logView === 'manual') {
       return state.logs.filter((entry) => String(entry?.phase || '').startsWith('manual_'));
     }
     return state.logs;
   }, [logView, state.logs]);
+
+  const availableTags = useMemo(() => {
+    const tags = new Set();
+    phaseScopedLogs.forEach((entry) => {
+      tags.add(String(entry?.tag || 'HTTP').toUpperCase());
+    });
+    return Array.from(tags).sort();
+  }, [phaseScopedLogs]);
+
+  const filteredLogs = useMemo(() => {
+    if (tagFilter === 'all') return phaseScopedLogs;
+    return phaseScopedLogs.filter((entry) => String(entry?.tag || 'HTTP').toUpperCase() === tagFilter);
+  }, [phaseScopedLogs, tagFilter]);
 
   useEffect(() => {
     try {
@@ -79,6 +93,12 @@ export default function DebugPanel() {
     const timeout = window.setTimeout(() => setToast(''), 2200);
     return () => window.clearTimeout(timeout);
   }, [toast]);
+
+  useEffect(() => {
+    if (tagFilter !== 'all' && !availableTags.includes(tagFilter)) {
+      setTagFilter('all');
+    }
+  }, [availableTags, tagFilter]);
 
   const handleExportVisibleLogs = () => {
     const exportData = {
@@ -171,6 +191,16 @@ export default function DebugPanel() {
               Manual Only
             </button>
           </div>
+            <select
+              style={styles.tagSelect}
+              value={tagFilter}
+              onChange={(event) => setTagFilter(event.target.value)}
+            >
+              <option value="all">All Tags</option>
+              {availableTags.map((tag) => (
+                <option key={tag} value={tag}>{tag}</option>
+              ))}
+            </select>
           </div>
         </div>
         <div style={styles.logList}>
@@ -304,6 +334,16 @@ const styles = {
   filterGroup: {
     display: 'flex',
     gap: 6,
+  },
+  tagSelect: {
+    border: '1px solid #334155',
+    background: '#0f172a',
+    color: '#cbd5e1',
+    borderRadius: 999,
+    padding: '4px 10px',
+    cursor: 'pointer',
+    fontSize: 11,
+    outline: 'none',
   },
   filterBtn: {
     border: '1px solid #334155',
