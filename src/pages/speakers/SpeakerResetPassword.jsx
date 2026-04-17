@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { speakerResetPassword } from '../../services/speakerApi';
+import { getUserFriendlyError, logTechnicalError } from '../../utils/errorMessages';
 import './speaker-portal.css';
 
 export default function SpeakerResetPassword() {
@@ -37,7 +38,8 @@ export default function SpeakerResetPassword() {
       setSuccess('Password reset successful. You can now sign in.');
       setTimeout(() => navigate('/connexers/login', { replace: true }), 1200);
     } catch (err) {
-      setError(err.response?.data?.detail || 'Unable to reset password.');
+      logTechnicalError(err, 'SPEAKER_RESET_PASSWORD');
+      setError(getUserFriendlyError(err));
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getUpgradeOptions, initializeUpgrade } from '../services/api';
+import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import './UpgradeTicket.css';
@@ -39,8 +40,8 @@ export default function UpgradeTicket() {
         setError('No upgrades available for this ticket type. You may already have the highest tier!');
       }
     } catch (err) {
-      console.error('Failed to fetch upgrade options:', err);
-      setError(err.response?.data?.detail || 'Invalid ticket ID or no upgrades available.');
+      logTechnicalError(err, 'UPGRADE_OPTIONS_PAGE');
+      setError(getUserFriendlyError(err));
       setUpgradeOptions(null);
     } finally {
       setLoading(false);
@@ -71,8 +72,8 @@ export default function UpgradeTicket() {
         window.location.href = response.authorization_url;
       }
     } catch (err) {
-      console.error('Upgrade initialization failed:', err);
-      setError(err.response?.data?.detail || 'Failed to initialize upgrade. Please try again.');
+      logTechnicalError(err, 'UPGRADE_INIT_PAGE');
+      setError(getUserFriendlyError(err));
     } finally {
       setLoading(false);
     }

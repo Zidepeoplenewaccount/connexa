@@ -4,6 +4,7 @@ import { initializePayment, validateTicketId, validateDiscountCode, validateSpea
 import { getAffiliateCode } from '../utils/affiliate';
 import { getSpeakerCode } from '../utils/speaker';
 import { isDiscountActive, calculateTicketPrice, getDiscountPercentage } from '../utils/discount';
+import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 
 
 const tickets = [
@@ -552,14 +553,12 @@ export default function Tickets() {
       }
       setConnectorsLookupResults(result.tickets);
     } catch (err) {
-      const detail = err?.response?.data?.detail;
-      if (typeof detail === 'string' && detail.trim()) {
-        setConnectorsLookupError(detail);
-      } else if (Array.isArray(detail) && detail.length > 0) {
-        setConnectorsLookupError('Please check your email format and try again.');
-      } else {
-        setConnectorsLookupError('Unable to check tickets right now. You can still enter your ticket ID manually.');
-      }
+      logTechnicalError(err, 'CONNECTORS_LOOKUP');
+      setConnectorsLookupError(
+        getUserFriendlyError(err, {
+          fallback: 'Unable to check tickets right now. You can still enter your ticket ID manually.'
+        })
+      );
     } finally {
       setConnectorsLookupLoading(false);
     }

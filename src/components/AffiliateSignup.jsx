@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { signupAffiliate } from '../services/api';
+import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './affiliate-signup.css';
 
 export default function AffiliateSignup() {
@@ -73,8 +74,8 @@ export default function AffiliateSignup() {
       setSubmitted(true);
       setShowConfirmModal(false);
     } catch (err) {
-      console.error('Signup error:', err);
-      setError(err.response?.data?.detail || 'Something went wrong. Please try again.');
+      logTechnicalError(err, 'AFFILIATE_SIGNUP');
+      setError(getUserFriendlyError(err));
     } finally {
       setLoading(false);
     }

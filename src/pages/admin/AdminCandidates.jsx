@@ -9,6 +9,7 @@ import {
 } from '../../services/adminApi';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
+import { getUserFriendlyError, logTechnicalError } from '../../utils/errorMessages';
 
 export default function AdminCandidates() {
   const [candidates, setCandidates] = useState([]);
@@ -101,7 +102,8 @@ export default function AdminCandidates() {
       setShowModal(false);
       fetchCandidates();
     } catch (error) {
-      alert('Failed to create candidate: ' + error.message);
+      logTechnicalError(error, 'ADMIN_CREATE_CANDIDATE');
+      alert(getUserFriendlyError(error, { fallback: 'Unable to create candidate. Please try again.' }));
     }
   }
 

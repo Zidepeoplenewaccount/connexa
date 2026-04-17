@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { signupBusinessCandidate, signupIndividualCandidate } from '../services/api';
+import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './CandidateSignup.css';
 
 export default function CandidateSignup() {
@@ -56,8 +57,8 @@ export default function CandidateSignup() {
 
       setSubmitted(true);
     } catch (err) {
-      console.error('Signup error:', err);
-      setError(err.response?.data?.detail || 'Something went wrong. Please try again.');
+      logTechnicalError(err, 'CANDIDATE_SIGNUP');
+      setError(getUserFriendlyError(err));
     } finally {
       setLoading(false);
     }

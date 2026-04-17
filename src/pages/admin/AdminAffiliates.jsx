@@ -11,6 +11,7 @@ import {
 } from '../../services/adminApi';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
+import { getUserFriendlyError, logTechnicalError } from '../../utils/errorMessages';
 
 export default function AdminAffiliates() {
   const [activeTab, setActiveTab] = useState('affiliates'); // 'affiliates' or 'commissions'
@@ -179,7 +180,8 @@ export default function AdminAffiliates() {
       setShowModal(false);
       fetchAffiliatesAndStats();
     } catch (error) {
-      alert('Failed to create affiliate: ' + (error.response?.data?.detail || error.message));
+      logTechnicalError(error, 'ADMIN_CREATE_AFFILIATE');
+      alert(getUserFriendlyError(error, { fallback: 'Unable to create affiliate. Please try again.' }));
     }
   }
 

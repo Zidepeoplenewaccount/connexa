@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { speakerLogin, speakerSignup, speakerForgotPassword } from '../../services/speakerApi';
+import { getUserFriendlyError, logTechnicalError } from '../../utils/errorMessages';
 import './speaker-portal.css';
 
 export default function SpeakerLogin() {
@@ -38,7 +39,8 @@ export default function SpeakerLogin() {
       }
       navigate('/connexers/dashboard');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Unable to continue. Please check your details.');
+      logTechnicalError(err, 'SPEAKER_LOGIN_OR_SIGNUP');
+      setError(getUserFriendlyError(err));
     } finally {
       setLoading(false);
     }
@@ -61,7 +63,8 @@ export default function SpeakerLogin() {
       await speakerForgotPassword((forgotEmail || email).trim());
       setForgotMessage('If this email is registered, a reset link has been sent.');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Unable to send reset email right now.');
+      logTechnicalError(err, 'SPEAKER_FORGOT_PASSWORD');
+      setError(getUserFriendlyError(err));
     } finally {
       setForgotLoading(false);
     }

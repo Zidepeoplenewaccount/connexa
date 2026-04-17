@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { submitSpeakerQuestion } from '../services/api';
+import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './AskQuestionModal.css';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
@@ -74,8 +75,8 @@ export default function AskQuestionModal({ speaker, onClose }) {
         setShowUpgradePrompt(true);
       }
     } catch (err) {
-      console.error('Question submission failed:', err);
-      setError(err.response?.data?.detail || 'Failed to submit question. Please try again.');
+      logTechnicalError(err, 'SPEAKER_QUESTION_SUBMIT');
+      setError(getUserFriendlyError(err));
     } finally {
       setLoading(false);
     }

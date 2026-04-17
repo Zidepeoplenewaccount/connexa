@@ -9,6 +9,7 @@ import {
 } from '../../services/adminApi';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
+import { getUserFriendlyError, logTechnicalError } from '../../utils/errorMessages';
 
 export default function AdminDiscountCodes() {
   const [codes, setCodes] = useState([]);
@@ -86,7 +87,8 @@ export default function AdminDiscountCodes() {
       setShowModal(false);
       fetchData();
     } catch (error) {
-      alert('Failed to create discount code: ' + (error.response?.data?.detail || error.message));
+      logTechnicalError(error, 'ADMIN_CREATE_DISCOUNT_CODE');
+      alert(getUserFriendlyError(error, { fallback: 'Unable to create discount code. Please try again.' }));
     }
   }
 

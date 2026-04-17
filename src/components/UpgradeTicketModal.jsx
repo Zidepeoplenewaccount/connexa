@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getUpgradeOptions, initializeUpgrade } from '../services/api';
+import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './UpgradeTicketModal.css';
 
 export default function UpgradeTicketModal({ initialTicketId = '', onClose }) {
@@ -30,8 +31,8 @@ export default function UpgradeTicketModal({ initialTicketId = '', onClose }) {
         setError('No upgrades available for this ticket type.');
       }
     } catch (err) {
-      console.error('Failed to fetch upgrade options:', err);
-      setError(err.response?.data?.detail || 'Invalid ticket ID or no upgrades available.');
+      logTechnicalError(err, 'UPGRADE_OPTIONS_MODAL');
+      setError(getUserFriendlyError(err));
       setUpgradeOptions(null);
     } finally {
       setLoading(false);
@@ -62,8 +63,8 @@ export default function UpgradeTicketModal({ initialTicketId = '', onClose }) {
         window.location.href = response.authorization_url;
       }
     } catch (err) {
-      console.error('Upgrade initialization failed:', err);
-      setError(err.response?.data?.detail || 'Failed to initialize upgrade. Please try again.');
+      logTechnicalError(err, 'UPGRADE_INIT_MODAL');
+      setError(getUserFriendlyError(err));
     } finally {
       setLoading(false);
     }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setupAxiosErrorHandling } from '../utils/errorMessages';
 
 const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
 //const BACKEND_URL = 'http://127.0.0.1:8000';
@@ -6,6 +7,7 @@ const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurew
 const getAuthToken = () => localStorage.getItem('admin_token');
 
 const adminAxios = axios.create({ baseURL: BACKEND_URL });
+setupAxiosErrorHandling(adminAxios);
 
 adminAxios.interceptors.request.use((config) => {
   const token = getAuthToken();

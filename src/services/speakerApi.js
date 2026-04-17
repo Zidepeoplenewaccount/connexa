@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setupAxiosErrorHandling } from '../utils/errorMessages';
 
 const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
 //const BACKEND_URL = 'http://127.0.0.1:8000';
@@ -6,6 +7,7 @@ const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurew
 const getSpeakerToken = () => localStorage.getItem('speaker_token');
 
 const speakerAxios = axios.create({ baseURL: BACKEND_URL });
+setupAxiosErrorHandling(speakerAxios);
 
 speakerAxios.interceptors.request.use((config) => {
   const token = getSpeakerToken();

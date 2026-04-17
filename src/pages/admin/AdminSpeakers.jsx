@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import axios from 'axios';
+import { getUserFriendlyError, logTechnicalError } from '../../utils/errorMessages';
 
 const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
 //const BACKEND_URL = 'http://127.0.0.1:8000';
@@ -52,7 +53,8 @@ export default function AdminSpeakers() {
       setForm({ name: '', email: '', password: '', discount_percentage: 5, commission_rate: 75, account_number: '', bank_name: '' });
       loadSpeakers();
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to create speaker');
+      logTechnicalError(err, 'ADMIN_CREATE_SPEAKER');
+      setError(getUserFriendlyError(err, { fallback: 'Unable to create speaker. Please try again.' }));
     } finally {
       setCreating(false);
     }
@@ -73,7 +75,8 @@ export default function AdminSpeakers() {
       await axios.delete(`${BACKEND_URL}/connexers/admin/${speaker.id}`, getAuth());
       loadSpeakers();
     } catch (err) {
-      alert(err.response?.data?.detail || 'Failed to delete speaker');
+      logTechnicalError(err, 'ADMIN_DELETE_SPEAKER');
+      alert(getUserFriendlyError(err, { fallback: 'Unable to delete speaker. Please try again.' }));
     }
   }
 
@@ -83,7 +86,8 @@ export default function AdminSpeakers() {
       if (expandedSpeaker) loadCommissions(expandedSpeaker);
       loadSpeakers();
     } catch (err) {
-      alert(err.response?.data?.detail || 'Failed to mark as paid');
+      logTechnicalError(err, 'ADMIN_MARK_COMMISSION_PAID');
+      alert(getUserFriendlyError(err, { fallback: 'Unable to mark this commission as paid. Please try again.' }));
     }
   }
 
