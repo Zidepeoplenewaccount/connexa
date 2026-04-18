@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import axios from 'axios';
 import { getUserFriendlyError, logTechnicalError } from '../../utils/errorMessages';
@@ -41,6 +41,61 @@ export default function AdminSpeakers() {
     return { date: localDate, time: localTime };
   }
 
+  function getExpiryStatus(isoDateTime) {
+    if (!isoDateTime) {
+      return {
+        label: 'No Expiry',
+        style: {
+          background: 'rgba(255,255,255,0.12)',
+          color: 'rgba(255,255,255,0.7)',
+        },
+      };
+    }
+
+    const expiry = new Date(isoDateTime);
+    if (Number.isNaN(expiry.getTime())) {
+      return {
+        label: 'Invalid Date',
+        style: {
+          background: 'rgba(232,49,42,0.15)',
+          color: '#e8312a',
+        },
+      };
+    }
+
+    const now = new Date();
+    const msLeft = expiry.getTime() - now.getTime();
+    const dayMs = 24 * 60 * 60 * 1000;
+
+    if (msLeft <= 0) {
+      return {
+        label: 'Expired',
+        style: {
+          background: 'rgba(232,49,42,0.15)',
+          color: '#e8312a',
+        },
+      };
+    }
+
+    if (msLeft <= 3 * dayMs) {
+      return {
+        label: 'Expiring Soon',
+        style: {
+          background: 'rgba(245,166,35,0.15)',
+          color: '#f5a623',
+        },
+      };
+    }
+
+    return {
+      label: 'Active',
+      style: {
+        background: 'rgba(45,184,75,0.15)',
+        color: '#2db84b',
+      },
+    };
+  }
+
   const [speakers, setSpeakers] = useState([]);
   const [commissions, setCommissions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,9 +106,53 @@ export default function AdminSpeakers() {
   const [expiryForm, setExpiryForm] = useState({ date: '', time: '' });
   const [expirySaving, setExpirySaving] = useState(false);
   const [expiryError, setExpiryError] = useState('');
+  const [expirySortDirection, setExpirySortDirection] = useState('asc');
   const [form, setForm] = useState({ name: '', email: '', password: '', discount_percentage: 5, discount_expiry_date: '', discount_expiry_time: '', commission_rate: 75, account_number: '', bank_name: '' });
   const [error, setError] = useState('');
   const [creating, setCreating] = useState(false);
+
+  const sortedSpeakers = useMemo(() => {
+    function expirySortMeta(isoDateTime) {
+      if (!isoDateTime) {
+        return { group: 3, timestamp: Number.MAX_SAFE_INTEGER };
+      }
+
+      const expiry = new Date(isoDateTime);
+      if (Number.isNaN(expiry.getTime())) {
+        return { group: 4, timestamp: Number.MAX_SAFE_INTEGER };
+      }
+
+      const nowMs = Date.now();
+      const msLeft = expiry.getTime() - nowMs;
+      const dayMs = 24 * 60 * 60 * 1000;
+
+      if (msLeft <= 0) {
+        return { group: 0, timestamp: expiry.getTime() };
+      }
+
+      if (msLeft <= 3 * dayMs) {
+        return { group: 1, timestamp: expiry.getTime() };
+      }
+
+      return { group: 2, timestamp: expiry.getTime() };
+    }
+
+    const direction = expirySortDirection === 'asc' ? 1 : -1;
+    return [...speakers].sort((a, b) => {
+      const aMeta = expirySortMeta(a.discount_expires_at);
+      const bMeta = expirySortMeta(b.discount_expires_at);
+
+      if (aMeta.group !== bMeta.group) {
+        return (aMeta.group - bMeta.group) * direction;
+      }
+
+      if (aMeta.timestamp !== bMeta.timestamp) {
+        return (aMeta.timestamp - bMeta.timestamp) * direction;
+      }
+
+      return a.name.localeCompare(b.name);
+    });
+  }, [speakers, expirySortDirection]);
 
   async function loadSpeakers() {
     try {
@@ -266,7 +365,23 @@ export default function AdminSpeakers() {
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
-                  {['Name', 'Email', 'Code', 'Account', 'Discount', 'Expiry', 'Commission', 'Uses', 'Earned', 'Pending', 'Status', 'Actions'].map(h => (
+                  {['Name', 'Email', 'Code', 'Account', 'Discount'].map(h => (
+                    <th key={h} style={{
+                      textAlign: 'left', padding: '12px 14px', fontSize: 11, fontWeight: 700,
+                      color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: 1,
+                      borderBottom: '1px solid #333',
+                    }}>{h}</th>
+                  ))}
+                  <th style={{
+                    textAlign: 'left', padding: '12px 14px', fontSize: 11, fontWeight: 700,
+                    color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: 1,
+                    borderBottom: '1px solid #333',
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                  }} onClick={() => setExpirySortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'))}>
+                    Expiry {expirySortDirection === 'asc' ? '↑' : '↓'}
+                  </th>
+                  {['Commission', 'Uses', 'Earned', 'Pending', 'Status', 'Actions'].map(h => (
                     <th key={h} style={{
                       textAlign: 'left', padding: '12px 14px', fontSize: 11, fontWeight: 700,
                       color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: 1,
@@ -276,7 +391,7 @@ export default function AdminSpeakers() {
                 </tr>
               </thead>
               <tbody>
-                {speakers.map((s) => (
+                {sortedSpeakers.map((s) => (
                   <>
                     <tr key={s.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                       <td style={{ padding: '14px', color: '#fff', fontWeight: 600 }}>{s.name}</td>
@@ -294,7 +409,27 @@ export default function AdminSpeakers() {
                       </td>
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.7)' }}>{s.discount_percentage}%</td>
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.7)' }}>
-                        {s.discount_expires_at ? new Date(s.discount_expires_at).toLocaleString() : 'No expiry'}
+                        {(() => {
+                          const expiryStatus = getExpiryStatus(s.discount_expires_at);
+                          return (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                              <span>{s.discount_expires_at ? new Date(s.discount_expires_at).toLocaleString() : 'No expiry'}</span>
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  width: 'fit-content',
+                                  padding: '3px 8px',
+                                  borderRadius: 12,
+                                  fontSize: 11,
+                                  fontWeight: 700,
+                                  ...expiryStatus.style,
+                                }}
+                              >
+                                {expiryStatus.label}
+                              </span>
+                            </div>
+                          );
+                        })()}
                       </td>
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.7)' }}>{s.commission_rate}%</td>
                       <td style={{ padding: '14px', color: '#fff', fontWeight: 700 }}>{s.total_uses}</td>
