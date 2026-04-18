@@ -642,7 +642,6 @@ export default function AdminSpeakers() {
                         </button>
                       </td>
                     </tr>
-                  </tr>
                 ))}
               </tbody>
             </table>
