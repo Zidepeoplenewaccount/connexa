@@ -20,7 +20,7 @@ import MerchSuccess from './pages/MerchSuccess';
 import UpgradeSuccess from './pages/UpgradeSuccess';
 import UpgradeTicket from './pages/UpgradeTicket';
 
-import AdminLogin from './components/admin/AdminLogin';
+import AdminLogin from './features/auth/admin-login-page';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminTickets from './pages/admin/AdminTickets';
 import AdminCandidates from './pages/admin/AdminCandidates';
@@ -32,14 +32,14 @@ import AdminDiscountCodes from './pages/admin/AdminDiscountCodes';
 import AdminSpeakers from './pages/admin/AdminSpeakers';
 import AdminQuestions from './pages/admin/AdminQuestions';
 
-import SpeakerLogin from './pages/speakers/SpeakerLogin';
+import SpeakerLogin from './features/auth/connexer-login-page';
 import SpeakerDashboard from './pages/speakers/SpeakerDashboard';
-import SpeakerResetPassword from './pages/speakers/SpeakerResetPassword';
+import SpeakerResetPassword from './features/auth/connexer-reset-password-page';
 import DebugPanel from './debug/DebugPanel';
 
-import ProtectedRoute from './components/admin/protectedRoute';
+import ProtectedRoute from './features/auth/admin-protected-route';
 import AdminScanner from './pages/adminScanner/adminScanner';
-import ScannerProtectedRoute from './pages/adminScanner/scannerProtectedRoute';
+import ScannerProtectedRoute from './features/auth/scanner-protected-route';
 
 function HomePage() {
   useScrollReveal();
