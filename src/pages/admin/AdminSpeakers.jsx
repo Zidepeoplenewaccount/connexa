@@ -156,10 +156,8 @@ export default function AdminSpeakers() {
   }
 
   const [speakers, setSpeakers] = useState([]);
-  const [commissions, setCommissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
-  const [expandedSpeaker, setExpandedSpeaker] = useState(null);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [profileCommissions, setProfileCommissions] = useState([]);
@@ -226,18 +224,6 @@ export default function AdminSpeakers() {
       console.error('Failed to load connexers', err);
     } finally {
       setLoading(false);
-    }
-  }
-
-  async function loadCommissions(speakerId) {
-    try {
-      const res = await axios.get(`${BACKEND_URL}/connexers/admin/commissions`, {
-        ...getAuth(),
-        params: speakerId ? { speaker_id: speakerId } : {},
-      });
-      setCommissions(res.data);
-    } catch (err) {
-      console.error('Failed to load commissions', err);
     }
   }
 
@@ -423,27 +409,6 @@ export default function AdminSpeakers() {
     }
   }
 
-  async function markPaid(commissionId) {
-    try {
-      await axios.patch(`${BACKEND_URL}/connexers/admin/commissions/${commissionId}/mark-paid`, null, getAuth());
-      if (expandedSpeaker) loadCommissions(expandedSpeaker);
-      loadSpeakers();
-    } catch (err) {
-      logTechnicalError(err, 'ADMIN_MARK_COMMISSION_PAID');
-      alert(getUserFriendlyError(err, { fallback: 'Unable to mark this commission as paid. Please try again.' }));
-    }
-  }
-
-  function handleExpand(speakerId) {
-    if (expandedSpeaker === speakerId) {
-      setExpandedSpeaker(null);
-      setCommissions([]);
-    } else {
-      setExpandedSpeaker(speakerId);
-      loadCommissions(speakerId);
-    }
-  }
-
   function openExpiryModal(speaker) {
     const split = splitExpiryDateTime(speaker.discount_expires_at);
     setSelectedSpeakerForExpiry(speaker);
@@ -586,8 +551,7 @@ export default function AdminSpeakers() {
               </thead>
               <tbody>
                 {sortedSpeakers.map((s) => (
-                  <>
-                    <tr key={s.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                  <tr key={s.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                       <td style={{ padding: '14px', color: '#fff', fontWeight: 600 }}>{s.name}</td>
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>{s.email}</td>
                       <td style={{ padding: '14px' }}>
@@ -667,9 +631,6 @@ export default function AdminSpeakers() {
                         <button onClick={() => openProfileModal(s)} style={btnSmall('#8d6ad8')}>
                           Profile
                         </button>
-                        <button onClick={() => handleExpand(s.id)} style={btnSmall('#1a73e8')}>
-                          {expandedSpeaker === s.id ? 'Hide' : 'Sales'}
-                        </button>
                         <button onClick={() => toggleActive(s)} style={btnSmall(s.is_active ? '#666' : '#2db84b')}>
                           {s.is_active ? 'Disable' : 'Enable'}
                         </button>
@@ -681,66 +642,7 @@ export default function AdminSpeakers() {
                         </button>
                       </td>
                     </tr>
-                    {/* Expanded commissions */}
-                    {expandedSpeaker === s.id && (
-                      <tr key={`${s.id}-detail`}>
-                        <td colSpan={13} style={{ padding: '0 14px 14px', background: '#111' }}>
-                          <h4 style={{ color: 'rgba(255,255,255,0.5)', padding: '12px 0 8px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 1 }}>
-                            Sales by {s.name}
-                          </h4>
-                          {commissions.length === 0 ? (
-                            <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 13, padding: '8px 0' }}>No sales yet</p>
-                          ) : (
-                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                              <thead>
-                                <tr>
-                                  {['Buyer', 'Ticket', 'Price', 'Discount', 'Commission', 'Status', 'Date', ''].map(h => (
-                                    <th key={h} style={{
-                                      textAlign: 'left', padding: '8px 10px', fontSize: 10,
-                                      color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase',
-                                      borderBottom: '1px solid #222',
-                                    }}>{h}</th>
-                                  ))}
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {commissions.map(c => (
-                                  <tr key={c.id}>
-                                    <td style={{ padding: '8px 10px', fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>
-                                      {c.buyer_name || c.buyer_email}
-                                    </td>
-                                    <td style={{ padding: '8px 10px', fontSize: 13, color: 'rgba(255,255,255,0.6)' }}>{c.ticket_type}</td>
-                                    <td style={{ padding: '8px 10px', fontSize: 13, color: '#fff' }}>₦{c.ticket_price.toLocaleString()}</td>
-                                    <td style={{ padding: '8px 10px', fontSize: 13, color: '#f5a623' }}>₦{c.discount_given.toLocaleString()}</td>
-                                    <td style={{ padding: '8px 10px', fontSize: 13, color: '#2db84b', fontWeight: 700 }}>₦{c.commission_amount.toLocaleString()}</td>
-                                    <td style={{ padding: '8px 10px' }}>
-                                      <span style={{
-                                        padding: '3px 8px', borderRadius: 12, fontSize: 11, fontWeight: 600,
-                                        background: c.status === 'paid' ? 'rgba(45,184,75,0.15)' : 'rgba(245,166,35,0.15)',
-                                        color: c.status === 'paid' ? '#2db84b' : '#f5a623',
-                                      }}>
-                                        {c.status === 'paid' ? '✓ Paid' : 'Pending'}
-                                      </span>
-                                    </td>
-                                    <td style={{ padding: '8px 10px', fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
-                                      {new Date(c.created_at).toLocaleDateString()}
-                                    </td>
-                                    <td style={{ padding: '8px 10px' }}>
-                                      {c.status === 'pending' && (
-                                        <button onClick={() => markPaid(c.id)} style={btnSmall('#2db84b')}>
-                                          Mark Paid
-                                        </button>
-                                      )}
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          )}
-                        </td>
-                      </tr>
-                    )}
-                  </>
+                  </tr>
                 ))}
               </tbody>
             </table>
