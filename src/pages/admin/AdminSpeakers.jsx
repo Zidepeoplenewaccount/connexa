@@ -126,11 +126,45 @@ export default function AdminSpeakers() {
     };
   }
 
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function getProfileMetrics(rows) {
+    const totalTickets = rows.length;
+    const totalDiscount = rows.reduce((acc, row) => acc + Number(row.discount_given || 0), 0);
+    const totalCommission = rows.reduce((acc, row) => acc + Number(row.commission_amount || 0), 0);
+    const paidCommission = rows
+      .filter((row) => row.status === 'paid')
+      .reduce((acc, row) => acc + Number(row.commission_amount || 0), 0);
+    const pendingCommission = totalCommission - paidCommission;
+    const totalTicketRevenue = rows.reduce((acc, row) => acc + Number(row.ticket_price || 0), 0);
+
+    return {
+      totalTickets,
+      totalDiscount,
+      totalCommission,
+      paidCommission,
+      pendingCommission,
+      totalTicketRevenue,
+    };
+  }
+
   const [speakers, setSpeakers] = useState([]);
   const [commissions, setCommissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
   const [expandedSpeaker, setExpandedSpeaker] = useState(null);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState(null);
+  const [profileCommissions, setProfileCommissions] = useState([]);
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [profileError, setProfileError] = useState('');
   const [selectedSpeakerForExpiry, setSelectedSpeakerForExpiry] = useState(null);
   const [showExpiryModal, setShowExpiryModal] = useState(false);
   const [expiryForm, setExpiryForm] = useState({ date: '', time: '' });
@@ -205,6 +239,136 @@ export default function AdminSpeakers() {
     } catch (err) {
       console.error('Failed to load commissions', err);
     }
+  }
+
+  async function openProfileModal(speaker) {
+    setSelectedProfile(speaker);
+    setShowProfileModal(true);
+    setProfileLoading(true);
+    setProfileError('');
+    setProfileCommissions([]);
+
+    try {
+      const res = await axios.get(`${BACKEND_URL}/connexers/admin/commissions`, {
+        ...getAuth(),
+        params: { speaker_id: speaker.id },
+      });
+      setProfileCommissions(res.data || []);
+    } catch (err) {
+      logTechnicalError(err, 'ADMIN_LOAD_SPEAKER_PROFILE_COMMISSIONS');
+      setProfileError(getUserFriendlyError(err, { fallback: 'Unable to load profile performance data.' }));
+    } finally {
+      setProfileLoading(false);
+    }
+  }
+
+  function exportProfileToPdf() {
+    if (!selectedProfile) return;
+
+    const metrics = getProfileMetrics(profileCommissions);
+    const profile = selectedProfile;
+    const sourceMeta = getCodeSourceMeta(profile.code_source);
+    const nowLabel = new Date().toLocaleString();
+
+    const tableRows = profileCommissions.length
+      ? profileCommissions.map((row) => `
+          <tr>
+            <td>${escapeHtml(row.buyer_name || row.buyer_email || '—')}</td>
+            <td>${escapeHtml(row.buyer_email || '—')}</td>
+            <td>${escapeHtml(row.ticket_type || '—')}</td>
+            <td>${Number(row.ticket_price || 0).toLocaleString()}</td>
+            <td>${Number(row.discount_given || 0).toLocaleString()}</td>
+            <td>${Number(row.commission_amount || 0).toLocaleString()}</td>
+            <td>${escapeHtml(row.status || 'pending')}</td>
+            <td>${row.created_at ? new Date(row.created_at).toLocaleString() : '—'}</td>
+          </tr>
+        `).join('')
+      : '<tr><td colspan="8" style="text-align:center;color:#666;">No commission records yet.</td></tr>';
+
+    const html = `
+      <!doctype html>
+      <html>
+        <head>
+          <meta charset="utf-8" />
+          <title>Connexer Profile Report - ${escapeHtml(profile.name)}</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 24px; color: #111; }
+            h1, h2 { margin: 0 0 8px; }
+            .muted { color: #666; font-size: 12px; }
+            .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0 20px; }
+            .card { border: 1px solid #ddd; border-radius: 8px; padding: 10px; }
+            .label { font-size: 11px; color: #666; text-transform: uppercase; }
+            .value { font-size: 16px; font-weight: bold; margin-top: 4px; }
+            .details { margin: 8px 0 20px; }
+            .details div { margin: 4px 0; }
+            table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+            th, td { border: 1px solid #ddd; padding: 8px; font-size: 12px; text-align: left; }
+            th { background: #f5f5f5; }
+          </style>
+        </head>
+        <body>
+          <h1>Connexer Profile Report</h1>
+          <p class="muted">Generated: ${escapeHtml(nowLabel)}</p>
+
+          <div class="details">
+            <div><strong>Name:</strong> ${escapeHtml(profile.name)}</div>
+            <div><strong>Email:</strong> ${escapeHtml(profile.email)}</div>
+            <div><strong>Discount Code:</strong> ${escapeHtml(profile.discount_code)}</div>
+            <div><strong>Code Source:</strong> ${escapeHtml(sourceMeta.label)}</div>
+            <div><strong>Discount %:</strong> ${Number(profile.discount_percentage || 0)}%</div>
+            <div><strong>Commission %:</strong> ${Number(profile.commission_rate || 0)}%</div>
+            <div><strong>Account Number:</strong> ${escapeHtml(profile.account_number || '—')}</div>
+            <div><strong>Bank Name:</strong> ${escapeHtml(profile.bank_name || '—')}</div>
+            <div><strong>Code Expiry:</strong> ${profile.discount_expires_at ? escapeHtml(new Date(profile.discount_expires_at).toLocaleString()) : 'No expiry'}</div>
+            <div><strong>Status:</strong> ${profile.is_active ? 'Active' : 'Inactive'}</div>
+            <div><strong>Created At:</strong> ${profile.created_at ? escapeHtml(new Date(profile.created_at).toLocaleString()) : '—'}</div>
+          </div>
+
+          <h2>Performance Tracker</h2>
+          <div class="grid">
+            <div class="card"><div class="label">Total Tickets</div><div class="value">${metrics.totalTickets}</div></div>
+            <div class="card"><div class="label">Ticket Revenue</div><div class="value">₦${metrics.totalTicketRevenue.toLocaleString()}</div></div>
+            <div class="card"><div class="label">Discount Given</div><div class="value">₦${metrics.totalDiscount.toLocaleString()}</div></div>
+            <div class="card"><div class="label">Total Commission</div><div class="value">₦${metrics.totalCommission.toLocaleString()}</div></div>
+            <div class="card"><div class="label">Paid Commission</div><div class="value">₦${metrics.paidCommission.toLocaleString()}</div></div>
+            <div class="card"><div class="label">Pending Commission</div><div class="value">₦${metrics.pendingCommission.toLocaleString()}</div></div>
+          </div>
+
+          <h2>Commission History</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Buyer</th>
+                <th>Email</th>
+                <th>Ticket</th>
+                <th>Price (₦)</th>
+                <th>Discount (₦)</th>
+                <th>Commission (₦)</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tableRows}
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `;
+
+    const printWindow = window.open('', '_blank', 'width=1200,height=900');
+    if (!printWindow) {
+      alert('Unable to open print window. Please allow popups and try again.');
+      return;
+    }
+
+    printWindow.document.open();
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(() => {
+      printWindow.print();
+    }, 300);
   }
 
   useEffect(() => { loadSpeakers(); }, []);
@@ -500,6 +664,9 @@ export default function AdminSpeakers() {
                         </span>
                       </td>
                       <td style={{ padding: '14px', display: 'flex', gap: 6, flexWrap: 'nowrap' }}>
+                        <button onClick={() => openProfileModal(s)} style={btnSmall('#8d6ad8')}>
+                          Profile
+                        </button>
                         <button onClick={() => handleExpand(s.id)} style={btnSmall('#1a73e8')}>
                           {expandedSpeaker === s.id ? 'Hide' : 'Sales'}
                         </button>
@@ -672,7 +839,157 @@ export default function AdminSpeakers() {
           </div>
         </div>
       )}
+
+      {showProfileModal && selectedProfile && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.78)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 16,
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowProfileModal(false);
+              setSelectedProfile(null);
+            }
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              maxWidth: 1200,
+              maxHeight: '92vh',
+              overflowY: 'auto',
+              background: '#161616',
+              border: '1px solid #333',
+              borderRadius: 12,
+              padding: 20,
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'center', marginBottom: 16 }}>
+              <div>
+                <h3 style={{ color: '#fff', margin: 0 }}>Connexer Profile Tracker</h3>
+                <p style={{ color: 'rgba(255,255,255,0.65)', margin: '6px 0 0', fontSize: 13 }}>
+                  View submitted profile details, discount code activity, and performance history.
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <button
+                  type="button"
+                  onClick={exportProfileToPdf}
+                  style={{ padding: '8px 12px', borderRadius: 8, border: 'none', background: '#1a73e8', color: '#fff', fontWeight: 700, cursor: 'pointer' }}
+                >
+                  Export PDF
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowProfileModal(false);
+                    setSelectedProfile(null);
+                  }}
+                  style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #555', background: 'transparent', color: '#fff', fontWeight: 600, cursor: 'pointer' }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(220px, 1fr))', gap: 12, marginBottom: 18 }}>
+              {[
+                { label: 'Full Name', value: selectedProfile.name },
+                { label: 'Email', value: selectedProfile.email },
+                { label: 'Discount Code', value: selectedProfile.discount_code },
+                { label: 'Code Source', value: getCodeSourceMeta(selectedProfile.code_source).label },
+                { label: 'Discount Percentage', value: `${selectedProfile.discount_percentage}%` },
+                { label: 'Commission Rate', value: `${selectedProfile.commission_rate}%` },
+                { label: 'Account Number', value: selectedProfile.account_number || '—' },
+                { label: 'Bank Name', value: selectedProfile.bank_name || '—' },
+                { label: 'Code Expiry', value: selectedProfile.discount_expires_at ? new Date(selectedProfile.discount_expires_at).toLocaleString() : 'No expiry' },
+                { label: 'Profile Status', value: selectedProfile.is_active ? 'Active' : 'Inactive' },
+                { label: 'Created At', value: selectedProfile.created_at ? new Date(selectedProfile.created_at).toLocaleString() : '—' },
+                { label: 'Created By', value: selectedProfile.code_created_by || '—' },
+              ].map((item) => (
+                <div key={item.label} style={{ border: '1px solid #2a2a2a', borderRadius: 10, padding: 10, background: '#101010' }}>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: 0.8 }}>{item.label}</div>
+                  <div style={{ marginTop: 5, color: '#fff', fontWeight: 600, fontSize: 14 }}>{item.value}</div>
+                </div>
+              ))}
+            </div>
+
+            {profileLoading ? (
+              <p style={{ color: 'rgba(255,255,255,0.55)' }}>Loading profile performance...</p>
+            ) : profileError ? (
+              <p style={{ color: '#ff6b6b' }}>{profileError}</p>
+            ) : (
+              <>
+                {(() => {
+                  const metrics = getProfileMetrics(profileCommissions);
+                  return (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(180px, 1fr))', gap: 10, marginBottom: 18 }}>
+                      <MetricCard label="Total Tickets" value={metrics.totalTickets} color="#fff" />
+                      <MetricCard label="Ticket Revenue" value={`₦${metrics.totalTicketRevenue.toLocaleString()}`} color="#1a73e8" />
+                      <MetricCard label="Discount Given" value={`₦${metrics.totalDiscount.toLocaleString()}`} color="#f5a623" />
+                      <MetricCard label="Total Commission" value={`₦${metrics.totalCommission.toLocaleString()}`} color="#2db84b" />
+                      <MetricCard label="Paid Commission" value={`₦${metrics.paidCommission.toLocaleString()}`} color="#2db84b" />
+                      <MetricCard label="Pending Commission" value={`₦${metrics.pendingCommission.toLocaleString()}`} color="#f5a623" />
+                    </div>
+                  );
+                })()}
+
+                <div style={{ border: '1px solid #2a2a2a', borderRadius: 10, overflow: 'hidden' }}>
+                  <div style={{ padding: '10px 12px', borderBottom: '1px solid #2a2a2a', color: '#fff', fontWeight: 700 }}>
+                    Commission History ({profileCommissions.length})
+                  </div>
+                  {profileCommissions.length === 0 ? (
+                    <p style={{ padding: 12, color: 'rgba(255,255,255,0.55)' }}>No commission records yet.</p>
+                  ) : (
+                    <div style={{ overflowX: 'auto' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <thead>
+                          <tr>
+                            {['Buyer', 'Email', 'Ticket', 'Price', 'Discount', 'Commission', 'Status', 'Date'].map((header) => (
+                              <th key={header} style={{ textAlign: 'left', padding: '10px', fontSize: 11, color: 'rgba(255,255,255,0.45)', borderBottom: '1px solid #2a2a2a', textTransform: 'uppercase' }}>{header}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {profileCommissions.map((row) => (
+                            <tr key={row.id}>
+                              <td style={{ padding: '10px', borderBottom: '1px solid #222', color: '#fff' }}>{row.buyer_name || row.buyer_email}</td>
+                              <td style={{ padding: '10px', borderBottom: '1px solid #222', color: 'rgba(255,255,255,0.75)' }}>{row.buyer_email}</td>
+                              <td style={{ padding: '10px', borderBottom: '1px solid #222', color: 'rgba(255,255,255,0.75)' }}>{row.ticket_type}</td>
+                              <td style={{ padding: '10px', borderBottom: '1px solid #222', color: '#fff' }}>₦{Number(row.ticket_price || 0).toLocaleString()}</td>
+                              <td style={{ padding: '10px', borderBottom: '1px solid #222', color: '#f5a623' }}>₦{Number(row.discount_given || 0).toLocaleString()}</td>
+                              <td style={{ padding: '10px', borderBottom: '1px solid #222', color: '#2db84b', fontWeight: 700 }}>₦{Number(row.commission_amount || 0).toLocaleString()}</td>
+                              <td style={{ padding: '10px', borderBottom: '1px solid #222', color: row.status === 'paid' ? '#2db84b' : '#f5a623' }}>{row.status}</td>
+                              <td style={{ padding: '10px', borderBottom: '1px solid #222', color: 'rgba(255,255,255,0.65)' }}>{row.created_at ? new Date(row.created_at).toLocaleString() : '—'}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </AdminLayout>
+  );
+}
+
+function MetricCard({ label, value, color }) {
+  return (
+    <div style={{ border: '1px solid #2a2a2a', borderRadius: 10, padding: 10, background: '#101010' }}>
+      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: 0.8 }}>{label}</div>
+      <div style={{ marginTop: 5, color: color || '#fff', fontWeight: 700, fontSize: 16 }}>{value}</div>
+    </div>
   );
 }
 
