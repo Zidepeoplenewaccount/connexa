@@ -33,7 +33,7 @@ import AdminSpeakers from './pages/admin/AdminSpeakers';
 import AdminQuestions from './pages/admin/AdminQuestions';
 
 import SpeakerLogin from './features/auth/connexer-login-page';
-import SpeakerDashboard from './pages/speakers/SpeakerDashboard';
+import SpeakerDashboard from './features/auth/connexer-dashboard-page';
 import SpeakerResetPassword from './features/auth/connexer-reset-password-page';
 import DebugPanel from './debug/DebugPanel';
 
