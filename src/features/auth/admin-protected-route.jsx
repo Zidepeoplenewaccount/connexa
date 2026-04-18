@@ -1,6 +1,11 @@
 import React from "react";
-import ProtectedRoute from "../../components/admin/protectedRoute";
+import { Navigate } from 'react-router-dom';
+import { isAuthenticated } from '../../services/adminApi';
 
 export default function AdminProtectedRouteFeature({ children }) {
-  return <ProtectedRoute>{children}</ProtectedRoute>;
+  if (!isAuthenticated()) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  return children;
 }
