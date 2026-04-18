@@ -96,6 +96,36 @@ export default function AdminSpeakers() {
     };
   }
 
+  function getCodeSourceMeta(source) {
+    if (source === 'self_signup') {
+      return {
+        label: 'Self Signup',
+        style: {
+          background: 'rgba(45,184,75,0.15)',
+          color: '#2db84b',
+        },
+      };
+    }
+
+    if (source === 'admin') {
+      return {
+        label: 'Admin Created',
+        style: {
+          background: 'rgba(26,115,232,0.15)',
+          color: '#1a73e8',
+        },
+      };
+    }
+
+    return {
+      label: 'Unknown',
+      style: {
+        background: 'rgba(255,255,255,0.12)',
+        color: 'rgba(255,255,255,0.7)',
+      },
+    };
+  }
+
   const [speakers, setSpeakers] = useState([]);
   const [commissions, setCommissions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -365,7 +395,7 @@ export default function AdminSpeakers() {
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
-                  {['Name', 'Email', 'Code', 'Account', 'Discount'].map(h => (
+                  {['Name', 'Email', 'Code', 'Source', 'Account', 'Discount'].map(h => (
                     <th key={h} style={{
                       textAlign: 'left', padding: '12px 14px', fontSize: 11, fontWeight: 700,
                       color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: 1,
@@ -398,6 +428,31 @@ export default function AdminSpeakers() {
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>{s.email}</td>
                       <td style={{ padding: '14px' }}>
                         <code style={{ color: '#f5a623', fontWeight: 700, fontSize: 13 }}>{s.discount_code}</code>
+                      </td>
+                      <td style={{ padding: '14px' }}>
+                        {(() => {
+                          const sourceMeta = getCodeSourceMeta(s.code_source);
+                          return (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  width: 'fit-content',
+                                  padding: '3px 8px',
+                                  borderRadius: 12,
+                                  fontSize: 11,
+                                  fontWeight: 700,
+                                  ...sourceMeta.style,
+                                }}
+                              >
+                                {sourceMeta.label}
+                              </span>
+                              {s.code_created_by && (
+                                <small style={{ color: 'rgba(255,255,255,0.45)' }}>{s.code_created_by}</small>
+                              )}
+                            </div>
+                          );
+                        })()}
                       </td>
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>
                         {s.account_number ? (
@@ -462,7 +517,7 @@ export default function AdminSpeakers() {
                     {/* Expanded commissions */}
                     {expandedSpeaker === s.id && (
                       <tr key={`${s.id}-detail`}>
-                        <td colSpan={12} style={{ padding: '0 14px 14px', background: '#111' }}>
+                        <td colSpan={13} style={{ padding: '0 14px 14px', background: '#111' }}>
                           <h4 style={{ color: 'rgba(255,255,255,0.5)', padding: '12px 0 8px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 1 }}>
                             Sales by {s.name}
                           </h4>
