@@ -140,8 +140,8 @@ export default function SpeakerLogin() {
           <div className="speaker-login-logo">CONNEXA</div>
           <h1>{isSignup ? 'Create Connexer Account' : 'Connexer Portal'}</h1>
           <p className="speaker-login-subtitle">
-            {isSignup
-              ? 'Choose your code once. It will be valid for ticket discounts and visible in Admin Discount Codes.'
+              {isSignup 
+                ? 'Choose your code once.'
               : 'Log in to access your connexer dashboard.'}
           </p>
 
