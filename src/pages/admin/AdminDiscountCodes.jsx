@@ -12,6 +12,23 @@ import '../../components/admin/admin.css';
 import { getUserFriendlyError, logTechnicalError } from '../../utils/errorMessages';
 
 export default function AdminDiscountCodes() {
+  function buildExpiryDateTime(expiryDate, expiryTime) {
+    if (!expiryDate && !expiryTime) {
+      return null;
+    }
+
+    if (!expiryDate || !expiryTime) {
+      throw new Error('Please provide both expiry date and time.');
+    }
+
+    const localDateTime = new Date(`${expiryDate}T${expiryTime}`);
+    if (Number.isNaN(localDateTime.getTime())) {
+      throw new Error('Invalid expiry date or time.');
+    }
+
+    return localDateTime.toISOString();
+  }
+
   const [codes, setCodes] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -26,6 +43,8 @@ export default function AdminDiscountCodes() {
     auto_generate: false,
     max_uses: null,
     specific_ticket_type: '',
+    expiry_date: '',
+    expiry_time: '',
   });
 
   // Available ticket types for dropdown
@@ -66,13 +85,25 @@ export default function AdminDiscountCodes() {
       code: '',
       discount_percentage: 10,
       applies_to: 'both',
-      auto_generate: false
+      auto_generate: false,
+      max_uses: null,
+      specific_ticket_type: '',
+      expiry_date: '',
+      expiry_time: '',
     });
     setShowModal(true);
   }
 
   async function handleCreateCode(e) {
     e.preventDefault();
+
+    let expiresAt = null;
+    try {
+      expiresAt = buildExpiryDateTime(formData.expiry_date, formData.expiry_time);
+    } catch (error) {
+      alert(error.message || 'Please provide a valid expiry date and time.');
+      return;
+    }
     
     try {
       await createDiscountCode({
@@ -81,6 +112,7 @@ export default function AdminDiscountCodes() {
         applies_to: formData.applies_to,
         max_uses: formData.max_uses ? parseInt(formData.max_uses) : null,
         specific_ticket_type: formData.specific_ticket_type && formData.specific_ticket_type !== 'All Tickets' ? formData.specific_ticket_type : null,
+        expires_at: expiresAt,
       });
       
       alert('Discount code created successfully!');
@@ -465,6 +497,44 @@ export default function AdminDiscountCodes() {
                   value={formData.max_uses || ''}
                   onChange={(e) => setFormData({...formData, max_uses: e.target.value})}
                   placeholder="Unlimited"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: '#0a0a0a',
+                    border: '1px solid #333',
+                    borderRadius: '8px',
+                    color: '#fff'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}>
+                  Expiry Date (optional)
+                </label>
+                <input
+                  type="date"
+                  value={formData.expiry_date}
+                  onChange={(e) => setFormData({...formData, expiry_date: e.target.value})}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: '#0a0a0a',
+                    border: '1px solid #333',
+                    borderRadius: '8px',
+                    color: '#fff'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}>
+                  Expiry Time (optional)
+                </label>
+                <input
+                  type="time"
+                  value={formData.expiry_time}
+                  onChange={(e) => setFormData({...formData, expiry_time: e.target.value})}
                   style={{
                     width: '100%',
                     padding: '12px',

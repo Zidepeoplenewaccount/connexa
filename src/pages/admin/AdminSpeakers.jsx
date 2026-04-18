@@ -9,12 +9,49 @@ const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurew
 const getAuth = () => ({ headers: { Authorization: localStorage.getItem('admin_token') } });
 
 export default function AdminSpeakers() {
+  function buildExpiryDateTime(expiryDate, expiryTime) {
+    if (!expiryDate && !expiryTime) {
+      return null;
+    }
+
+    if (!expiryDate || !expiryTime) {
+      throw new Error('Please provide both expiry date and expiry time.');
+    }
+
+    const localDateTime = new Date(`${expiryDate}T${expiryTime}`);
+    if (Number.isNaN(localDateTime.getTime())) {
+      throw new Error('Invalid expiry date or time.');
+    }
+
+    return localDateTime.toISOString();
+  }
+
+  function splitExpiryDateTime(isoDateTime) {
+    if (!isoDateTime) {
+      return { date: '', time: '' };
+    }
+
+    const value = new Date(isoDateTime);
+    if (Number.isNaN(value.getTime())) {
+      return { date: '', time: '' };
+    }
+
+    const localDate = value.toLocaleDateString('en-CA');
+    const localTime = value.toTimeString().slice(0, 5);
+    return { date: localDate, time: localTime };
+  }
+
   const [speakers, setSpeakers] = useState([]);
   const [commissions, setCommissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
   const [expandedSpeaker, setExpandedSpeaker] = useState(null);
-  const [form, setForm] = useState({ name: '', email: '', password: '', discount_percentage: 5, commission_rate: 75, account_number: '', bank_name: '' });
+  const [selectedSpeakerForExpiry, setSelectedSpeakerForExpiry] = useState(null);
+  const [showExpiryModal, setShowExpiryModal] = useState(false);
+  const [expiryForm, setExpiryForm] = useState({ date: '', time: '' });
+  const [expirySaving, setExpirySaving] = useState(false);
+  const [expiryError, setExpiryError] = useState('');
+  const [form, setForm] = useState({ name: '', email: '', password: '', discount_percentage: 5, discount_expiry_date: '', discount_expiry_time: '', commission_rate: 75, account_number: '', bank_name: '' });
   const [error, setError] = useState('');
   const [creating, setCreating] = useState(false);
 
@@ -47,10 +84,23 @@ export default function AdminSpeakers() {
     e.preventDefault();
     setError('');
     setCreating(true);
+
+    let discountExpiresAt = null;
     try {
-      await axios.post(`${BACKEND_URL}/connexers/admin/create`, form, getAuth());
+      discountExpiresAt = buildExpiryDateTime(form.discount_expiry_date, form.discount_expiry_time);
+    } catch (err) {
+      setError(err.message || 'Please provide a valid discount expiry date and time.');
+      setCreating(false);
+      return;
+    }
+
+    try {
+      await axios.post(`${BACKEND_URL}/connexers/admin/create`, {
+        ...form,
+        discount_expires_at: discountExpiresAt,
+      }, getAuth());
       setShowCreate(false);
-      setForm({ name: '', email: '', password: '', discount_percentage: 5, commission_rate: 75, account_number: '', bank_name: '' });
+      setForm({ name: '', email: '', password: '', discount_percentage: 5, discount_expiry_date: '', discount_expiry_time: '', commission_rate: 75, account_number: '', bank_name: '' });
       loadSpeakers();
     } catch (err) {
       logTechnicalError(err, 'ADMIN_CREATE_SPEAKER');
@@ -101,6 +151,46 @@ export default function AdminSpeakers() {
     }
   }
 
+  function openExpiryModal(speaker) {
+    const split = splitExpiryDateTime(speaker.discount_expires_at);
+    setSelectedSpeakerForExpiry(speaker);
+    setExpiryForm({ date: split.date, time: split.time });
+    setExpiryError('');
+    setShowExpiryModal(true);
+  }
+
+  async function saveExpiry() {
+    if (!selectedSpeakerForExpiry) return;
+
+    setExpirySaving(true);
+    setExpiryError('');
+
+    let discountExpiresAt = null;
+    try {
+      discountExpiresAt = buildExpiryDateTime(expiryForm.date, expiryForm.time);
+    } catch (err) {
+      setExpiryError(err.message || 'Please provide a valid expiry date and time.');
+      setExpirySaving(false);
+      return;
+    }
+
+    try {
+      await axios.patch(
+        `${BACKEND_URL}/connexers/admin/${selectedSpeakerForExpiry.id}`,
+        { discount_expires_at: discountExpiresAt },
+        getAuth(),
+      );
+      setShowExpiryModal(false);
+      setSelectedSpeakerForExpiry(null);
+      loadSpeakers();
+    } catch (err) {
+      logTechnicalError(err, 'ADMIN_UPDATE_SPEAKER_EXPIRY');
+      setExpiryError(getUserFriendlyError(err, { fallback: 'Unable to update expiry. Please try again.' }));
+    } finally {
+      setExpirySaving(false);
+    }
+  }
+
   return (
     <AdminLayout>
       <div style={{ padding: 32 }}>
@@ -131,6 +221,8 @@ export default function AdminSpeakers() {
                   { label: 'Email', name: 'email', type: 'email', required: true },
                   { label: 'Password', name: 'password', type: 'text', required: true, placeholder: 'Generate a password for them' },
                   { label: 'Discount %', name: 'discount_percentage', type: 'number', step: '0.1' },
+                  { label: 'Expiry Date (optional)', name: 'discount_expiry_date', type: 'date' },
+                  { label: 'Expiry Time (optional)', name: 'discount_expiry_time', type: 'time' },
                   { label: 'Commission %', name: 'commission_rate', type: 'number', step: '0.1' },
                   { label: 'Account Number', name: 'account_number', type: 'text', placeholder: 'Bank account number' },
                   { label: 'Bank Name', name: 'bank_name', type: 'text', placeholder: 'e.g. GTBank, Access Bank' },
@@ -174,7 +266,7 @@ export default function AdminSpeakers() {
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
-                  {['Name', 'Email', 'Code', 'Account', 'Discount', 'Commission', 'Uses', 'Earned', 'Pending', 'Status', 'Actions'].map(h => (
+                  {['Name', 'Email', 'Code', 'Account', 'Discount', 'Expiry', 'Commission', 'Uses', 'Earned', 'Pending', 'Status', 'Actions'].map(h => (
                     <th key={h} style={{
                       textAlign: 'left', padding: '12px 14px', fontSize: 11, fontWeight: 700,
                       color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: 1,
@@ -201,6 +293,9 @@ export default function AdminSpeakers() {
                         ) : <span style={{ color: 'rgba(255,255,255,0.2)' }}>—</span>}
                       </td>
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.7)' }}>{s.discount_percentage}%</td>
+                      <td style={{ padding: '14px', color: 'rgba(255,255,255,0.7)' }}>
+                        {s.discount_expires_at ? new Date(s.discount_expires_at).toLocaleString() : 'No expiry'}
+                      </td>
                       <td style={{ padding: '14px', color: 'rgba(255,255,255,0.7)' }}>{s.commission_rate}%</td>
                       <td style={{ padding: '14px', color: '#fff', fontWeight: 700 }}>{s.total_uses}</td>
                       <td style={{ padding: '14px', color: '#2db84b', fontWeight: 700 }}>₦{s.total_earned.toLocaleString()}</td>
@@ -221,6 +316,9 @@ export default function AdminSpeakers() {
                         <button onClick={() => toggleActive(s)} style={btnSmall(s.is_active ? '#666' : '#2db84b')}>
                           {s.is_active ? 'Disable' : 'Enable'}
                         </button>
+                        <button onClick={() => openExpiryModal(s)} style={btnSmall('#f5a623')}>
+                          Expiry
+                        </button>
                         <button onClick={() => deleteSpeaker(s)} style={btnSmall('#e8312a')}>
                           Delete
                         </button>
@@ -229,7 +327,7 @@ export default function AdminSpeakers() {
                     {/* Expanded commissions */}
                     {expandedSpeaker === s.id && (
                       <tr key={`${s.id}-detail`}>
-                        <td colSpan={11} style={{ padding: '0 14px 14px', background: '#111' }}>
+                        <td colSpan={12} style={{ padding: '0 14px 14px', background: '#111' }}>
                           <h4 style={{ color: 'rgba(255,255,255,0.5)', padding: '12px 0 8px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 1 }}>
                             Sales by {s.name}
                           </h4>
@@ -292,6 +390,98 @@ export default function AdminSpeakers() {
           </div>
         )}
       </div>
+
+      {showExpiryModal && selectedSpeakerForExpiry && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.75)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 16,
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !expirySaving) {
+              setShowExpiryModal(false);
+            }
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              maxWidth: 460,
+              background: '#1a1a1a',
+              border: '1px solid #333',
+              borderRadius: 12,
+              padding: 20,
+            }}
+          >
+            <h3 style={{ color: '#fff', marginBottom: 12 }}>Update Discount Expiry</h3>
+            <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: 16, fontSize: 13 }}>
+              {selectedSpeakerForExpiry.name} ({selectedSpeakerForExpiry.discount_code})
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div>
+                <label style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>Expiry Date</label>
+                <input
+                  type="date"
+                  value={expiryForm.date}
+                  onChange={(e) => setExpiryForm({ ...expiryForm, date: e.target.value })}
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #333', background: '#111', color: '#fff', fontSize: 14 }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>Expiry Time</label>
+                <input
+                  type="time"
+                  value={expiryForm.time}
+                  onChange={(e) => setExpiryForm({ ...expiryForm, time: e.target.value })}
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #333', background: '#111', color: '#fff', fontSize: 14 }}
+                />
+              </div>
+            </div>
+
+            {expiryError && <div style={{ color: '#ff6b6b', marginTop: 12, fontSize: 13 }}>{expiryError}</div>}
+
+            <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                disabled={expirySaving}
+                onClick={saveExpiry}
+                style={{ padding: '8px 14px', borderRadius: 8, border: 'none', background: '#2db84b', color: '#fff', fontWeight: 700, cursor: 'pointer' }}
+              >
+                {expirySaving ? 'Saving...' : 'Save Expiry'}
+              </button>
+              <button
+                type="button"
+                disabled={expirySaving}
+                onClick={() => {
+                  setExpiryForm({ date: '', time: '' });
+                  setExpiryError('');
+                }}
+                style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid #555', background: 'transparent', color: '#fff', fontWeight: 600, cursor: 'pointer' }}
+              >
+                Clear Inputs
+              </button>
+              <button
+                type="button"
+                disabled={expirySaving}
+                onClick={() => {
+                  setShowExpiryModal(false);
+                  setSelectedSpeakerForExpiry(null);
+                }}
+                style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid #555', background: 'transparent', color: '#fff', fontWeight: 600, cursor: 'pointer' }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   );
 }
