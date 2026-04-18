@@ -118,10 +118,10 @@ export default function AdminSpeakers() {
     }
 
     return {
-      label: 'Unknown',
+      label: 'Self Signup',
       style: {
-        background: 'rgba(255,255,255,0.12)',
-        color: 'rgba(255,255,255,0.7)',
+        background: 'rgba(45,184,75,0.15)',
+        color: '#2db84b',
       },
     };
   }
@@ -507,7 +507,7 @@ export default function AdminSpeakers() {
                           {s.is_active ? 'Disable' : 'Enable'}
                         </button>
                         <button onClick={() => openExpiryModal(s)} style={btnSmall('#f5a623')}>
-                          Expiry
+                          Set Expiry
                         </button>
                         <button onClick={() => deleteSpeaker(s)} style={btnSmall('#e8312a')}>
                           Delete
@@ -609,7 +609,7 @@ export default function AdminSpeakers() {
               padding: 20,
             }}
           >
-            <h3 style={{ color: '#fff', marginBottom: 12 }}>Update Discount Expiry</h3>
+            <h3 style={{ color: '#fff', marginBottom: 12 }}>Set Discount Code Expiry</h3>
             <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: 16, fontSize: 13 }}>
               {selectedSpeakerForExpiry.name} ({selectedSpeakerForExpiry.discount_code})
             </p>
