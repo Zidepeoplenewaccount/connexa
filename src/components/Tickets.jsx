@@ -430,6 +430,7 @@ export default function Tickets() {
     setSelectedTicket(ticket);
     setModalOpen(true);
     setError('');
+    document.body.style.overflow = 'hidden';
 
     // Reset discount code
     setDiscountCode('');
@@ -477,6 +478,7 @@ export default function Tickets() {
   function closeModal() {
     setModalOpen(false);
     setSelectedTicket(null);
+    document.body.style.overflow = '';
   }
 
   function handleQuantityChange(newQuantity) {

@@ -17,12 +17,29 @@ function jsonView(value) {
 
 export default function DebugPanel() {
   const LOG_VIEW_KEY = 'connexa_website_debug_log_view';
+  const TAG_FILTER_KEY = 'connexa_website_debug_tag_filter';
+  const PINNED_ERROR_KEY = 'connexa_website_debug_pinned_error';
   const EXPORT_PREFIX = 'connexa-website-debug-logs';
   const [open, setOpen] = useState(false);
   const [state, setState] = useState(getStateSnapshot());
   const [jobId, setJobId] = useState('');
   const [toast, setToast] = useState('');
-  const [tagFilter, setTagFilter] = useState('all');
+  const [lastCopiedError, setLastCopiedError] = useState(() => {
+    try {
+      const raw = window.localStorage.getItem(PINNED_ERROR_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (err) {
+      return null;
+    }
+  });
+  const [tagFilter, setTagFilter] = useState(() => {
+    try {
+      return window.localStorage.getItem(TAG_FILTER_KEY) || 'all';
+    } catch (err) {
+      return 'all';
+    }
+  });
   const [logView, setLogView] = useState(() => {
     try {
       const saved = window.localStorage.getItem(LOG_VIEW_KEY);
@@ -38,11 +55,29 @@ export default function DebugPanel() {
     const onKeyDown = (event) => {
       if (event.altKey && event.shiftKey && event.key.toLowerCase() === 'd') {
         setOpen((value) => !value);
+        return;
+      }
+
+      if (!open) return;
+
+      const tagName = String(event?.target?.tagName || '').toLowerCase();
+      const isTypingTarget = tagName === 'input' || tagName === 'textarea' || tagName === 'select';
+      if (isTypingTarget) return;
+
+      if (!event.altKey && !event.ctrlKey && !event.metaKey && event.key.toLowerCase() === 'm') {
+        setLogView((value) => (value === 'manual' ? 'all' : 'manual'));
+        setToast('Toggled log view.');
+      }
+
+      if (!event.altKey && !event.ctrlKey && !event.metaKey && event.key.toLowerCase() === 'r') {
+        setLogView('all');
+        setTagFilter('all');
+        setToast('Filters reset.');
       }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, []);
+  }, [open]);
 
   const inspector = useMemo(() => {
     const key = String(jobId || '').trim();
@@ -89,6 +124,26 @@ export default function DebugPanel() {
   }, [logView]);
 
   useEffect(() => {
+    try {
+      window.localStorage.setItem(TAG_FILTER_KEY, tagFilter);
+    } catch (err) {
+      // Ignore storage write failures in private mode or restricted contexts.
+    }
+  }, [tagFilter]);
+
+  useEffect(() => {
+    try {
+      if (lastCopiedError == null) {
+        window.localStorage.removeItem(PINNED_ERROR_KEY);
+      } else {
+        window.localStorage.setItem(PINNED_ERROR_KEY, JSON.stringify(lastCopiedError));
+      }
+    } catch (err) {
+      // Ignore storage write failures in private mode or restricted contexts.
+    }
+  }, [lastCopiedError]);
+
+  useEffect(() => {
     if (!toast) return undefined;
     const timeout = window.setTimeout(() => setToast(''), 2200);
     return () => window.clearTimeout(timeout);
@@ -104,6 +159,7 @@ export default function DebugPanel() {
     const exportData = {
       exported_at: new Date().toISOString(),
       view: logView,
+      tag_filter: tagFilter,
       visible_count: filteredLogs.length,
       total_count: state.logs.length,
       logs: filteredLogs,
@@ -131,6 +187,54 @@ export default function DebugPanel() {
     }
   };
 
+  const handleCopyLatestError = () => {
+    const latestError = [...filteredLogs].reverse().find((entry) => {
+      const level = String(entry?.level || '').toLowerCase();
+      return level === 'error' || Boolean(entry?.error);
+    });
+
+    if (!latestError) {
+      setToast('No visible error log to copy.');
+      return;
+    }
+
+    const payload = JSON.stringify(latestError, null, 2);
+    window.navigator.clipboard.writeText(payload).then(
+      () => {
+        setLastCopiedError({
+          copiedAt: new Date().toISOString(),
+          entry: latestError,
+        });
+        setToast('Latest visible error copied.');
+      },
+      () => setToast('Unable to copy latest error in this browser context.'),
+    );
+  };
+
+  const pinnedEntry = lastCopiedError?.entry ?? lastCopiedError;
+  const pinnedCopiedAt = lastCopiedError?.copiedAt;
+
+  const hasActiveFilters = logView !== 'all' || tagFilter !== 'all';
+
+  const handleResetFilters = () => {
+    setLogView('all');
+    setTagFilter('all');
+    setToast('Filters reset.');
+  };
+
+  const handleCopyPinnedError = () => {
+    if (!pinnedEntry) {
+      setToast('No pinned error to copy.');
+      return;
+    }
+
+    const payload = JSON.stringify(pinnedEntry, null, 2);
+    window.navigator.clipboard.writeText(payload).then(
+      () => setToast('Pinned error copied.'),
+      () => setToast('Unable to copy pinned error in this browser context.'),
+    );
+  };
+
   if (!open) return null;
 
   return (
@@ -147,6 +251,33 @@ export default function DebugPanel() {
       </div>
 
       {toast ? <div style={styles.toast}>{toast}</div> : null}
+
+      {lastCopiedError ? (
+        <div style={styles.section}>
+          <div style={styles.pinHeader}>
+            <div>
+              <div style={styles.cardTitle}>Last Copied Error</div>
+              {pinnedCopiedAt ? (
+                <div style={styles.shortcutHint}>
+                  Copied at {new Date(pinnedCopiedAt).toLocaleTimeString()}
+                </div>
+              ) : null}
+            </div>
+            <div style={styles.filterGroup}>
+              <button style={styles.filterBtn} onClick={handleCopyPinnedError}>
+                Copy Pinned Error
+              </button>
+              <button
+                style={styles.filterBtn}
+                onClick={() => setLastCopiedError(null)}
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+          <pre style={styles.logPayload}>{jsonView(pinnedEntry)}</pre>
+        </div>
+      ) : null}
 
       <div style={styles.section}>
         <label style={styles.label}>Job ID Inspector</label>
@@ -177,6 +308,14 @@ export default function DebugPanel() {
           <div style={styles.cardTitle}>Network Logs ({filteredLogs.length}/{state.logs.length})</div>
           <div style={styles.logsControls}>
             <button style={styles.filterBtn} onClick={handleExportVisibleLogs}>Export Visible Logs</button>
+            <button style={styles.filterBtn} onClick={handleCopyLatestError}>Copy Latest Error</button>
+            <button
+              style={styles.filterBtn}
+              onClick={handleResetFilters}
+              disabled={!hasActiveFilters}
+            >
+              Reset Filters
+            </button>
           <div style={styles.filterGroup}>
             <button
               style={logView === 'all' ? styles.filterBtnActive : styles.filterBtn}
@@ -203,6 +342,7 @@ export default function DebugPanel() {
             </select>
           </div>
         </div>
+        <div style={styles.shortcutHint}>Shortcuts: M toggles Manual Only, R resets filters.</div>
         <div style={styles.logList}>
           {[...filteredLogs].reverse().map((entry, index) => (
             <div key={`${entry.at}-${index}`} style={styles.logItem}>
@@ -325,11 +465,23 @@ const styles = {
     marginBottom: 8,
     flexWrap: 'wrap',
   },
+  pinHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 8,
+  },
   logsControls: {
     display: 'flex',
     gap: 8,
     alignItems: 'center',
     flexWrap: 'wrap',
+  },
+  shortcutHint: {
+    color: '#94a3b8',
+    fontSize: 11,
+    marginBottom: 8,
   },
   filterGroup: {
     display: 'flex',

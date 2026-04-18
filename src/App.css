@@ -293,7 +293,7 @@ body::before {
     left: 12px;
     right: 12px;
     bottom: 14px;
-    z-index: 3200;
+    z-index: 2900; /* must be below modal overlay (3000) */
     display: flex;
     align-items: center;
     justify-content: center;

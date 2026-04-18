@@ -11,15 +11,26 @@ export function useScrollReveal() {
         });
       },
       {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.05,
+        rootMargin: '0px 0px -10px 0px',
       }
     );
 
     const elements = document.querySelectorAll('.reveal');
     elements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect();
+    // Fallback: if any .reveal element is still hidden after 2s (can happen on
+    // Android Chrome with dynamic URL bar or in-app browsers), force them visible.
+    const fallback = setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.visible)').forEach((el) => {
+        el.classList.add('visible');
+      });
+    }, 2000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallback);
+    };
   }, []);
 }
 
