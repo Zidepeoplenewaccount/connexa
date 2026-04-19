@@ -21,15 +21,15 @@ import UpgradeSuccess from './pages/UpgradeSuccess';
 import UpgradeTicket from './pages/UpgradeTicket';
 
 import AdminLogin from './features/auth/admin-login-page';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminTickets from './pages/admin/AdminTickets';
-import AdminCandidates from './pages/admin/AdminCandidates';
-import AdminVotes from './pages/admin/AdminVotes';
-import AdminOrders from './pages/admin/AdminOrders';
-import AdminPayments from './pages/admin/AdminPayments';
-import AdminAffiliates from './pages/admin/AdminAffiliates';
-import AdminDiscountCodes from './pages/admin/AdminDiscountCodes';
-import AdminSpeakers from './pages/admin/AdminSpeakers';
+import AdminDashboard from './features/admin/admin-dashboard-page';
+import AdminTickets from './features/admin/admin-tickets-page';
+import AdminCandidates from './features/admin/admin-candidates-page';
+import AdminVotes from './features/admin/admin-votes-page';
+import AdminOrders from './features/admin/admin-orders-page';
+import AdminPayments from './features/admin/admin-payments-page';
+import AdminAffiliates from './features/admin/admin-affiliates-page';
+import AdminDiscountCodes from './features/admin/admin-discount-codes-page';
+import AdminSpeakers from './features/admin/admin-speakers-page';
 import AdminQuestionsPage from './features/admin/admin-questions-page';
 
 import SpeakerLogin from './features/auth/connexer-login-page';
