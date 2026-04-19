@@ -13,7 +13,7 @@ import {
 } from '../../services/speakerApi';
 import '../../pages/speakers/speaker-portal.css';
 
-export default function SpeakerDashboard() {
+export default function ConnexerDashboardFeaturePage() {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(() => getSpeakerProfile());
   const [stats, setStats] = useState(null);

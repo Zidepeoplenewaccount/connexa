@@ -33,12 +33,12 @@ import AdminSpeakers from './pages/admin/AdminSpeakers';
 import AdminQuestions from './pages/admin/AdminQuestions';
 
 import SpeakerLogin from './features/auth/connexer-login-page';
-import SpeakerDashboard from './features/auth/connexer-dashboard-page';
+import ConnexerDashboardPage from './features/auth/connexer-dashboard-page';
 import SpeakerResetPassword from './features/auth/connexer-reset-password-page';
 import DebugPanel from './debug/DebugPanel';
 
 import ProtectedRoute from './features/auth/admin-protected-route';
-import AdminScanner from './pages/adminScanner/adminScanner';
+import AdminScannerPage from './features/auth/admin-scanner-page';
 import ScannerProtectedRoute from './features/auth/scanner-protected-route';
 
 function HomePage() {
@@ -172,13 +172,13 @@ export default function App() {
 
         <Route path="/connexers/login" element={<SpeakerLogin />} />
         <Route path="/connexers/reset-password" element={<SpeakerResetPassword />} />
-        <Route path="/connexers/dashboard" element={<SpeakerDashboard />} />
+        <Route path="/connexers/dashboard" element={<ConnexerDashboardPage />} />
 
         <Route
           path="/admin/scanner"
           element={
             <ScannerProtectedRoute>
-              <AdminScanner />
+              <AdminScannerPage />
             </ScannerProtectedRoute>
           }
         />
