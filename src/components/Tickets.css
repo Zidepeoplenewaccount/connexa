@@ -148,7 +148,7 @@
 .ticket-card[data-type="connectors"] .ticket-name {
   font-size: 1.25rem;
   margin-bottom: 4px;
-  min-height: auto;
+  min-height: calc(1.2em * 3); /* 👈 add this */
 }
 
 .ticket-card[data-type="growth"] .ticket-subtitle,
