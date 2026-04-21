@@ -124,6 +124,59 @@
 .ticket-card[data-type="connectors"]::before { background: var(--purple); }
 .ticket-card[data-type="connectors"]:hover { border-color: rgba(114, 42, 239, 0.3); box-shadow: 0 20px 60px rgba(140, 35, 245, 0.1); }
 
+/* Compact variants to reduce card height without removing content */
+.ticket-card[data-type="growth"],
+.ticket-card[data-type="connectors"] {
+  padding: 26px;
+}
+
+.ticket-card[data-type="growth"] .ticket-icon,
+.ticket-card[data-type="connectors"] .ticket-icon {
+  margin-bottom: 14px;
+}
+
+.ticket-card[data-type="growth"] .ticket-type-label,
+.ticket-card[data-type="connectors"] .ticket-type-label {
+  margin-bottom: 6px;
+}
+
+.ticket-card[data-type="growth"] .ticket-name,
+.ticket-card[data-type="connectors"] .ticket-name {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.ticket-card[data-type="growth"] .ticket-subtitle,
+.ticket-card[data-type="connectors"] .ticket-subtitle {
+  font-size: 12.5px;
+  margin-bottom: 14px;
+}
+
+.ticket-card[data-type="growth"] .ticket-divider,
+.ticket-card[data-type="connectors"] .ticket-divider {
+  margin-bottom: 14px;
+}
+
+.ticket-card[data-type="growth"] .ticket-features,
+.ticket-card[data-type="connectors"] .ticket-features {
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.ticket-card[data-type="growth"] .ticket-feature,
+.ticket-card[data-type="connectors"] .ticket-feature {
+  font-size: 12.75px;
+  line-height: 1.3;
+}
+
+.ticket-card[data-type="growth"] .ticket-best-for,
+.ticket-card[data-type="connectors"] .ticket-best-for {
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  margin-bottom: 18px;
+}
+
 /* VIP Partner special styling */
 .ticket-card.featured {
   background: linear-gradient(135deg, rgba(232,49,42,0.08), rgba(245,166,35,0.08), rgba(45,184,75,0.08), rgba(26,115,232,0.08));
