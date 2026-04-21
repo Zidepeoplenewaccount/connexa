@@ -65,8 +65,9 @@
 .tickets-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  align-items: start;
+  column-gap: 20px;
+  row-gap: 30px;
+  align-items: stretch;
 }
 
 .ticket-card {
@@ -80,6 +81,7 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .ticket-card::before {
@@ -107,6 +109,9 @@
 
 .ticket-card[data-type="showcase"]::before { background: var(--blue); }
 .ticket-card[data-type="showcase"]:hover { border-color: rgba(26,115,232,0.3); box-shadow: 0 20px 60px rgba(26,115,232,0.1); }
+
+/* Keep the very tall showcase card later so row 2 can sit higher */
+.ticket-card[data-type="showcase"] { order: 99; }
 
 .ticket-card[data-type="growth"]::before { background: var(--green); }
 .ticket-card[data-type="growth"]:hover { border-color: rgba(45,184,75,0.3); box-shadow: 0 20px 60px rgba(45,184,75,0.1); }
@@ -276,6 +281,7 @@
   flex-direction: column;
   gap: 10px;
   margin-bottom: 24px;
+  flex: 1;
 }
 
 .ticket-feature {
