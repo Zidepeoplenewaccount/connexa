@@ -159,25 +159,24 @@
 
 .ticket-card[data-type="growth"] .ticket-features,
 .ticket-card[data-type="connectors"] .ticket-features {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 10px;
-  row-gap: 8px;
-  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
 }
 
 .ticket-card[data-type="growth"] .ticket-feature,
 .ticket-card[data-type="connectors"] .ticket-feature {
-  font-size: 12.75px;
-  line-height: 1.3;
+  font-size: 12.5px;
+  line-height: 1.25;
 }
 
 .ticket-card[data-type="growth"] .ticket-best-for,
 .ticket-card[data-type="connectors"] .ticket-best-for {
-  padding: 10px 12px;
+  padding: 8px 10px;
   font-size: 12px;
-  line-height: 1.4;
-  margin-bottom: 18px;
+  line-height: 1.35;
+  margin-bottom: 14px;
 }
 
 /* VIP Partner special styling */
@@ -407,10 +406,6 @@
     min-height: auto;
   }
 
-  .ticket-card[data-type="growth"] .ticket-features,
-  .ticket-card[data-type="connectors"] .ticket-features {
-    grid-template-columns: 1fr;
-  }
 }
 
 
