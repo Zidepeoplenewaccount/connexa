@@ -128,7 +128,7 @@
 .ticket-card[data-type="connectors"]::before { background: var(--purple); }
 .ticket-card[data-type="connectors"]:hover { border-color: rgba(114, 42, 239, 0.3); box-shadow: 0 20px 60px rgba(140, 35, 245, 0.1); }
 
-/* Compact variants to reduce card height without removing content */
+/* Compact variants to reduce card height without removing content 
 .ticket-card[data-type="growth"],
 .ticket-card[data-type="connectors"] {
   padding: 26px;
@@ -136,7 +136,7 @@
 
 .ticket-card[data-type="growth"] .ticket-icon,
 .ticket-card[data-type="connectors"] .ticket-icon {
-  margin-bottom: 14px;
+  margin-bottom: 20px;
 }
 
 .ticket-card[data-type="growth"] .ticket-type-label,
@@ -148,7 +148,7 @@
 .ticket-card[data-type="connectors"] .ticket-name {
   font-size: 1.25rem;
   margin-bottom: 4px;
-  min-height: calc(1.2em * 3); /* 👈 add this */
+  min-height: calc(1.2em * 3);
 }
 
 .ticket-card[data-type="growth"] .ticket-subtitle,
@@ -183,6 +183,8 @@
   line-height: 1.35;
   margin-bottom: 14px;
 }
+
+*/
 
 /* VIP Partner special styling */
 .ticket-card.featured {
