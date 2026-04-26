@@ -15,7 +15,7 @@ export default function About() {
         <div className="about-inner">
           <div className="about-text reveal">
             <div className="section-tag">About Connexa</div>
-            <h2 className="section-title">
+            <h2 className="section-title about-main-title">
               Connexa Lagos | The Opportunity Playground You Shouldn't Miss
             </h2>
             <p>
