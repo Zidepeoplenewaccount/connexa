@@ -78,6 +78,7 @@ export default function Navbar() {
         ))}
         <a
           href="#tickets"
+          className="navbar-mobile-cta"
           onClick={() => setMobileOpen(false)}
           style={{ color: 'var(--orange)' }}
         >

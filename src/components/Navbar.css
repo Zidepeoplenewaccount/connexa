@@ -169,6 +169,10 @@
     font-size: 1.5rem;
   }
 
+  .navbar-mobile a.navbar-mobile-cta {
+    font-size: 1.2rem;
+  }
+
   .navbar.open {
     display: none;
   }
