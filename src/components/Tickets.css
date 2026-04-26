@@ -29,18 +29,25 @@
 
 .tickets-upgrade-strip {
   margin: 20px auto 0;
-  max-width: 520px;
+  max-width: 760px;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px 16px;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 22px;
   border-radius: var(--radius-md);
   border: 1px solid rgba(245,166,35,0.25);
   background: linear-gradient(135deg, rgba(245,166,35,0.12), rgba(26,115,232,0.1));
   color: rgba(255,255,255,0.86);
   font-size: 14px;
   line-height: 1.4;
+}
+
+.tickets-upgrade-strip span {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
 }
 
 .tickets-upgrade-link {
@@ -403,6 +410,13 @@
 @media (max-width: 640px) {
   .tickets-upgrade-strip {
     flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    padding: 14px 16px;
+  }
+
+  .tickets-upgrade-strip span {
+    text-align: center;
   }
 
   .tickets-grid {
