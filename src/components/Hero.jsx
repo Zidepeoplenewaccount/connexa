@@ -145,7 +145,7 @@ export default function Hero() {
 
           <p className="hero-description">
             Lagos’ most energetic business and 
-            talent event, where entrepreneurs, 
+            networking event, where entrepreneurs, 
             brands, and individuals connect, 
             showcase, and discover opportunities. 
             One day. Endless possibilities.
