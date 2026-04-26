@@ -11,8 +11,8 @@ export default function Footer() {
           <div className="footer-brand">
             <img src={connexaLogo} alt="Connexa" className="footer-brand-logo" />
             <p className="footer-brand-desc">
-              Connexa brings together talents, business owners, brands, and
-              decision-makers to learn, sell, connect and grow - in one space.
+              Connexa is an opportunity playground in Lagos, Nigeria where talents,
+              business owners, brands, and decision-makers connect to real opportunities.
             </p>
             
             <p className="footer-brand-desc">
@@ -79,8 +79,8 @@ export default function Footer() {
           <div>
             <div className="footer-col-title">Event</div>
             <div className="footer-col-links">
-              <p href="#">University of Lagos</p>
-              <p href="#">2026</p>
+              <p href="#">University of Lagos, Nigeria</p>
+              <p href="#">Lagos · 2026</p>
             </div>
           </div>
         </div>

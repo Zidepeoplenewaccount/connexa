@@ -46,7 +46,7 @@ export default function Navbar() {
             {navLinks.map(link => (
               <a key={link.label} href={link.href}>{link.label}</a>
             ))}
-            <a href="#tickets" className="navbar-cta">Get Tickets</a>
+            <a href="#tickets" className="navbar-cta">Get Your Connexa Ticket</a>
           </div>
 
           <button
@@ -81,7 +81,7 @@ export default function Navbar() {
           onClick={() => setMobileOpen(false)}
           style={{ color: 'var(--orange)' }}
         >
-          Get Tickets →
+          Secure Your Spot at Connexa Lagos →
         </a>
       </div>
     </>

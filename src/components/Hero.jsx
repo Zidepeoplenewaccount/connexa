@@ -5,7 +5,7 @@ import ArcLogo from '../assets/ARC_LOGO.png';
 import RightEvents from '../assets/IMG_9099.PNG';
 
 const marqueeItems = [
-  { text: 'Network', color: 'var(--orange)' },
+  { text: 'Meet', color: 'var(--orange)' },
   { text: 'Grow', color: 'var(--green)' },
   { text: 'Sell', color: 'var(--red)' },
   { text: 'Connect', color: 'var(--blue)' },
@@ -139,16 +139,14 @@ export default function Hero() {
             <span className="highlight-blue">X</span>
             <span>A</span>
           </h1>
-          <span className="hero-subtitle">The Opportunity Playground</span>
+          <span className="hero-subtitle">The Opportunity Playground in Lagos, Nigeria</span>
 
-          <p className="hero-title-sub">BUSINESS · TALENT · CONNECTIONS</p>
+          <p className="hero-title-sub">EVENTS IN LAGOS · REAL OPPORTUNITIES · GROWTH</p>
 
           <p className="hero-description">
-            Lagos’ most energetic business and 
-            networking event, where entrepreneurs, 
-            brands, and individuals connect, 
-            showcase, and discover opportunities. 
-            One day. Endless possibilities.
+            Connexa is an opportunity playground in Lagos where people connect to real opportunities.
+            Meet founders, creatives, and professionals, discover new paths in Nigeria,
+            and find opportunities that move you forward.
           </p>
 
           <div className="hero-details">
@@ -203,10 +201,10 @@ export default function Hero() {
 
           <div className="hero-actions">
             <a href="#tickets" className="btn-primary">
-              <span>Get Your Ticket →</span>
+              <span>Get Your Connexa Ticket →</span>
             </a>
-            <a href="#partner-form" className="btn-secondary">
-              Become A Sponsor
+            <a href="#tickets" className="btn-secondary">
+              Secure Your Spot at Connexa Lagos
             </a>
           </div>
 

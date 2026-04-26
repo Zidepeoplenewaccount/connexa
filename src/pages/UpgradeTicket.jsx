@@ -89,7 +89,7 @@ export default function UpgradeTicket() {
             <h1 className="section-title">
               Upgrade Your <span className="highlight-orange">Ticket</span>
             </h1>
-            <p>Unlock VIP access, priority seating, networking opportunities, and exclusive benefits.</p>
+            <p>Unlock VIP access, priority seating, opportunity access, and exclusive benefits.</p>
           </div>
 
           {!upgradeOptions ? (
@@ -138,7 +138,7 @@ export default function UpgradeTicket() {
                   </div>
                   <div className="upgrade-benefit-item">
                     <span className="upgrade-benefit-icon">🤝</span>
-                    <h4>Premium Networking</h4>
+                    <h4>Premium Access</h4>
                     <p>Connect with speakers and partners</p>
                   </div>
                   <div className="upgrade-benefit-item">
@@ -207,14 +207,14 @@ export default function UpgradeTicket() {
                             <>
                               <span>✓ VIP seating & areas</span>
                               <span>✓ Priority Q&A selection</span>
-                              <span>✓ Exclusive networking</span>
+                              <span>✓ Exclusive speaker access</span>
                             </>
                           )}
                           {selectedUpgrade.ticket_type.includes('Business Owner') && (
                             <>
                               <span>✓ Business owner sessions</span>
                               <span>✓ Advisory access</span>
-                              <span>✓ Peer networking</span>
+                              <span>✓ Peer opportunity circles</span>
                             </>
                           )}
                           {selectedUpgrade.ticket_type.includes('VIP Partner') && (

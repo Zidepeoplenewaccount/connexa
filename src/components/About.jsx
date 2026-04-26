@@ -4,7 +4,7 @@ import zideLogo from '../assets/IMG_6707.PNG';
 const highlights = [
   { icon: '🛒', title: 'Live Marketplace', desc: 'Real buyers, real sellers, real transactions on the day' },
   { icon: '🎤', title: 'Connexer Sessions', desc: 'No regular speakers here. Connexers deliver a completely different experience.' },
-  { icon: '🤝', title: 'Opportunities', desc: 'Connect with founders, talents, and decision-makers' },
+  { icon: '🤝', title: 'Opportunities', desc: 'Meet founders, talents, and decision-makers in Lagos' },
   { icon: '🏆', title: 'Awards & Recognition', desc: 'Win visibility, prizes, and public acknowledgment' },
 ];
 
@@ -16,18 +16,16 @@ export default function About() {
           <div className="about-text reveal">
             <div className="section-tag">About Connexa</div>
             <h2 className="section-title">
-              Where Business <br />
-              <span className="highlight-orange">Meets Opportunity</span>
+              Connexa Lagos | The Opportunity Playground You Shouldn't Miss
             </h2>
             <p>
-              Connexa 2026 is the first Opportunity Playground in Nigeria,
-              happening in Lagos for talents, founders, vendors, startups,
-              and professionals serious about growth.
+              Connexa is an opportunity playground in Lagos where people connect to real opportunities. Whether you're a founder, job seeker, or creative, Connexa helps you meet the right people and move forward faster.
             </p>
             <p>
-              Whether you're selling products, showcasing your platform,
-              looking to learn, or hunting for your next opportunity, Connexa
-              connects talents directly to businesses where opportunities can happen on the spot.
+              Connexa is one of the most anticipated events in Lagos, Nigeria for talents, founders, vendors, startups, and professionals serious about growth.
+            </p>
+            <p>
+              If you are searching for events in Lagos, things to do in Lagos, business events in Nigeria, career events in Lagos, and growth events in Lagos, Connexa gives you one place to access real opportunities.
             </p>
 
             <div className="about-highlights">
@@ -54,7 +52,7 @@ export default function About() {
                 <div className="about-card-label">Business Growth</div>
                 <div className="about-card-title">Learn. Fix. Scale faster.</div>
                 <div className="about-card-text">
-                  Expert advisors, sessions, and peer networks all in one place.
+                  Expert advisors, sessions, and growth-focused peers all in one place.
                 </div>
               </div>
             </div>

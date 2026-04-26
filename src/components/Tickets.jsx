@@ -23,7 +23,7 @@ const tickets = [
       'Access to outdoor vendor marketplace',
       'Shop from 100+ vendors and businesses',
       'Discover and support new brands on the spot',
-      'Networking opportunities with vendors',
+      'Opportunity to meet vendors and access real opportunities',
       'Experience the energy of the Opportunity Playground',
     ],
     bestFor: 'Anyone who wants to shop with vendors and feel the energy of the Opportunity Playground.',
@@ -46,7 +46,7 @@ const tickets = [
     features: [
       'Access to speaker sessions and panels',
       'Exposure to businesses, vendors, and hiring brands',
-      'Networking with professionals and creatives',
+      'Meet professionals and creatives for real opportunities',
       'Insight into the future of flexible work',
       'Entry into a high-energy, opportunity-driven environment',
     ],
@@ -63,14 +63,14 @@ const tickets = [
     iconClass: 'ticket-icon-gradient',
     label: 'Premium Individuals',
     name: 'Talent Pass — VIP',
-    subtitle: 'Premium access, priority networking, and recognition',
+    subtitle: 'Premium access, priority opportunity circles, and recognition',
     price: 10000,
     available: 500,  // ADD THIS
     badge: 'VIP',
     badgeClass: '',
     features: [
       'Priority seating and VIP event access',
-      'Exclusive networking with speakers and partners',
+      'Exclusive access to speakers and partners',
       'Access to VIP-only areas and sessions',
       'Eligibility for Individual Awards & Recognition',
       'Public acknowledgment and premium event experience',
@@ -87,14 +87,14 @@ const tickets = [
     passType: 'individual',
     icon: '🔗',
     iconClass: 'ticket-icon-blue',
-    label: 'Strategic Networking',
+    label: 'Strategic Opportunities',
     name: 'Connectors Pass',
-    subtitle: 'Turn networking into real opportunities',
+    subtitle: 'Turn conversations into real opportunities',
     price: 5000,
     available: 30,  // ADD THIS
     features: [
       'Must purchase General access/Individual Regular ticket',
-      'Gain entry to curated networking sessions',
+      'Gain entry to curated opportunity sessions',
       'Structured introductions to business owners and speakers',
       'Participation in connection circles',
       'Access to all regular pass benefits',
@@ -118,7 +118,7 @@ const tickets = [
     features: [
       'Access to all speaker sessions and panels',
       'Practical insights for scaling, operations, and sales',
-      'Peer networking with other business owners',
+      'Peer connection with other business owners',
       'Access to roaming business advisors',
       'Priority seating and business owner recognition',
       'Full focus on learning and growth strategy',
@@ -883,12 +883,12 @@ export default function Tickets() {
         <div className="tickets-header reveal">
           <div className="section-tag">Tickets</div>
           <h2 className="section-title">
-            Access. Opportunity. <span className="highlight-orange">Results.</span>
+            Tickets for Connexa Lagos: <span className="highlight-orange">Join the Opportunity Playground</span>
           </h2>
-          <p>Connexa tickets are not about attendance — they're about what you get out of the room.</p>
+          <p>Connexa is an opportunity playground in Lagos, Nigeria where people connect to real opportunities. Your ticket gives you access to people, ideas, and outcomes that move you forward.</p>
 
           <div className="tickets-upgrade-strip">
-            <span>Already bought a ticket?</span>
+            <span>Already bought a ticket? Limited slots available. Tickets selling fast.</span>
             <a href="/upgrade-ticket" className="tickets-upgrade-link">Upgrade now</a>
           </div>
           
@@ -986,7 +986,7 @@ export default function Tickets() {
         </div>
 
         <p className="tickets-note reveal">
-          Connexa tickets are not about attendance.<br />
+          Connexa tickets are your entry into Lagos opportunities.<br />
           They are about <span>access, opportunity, and results.</span>
         </p>
       </div>
@@ -1704,7 +1704,7 @@ export default function Tickets() {
                 className="ticket-modal-submit"
                 disabled={loading || (selectedTicket.type === 'connectors' && !connectorsTicketValid)}
               >
-                {loading ? 'Processing...' : 'Proceed to Payment →'}
+                {loading ? 'Processing...' : 'Join the Opportunity Playground'}
               </button>
             </form>
           </div>
