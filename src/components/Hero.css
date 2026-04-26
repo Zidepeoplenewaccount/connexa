@@ -143,14 +143,6 @@
   opacity: 0;
 }
 
-.hero-search-intent {
-  max-width: 680px;
-  margin: -24px auto 36px;
-  color: rgba(255,255,255,0.75);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
 /* Event Details */
 .hero-details {
   display: flex;
@@ -191,33 +183,6 @@
   font-size: 15px;
   font-weight: 600;
   color: rgba(255,255,255,0.9);
-}
-
-.hero-gains {
-  max-width: 760px;
-  margin: 0 auto 40px;
-  padding: 20px;
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 16px;
-  background: rgba(255,255,255,0.04);
-  text-align: left;
-}
-
-.hero-gains h2 {
-  margin: 0 0 12px;
-  font-size: clamp(1.05rem, 2.1vw, 1.3rem);
-  color: var(--white);
-}
-
-.hero-gains ul {
-  margin: 0;
-  padding-left: 20px;
-  color: rgba(255,255,255,0.82);
-  line-height: 1.6;
-}
-
-.hero-gains li + li {
-  margin-top: 8px;
 }
 
 /* Countdown */

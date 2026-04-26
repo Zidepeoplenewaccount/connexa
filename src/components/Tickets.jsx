@@ -883,21 +883,9 @@ export default function Tickets() {
         <div className="tickets-header reveal">
           <div className="section-tag">Tickets</div>
           <h2 className="section-title">
-            Connexa Tickets for Lagos, Nigeria: <span className="highlight-orange">Secure Your Spot</span>
+            Access. Opportunity. <span className="highlight-orange">Results.</span>
           </h2>
-          <p>One of the most anticipated events in Lagos, Nigeria is filling up. Connexa tickets are not just for attendance, they are for real opportunities.</p>
-
-          <p><strong>Limited slots available.</strong> Early tickets selling fast.</p>
-
-          <div className="tickets-upgrade-strip" aria-label="Connexa event details">
-            <span><strong>Date:</strong> 28th November, 2026</span>
-            <span><strong>Time:</strong> Doors open 8:00 AM</span>
-            <span><strong>Location:</strong> University of Lagos, Lagos, Nigeria</span>
-          </div>
-
-          <p>
-            Attend Connexa to meet the right people, discover business and career opportunities, and build quality relationships that move you forward.
-          </p>
+          <p>Connexa tickets are not about attendance — they're about what you get out of the room.</p>
 
           <div className="tickets-upgrade-strip">
             <span>Already bought a ticket?</span>
@@ -999,7 +987,7 @@ export default function Tickets() {
 
         <p className="tickets-note reveal">
           Connexa tickets are not about attendance.<br />
-          They are about <span>access, opportunity, and results.</span> Join Connexa today.
+          They are about <span>access, opportunity, and results.</span>
         </p>
       </div>
 
@@ -1716,7 +1704,7 @@ export default function Tickets() {
                 className="ticket-modal-submit"
                 disabled={loading || (selectedTicket.type === 'connectors' && !connectorsTicketValid)}
               >
-                {loading ? 'Processing...' : 'Secure Your Ticket Now'}
+                {loading ? 'Processing...' : 'Proceed to Payment →'}
               </button>
             </form>
           </div>

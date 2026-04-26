@@ -16,16 +16,18 @@ export default function About() {
           <div className="about-text reveal">
             <div className="section-tag">About Connexa</div>
             <h2 className="section-title">
-              What is Connexa?
+              Where Business <br />
+              <span className="highlight-orange">Meets Opportunity</span>
             </h2>
             <p>
-              Connexa is a high-impact networking event in Lagos designed to connect people to opportunities. Whether you're a founder, job seeker, or creative, Connexa helps you meet the right people and grow faster.
+              Connexa 2026 is the first Opportunity Playground in Nigeria,
+              happening in Lagos for talents, founders, vendors, startups,
+              and professionals serious about growth.
             </p>
             <p>
-              Connexa 2026 is one of the most anticipated entrepreneurship events in Nigeria, happening in Lagos for talents, founders, vendors, startups, and professionals serious about growth.
-            </p>
-            <p>
-              If you are searching for conferences in Lagos, tech events in Lagos, or business events in Nigeria, Connexa gives you one place to learn, connect, and get real opportunities.
+              Whether you're selling products, showcasing your platform,
+              looking to learn, or hunting for your next opportunity, Connexa
+              connects talents directly to businesses where opportunities can happen on the spot.
             </p>
 
             <div className="about-highlights">

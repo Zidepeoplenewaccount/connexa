@@ -16,7 +16,6 @@ export default function Navbar() {
   const navLinks = [
     { label: 'About', href: '#about' },
     { label: 'Gallery', href: '#gallery' },
-    { label: 'Blog', href: '/blog' },
     //{ label: 'Tickets', href: '#tickets' },
     { label: 'Awards', href: '#awards' },
     { label: 'Vote', href: '#voting' },
@@ -28,7 +27,6 @@ export default function Navbar() {
   const navLinksMobile = [
     { label: 'About', href: '#about' },
     { label: 'Gallery', href: '#gallery' },
-    { label: 'Blog', href: '/blog' },
     { label: 'Awards', href: '#awards' },
     { label: 'Vote', href: '#voting' },
     { label: 'Merch', href: '#merch' },
@@ -48,7 +46,7 @@ export default function Navbar() {
             {navLinks.map(link => (
               <a key={link.label} href={link.href}>{link.label}</a>
             ))}
-            <a href="#tickets" className="navbar-cta">Buy Ticket</a>
+            <a href="#tickets" className="navbar-cta">Get Tickets</a>
           </div>
 
           <button
@@ -83,7 +81,7 @@ export default function Navbar() {
           onClick={() => setMobileOpen(false)}
           style={{ color: 'var(--orange)' }}
         >
-          Buy Ticket →
+          Get Tickets →
         </a>
       </div>
     </>
