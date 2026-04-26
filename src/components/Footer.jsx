@@ -67,8 +67,10 @@ export default function Footer() {
           <div>
             <div className="footer-col-title">Navigate</div>
             <div className="footer-col-links">
+              <a href="/#tickets">Buy Ticket</a>
               <a href="#about">About</a>
               <a href="#tickets">Tickets</a>
+              <a href="/blog">Blog</a>
               <a href="/upgrade-ticket">Upgrade Ticket</a>
               <a href="#awards">Awards</a>
               <a href="#voting">Vote</a>
@@ -79,8 +81,8 @@ export default function Footer() {
           <div>
             <div className="footer-col-title">Event</div>
             <div className="footer-col-links">
-              <p href="#">University of Lagos</p>
-              <p href="#">2026</p>
+              <p>University of Lagos, Lagos, Nigeria</p>
+              <p>28th November, 2026 · 8:00 AM</p>
             </div>
           </div>
         </div>

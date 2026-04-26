@@ -132,29 +132,24 @@ export default function Hero() {
           </div>
 
           <h1 className="hero-title">
-            <span className="highlight-red">C</span>
-            <span className="highlight-orange">O</span>
-            <span>NN</span>
-            <span className="highlight-green">E</span>
-            <span className="highlight-blue">X</span>
-            <span>A</span>
+            Connexa Lagos 2026 | The Networking &amp; Opportunity Event in Nigeria
           </h1>
-          <span className="hero-subtitle">The Opportunity Playground</span>
+          <span className="hero-subtitle">One of the most anticipated events in Lagos, Nigeria</span>
 
-          <p className="hero-title-sub">BUSINESS · TALENT · CONNECTIONS</p>
+          <p className="hero-title-sub">NETWORKING · BUSINESS GROWTH · OPPORTUNITIES</p>
 
           <p className="hero-description">
-            Lagos’ most energetic business and 
-            talent event, where entrepreneurs, 
-            brands, and individuals connect, 
-            showcase, and discover opportunities. 
-            One day. Endless possibilities.
+            Meet founders, creatives, and professionals at one of the most impactful events in Lagos. Secure your spot at Connexa today.
+          </p>
+
+          <p className="hero-search-intent">
+            Looking for networking events in Lagos, business events in Nigeria, tech events in Lagos, or things to do in Lagos this weekend? Connexa is built for you.
           </p>
 
           <div className="hero-details">
             <div className="hero-detail-item">
               <span className="hero-detail-icon">📍</span>
-              <span className="hero-detail-text">University of Lagos</span>
+              <span className="hero-detail-text">University of Lagos, Lagos, Nigeria</span>
             </div>
             <div className="hero-detail-item">
               <span className="hero-detail-icon">
@@ -171,6 +166,16 @@ export default function Hero() {
               <span className="hero-detail-icon">🕐</span>
               <span className="hero-detail-text">Doors open 8:00 AM</span>
             </div>
+          </div>
+
+          <div className="hero-gains" aria-label="What attendees gain">
+            <h2>What you will gain at Connexa in Lagos, Nigeria</h2>
+            <ul>
+              <li>Meet founders, hiring teams, and decision-makers.</li>
+              <li>Discover new business and career opportunities.</li>
+              <li>Learn practical growth strategies from real operators.</li>
+              <li>Build quality relationships that can open doors after the event.</li>
+            </ul>
           </div>
 
           {/* Countdown */}
@@ -203,10 +208,10 @@ export default function Hero() {
 
           <div className="hero-actions">
             <a href="#tickets" className="btn-primary">
-              <span>Get Your Ticket →</span>
+              <span>Secure Your Ticket Now</span>
             </a>
-            <a href="#partner-form" className="btn-secondary">
-              Become A Sponsor
+            <a href="#tickets" className="btn-secondary">
+              Join Connexa Today
             </a>
           </div>
 
