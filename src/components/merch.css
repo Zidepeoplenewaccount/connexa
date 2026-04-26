@@ -563,6 +563,7 @@
 /* Header Section */
 .merch-header-section {
   margin-bottom: 16px;
+  text-align: left;
 }
 
 .merch-header {
@@ -574,6 +575,10 @@
   line-height: 1.2;
 }
 
+.merch-body .merch-header {
+  text-align: left;
+}
+
 .merch-tagline {
   font-family: var(--font-display);
   font-size: 0.95rem;
@@ -582,6 +587,11 @@
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.merch-body .merch-tagline {
+  text-align: left;
+  align-self: flex-start;
 }
 
 /* Update description styling */
@@ -929,10 +939,9 @@
     font-size: 1.3rem;
   }
 
-  .merch-tagline {
+  .merch-body .merch-tagline {
     font-size: 0.85rem;
-    align-self: center;
-    justify-self: center;
+    align-self: flex-start;
   }
 
   .merch-desc {
