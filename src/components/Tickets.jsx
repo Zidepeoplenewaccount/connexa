@@ -73,7 +73,7 @@ const tickets = [
       'Exclusive access to speakers and partners',
       'Access to VIP-only areas and sessions',
       'Eligibility for Individual Awards & Recognition',
-      'Public acknowledgment and premium event experience',
+      'Premium event experience',
       'Includes connectors pass',
     ],
     bestFor: 'Professionals who want visibility, status, and recognition.',
