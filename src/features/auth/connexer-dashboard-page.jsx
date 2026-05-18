@@ -86,25 +86,6 @@ export default function ConnexerDashboardFeaturePage() {
     return () => window.clearInterval(intervalId);
   }, []);
 
-  useEffect(() => {
-    if (!isSpeakerAuthenticated()) return undefined;
-
-    const intervalId = window.setInterval(async () => {
-      try {
-        const [nextStats, nextCommissions] = await Promise.all([
-          fetchSpeakerStats(),
-          fetchSpeakerCommissions(),
-        ]);
-        setStats(nextStats);
-        setCommissions(nextCommissions);
-      } catch {
-        // Best effort polling for live dashboard updates.
-      }
-    }, 15000);
-
-    return () => window.clearInterval(intervalId);
-  }, []);
-
   async function handleLogout() {
     await speakerLogout();
     navigate('/connexers/login', { replace: true });
