@@ -165,6 +165,26 @@ export default function ConnexerDashboardFeaturePage() {
             />
             <button onClick={copyLink} className="speaker-btn-copy">Copy Link</button>
           </div>
+
+          {/* Earnings Progress Tracker */}
+          <section className="speaker-progress-section">
+            <h2>Your Ticket Earnings</h2>
+            <div className="speaker-progress-amounts">
+              <span>₦{progressEarned.toLocaleString()}</span>
+              <span className="speaker-progress-divider">/</span>
+              <span>₦{progressTarget.toLocaleString()}</span>
+            </div>
+            <div className="speaker-progress-meta">
+              <span className="speaker-progress-percent">{Math.round(progressPercentage)}%</span>
+              <span>{totalTicketsSold} Tickets Sold</span>
+            </div>
+            <div className="speaker-progress-track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progressPercentage)} aria-label="Engagement fee progress">
+              <div className="speaker-progress-fill" style={{ width: `${progressPercentage}%` }} />
+            </div>
+            <p className="speaker-progress-note">
+              Progress updates automatically from successful ticket sales linked to your code.
+            </p>
+          </section>
         </section>
 
         {/* Questions Section */}
@@ -282,26 +302,6 @@ export default function ConnexerDashboardFeaturePage() {
             <span className="speaker-stat-label">Total Paid</span>
             <span className="speaker-stat-value">₦{(stats?.total_paid ?? 0).toLocaleString()}</span>
           </div>
-        </section>
-
-        {/* Earnings Progress Tracker */}
-        <section className="speaker-progress-section">
-          <h2>Your Ticket Earnings</h2>
-          <div className="speaker-progress-amounts">
-            <span>₦{progressEarned.toLocaleString()}</span>
-            <span className="speaker-progress-divider">/</span>
-            <span>₦{progressTarget.toLocaleString()}</span>
-          </div>
-          <div className="speaker-progress-meta">
-            <span className="speaker-progress-percent">{Math.round(progressPercentage)}%</span>
-            <span>{totalTicketsSold} Tickets Sold</span>
-          </div>
-          <div className="speaker-progress-track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progressPercentage)} aria-label="Engagement fee progress">
-            <div className="speaker-progress-fill" style={{ width: `${progressPercentage}%` }} />
-          </div>
-          <p className="speaker-progress-note">
-            Progress updates automatically from successful ticket sales linked to your code.
-          </p>
         </section>
 
         {/* Analytics Chart */}
