@@ -1,6 +1,7 @@
 import './speakers.css';
 import { useState } from 'react';
 import AskQuestionModal from './AskQuestionModal';
+import JoshuaPhoto from '../assets/IMG_0407.JPEG';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -9,54 +10,17 @@ import { FaTiktok, FaXTwitter } from "react-icons/fa6";
 const speakers = [
   {
     id: 1,
-    name: 'Connexer',
-    title: 'CEO',
-    company: 'Company / Organisation',
-    topic: 's',
-    photo: null,
-    featured: true,
-    socials: {
-      instagram: '#',
-      twitter: '#',
-      linkedin: '#',
-    },
-  },
-  {
-    id: 2,
-    name: 'Connexer',
-    title: 'CEO',
-    company: 'Company / Organisation',
-    topic: 's',
-    photo: null,
+    name: 'Joshua Oluwadepo',
+    connexerType: 'Talent Connexer',
+    title: 'Senior Recruitment Consultant',
+    company: 'Jobberman',
+    topic: null, 
+    photo: JoshuaPhoto,
     featured: false,
+    bio: 'Joshua Oluwadepo is a Senior Recruitment Consultant at Jobberman (The African Talent Company) with years of experience helping Nigerian talents access opportunities across Africa and globally. Specializing in recruitment, talent positioning, remote opportunities, and tech hiring, he has helped connect talents to opportunities across multiple industries and continents. As a Talent Connexer, Joshua will be answering questions around how to get connected to real opportunities, especially breaking down how hiring works and how talent positioning can significantly improve your chances in today\'s job market.',
+    instagramUrl: 'https://instagram.com/connexa2026',
     socials: {
-      instagram: '#',
-      linkedin: '#',
-    },
-  },
-  {
-    id: 3,
-    name: 'Connexer',
-    title: 'CEO',
-    company: 'Company / Organisation',
-    topic: 's',
-    photo: null,
-    featured: false,
-    socials: {
-      twitter: '#',
-      linkedin: '#',
-    },
-  },
-  {
-    id: 4,
-    name: 'Connexer',
-    title: 'CEO',
-    company: 'Company / Organisation',
-    topic: 's',
-    photo: null,
-    featured: false,
-    socials: {
-      instagram: '#',
+      linkedin: 'https://www.linkedin.com/in/joshuaoluwadepo?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
     },
   },
 ];
@@ -95,6 +59,13 @@ export default function Speakers() {
             you can act on immediately.
           </p>
         </div>
+        <div className="question-priority-notice">
+          <div className="priority-icon">⭐</div>
+          <div className="priority-text">
+            <strong>Priority Questions:</strong>
+            <p>Questions from Talent VIP, Business Owner, Market Vendor, Showcase Vendor, and VIP Partner ticket holders will be prioritized.</p>
+          </div>
+        </div>
 
         <div className="speakers-grid">
           {speakers.map((speaker, i) => (
@@ -114,35 +85,56 @@ export default function Speakers() {
                   </div>
                 )}
 
-                {/* ── Featured badge — remove this block to hide ── */}
+                {/* ── Featured badge ── */}
                 {speaker.featured && (
                   <div className="speaker-featured-badge">Featured</div>
                 )}
               </div>
 
               <div className="speaker-body">
-                {/* ── Name — required ── */}
+                {/* ── Name ── */}
                 <div className="speaker-name">{speaker.name}</div>
 
-                {/* ── Title — remove this line to hide ── */}
+                {/* ── Connexer Type ── */}
+                {speaker.connexerType && (
+                  <div className="speaker-connexer-type">
+                    {speaker.connexerType}
+                  </div>
+                )}
+
+                {/* ── Title ── */}
                 {speaker.title && (
                   <div className="speaker-title">{speaker.title}</div>
                 )}
 
-                {/* ── Company — remove this line to hide ── */}
+                {/* ── Company ── */}
                 {speaker.company && (
                   <div className="speaker-company">{speaker.company}</div>
                 )}
 
-                {/* ── Talk topic — remove this block to hide ── */}
-                {speaker.topic && (
-                  <div className="speaker-topic">
-                    <strong>Speaking On</strong>
-                    {speaker.topic}
+                {/* ── Bio with Read More ── */}
+                {speaker.bio && (
+                  <div className="speaker-bio">
+                    <p>{speaker.bio.substring(0, 200)}...</p>
+                    <a 
+                      href={speaker.instagramUrl || '#'} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="speaker-read-more"
+                    >
+                      Read more on Instagram
+                    </a>
                   </div>
                 )}
 
-                {/* ── Social links — remove this block to hide ── */}
+                {/* ── Talk topic (OPTIONAL - only show if exists) ── */}
+                {speaker.topic && (
+                  <div className="speaker-topic">
+                    <strong>Speaking On:</strong> {speaker.topic}
+                  </div>
+                )}
+
+                {/* ── Social links ── */}
                 {speaker.socials && Object.keys(speaker.socials).length > 0 && (
                   <div className="speaker-socials">
                     {Object.entries(speaker.socials).map(([platform, url]) => {
@@ -169,7 +161,7 @@ export default function Speakers() {
                     className="speaker-ask-btn"
                     onClick={() => openQuestionModal(speaker)}
                   >
-                    Ask Connexer {speaker.name.split(' ')[0]}
+                    Ask Connexer {speaker?.name?.split(' ')[0]}
                   </button>
                 )}
               </div>

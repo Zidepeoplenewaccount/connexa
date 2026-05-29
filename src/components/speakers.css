@@ -27,6 +27,136 @@
   margin: 16px auto 0;
 }
 
+/* Priority Notice in Header */
+.question-priority-notice {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding: 28px;
+  background: linear-gradient(135deg, rgba(26, 115, 232, 0.08) 0%, rgba(245, 166, 35, 0.04) 100%);
+  border: 1px solid rgba(26, 115, 232, 0.15);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Subtle background accent */
+.question-priority-notice::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(26, 115, 232, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.priority-notice-icon {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  margin-top: 2px;
+}
+
+.priority-notice-content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+
+.priority-notice-title {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  letter-spacing: -0.3px;
+}
+
+.priority-notice-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.priority-notice-text strong {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+/* Bottom accent line */
+.question-priority-notice::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, #1a73e8 0%, #f5a623 50%, transparent 100%);
+}
+
+/* Connexer Type Badge */
+.speaker-connexer-type {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--orange);
+  background: rgba(245, 166, 35, 0.15);
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  border-left: 3px solid var(--orange);
+}
+
+.speaker-connexer-type::before {
+  content: '🔗 ';
+  margin-right: 4px;
+}
+
+/* Speaker Bio */
+.speaker-bio {
+  margin: 16px 0;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid var(--yellow);
+  border-radius: 6px;
+}
+
+.speaker-bio p {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.speaker-read-more {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  padding: 6px 12px;
+  background: rgba(26, 115, 232, 0.1);
+  border-radius: 4px;
+}
+
+.speaker-read-more:hover {
+  background: rgba(26, 115, 232, 0.2);
+  transform: translateX(2px);
+}
+
+.speaker-read-more::after {
+  content: ' →';
+}
 /* Grid */
 .speakers-grid {
   display: grid;
@@ -259,5 +389,29 @@
 @media (max-width: 480px) {
   .speakers-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+
+/* Responsive */
+@media (max-width: 640px) {
+  .question-priority-notice {
+    margin-top: 24px;
+    padding: 20px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .priority-notice-icon {
+    font-size: 24px;
+  }
+
+  .priority-notice-title {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .priority-notice-text {
+    font-size: 13px;
   }
 }
