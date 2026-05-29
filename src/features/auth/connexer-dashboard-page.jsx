@@ -30,6 +30,12 @@ export default function ConnexerDashboardFeaturePage() {
   const [accountForm, setAccountForm] = useState({ account_number: '', bank_name: '' });
   const [savingAccount, setSavingAccount] = useState(false);
 
+  const progressTarget = Number(stats?.progress_target ?? 0);
+  const progressEarned = Number(stats?.progress_earned ?? stats?.total_earned ?? 0);
+  const progressPercentRaw = Number(stats?.progress_percentage ?? 0);
+  const progressPercentage = Math.max(0, Math.min(100, progressPercentRaw));
+  const totalTicketsSold = Number(stats?.total_tickets_sold ?? stats?.total_uses ?? 0);
+
   const loadData = useCallback(async () => {
     if (!isSpeakerAuthenticated()) {
       navigate('/connexers/login', { replace: true });
@@ -60,6 +66,25 @@ export default function ConnexerDashboardFeaturePage() {
   }, [navigate]);
 
   useEffect(() => { loadData(); }, [loadData]);
+
+  useEffect(() => {
+    if (!isSpeakerAuthenticated()) return undefined;
+
+    const intervalId = window.setInterval(async () => {
+      try {
+        const [nextStats, nextCommissions] = await Promise.all([
+          fetchSpeakerStats(),
+          fetchSpeakerCommissions(),
+        ]);
+        setStats(nextStats);
+        setCommissions(nextCommissions);
+      } catch {
+        // Best effort polling for live dashboard updates.
+      }
+    }, 15000);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
 
   async function handleLogout() {
     await speakerLogout();
@@ -130,7 +155,7 @@ export default function ConnexerDashboardFeaturePage() {
           </div>
           <p className="speaker-code-info">
             Anyone who uses this code gets <strong>{profile?.discount_percentage}%</strong> off their ticket.
-            You earn <strong>{profile?.commission_rate}%</strong> on each ticket sold with your code.
+            You earn <strong>{profile?.commission_rate}%</strong> on every ticket sold with your code until your engagement fee is fully covered.
           </p>
           <div className="speaker-link-row">
             <input
@@ -140,6 +165,26 @@ export default function ConnexerDashboardFeaturePage() {
             />
             <button onClick={copyLink} className="speaker-btn-copy">Copy Link</button>
           </div>
+
+          {/* Earnings Progress Tracker */}
+          <section className="speaker-progress-section">
+            <h2>Your Ticket Earnings</h2>
+            <div className="speaker-progress-amounts">
+              <span>₦{progressEarned.toLocaleString()}</span>
+              <span className="speaker-progress-divider">/</span>
+              <span>₦{progressTarget.toLocaleString()}</span>
+            </div>
+            <div className="speaker-progress-meta">
+              <span className="speaker-progress-percent">{Math.round(progressPercentage)}%</span>
+              <span>{totalTicketsSold} Tickets Sold</span>
+            </div>
+            <div className="speaker-progress-track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progressPercentage)} aria-label="Engagement fee progress">
+              <div className="speaker-progress-fill" style={{ width: `${progressPercentage}%` }} />
+            </div>
+            <p className="speaker-progress-note">
+              Progress updates automatically from successful ticket sales linked to your code.
+            </p>
+          </section>
         </section>
 
         {/* Questions Section */}
@@ -243,7 +288,7 @@ export default function ConnexerDashboardFeaturePage() {
         <section className="speaker-stats-grid">
           <div className="speaker-stat-card">
             <span className="speaker-stat-label">Tickets Sold</span>
-            <span className="speaker-stat-value">{stats?.total_uses ?? 0}</span>
+            <span className="speaker-stat-value">{totalTicketsSold}</span>
           </div>
           <div className="speaker-stat-card accent-green">
             <span className="speaker-stat-label">Total Earned</span>

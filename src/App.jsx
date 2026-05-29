@@ -76,7 +76,7 @@ function HomePage() {
       </main>
 
       <a href="#tickets" className="mobile-sticky-ticket-cta" aria-label="Get tickets">
-        Get Tickets from ₦3,000 →
+        Join the Opportunity Playground →
       </a>
 
       <Footer />

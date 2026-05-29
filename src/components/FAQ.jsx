@@ -8,7 +8,7 @@ const faqs = [
   },
   {
     question: 'Is Connexa really different from regular events?',
-    answer: 'Yes. This is the first Opportunity Playground in Nigeria, and it is happening in Lagos. You need to be in the playground.'
+    answer: 'Yes. Connexa is an opportunity playground in Lagos, Nigeria where people connect to real opportunities, not just conversations.'
   },
   {
     question: 'What time do doors open?',
@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     question: 'What is Connexa about?',
-    answer: 'Connexa is where talents get connected to businesses and opportunities at the spot. It is going to be massive.'
+    answer: 'Connexa is an opportunity playground in Lagos where you meet the right people, discover new paths, and access real opportunities in Nigeria.'
   },
   {
     question: 'Can I buy any ticket at the gate?',
@@ -48,7 +48,7 @@ const faqs = [
   },
   {
     question: 'Why are there different tickets?',
-    answer: 'Different tickets are designed for different experiences inside the Opportunity Playground.'
+    answer: 'Different tickets are designed for different goals inside the Opportunity Playground, from direct sales to business growth and career opportunities.'
   },
   {
     question: 'What is the difference between Business Owner and Vendor tickets?',
