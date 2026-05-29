@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import zideLogo from '../assets/IMG_5735-removebg-preview2.png';
 import ArcLogo from '../assets/ARC_LOGO.png';
 import RightEvents from '../assets/IMG_9099.PNG';
+import plitverse from '../assets/IMG_0405.PNG';
 
 const marqueeItems = [
   { text: 'Network', color: 'var(--orange)' },
@@ -20,12 +21,15 @@ const sponsors = [
   { name: '', logo: zideLogo },
   { name: '', logo: ArcLogo },
   { name: '', logo: RightEvents },
+  { name: '', logo: plitverse },
   { name: '', logo: zideLogo },
   { name: '', logo: ArcLogo },
   { name: '', logo: RightEvents },
+  { name: '', logo: plitverse },
   { name: '', logo: zideLogo },
   { name: '', logo: ArcLogo },
   { name: '', logo: RightEvents },
+  { name: '', logo: plitverse },
 ];
 
 export default function Hero() {
