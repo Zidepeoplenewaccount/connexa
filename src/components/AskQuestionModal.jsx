@@ -150,7 +150,10 @@ export default function AskQuestionModal({ speaker, onClose }) {
         
         {/* Header */}
         <h2 className="question-modal-title">
-          Ask {speaker.connexerType ? `${speaker.connexerType}` : 'Connexer'} {speaker.name}
+          {speaker.connexerType ? `${speaker.connexerType}` : 'Connexer'}
+        </h2>
+        <h2 className="question-modal-title">
+          Ask {speaker.name}
         </h2>
         <p className="question-modal-subtitle">
           Have a question you want answered at Connexa 2026? Submit it below.
