@@ -2,78 +2,94 @@ import { useState } from 'react';
 import { submitSpeakerQuestion } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './AskQuestionModal.css';
-
+ 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
-
+ 
 const socialIcons = {
   instagram: FaInstagram,
   twitter: FaXTwitter,
   linkedin: FaLinkedin,
   tiktok: FaTiktok,
 };
-
-
+ 
+const PRIORITY_TICKETS = [
+  'Talent Pass — VIP',
+  'Business Owner Pass',
+  'Showcase Vendor Pass',
+  'Market Vendor Pass',
+  'VIP Partner Pass'
+];
+ 
+ 
 export default function AskQuestionModal({ speaker, onClose }) {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    ticketType: '',
-    question: ''
-  });
+  const [step, setStep] = useState('ticket'); // 'ticket' or 'question'
+  const [ticketId, setTicketId] = useState('');
+  const [question, setQuestion] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [showUpgradePrompt, setShowUpgradePrompt] = useState(false);
-
-  const ticketTypes = [
-    'General Access Ticket',
-    'Individual Pass — Regular',
-    'Connectors Pass',
-    'Individual Pass — VIP',
-    'Business Owner Pass',
-    'Showcase Vendor Pass',
-    'Market Vendor Pass',
-    'VIP Partner Pass'
-  ];
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  }
-
-  async function handleSubmit(e) {
+  
+  // Ticket details from lookup
+  const [ticketDetails, setTicketDetails] = useState(null);
+  const [isPriorityTicket, setIsPriorityTicket] = useState(false);
+ 
+  async function handleVerifyTicket(e) {
     e.preventDefault();
     setError('');
-
-    if (!formData.name.trim() || !formData.email.trim() || !formData.ticketType || !formData.question.trim()) {
-      setError('Please fill in all fields');
+ 
+    if (!ticketId.trim()) {
+      setError('Please enter your ticket ID');
       return;
     }
-
+ 
     setLoading(true);
-
+ 
+    try {
+      // Fetch ticket details from backend
+      const response = await fetch(
+        `https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net/tickets/${ticketId.trim()}`
+      );
+      
+      if (!response.ok) {
+        throw new Error('Ticket not found');
+      }
+ 
+      const details = await response.json();
+      
+      setTicketDetails(details);
+      setIsPriorityTicket(PRIORITY_TICKETS.includes(details.ticket_type));
+      setStep('question');
+    } catch (err) {
+      logTechnicalError(err, 'TICKET_LOOKUP');
+      setError(getUserFriendlyError(err) || 'Ticket not found. Please check your ticket ID and try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+ 
+  async function handleSubmitQuestion(e) {
+    e.preventDefault();
+    setError('');
+ 
+    if (!question.trim()) {
+      setError('Please enter your question');
+      return;
+    }
+ 
+    setLoading(true);
+ 
     try {
       await submitSpeakerQuestion({
         speaker_name: speaker.name,
-        ticket_type: formData.ticketType,
-        attendee_name: formData.name,
-        attendee_email: formData.email,
-        question_text: formData.question
+        ticket_id: ticketDetails.ticket_id,
+        ticket_type: ticketDetails.ticket_type,
+        attendee_name: ticketDetails.attendee_name,
+        attendee_email: ticketDetails.buyer_email,
+        question_text: question
       });
-
+ 
       setSubmitted(true);
-
-      // Check if should show upgrade prompt
-      const lowerTierTickets = [
-        'General Access Ticket',
-        'Individual Pass — Regular',
-        'Connectors Pass'
-      ];
-
-      if (lowerTierTickets.includes(formData.ticketType)) {
-        setShowUpgradePrompt(true);
-      }
     } catch (err) {
       logTechnicalError(err, 'SPEAKER_QUESTION_SUBMIT');
       setError(getUserFriendlyError(err));
@@ -81,150 +97,172 @@ export default function AskQuestionModal({ speaker, onClose }) {
       setLoading(false);
     }
   }
-
+ 
   function handleUpgradeClick() {
-    // Redirect to upgrade page
     window.location.href = '/upgrade-ticket';
   }
-
+ 
+  function handleBackToTicket() {
+    setStep('ticket');
+    setQuestion('');
+    setTicketDetails(null);
+  }
+ 
+  // Success Screen
   if (submitted) {
     return (
       <div className="question-modal-overlay" onClick={onClose}>
         <div className="question-modal" onClick={(e) => e.stopPropagation()}>
-          {/*<button className="question-modal-close" onClick={onClose}>×</button>*/}
-          
-          {showUpgradePrompt ? (
-            <div className="question-success">
-              <div className="question-success-icon">✓</div>
-              <h3>Thank you for submitting your question!</h3>
-              
+          <div className="question-success">
+            <div className="question-success-icon">✓</div>
+            <h3>Thank you for submitting your question!</h3>
+            
+            {!isPriorityTicket ? (
               <div className="question-upgrade-info">
                 <p>
-                  Questions selected for the live session will be answered from <strong>VIP and Business Owner</strong> ticket holders during Connexa.
-                </p>
-                <p>
-                  General Access attendees will still enjoy the full conversation live at the event.
+                  Your question has been submitted successfully. Questions are reviewed and selected for the live session based on relevance and prioritization.
                 </p>
                 
                 <div className="question-upgrade-cta">
                   <h4>Want your question to stand out?</h4>
-                  <p>Upgrade to VIP or Business Owner access for priority selection.</p>
+                  <p>Upgrade to a VIP, Business Owner, or Partner pass for priority selection in Q&A sessions.</p>
                   <button onClick={handleUpgradeClick} className="question-upgrade-btn">
                     Upgrade Ticket →
                   </button>
                 </div>
               </div>
-              
-              <button onClick={onClose} className="question-close-btn">
-                Close
-              </button>
-            </div>
-          ) : (
-            <div className="question-success">
-              <div className="question-success-icon">✓</div>
-              <h3>Thank you for submitting your question!</h3>
-              <p>Your question has been submitted successfully. We'll review all questions and select the best ones for the live Q&A session.</p>
-              <button onClick={onClose} className="question-close-btn">
-                Close
-              </button>
-            </div>
-          )}
+            ) : (
+              <p>Your question will be prioritized for selection at Connexa 2026!</p>
+            )}
+            
+            <button onClick={onClose} className="question-close-btn">
+              Close
+            </button>
+          </div>
         </div>
       </div>
     );
   }
-
+ 
   return (
     <div className="question-modal-overlay" onClick={onClose}>
       <div className="question-modal" onClick={(e) => e.stopPropagation()}>
-        {/*<button className="question-modal-close" onClick={onClose}>×</button>*/}
         
-        <h2 className="question-modal-title">Ask Connexer {speaker.name}</h2>
+        {/* Header */}
+        <h2 className="question-modal-title">
+          Ask {speaker.connexerType ? `${speaker.connexerType}` : 'Connexer'} {speaker.name}
+        </h2>
         <p className="question-modal-subtitle">
           Have a question you want answered at Connexa 2026? Submit it below.
         </p>
-
-        <form className="question-form" onSubmit={handleSubmit}>
-          {/* Name */}
-          <div className="question-form-group">
-            <label htmlFor="name">Name *</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Your full name"
-              required
-            />
-          </div>
-
-          {/* Email */}
-          <div className="question-form-group">
-            <label htmlFor="email">Email *</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="your.email@example.com"
-              required
-            />
-          </div>
-
-          {/* Ticket Type */}
-          <div className="question-form-group">
-            <label htmlFor="ticketType">Ticket Type *</label>
-            <select
-              id="ticketType"
-              name="ticketType"
-              value={formData.ticketType}
-              onChange={handleChange}
-              required
+ 
+        {/* Step 1: Ticket Verification */}
+        {step === 'ticket' && (
+          <form className="question-form" onSubmit={handleVerifyTicket}>
+            <div className="question-form-group">
+              <label htmlFor="ticketId">Ticket ID *</label>
+              <input
+                type="text"
+                id="ticketId"
+                value={ticketId}
+                onChange={(e) => setTicketId(e.target.value.toUpperCase())}
+                placeholder="e.g., CNX2026-ABC123"
+                required
+                autoFocus
+                style={{
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px',
+                  fontFamily: 'monospace'
+                }}
+              />
+              <small style={{ marginTop: '8px', color: 'var(--color-text-secondary)' }}>
+                Find your ticket ID in your confirmation email or ticket receipt
+              </small>
+            </div>
+ 
+            {error && <div className="question-error">{error}</div>}
+ 
+            <button 
+              type="submit" 
+              className="question-submit-btn"
+              disabled={loading}
             >
-              <option value="">Select your ticket type</option>
-              {ticketTypes.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Question */}
-          <div className="question-form-group">
-            <label htmlFor="question">Your Question *</label>
-            <textarea
-              id="question"
-              name="question"
-              value={formData.question}
-              onChange={handleChange}
-              rows="4"
-              placeholder="What would you like to ask?"
-              required
-            />
-          </div>
-
-          {error && <div className="question-error">{error}</div>}
-
-          <button 
-            type="submit" 
-            className="question-submit-btn"
-            disabled={loading}
-          >
-            {loading ? 'Submitting...' : 'Submit Question'}
-          </button>
-        </form>
-
+              {loading ? 'Verifying...' : 'Verify Ticket'}
+            </button>
+          </form>
+        )}
+ 
+        {/* Step 2: Question Submission */}
+        {step === 'question' && ticketDetails && (
+          <>
+            {/* Verified Ticket Info */}
+            <div className="question-ticket-info">
+              <div className="ticket-info-row">
+                <span className="ticket-info-label">Name:</span>
+                <span className="ticket-info-value">{ticketDetails.attendee_name}</span>
+              </div>
+              <div className="ticket-info-row">
+                <span className="ticket-info-label">Ticket Type:</span>
+                <span className="ticket-info-value">{ticketDetails.ticket_type}</span>
+              </div>
+              {!isPriorityTicket && (
+                <div className="ticket-info-priority-warning">
+                  <strong>💡 Not a priority ticket?</strong>
+                  <p>Upgrade to VIP, Business Owner, or Partner pass to get priority selection in Q&A sessions.</p>
+                  <a href="/upgrade-ticket" className="ticket-upgrade-link">
+                    Upgrade Your Ticket →
+                  </a>
+                </div>
+              )}
+            </div>
+ 
+            <form className="question-form" onSubmit={handleSubmitQuestion}>
+              {/* Question */}
+              <div className="question-form-group">
+                <label htmlFor="question">Your Question *</label>
+                <textarea
+                  id="question"
+                  value={question}
+                  onChange={(e) => setQuestion(e.target.value)}
+                  rows="5"
+                  placeholder="What would you like to ask?"
+                  required
+                  autoFocus
+                />
+              </div>
+ 
+              {error && <div className="question-error">{error}</div>}
+ 
+              <div className="question-form-actions">
+                <button 
+                  type="submit" 
+                  className="question-submit-btn"
+                  disabled={loading}
+                >
+                  {loading ? 'Submitting...' : 'Submit Question'}
+                </button>
+                <button 
+                  type="button" 
+                  className="question-back-btn"
+                  onClick={handleBackToTicket}
+                  disabled={loading}
+                >
+                  Back
+                </button>
+              </div>
+            </form>
+          </>
+        )}
+ 
+        {/* Speaker Info Section */}
         <div className="question-learn-more">
-          <strong>Learn more about the Connexer before asking your question.</strong>
+          <strong>Learn more about {speaker.connexerType ? speaker.connexerType : 'the Connexer'}</strong>
           
           {speaker.socials && Object.keys(speaker.socials).length > 0 && (
             <div className="speaker-socials">
               {Object.entries(speaker.socials).map(([platform, url]) => {
                 const Icon = socialIcons[platform];
-
+ 
                 return (
                   <a
                     key={platform}
@@ -240,9 +278,9 @@ export default function AskQuestionModal({ speaker, onClose }) {
               })}
             </div>
           )}
-
-          {speaker.topic && <p>Speaking on: {speaker.topic}</p>}
-          {speaker.company && <p>{speaker.title} at {speaker.company}</p>}
+ 
+          {speaker.topic && <p><strong>Speaking on:</strong> {speaker.topic}</p>}
+          {speaker.company && <p><strong>{speaker.title}</strong> at {speaker.company}</p>}
         </div>
       </div>
     </div>

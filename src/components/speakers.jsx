@@ -50,13 +50,13 @@ export default function Speakers() {
       <div className="container">
 
         <div className="speakers-header reveal">
-          <div className="section-tag">Connexers</div>
+          <div className="section-tag">ATHE PEOPLE BEHIND THE OPPORTUNITIES</div>
           <h2 className="section-title">
-            Learn From The <span className="highlight-blue">Best</span>
+            Connexers <span className="highlight-blue"></span>
           </h2>
           <p>
-            Industry leaders, founders, and experts sharing real insights
-            you can act on immediately.
+            Get answers from talents and business connexers who are 
+            building, hiring, growing, and creating opportunities.
           </p>
         </div>
         <div className="question-priority-notice">
@@ -122,7 +122,7 @@ export default function Speakers() {
                       rel="noreferrer"
                       className="speaker-read-more"
                     >
-                      Read more on Instagram
+                      Read more
                     </a>
                   </div>
                 )}
