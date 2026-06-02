@@ -149,7 +149,7 @@ export default function AskQuestionModal({ speaker, onClose }) {
       <div className="question-modal" onClick={(e) => e.stopPropagation()}>
         
         {/* Header */}
-        <h2 className="question-modal-title">
+        <h2 className="question-modal-title2">
           {speaker.connexerType ? `${speaker.connexerType}` : 'Connexer'}
         </h2>
         <h2 className="question-modal-title">

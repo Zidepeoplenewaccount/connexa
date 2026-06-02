@@ -11,7 +11,7 @@ const speakers = [
   {
     id: 1,
     name: 'Joshua Oluwadepo',
-    connexerType: 'Talent Connexer',
+    connexerType: 'TALENT CONNEXER',
     title: 'Senior Recruitment Consultant',
     company: 'Jobberman',
     topic: null, 
@@ -50,7 +50,7 @@ export default function Speakers() {
       <div className="container">
 
         <div className="speakers-header reveal">
-          <div className="section-tag">ATHE PEOPLE BEHIND THE OPPORTUNITIES</div>
+          <div className="section-tag">ASK THE PEOPLE BEHIND THE OPPORTUNITIES</div>
           <h2 className="section-title">
             Connexers <span className="highlight-blue"></span>
           </h2>
