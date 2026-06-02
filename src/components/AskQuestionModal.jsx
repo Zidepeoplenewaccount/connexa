@@ -113,6 +113,7 @@ export default function AskQuestionModal({ speaker, onClose }) {
     return (
       <div className="question-modal-overlay" onClick={onClose}>
         <div className="question-modal" onClick={(e) => e.stopPropagation()}>
+          <button className="question-modal-close" onClick={onClose}>×</button>
           <div className="question-success">
             <div className="question-success-icon">✓</div>
             <h3>Thank you for submitting your question!</h3>
@@ -147,6 +148,7 @@ export default function AskQuestionModal({ speaker, onClose }) {
   return (
     <div className="question-modal-overlay" onClick={onClose}>
       <div className="question-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="question-modal-close" onClick={onClose}>×</button>
         
         {/* Header */}
         <h2 className="question-modal-title2">
