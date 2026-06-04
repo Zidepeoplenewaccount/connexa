@@ -1,7 +1,7 @@
 import './speakers.css';
 import { useState } from 'react';
 import AskQuestionModal from './AskQuestionModal';
-import JoshuaPhoto from '../assets/IMG_0407.JPEG';
+import JoshuaPhoto from '../assets/joshua_oluwadepo.jpg';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
