@@ -1,5 +1,149 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Tickets.css';
+
+const SKILL_OPTIONS = [
+  'Software Developer',
+  'UI/UX Designer',
+  'Product Manager',
+  'Data Analyst',
+  'Digital Marketer',
+  'Content Creator',
+  'Graphic Designer',
+  'Project Manager',
+  'Sales / Business Development',
+  'Customer Support',
+  'Virtual Assistant',
+  'Copywriter',
+  'Video Editor',
+  'Social Media Manager',
+  'Accountant / Finance',
+  'HR / Recruiter',
+  'Photographer',
+  'Fashion Designer',
+  'Business Owner',
+  'Student',
+  'Web Developer',
+  'Mobile App Developer',
+  'DevOps Engineer',
+  'Cloud Engineer',
+  'Cybersecurity Analyst',
+  'AI / Machine Learning Engineer',
+  'Blockchain Developer',
+  'QA / Tester',
+  'Technical Writer',
+  'SEO Specialist',
+  'Email Marketer',
+  'Brand Strategist',
+  'Motion Designer',
+  'Animator',
+  'Music Producer',
+  'Event Planner',
+  'Interior Designer',
+  'Real Estate Agent',
+  'Lawyer',
+  'Doctor / Health Professional',
+  'Teacher / Tutor',
+  'Chef / Caterer',
+  'Fitness Trainer',
+  'Logistics / Supply Chain',
+  'Entrepreneur',
+  'Other',
+];
+
+function SkillDropdown({ value, onChange }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState('');
+  const [customSkill, setCustomSkill] = useState('');
+  const dropdownRef = useRef(null);
+
+  const isOther = value === 'Other' || (value && !SKILL_OPTIONS.slice(0, -1).includes(value));
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsOpen(false);
+        setSearch('');
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const filtered = SKILL_OPTIONS.filter(opt =>
+    opt.toLowerCase().includes(search.toLowerCase())
+  );
+
+  function handleSelect(opt) {
+    if (opt === 'Other') {
+      onChange('Other');
+      setCustomSkill('');
+    } else {
+      onChange(opt);
+    }
+    setIsOpen(false);
+    setSearch('');
+  }
+
+  function handleCustomChange(e) {
+    const val = e.target.value;
+    setCustomSkill(val);
+    onChange(val || 'Other');
+  }
+
+  const displayValue = isOther && value !== 'Other' ? value : (SKILL_OPTIONS.includes(value) ? value : '');
+
+  return (
+    <div className="skill-dropdown" ref={dropdownRef}>
+      <div
+        className={`skill-dropdown-trigger ticket-input ${isOpen ? 'skill-dropdown-open' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className={displayValue || value === 'Other' ? 'skill-dropdown-value' : 'skill-dropdown-placeholder'}>
+          {displayValue || (value === 'Other' ? 'Other (custom)' : 'What is your role or primary skill?')}
+        </span>
+        <svg className={`skill-dropdown-arrow ${isOpen ? 'rotated' : ''}`} width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </div>
+
+      {isOpen && (
+        <div className="skill-dropdown-menu">
+          <input
+            type="text"
+            className="skill-dropdown-search"
+            placeholder="Search skills..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            autoFocus
+          />
+          <div className="skill-dropdown-options">
+            {filtered.length > 0 ? filtered.map(opt => (
+              <div
+                key={opt}
+                className={`skill-dropdown-option ${opt === value ? 'selected' : ''}`}
+                onClick={() => handleSelect(opt)}
+              >
+                {opt}
+              </div>
+            )) : (
+              <div className="skill-dropdown-empty">No matches found</div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {(value === 'Other' || (isOther && value)) && (
+        <input
+          type="text"
+          className="ticket-input skill-custom-input"
+          placeholder="Type your skill or role..."
+          value={isOther && value !== 'Other' ? value : customSkill}
+          onChange={handleCustomChange}
+        />
+      )}
+    </div>
+  );
+}
 import { initializePayment, validateTicketId, validateDiscountCode, validateSpeakerCode, createFreeOrder, findTicketsByEmail } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
 import { getSpeakerCode } from '../utils/speaker';
@@ -1146,34 +1290,10 @@ export default function Tickets() {
                           onChange={(e) => handleAttendeeChange(index, 'phone', e.target.value)}
                           required
                         />
-                        <select
-                          className="ticket-input"
+                        <SkillDropdown
                           value={attendee.role_or_skill}
-                          onChange={(e) => handleAttendeeChange(index, 'role_or_skill', e.target.value)}
-                        >
-                          <option value="">What is your role or primary skill?</option>
-                          <option value="Software Developer">Software Developer</option>
-                          <option value="UI/UX Designer">UI/UX Designer</option>
-                          <option value="Product Manager">Product Manager</option>
-                          <option value="Data Analyst">Data Analyst</option>
-                          <option value="Digital Marketer">Digital Marketer</option>
-                          <option value="Content Creator">Content Creator</option>
-                          <option value="Graphic Designer">Graphic Designer</option>
-                          <option value="Project Manager">Project Manager</option>
-                          <option value="Sales / Business Development">Sales / Business Development</option>
-                          <option value="Customer Support">Customer Support</option>
-                          <option value="Virtual Assistant">Virtual Assistant</option>
-                          <option value="Copywriter">Copywriter</option>
-                          <option value="Video Editor">Video Editor</option>
-                          <option value="Social Media Manager">Social Media Manager</option>
-                          <option value="Accountant / Finance">Accountant / Finance</option>
-                          <option value="HR / Recruiter">HR / Recruiter</option>
-                          <option value="Photographer">Photographer</option>
-                          <option value="Fashion Designer">Fashion Designer</option>
-                          <option value="Business Owner">Business Owner</option>
-                          <option value="Student">Student</option>
-                          <option value="Other">Other</option>
-                        </select>
+                          onChange={(val) => handleAttendeeChange(index, 'role_or_skill', val)}
+                        />
                       </div>
                     ))}
                   </div>
