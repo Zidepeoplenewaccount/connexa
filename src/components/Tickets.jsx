@@ -1012,10 +1012,11 @@ export default function Tickets() {
         message: 'Ticket checkout failed before redirect',
         payload: {
           ticket_type: selectedTicket?.name,
-          error: err?.message || 'unknown_error',
+          error: err?.response?.data?.detail || err?.message || 'unknown_error',
         },
       });
-      setError('Something went wrong. Please try again.');
+      const backendMsg = err?.response?.data?.detail;
+      setError(backendMsg || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
