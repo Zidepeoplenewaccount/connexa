@@ -235,7 +235,7 @@ export default function Tickets() {
   
   // Individual pass state
   const [quantity, setQuantity] = useState(1);
-  const [attendees, setAttendees] = useState([{ name: '', email: '', phone: '' }]);
+  const [attendees, setAttendees] = useState([{ name: '', email: '', phone: '', role_or_skill: '' }]);
   
   // Business pass state
   const [businessName, setBusinessName] = useState('');
@@ -442,7 +442,7 @@ export default function Tickets() {
     // Reset state based on pass type
     if (ticket.passType === 'individual') {
       setQuantity(1);
-      setAttendees([{ name: '', email: '', phone: '' }]);
+      setAttendees([{ name: '', email: '', phone: '', role_or_skill: '' }]);
 
       if (ticket.type === 'connectors') {
         setConnectorsTicketId('');
@@ -484,7 +484,7 @@ export default function Tickets() {
   function handleQuantityChange(newQuantity) {
     setQuantity(newQuantity);
     const newAttendees = Array(newQuantity).fill(null).map((_, i) => 
-      attendees[i] || { name: '', email: '', phone: '' }
+      attendees[i] || { name: '', email: '', phone: '', role_or_skill: '' }
     );
     setAttendees(newAttendees);
   }
@@ -709,7 +709,8 @@ export default function Tickets() {
           attendees: attendees.map(a => ({
             name: a.name.trim(),
             email: normalizeEmail(a.email),
-            phone: a.phone.trim()
+            phone: a.phone.trim(),
+            role_or_skill: a.role_or_skill || null
           })),
           affiliate_code: affiliateCode
         };
@@ -1145,6 +1146,34 @@ export default function Tickets() {
                           onChange={(e) => handleAttendeeChange(index, 'phone', e.target.value)}
                           required
                         />
+                        <select
+                          className="ticket-input"
+                          value={attendee.role_or_skill}
+                          onChange={(e) => handleAttendeeChange(index, 'role_or_skill', e.target.value)}
+                        >
+                          <option value="">What is your role or primary skill?</option>
+                          <option value="Software Developer">Software Developer</option>
+                          <option value="UI/UX Designer">UI/UX Designer</option>
+                          <option value="Product Manager">Product Manager</option>
+                          <option value="Data Analyst">Data Analyst</option>
+                          <option value="Digital Marketer">Digital Marketer</option>
+                          <option value="Content Creator">Content Creator</option>
+                          <option value="Graphic Designer">Graphic Designer</option>
+                          <option value="Project Manager">Project Manager</option>
+                          <option value="Sales / Business Development">Sales / Business Development</option>
+                          <option value="Customer Support">Customer Support</option>
+                          <option value="Virtual Assistant">Virtual Assistant</option>
+                          <option value="Copywriter">Copywriter</option>
+                          <option value="Video Editor">Video Editor</option>
+                          <option value="Social Media Manager">Social Media Manager</option>
+                          <option value="Accountant / Finance">Accountant / Finance</option>
+                          <option value="HR / Recruiter">HR / Recruiter</option>
+                          <option value="Photographer">Photographer</option>
+                          <option value="Fashion Designer">Fashion Designer</option>
+                          <option value="Business Owner">Business Owner</option>
+                          <option value="Student">Student</option>
+                          <option value="Other">Other</option>
+                        </select>
                       </div>
                     ))}
                   </div>
