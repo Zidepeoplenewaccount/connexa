@@ -142,7 +142,10 @@ export default function AdminTicketsFeaturePage() {
 
   const filtered = tickets.filter(t =>
     t.attendee_name.toLowerCase().includes(search.toLowerCase()) ||
-    t.buyer_email.toLowerCase().includes(search.toLowerCase())
+    t.buyer_email.toLowerCase().includes(search.toLowerCase()) ||
+    (t.phone || '').toLowerCase().includes(search.toLowerCase()) ||
+    (t.role_or_skill || '').toLowerCase().includes(search.toLowerCase()) ||
+    (t.ticket_type || '').toLowerCase().includes(search.toLowerCase())
   );
 
   if (loading) {
@@ -176,28 +179,43 @@ export default function AdminTicketsFeaturePage() {
                 <th>Ticket ID</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Phone</th>
                 <th>Type</th>
+                <th>Role/Skill</th>
+                <th>Business</th>
                 <th>Amount</th>
                 <th>Discount</th>
+                <th>Vendor Details</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>
+                  <td colSpan="11" style={{ textAlign: 'center', padding: '40px' }}>
                     No tickets found
                   </td>
                 </tr>
               ) : (
                 filtered.map((ticket) => {
                   const resolvedDiscount = resolveTicketDiscount(ticket);
+                  const vendorDetails = [
+                    ticket.vendor_category && `Category: ${ticket.vendor_category}`,
+                    ticket.instagram_website && `IG/Web: ${ticket.instagram_website}`,
+                    ticket.needs_electricity && `Electricity: ${ticket.needs_electricity}`,
+                    ticket.electricity_appliances && `Appliances: ${ticket.electricity_appliances}`,
+                    ticket.support_assistant && `Support: ${ticket.support_assistant}`,
+                    ticket.support_quantity && `Qty: ${ticket.support_quantity}`,
+                  ].filter(Boolean).join(' | ');
                   return (
                     <tr key={ticket.ticket_id}>
                       <td><code>{ticket.ticket_id}</code></td>
                       <td>{ticket.attendee_name}</td>
                       <td>{ticket.buyer_email}</td>
+                      <td>{ticket.phone || '—'}</td>
                       <td>{ticket.ticket_type}</td>
+                      <td>{ticket.role_or_skill || '—'}</td>
+                      <td>{ticket.business_name || '—'}</td>
                       <td>₦{ticket.amount?.toLocaleString()}</td>
                       <td>
                         {resolvedDiscount && resolvedDiscount.percentage !== null && resolvedDiscount.percentage !== undefined ? (
@@ -207,6 +225,9 @@ export default function AdminTicketsFeaturePage() {
                         ) : (
                           <span style={{ color: 'rgba(255,255,255,0.45)' }}>None</span>
                         )}
+                      </td>
+                      <td style={{ fontSize: '12px', maxWidth: '200px', whiteSpace: 'pre-wrap' }}>
+                        {vendorDetails || '—'}
                       </td>
                       <td>
                         <button
