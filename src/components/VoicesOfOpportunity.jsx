@@ -12,11 +12,11 @@ const quotes = [
   },
   {
     text: "I didn't get here because I knew the right people. I got here by consistently showing up, adding value, and creating opportunities even when none seemed available.",
-    name: 'Omobolanle Adigun',
+    name: 'Omobolanle Adigun (THE VIBE QUEEN)',
   },
   {
     text: "Your talent may open the door, but your visibility, discipline, reputation and relationships determine how long you stay in the room. Invest in all.",
-    name: 'Omobolanle Adigun',
+    name: 'Omobolanle Adigun (THE VIBE QUEEN)',
   },
   {
     text: "I was not always the most connected person in the room. I often had to show up where I knew no one, stay when it felt uncomfortable, and keep showing up in silence—until preparation became my loudest introduction.",

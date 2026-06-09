@@ -18,6 +18,7 @@ const speakers = [
     topic: null, 
     photo: JoshuaPhoto,
     featured: false,
+    askLabel: 'Ask Joshua',
     bio: 'Joshua Oluwadepo is a Senior Recruitment Consultant at Jobberman (The African Talent Company) with years of experience helping Nigerian talents access opportunities across Africa and globally. Specializing in recruitment, talent positioning, remote opportunities, and tech hiring, he has helped connect talents to opportunities across multiple industries and continents. As a Talent Connexer, Joshua will be answering questions around how to get connected to real opportunities, especially breaking down how hiring works and how talent positioning can significantly improve your chances in today\'s job market.',
     instagramUrl: 'https://www.instagram.com/connexalagos',
     socials: {
@@ -33,6 +34,7 @@ const speakers = [
     topic: null,
     photo: ItunuoluwaPhoto,
     featured: false,
+    askLabel: 'Ask RT. HON ITUNUOLUWA',
     bio: 'Itunuoluwa Maria Soniregun is a youth leader and policy advocate committed to advancing youth inclusion, leadership development, and civic participation. As the first female Speaker of Lagos State Youth Parliament and the youngest State Youth Parliament Speaker in Nigeria, she has consistently leveraged her platform to bridge the gap between young people and meaningful opportunities in leadership, governance, and personal development. Her journey reflects a deep commitment to preparing young people not only to access opportunities, but to be fully ready to maximize them when they arrive.',
     socials: {
       instagram: 'https://www.instagram.com/soniregunitunuoluwa',
@@ -179,7 +181,7 @@ export default function Speakers() {
                     className="speaker-ask-btn"
                     onClick={() => openQuestionModal(speaker)}
                   >
-                    Ask {speaker?.name?.split(' ')[0]}
+                    {speaker.askLabel || `Ask ${speaker?.name?.split(' ')[0]}`}
                   </button>
                 )}
               </div>

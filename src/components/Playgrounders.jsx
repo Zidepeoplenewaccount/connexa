@@ -36,6 +36,7 @@ const playgrounders = [
     topic: null,
     photo: OmobolanlePhoto,
     featured: false,
+    photoClass: 'zoom-out-photo',
     askLabel: 'ASK THE VIBE QUEEN',
     bio: 'Omobolanle Valentina Adigun popularly known as Omobola Val or The Vibe Queen is a multi-talented media and communications professional who is passionate about connecting people with opportunities that transform their lives. As the Head of Brands & communications at Creatrix Empire, an actor, media presenter, event host, and content creator, she has built a strong career around entertainment, personal branding, and meaningful collaborations. Through her work, she has helped talents, brands, and organizations amplify their voices and create lasting impact. As a Talent Playgrounder, she believes that authentic relationships and strategic visibility are powerful tools for career growth.',
     socials: {
@@ -98,7 +99,11 @@ export default function Playgrounders() {
               {/* ── Photo ── */}
               <div className="speaker-photo">
                 {speaker.photo ? (
-                  <img src={speaker.photo} alt={speaker.name} />
+                  <img 
+                    src={speaker.photo} 
+                    alt={speaker.name}
+                    className={speaker.photoClass || ''}
+                  />
                 ) : (
                   <div className="speaker-photo-placeholder">
                     <span>{/*🎤*/}</span>

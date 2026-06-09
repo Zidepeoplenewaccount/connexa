@@ -528,9 +528,9 @@
 }
 
 .md-legal-logo {
-  height: 50px;
-  width: 50px;
-  object-fit: cover;
+  height: 60px;
+  width: 60px;
+  object-fit: contain;
   border-radius: 8px;
 }
 
