@@ -207,8 +207,7 @@
 }
 
 .speaker-photo img.zoom-out-photo {
-  object-position: top;
-  transform: scale(0.85);
+  object-position: center 15%;
 }
 
 .speaker-card:hover .speaker-photo img {
