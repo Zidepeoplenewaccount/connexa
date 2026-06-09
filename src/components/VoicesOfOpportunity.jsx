@@ -1,0 +1,84 @@
+import './VoicesOfOpportunity.css';
+import { useState, useEffect } from 'react';
+
+const quotes = [
+  {
+    text: "Opportunities don't always go to the most qualified person in the room. They often go to the person who is visible, prepared, and willing to take action when the opportunity appears.",
+    name: 'Barr. Mosunmoluwa David-Gbemisola',
+  },
+  {
+    text: "I didn't get where I am by having all the answers. I got here by staying curious, taking opportunities seriously and willing to learn along the way.",
+    name: 'Barr. Mosunmoluwa David-Gbemisola',
+  },
+  {
+    text: "I didn't get here because I knew the right people. I got here by consistently showing up, adding value, and creating opportunities even when none seemed available.",
+    name: 'Omobolanle Adigun',
+  },
+  {
+    text: "Your talent may open the door, but your visibility, discipline, reputation and relationships determine how long you stay in the room. Invest in all.",
+    name: 'Omobolanle Adigun',
+  },
+  {
+    text: "I was not always the most connected person in the room. I often had to show up where I knew no one, stay when it felt uncomfortable, and keep showing up in silence—until preparation became my loudest introduction.",
+    name: 'Rt. Hon Itunuoluwa Maria Soniregun',
+  },
+  {
+    text: "Too many people lose opportunities they prayed for because they were not prepared for the moment it finally arrived. The real work is not just getting access—it is becoming ready enough not to waste it.",
+    name: 'Rt. Hon Itunuoluwa Maria Soniregun',
+  },
+  {
+    text: "Experience gave me knowledge, but one intentional year turned me into a uniquely positioned talent.",
+    name: 'Joshua Oluwadepo',
+  },
+  {
+    text: "Talent alone is not enough. If you don't know how to connect your skills to opportunities, your expertise may remain invisible.",
+    name: 'Joshua Oluwadepo',
+  },
+];
+
+export default function VoicesOfOpportunity() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % quotes.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  function goTo(index) {
+    setCurrent(index);
+  }
+
+  return (
+    <section className="voices section" id="voices">
+      <div className="container">
+        <div className="voices-header reveal">
+          <div className="section-tag">HEAR FROM THOSE WHO'VE BEEN THERE</div>
+          <h2 className="section-title">
+            Voices of Opportunity
+          </h2>
+        </div>
+
+        <div className="voices-slider">
+          <div className="voices-slide">
+            <div className="voices-quote-mark">"</div>
+            <p className="voices-quote-text">{quotes[current].text}</p>
+            <div className="voices-quote-author">— {quotes[current].name}</div>
+          </div>
+
+          <div className="voices-dots">
+            {quotes.map((_, i) => (
+              <button
+                key={i}
+                className={`voices-dot ${i === current ? 'active' : ''}`}
+                onClick={() => goTo(i)}
+                aria-label={`Go to quote ${i + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
