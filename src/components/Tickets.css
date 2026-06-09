@@ -67,6 +67,8 @@
 .tickets-upgrade-link:hover {
   transform: translateY(-1px);
   box-shadow: 0 8px 20px rgba(245,166,35,0.3);
+  background: #ffffff;
+  color: var(--black);
 }
 
 .tickets-grid {
