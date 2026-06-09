@@ -4,6 +4,7 @@ import zideLogo from '../assets/IMG_5735-removebg-preview2.png';
 import ArcLogo from '../assets/ARC_LOGO.png';
 import RightEvents from '../assets/IMG_9099.PNG';
 import plitverse from '../assets/IMG_0405.PNG';
+import mdLegalLogo from '../assets/md_legal_consults.png';
 
 const marqueeItems = [
   { text: 'Meet', color: 'var(--orange)' },
@@ -22,14 +23,17 @@ const sponsors = [
   { name: '', logo: ArcLogo },
   { name: '', logo: RightEvents },
   { name: '', logo: plitverse },
+  { name: '', logo: mdLegalLogo },
   { name: '', logo: zideLogo },
   { name: '', logo: ArcLogo },
   { name: '', logo: RightEvents },
   { name: '', logo: plitverse },
+  { name: '', logo: mdLegalLogo },
   { name: '', logo: zideLogo },
   { name: '', logo: ArcLogo },
   { name: '', logo: RightEvents },
   { name: '', logo: plitverse },
+  { name: '', logo: mdLegalLogo },
 ];
 
 export default function Hero() {
@@ -246,7 +250,7 @@ export default function Hero() {
                     <img 
                       src={sponsor.logo} 
                       alt={sponsor.name} 
-                      className={`hero-sponsor-logo ${sponsor.logo === zideLogo ? 'zide-logo' : 'arc-logo'}`}
+                      className={`hero-sponsor-logo ${sponsor.logo === zideLogo ? 'zide-logo' : sponsor.logo === mdLegalLogo ? 'md-legal-logo' : 'arc-logo'}`}
                     />
                   ) : (
                     <div className="hero-sponsor-placeholder">Logo</div>

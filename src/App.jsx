@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Speakers from './components/speakers';
+import Playgrounders from './components/Playgrounders';
 import Gallery from './components/Gallery';
 import Tickets from './components/Tickets';
 import FAQ from './components/FAQ';
@@ -53,6 +54,7 @@ function HomePage() {
         <Hero />
         <About />
         <Speakers />
+        <Playgrounders />
         <Gallery />
         <Tickets />
 

@@ -1,44 +1,48 @@
 import './speakers.css';
 import { useState } from 'react';
 import AskQuestionModal from './AskQuestionModal';
-import JoshuaPhoto from '../assets/joshua_oluwadepo.jpg';
-import ItunuoluwaPhoto from '../assets/itunuoluwa_soniregun.png';
+import MosunmoluwaPhoto from '../assets/mosunmoluwa_david.png';
+import OmobolanlePhoto from '../assets/omobolanle_adigun.jpeg';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
 
 
-const speakers = [
+const playgrounders = [
   {
     id: 1,
-    name: 'Joshua Oluwadepo',
-    connexerType: 'TALENT CONNEXER',
-    title: 'Senior Recruitment Consultant',
-    company: 'Jobberman',
-    topic: null, 
-    photo: JoshuaPhoto,
+    name: 'Barr. Mosunmoluwa David-Gbemisola',
+    connexerType: 'TALENT PLAYGROUNDER',
+    title: 'Legal Practitioner, Founding Partner',
+    company: 'M&D Legal Consults',
+    topic: null,
+    photo: MosunmoluwaPhoto,
     featured: false,
-    bio: 'Joshua Oluwadepo is a Senior Recruitment Consultant at Jobberman (The African Talent Company) with years of experience helping Nigerian talents access opportunities across Africa and globally. Specializing in recruitment, talent positioning, remote opportunities, and tech hiring, he has helped connect talents to opportunities across multiple industries and continents. As a Talent Connexer, Joshua will be answering questions around how to get connected to real opportunities, especially breaking down how hiring works and how talent positioning can significantly improve your chances in today\'s job market.',
-    instagramUrl: 'https://www.instagram.com/connexalagos',
+    askLabel: 'Ask MOSUNMOLUWA',
+    bio: 'Barr. Mosunmoluwa David-Gbemisola is a legal practitioner with over five years of experience advising businesses on corporate, commercial, regulatory, and compliance matters. She holds a Master\'s degree in Corporate and Commercial Law from the prestigious University of Lagos and is the Founding Partner of M&D Legal Consults, a business-focused law firm dedicated to helping entrepreneurs, investors, and business owners protect and grow their ventures. Beyond legal practice, Barr. Mosunmoluwa is passionate about entrepreneurship, business development, and creating pathways for growth. Through her work, she has supported individuals and businesses in navigating legal complexities, identifying opportunities, and building sustainable ventures. As a speaker, she is committed to sharing practical insights, empowering professionals, and connecting people with real opportunities that drive personal and business success.',
     socials: {
-      linkedin: 'https://www.linkedin.com/in/joshuaoluwadepo?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
+      instagram: 'https://www.instagram.com/themosunmoluwa',
+      tiktok: 'https://www.tiktok.com/@mosununfiltered',
+      twitter: 'https://x.com/themosunmoluwa',
+      linkedin: 'https://www.linkedin.com/in/mosunakomolede',
     },
   },
   {
     id: 2,
-    name: 'Rt. Hon Itunuoluwa Maria Soniregun',
-    connexerType: 'TALENT CONNEXER',
-    title: 'First Female Speaker, Lagos State Youth Parliament',
-    company: 'Lagos State Youth Parliament',
+    name: 'Omobolanle Adigun',
+    connexerType: 'TALENT PLAYGROUNDER',
+    title: 'Actor, TV & Event Host, Brand & Communications Executive, Writer, Content Creator & Entrepreneur',
+    company: 'Creatrix Empire',
     topic: null,
-    photo: ItunuoluwaPhoto,
+    photo: OmobolanlePhoto,
     featured: false,
-    bio: 'Itunuoluwa Maria Soniregun is a youth leader and policy advocate committed to advancing youth inclusion, leadership development, and civic participation. As the first female Speaker of Lagos State Youth Parliament and the youngest State Youth Parliament Speaker in Nigeria, she has consistently leveraged her platform to bridge the gap between young people and meaningful opportunities in leadership, governance, and personal development. Her journey reflects a deep commitment to preparing young people not only to access opportunities, but to be fully ready to maximize them when they arrive.',
+    askLabel: 'ASK THE VIBE QUEEN',
+    bio: 'Omobolanle Valentina Adigun popularly known as Omobola Val or The Vibe Queen is a multi-talented media and communications professional who is passionate about connecting people with opportunities that transform their lives. As the Head of Brands & communications at Creatrix Empire, an actor, media presenter, event host, and content creator, she has built a strong career around entertainment, personal branding, and meaningful collaborations. Through her work, she has helped talents, brands, and organizations amplify their voices and create lasting impact. As a Talent Playgrounder, she believes that authentic relationships and strategic visibility are powerful tools for career growth.',
     socials: {
-      instagram: 'https://www.instagram.com/soniregunitunuoluwa',
-      tiktok: 'https://www.tiktok.com/@itunuoluwasoniregun1',
-      twitter: 'https://x.com/SoniregunItunu1',
-      linkedin: 'https://www.linkedin.com/in/rt-hon-soniregun-itunuoluwa-5a571a1aa',
+      instagram: 'https://www.instagram.com/omobolanleadigun_',
+      tiktok: 'https://www.tiktok.com/@omobola_val',
+      twitter: 'https://x.com/omobola_val',
+      linkedin: 'https://linkedin.com/in/omobolanle-adigun-508253120',
     },
   },
 ];
@@ -51,7 +55,7 @@ const socialIcons = {
 };
 
 
-export default function Speakers() {
+export default function Playgrounders() {
   const [selectedSpeaker, setSelectedSpeaker] = useState(null);
 
   function openQuestionModal(speaker) {
@@ -64,17 +68,16 @@ export default function Speakers() {
 
 
   return (
-    <section className="speakers section" id="speakers">
+    <section className="speakers section" id="playgrounders">
       <div className="container">
 
         <div className="speakers-header reveal">
-          <div className="section-tag">ASK THE PEOPLE BEHIND THE OPPORTUNITIES</div>
+          <div className="section-tag">MEET THE</div>
           <h2 className="section-title">
-            Connexers <span className="highlight-blue"></span>
+            Playgrounders <span className="highlight-blue"></span>
           </h2>
           <p>
-            Get answers from talents and business connexers who are 
-            building, hiring, growing, and creating opportunities.
+            Learn from people who have built careers, created impact, and unlocked opportunities.
           </p>
         </div>
         <div className="question-priority-notice">
@@ -86,7 +89,7 @@ export default function Speakers() {
         </div>
 
         <div className="speakers-grid">
-          {speakers.map((speaker, i) => (
+          {playgrounders.map((speaker, i) => (
             <div
               key={speaker.id}
               className="speaker-card reveal"
@@ -134,14 +137,6 @@ export default function Speakers() {
                 {speaker.bio && (
                   <div className="speaker-bio">
                     <p>{speaker.bio.substring(0, 200)}...</p>
-                    <a 
-                      href={speaker.instagramUrl || '#'} 
-                      target="_blank" 
-                      rel="noreferrer"
-                      className="speaker-read-more"
-                    >
-                      Read more
-                    </a>
                   </div>
                 )}
 
@@ -179,7 +174,7 @@ export default function Speakers() {
                     className="speaker-ask-btn"
                     onClick={() => openQuestionModal(speaker)}
                   >
-                    Ask {speaker?.name?.split(' ')[0]}
+                    {speaker.askLabel}
                   </button>
                 )}
               </div>

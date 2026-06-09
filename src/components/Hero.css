@@ -527,6 +527,13 @@
   width: 90%;
 }
 
+.md-legal-logo {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 .hero-sponsor-text {
   font-family: var(--font-display);
   font-size: 10px;
