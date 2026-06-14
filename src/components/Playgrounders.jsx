@@ -161,6 +161,14 @@ export default function Playgrounders() {
                 {speaker.bio && (
                   <div className="speaker-bio">
                     <p>{speaker.bio.substring(0, 200)}...</p>
+                    <a 
+                      href={speaker.socials?.instagram || '#'} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="speaker-read-more"
+                    >
+                      Read more
+                    </a>
                   </div>
                 )}
 
