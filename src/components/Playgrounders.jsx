@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AskQuestionModal from './AskQuestionModal';
 import MosunmoluwaPhoto from '../assets/mosunmoluwa_david.png';
 import OmobolanlePhoto from '../assets/omobolanle_adigun.jpeg';
+import OlalekanPhoto from '../assets/olalekan_asani.jpg';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -44,6 +45,24 @@ const playgrounders = [
       tiktok: 'https://www.tiktok.com/@omobola_val',
       twitter: 'https://x.com/omobola_val',
       linkedin: 'https://linkedin.com/in/omobolanle-adigun-508253120',
+    },
+  },
+  {
+    id: 3,
+    name: 'Olalekan Asani',
+    connexerType: 'BUSINESS PLAYGROUNDER',
+    title: 'Brand Naming Consultant & Brand Identity Designer',
+    company: '',
+    topic: null,
+    photo: OlalekanPhoto,
+    featured: false,
+    askLabel: 'Ask Olalekan',
+    bio: 'Olalekan Asani is a brand naming consultant and brand identity designer who helps founders and growing businesses turn unclear ideas into clear, ownable, and memorable brand identities. Through his work, he helps businesses clarify what they stand for, how they should be perceived, what they should be called, and how they should visually present themselves to attract the right audience and opportunities. As a Business Playgrounder at Connexa 2026, Olalekan brings practical experience in branding, naming, storytelling, and visual identity to help entrepreneurs think more clearly about how their business can move from just existing to being properly seen, understood, and trusted.',
+    socials: {
+      instagram: 'https://www.instagram.com/ola_asani?igsh=Znd4cWFlYmQzaHQ3',
+      tiktok: 'https://www.tiktok.com/@ola_asani?_r=1&_t=ZS-97DAAeKYcFh',
+      twitter: 'https://x.com/ola_asani?s=21',
+      linkedin: 'https://www.linkedin.com/in/olalekan-asani-502727191',
     },
   },
 ];

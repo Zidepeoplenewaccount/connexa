@@ -34,6 +34,14 @@ const quotes = [
     text: "Talent alone is not enough. If you don't know how to connect your skills to opportunities, your expertise may remain invisible.",
     name: 'Joshua Oluwadepo',
   },
+  {
+    text: "I know what it means to have the skill, the idea, and the ambition, but still need clarity, language, and positioning before people take you seriously.",
+    name: 'Olalekan Asani',
+  },
+  {
+    text: "Many businesses are not ignored because they are bad. They are ignored because people cannot quickly understand what they do, why it matters, and why they should trust them.",
+    name: 'Olalekan Asani',
+  },
 ];
 
 export default function VoicesOfOpportunity() {
