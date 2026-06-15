@@ -79,7 +79,7 @@ export default function Footer() {
           <div>
             <div className="footer-col-title">Event</div>
             <div className="footer-col-links">
-              <p href="#">University of Lagos, Nigeria</p>
+              <p href="#">University of Lagos Indoor Sports Hall</p>
               <p href="#">Lagos · 2026</p>
             </div>
           </div>

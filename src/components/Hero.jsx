@@ -160,7 +160,7 @@ export default function Hero() {
           <div className="hero-details">
             <div className="hero-detail-item">
               <span className="hero-detail-icon">📍</span>
-              <span className="hero-detail-text">University of Lagos</span>
+              <span className="hero-detail-text">University of Lagos Indoor Sports Hall</span>
             </div>
             <div className="hero-detail-item">
               <span className="hero-detail-icon">
