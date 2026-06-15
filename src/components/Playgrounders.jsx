@@ -13,7 +13,7 @@ const playgrounders = [
   {
     id: 1,
     name: 'Barr. Mosunmoluwa David-Gbemisola',
-    connexerType: 'TALENT PLAYGROUNDER',
+    connexerType: 'BUSINESS CONNEXER',
     title: 'Legal Practitioner, Founding Partner',
     company: 'M&D Legal Consults',
     topic: null,
