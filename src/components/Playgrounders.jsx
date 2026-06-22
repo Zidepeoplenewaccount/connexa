@@ -77,7 +77,6 @@ const playgrounders = [
     featured: false,
     askLabel: 'Ask Dotify',
     bio: 'With over 5 years experience in the blockchain ecosystem, Dotify helps founders and builders turn ideas into simple and relatable narratives that people can understand and act on. Through his platform Founders Corner, he connects talent, products, and opportunities by making complex thinking very simple and visible.',
-    quote: 'If I am worth anything later, then I am worth something now. For wheat is wheat, even if people think it is grass in the beginning. Building something valuable is hard, but making people understand it is harder, and that is where most people lose.',
     socials: {
       instagram: 'https://www.instagram.com/iamdotify',
       tiktok: 'https://www.tiktok.com/@iamdotify',
