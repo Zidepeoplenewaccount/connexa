@@ -31,7 +31,7 @@ const playgrounders = [
   },
   {
     id: 2,
-    name: 'Omobolanle Adigun',
+    name: 'Omobolanle Adigun (The Vibe Queen)',
     connexerType: 'TALENT PLAYGROUNDER',
     title: 'Actor, TV & Event Host, Brand & Communications Executive, Writer, Content Creator & Entrepreneur',
     company: 'Creatrix Empire',
