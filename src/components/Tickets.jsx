@@ -144,6 +144,78 @@ function SkillDropdown({ value, onChange }) {
     </div>
   );
 }
+const CONNEXER_OPTIONS = [
+  { group: 'Connexers', items: [
+    { value: 'Joshua Oluwadepo', label: 'Joshua Oluwadepo — Talent Connexer' },
+    { value: 'Rt. Hon Itunuoluwa Maria Soniregun', label: 'Rt. Hon Itunuoluwa — Talent Connexer' },
+  ]},
+  { group: 'Playgrounders', items: [
+    { value: 'Barr. Mosunmoluwa David-Gbemisola', label: 'Mosunmoluwa — Business Playgrounder' },
+    { value: 'Omobolanle Adigun (The Vibe Queen)', label: 'Omobolanle (The Vibe Queen) — Talent Playgrounder' },
+    { value: 'Olalekan Asani', label: 'Olalekan Asani — Business Playgrounder' },
+    { value: 'David Ogooluwa (Dotify)', label: 'Dotify — Talent Playgrounder' },
+  ]},
+];
+
+function ConnexerDropdown({ value, onChange }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const allItems = CONNEXER_OPTIONS.flatMap(g => g.items);
+  const selectedLabel = allItems.find(i => i.value === value)?.label || '';
+
+  function handleSelect(val) {
+    onChange(val);
+    setIsOpen(false);
+  }
+
+  return (
+    <div className="skill-dropdown" ref={dropdownRef}>
+      <div
+        className={`skill-dropdown-trigger ticket-input ${isOpen ? 'skill-dropdown-open' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className={value ? 'skill-dropdown-value' : 'skill-dropdown-placeholder'}>
+          {selectedLabel || 'Select a Connexer or Playgrounder'}
+        </span>
+        <svg className={`skill-dropdown-arrow ${isOpen ? 'rotated' : ''}`} width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </div>
+
+      {isOpen && (
+        <div className="skill-dropdown-menu">
+          <div className="skill-dropdown-options">
+            {CONNEXER_OPTIONS.map(group => (
+              <div key={group.group}>
+                <div className="connexer-dropdown-group-label">{group.group}</div>
+                {group.items.map(item => (
+                  <div
+                    key={item.value}
+                    className={`skill-dropdown-option ${item.value === value ? 'selected' : ''}`}
+                    onClick={() => handleSelect(item.value)}
+                  >
+                    {item.label}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 import { initializePayment, validateTicketId, validateDiscountCode, validateSpeakerCode, createFreeOrder, findTicketsByEmail } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';
 import { getSpeakerCode } from '../utils/speaker';
@@ -1244,23 +1316,10 @@ export default function Tickets() {
 
                   <div className="ticket-input-group">
                     <label>Who do you want to ask a question? (Optional)</label>
-                    <select
-                      className="ticket-input"
+                    <ConnexerDropdown
                       value={connectorsPreferredConnexer}
-                      onChange={(e) => setConnectorsPreferredConnexer(e.target.value)}
-                    >
-                      <option value="">Select a Connexer or Playgrounder</option>
-                      <optgroup label="Connexers">
-                        <option value="Joshua Oluwadepo">Joshua Oluwadepo — Talent Connexer</option>
-                        <option value="Rt. Hon Itunuoluwa Maria Soniregun">Rt. Hon Itunuoluwa Maria Soniregun — Talent Connexer</option>
-                      </optgroup>
-                      <optgroup label="Playgrounders">
-                        <option value="Barr. Mosunmoluwa David-Gbemisola">Barr. Mosunmoluwa David-Gbemisola — Business Playgrounder</option>
-                        <option value="Omobolanle Adigun (The Vibe Queen)">Omobolanle Adigun (The Vibe Queen) — Talent Playgrounder</option>
-                        <option value="Olalekan Asani">Olalekan Asani — Business Playgrounder</option>
-                        <option value="David Ogooluwa (Dotify)">David Ogooluwa (Dotify) — Talent Playgrounder</option>
-                      </optgroup>
-                    </select>
+                      onChange={setConnectorsPreferredConnexer}
+                    />
                   </div>
                 </>
               )}
