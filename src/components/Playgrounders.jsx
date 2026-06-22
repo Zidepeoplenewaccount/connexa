@@ -192,6 +192,13 @@ export default function Playgrounders() {
                   </div>
                 )}
 
+                {/* ── Quote ── */}
+                {speaker.quote && (
+                  <div className="speaker-quote">
+                    <em>"{speaker.quote}"</em>
+                  </div>
+                )}
+
                 {/* ── Talk topic (OPTIONAL - only show if exists) ── */}
                 {speaker.topic && (
                   <div className="speaker-topic">
