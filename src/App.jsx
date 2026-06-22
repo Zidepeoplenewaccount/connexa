@@ -15,6 +15,7 @@ import FAQ from './components/FAQ';
 import Merch from './components/merch';
 import PartnerForm from './components/PartnerForm';
 import AffiliateSignup from './components/AffiliateSignup';
+import PoweredBy from './components/PoweredBy';
 import Footer from './components/Footer';
 
 import PaymentSuccess from './components/paymentSuccess';
@@ -54,9 +55,9 @@ function HomePage() {
       <main>
         <Hero />
         <About />
-        <VoicesOfOpportunity />
         <Speakers />
         <Playgrounders />
+        <VoicesOfOpportunity />
         <Gallery />
         <Tickets />
 
@@ -85,6 +86,7 @@ function HomePage() {
         Join the Opportunity Playground →
       </a>
 
+      <PoweredBy />
       <Footer />
     </>
   );
