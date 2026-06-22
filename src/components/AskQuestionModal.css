@@ -493,3 +493,117 @@
     width: 100%;
   }
 }
+
+/* Email Lookup */
+.question-email-lookup {
+  margin-bottom: 20px;
+}
+
+.question-email-lookup-toggle {
+  background: none;
+  border: none;
+  color: var(--orange);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
+.question-email-lookup-toggle:hover {
+  opacity: 0.8;
+}
+
+.question-email-lookup-form {
+  margin-top: 14px;
+  padding: 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.question-email-lookup-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.question-email-lookup-input:focus {
+  border-color: var(--orange);
+  background: rgba(255,255,255,0.06);
+}
+
+.question-email-lookup-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 20px;
+  background: var(--orange);
+  color: var(--black);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.question-email-lookup-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245,166,35,0.3);
+}
+
+.question-email-lookup-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.question-email-lookup-results {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.question-email-lookup-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--white);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.question-email-lookup-result:hover {
+  border-color: var(--orange);
+  background: rgba(245,166,35,0.08);
+}
+
+.question-email-lookup-result strong {
+  font-family: monospace;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.question-email-lookup-result small {
+  color: rgba(255,255,255,0.6);
+  font-size: 12px;
+}
+}

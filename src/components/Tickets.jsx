@@ -410,6 +410,7 @@ export default function Tickets() {
   const [connectorsLookupLoading, setConnectorsLookupLoading] = useState(false);
   const [connectorsLookupResults, setConnectorsLookupResults] = useState([]);
   const [connectorsLookupError, setConnectorsLookupError] = useState('');
+  const [connectorsPreferredConnexer, setConnectorsPreferredConnexer] = useState('');
 
   // Discount code state
   const [discountCode, setDiscountCode] = useState('');
@@ -863,6 +864,7 @@ export default function Tickets() {
         if (isConnectors) {
           metadata.base_ticket_id = connectorsTicketId;
           metadata.base_ticket_type = connectorsTicketData.ticket_type;
+          metadata.preferred_connexer = connectorsPreferredConnexer || null;
         }
       } else if (isVendor) {
         let baseAmount = ticketPrice;
@@ -1047,7 +1049,7 @@ export default function Tickets() {
         </div>
 
         <div className="tickets-grid">
-          {tickets.map((ticket, i) => {
+          {tickets.filter(t => t.name !== 'Marketplace Pass').map((ticket, i) => {
             const discountedPrice = calculateTicketPrice(ticket.name, ticket.price);
             const hasDiscount = discountedPrice < ticket.price;
             const hasLowStock =
@@ -1238,6 +1240,27 @@ export default function Tickets() {
                         ))}
                       </div>
                     )}
+                  </div>
+
+                  <div className="ticket-input-group">
+                    <label>Who do you want to ask a question? (Optional)</label>
+                    <select
+                      className="ticket-input"
+                      value={connectorsPreferredConnexer}
+                      onChange={(e) => setConnectorsPreferredConnexer(e.target.value)}
+                    >
+                      <option value="">Select a Connexer or Playgrounder</option>
+                      <optgroup label="Connexers">
+                        <option value="Joshua Oluwadepo">Joshua Oluwadepo — Talent Connexer</option>
+                        <option value="Rt. Hon Itunuoluwa Maria Soniregun">Rt. Hon Itunuoluwa Maria Soniregun — Talent Connexer</option>
+                      </optgroup>
+                      <optgroup label="Playgrounders">
+                        <option value="Barr. Mosunmoluwa David-Gbemisola">Barr. Mosunmoluwa David-Gbemisola — Business Playgrounder</option>
+                        <option value="Omobolanle Adigun (The Vibe Queen)">Omobolanle Adigun (The Vibe Queen) — Talent Playgrounder</option>
+                        <option value="Olalekan Asani">Olalekan Asani — Business Playgrounder</option>
+                        <option value="David Ogooluwa (Dotify)">David Ogooluwa (Dotify) — Talent Playgrounder</option>
+                      </optgroup>
+                    </select>
                   </div>
                 </>
               )}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { submitSpeakerQuestion } from '../services/api';
+import { submitSpeakerQuestion, findTicketsByEmail } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './AskQuestionModal.css';
  
@@ -33,6 +33,13 @@ export default function AskQuestionModal({ speaker, onClose }) {
   // Ticket details from lookup
   const [ticketDetails, setTicketDetails] = useState(null);
   const [isPriorityTicket, setIsPriorityTicket] = useState(false);
+
+  // Find ticket by email
+  const [showEmailLookup, setShowEmailLookup] = useState(false);
+  const [lookupEmail, setLookupEmail] = useState('');
+  const [lookupLoading, setLookupLoading] = useState(false);
+  const [lookupResults, setLookupResults] = useState([]);
+  const [lookupError, setLookupError] = useState('');
  
   async function handleVerifyTicket(e) {
     e.preventDefault();
@@ -66,6 +73,39 @@ export default function AskQuestionModal({ speaker, onClose }) {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function handleFindByEmail(e) {
+    e.preventDefault();
+    setLookupError('');
+    setLookupResults([]);
+
+    if (!lookupEmail.trim()) {
+      setLookupError('Please enter your email');
+      return;
+    }
+
+    setLookupLoading(true);
+    try {
+      const result = await findTicketsByEmail(lookupEmail.trim());
+      if (!result.tickets || result.tickets.length === 0) {
+        setLookupError('No tickets found for this email.');
+        return;
+      }
+      setLookupResults(result.tickets);
+    } catch (err) {
+      logTechnicalError(err, 'ASK_QUESTION_EMAIL_LOOKUP');
+      setLookupError(getUserFriendlyError(err) || 'Unable to find tickets. Please try entering your ticket ID manually.');
+    } finally {
+      setLookupLoading(false);
+    }
+  }
+
+  function handleSelectLookupTicket(ticket) {
+    setTicketId(ticket.ticket_id);
+    setShowEmailLookup(false);
+    setLookupResults([]);
+    setLookupEmail('');
   }
  
   async function handleSubmitQuestion(e) {
@@ -183,6 +223,53 @@ export default function AskQuestionModal({ speaker, onClose }) {
               <small style={{ marginTop: '8px', color: 'var(--color-text-secondary)' }}>
                 Find your ticket ID in your confirmation email or ticket receipt
               </small>
+            </div>
+
+            {/* Find ticket by email */}
+            <div className="question-email-lookup">
+              <button
+                type="button"
+                className="question-email-lookup-toggle"
+                onClick={() => setShowEmailLookup(!showEmailLookup)}
+              >
+                Don't have your ticket ID? Find it by email
+              </button>
+
+              {showEmailLookup && (
+                <div className="question-email-lookup-form">
+                  <input
+                    type="email"
+                    value={lookupEmail}
+                    onChange={(e) => setLookupEmail(e.target.value)}
+                    placeholder="Enter the email used to purchase your ticket"
+                    className="question-email-lookup-input"
+                  />
+                  <button
+                    type="button"
+                    className="question-email-lookup-btn"
+                    onClick={handleFindByEmail}
+                    disabled={lookupLoading}
+                  >
+                    {lookupLoading ? 'Finding...' : 'Find My Ticket'}
+                  </button>
+                  {lookupError && <div className="question-error">{lookupError}</div>}
+                  {lookupResults.length > 0 && (
+                    <div className="question-email-lookup-results">
+                      {lookupResults.map((ticket) => (
+                        <button
+                          key={ticket.ticket_id}
+                          type="button"
+                          className="question-email-lookup-result"
+                          onClick={() => handleSelectLookupTicket(ticket)}
+                        >
+                          <strong>{ticket.ticket_id}</strong>
+                          <small>{ticket.attendee_name} · {ticket.ticket_type}</small>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
  
             {error && <div className="question-error">{error}</div>}
