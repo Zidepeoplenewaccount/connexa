@@ -42,6 +42,14 @@ const quotes = [
     text: "Many businesses are not ignored because they are bad. They are ignored because people cannot quickly understand what they do, why it matters, and why they should trust them.",
     name: 'Olalekan Asani',
   },
+  {
+    text: "If I am worth anything later, then I am worth something now. For wheat is wheat, even if people think it is grass in the beginning.",
+    name: 'David Ogooluwa (Dotify)',
+  },
+  {
+    text: "Building something valuable is hard, but making people understand it is harder, and that is where most people lose.",
+    name: 'David Ogooluwa (Dotify)',
+  },
 ];
 
 export default function VoicesOfOpportunity() {
