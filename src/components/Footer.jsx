@@ -45,11 +45,11 @@ export default function Footer() {
 
               <div className="footer-contact-item">
                 <span className="footer-contact-icon">📞</span>
-                <a href="tel:+2348185577843" className="footer-contact-link">
+                <a href="tel:+2348101422732" className="footer-contact-link">
                   (+234) 810 142 2732
                 </a>
 
-                <a href="tel:+2348185577843" className="footer-contact-link-mobile">
+                <a href="tel:+2348101422732" className="footer-contact-link-mobile">
                   📞 (+234) 810 142 2732
                 </a>
               </div>
