@@ -4,6 +4,7 @@ import AskQuestionModal from './AskQuestionModal';
 import MosunmoluwaPhoto from '../assets/mosunmoluwa_david.png';
 import OmobolanlePhoto from '../assets/omobolanle_adigun.jpeg';
 import OlalekanPhoto from '../assets/olalekan_asani.jpg';
+import DavidOgooPhoto from '../assets/david_ogooluwa.png';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -63,6 +64,25 @@ const playgrounders = [
       tiktok: 'https://www.tiktok.com/@ola_asani?_r=1&_t=ZS-97DAAeKYcFh',
       twitter: 'https://x.com/ola_asani?s=21',
       linkedin: 'https://www.linkedin.com/in/olalekan-asani-502727191',
+    },
+  },
+  {
+    id: 4,
+    name: 'David Ogooluwa (Dotify)',
+    connexerType: 'TALENT PLAYGROUNDER',
+    title: 'Founder & Chief Host (Founders Corner), Host (BlockFestAfrica)',
+    company: 'Founders Corner',
+    topic: null,
+    photo: DavidOgooPhoto,
+    featured: false,
+    askLabel: 'Ask Dotify',
+    bio: 'With over 5 years experience in the blockchain ecosystem, Dotify helps founders and builders turn ideas into simple and relatable narratives that people can understand and act on. Through his platform Founders Corner, he connects talent, products, and opportunities by making complex thinking very simple and visible.',
+    quote: 'If I am worth anything later, then I am worth something now. For wheat is wheat, even if people think it is grass in the beginning. Building something valuable is hard, but making people understand it is harder, and that is where most people lose.',
+    socials: {
+      instagram: 'https://www.instagram.com/iamdotify',
+      tiktok: 'https://www.tiktok.com/@iamdotify',
+      twitter: 'https://x.com/Iamdotify',
+      linkedin: 'https://www.linkedin.com/in/iamdotify/',
     },
   },
 ];
