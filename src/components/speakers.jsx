@@ -156,7 +156,27 @@ export default function Speakers() {
                   </div>
                 )}
 
-                {/* ── Social links removed ── */}
+                {/* ── Social links ── */}
+                {speaker.socials && Object.keys(speaker.socials).length > 0 && (
+                  <div className="speaker-socials">
+                    {Object.entries(speaker.socials).map(([platform, url]) => {
+                      const Icon = socialIcons[platform];
+
+                      return (
+                        <a
+                          key={platform}
+                          href={url}
+                          className="speaker-social"
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={platform}
+                        >
+                          {Icon ? <Icon size={18} /> : '🔗'}
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
 
                 {speaker.name !== 'Coming Soon' && (
                   <button 

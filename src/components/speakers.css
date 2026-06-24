@@ -116,11 +116,6 @@
   border-left: 3px solid var(--orange);
 }
 
-.speaker-connexer-type::before {
-  content: '🔗 ';
-  margin-right: 4px;
-}
-
 /* Speaker Bio */
 .speaker-bio {
   margin: 16px 0;
