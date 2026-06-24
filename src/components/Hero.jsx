@@ -5,6 +5,8 @@ import ArcLogo from '../assets/ARC_LOGO.png';
 import RightEvents from '../assets/IMG_9099.PNG';
 import plitverse from '../assets/IMG_0405.PNG';
 import mdLegalLogo from '../assets/md_legal_consults.png';
+import profileProLogo from '../assets/profilepro_logo.jpg';
+import carryHerLogo from '../assets/carryher_logo.jpg';
 
 const marqueeItems = [
   { text: 'Meet', color: 'var(--orange)' },
@@ -24,16 +26,15 @@ const sponsors = [
   { name: '', logo: RightEvents },
   { name: '', logo: plitverse },
   { name: '', logo: mdLegalLogo },
+  { name: '', logo: profileProLogo },
+  { name: '', logo: carryHerLogo },
   { name: '', logo: zideLogo },
   { name: '', logo: ArcLogo },
   { name: '', logo: RightEvents },
   { name: '', logo: plitverse },
   { name: '', logo: mdLegalLogo },
-  { name: '', logo: zideLogo },
-  { name: '', logo: ArcLogo },
-  { name: '', logo: RightEvents },
-  { name: '', logo: plitverse },
-  { name: '', logo: mdLegalLogo },
+  { name: '', logo: profileProLogo },
+  { name: '', logo: carryHerLogo },
 ];
 
 export default function Hero() {
