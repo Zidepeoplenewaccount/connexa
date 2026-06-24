@@ -171,7 +171,7 @@
 /* Grid */
 .speakers-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 24px;
 }
 
@@ -390,6 +390,12 @@
 }
 
 /* ===================== RESPONSIVE ===================== */
+@media (max-width: 1200px) {
+  .speakers-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 @media (max-width: 1024px) {
   .speakers-grid {
     grid-template-columns: repeat(3, 1fr);

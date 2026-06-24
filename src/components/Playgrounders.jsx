@@ -150,7 +150,7 @@ export default function Playgrounders() {
             <div
               key={speaker.id}
               className="speaker-card reveal"
-              style={{ transitionDelay: `${(i % 4) * 0.1}s` }}
+              style={{ transitionDelay: `${(i % 5) * 0.1}s` }}
             >
               {/* ── Photo ── */}
               <div className="speaker-photo">
