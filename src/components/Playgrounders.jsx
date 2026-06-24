@@ -88,8 +88,8 @@ const playgrounders = [
   {
     id: 5,
     name: 'Oluwatomi Adeife',
-    connexerType: 'TALENT & BUSINESS PLAYGROUNDER',
-    title: 'Founder & CEO, ProfilePro | Founder, CarryHer Nigeria',
+    connexerType: 'TALENT & BUSINESS',
+    title: 'Founder and CEO of ProfilePro',
     company: 'ProfilePro',
     topic: null,
     photo: OluwatomiPhoto,

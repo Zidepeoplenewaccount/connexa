@@ -154,7 +154,7 @@ const CONNEXER_OPTIONS = [
     { value: 'Omobolanle Adigun (The Vibe Queen)', label: 'Omobolanle (The Vibe Queen) — Talent Playgrounder' },
     { value: 'Olalekan Asani', label: 'Olalekan Asani — Business Playgrounder' },
     { value: 'David Ogooluwa (Dotify)', label: 'Dotify — Talent Playgrounder' },
-    { value: 'Oluwatomi Adeife', label: 'Oluwatomi Adeife — Talent & Business Playgrounder' },
+    { value: 'Oluwatomi Adeife', label: 'Oluwatomi Adeife — Talent & Business' },
   ]},
 ];
 
