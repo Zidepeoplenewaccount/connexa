@@ -646,6 +646,9 @@
   .hero-sponsor-logo {
     height: 40px;
   }
+  .hero-detail-text {
+    font-size: 11px;
+  }
   .marquee-section {
     margin-top: -15%;
   }
