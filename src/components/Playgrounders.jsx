@@ -88,7 +88,7 @@ const playgrounders = [
   {
     id: 5,
     name: 'Oluwatomi Adeife',
-    connexerType: 'TALENT & BUSINESS',
+    connexerType: 'TALENT & BUSINESS PLAYGROUNDER',
     title: 'Founder and CEO of ProfilePro',
     company: 'ProfilePro',
     topic: null,
@@ -223,27 +223,7 @@ export default function Playgrounders() {
                   </div>
                 )}
 
-                {/* ── Social links ── */}
-                {speaker.socials && Object.keys(speaker.socials).length > 0 && (
-                  <div className="speaker-socials">
-                    {Object.entries(speaker.socials).map(([platform, url]) => {
-                      const Icon = socialIcons[platform];
-
-                      return (
-                        <a
-                          key={platform}
-                          href={url}
-                          className="speaker-social"
-                          target="_blank"
-                          rel="noreferrer"
-                          aria-label={platform}
-                        >
-                          {Icon ? <Icon size={18} /> : '🔗'}
-                        </a>
-                      );
-                    })}
-                  </div>
-                )}
+                {/* ── Social links removed ── */}
 
                 {speaker.name !== 'Coming Soon' && (
                   <button 
