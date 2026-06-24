@@ -58,6 +58,14 @@ const quotes = [
     text: "Talent alone is not enough. If people can't see your value, they can't pay for it. Learn to position yourself.",
     name: 'Oluwatomi Adeife',
   },
+  {
+    text: "Cook until you become the recipe.",
+    name: 'Richard Essangabasi',
+  },
+  {
+    text: "Access is one of the major things standing between an African builder and the global stage, but if you don't have the ability to unlearn and relearn then even Access becomes useless.",
+    name: 'Richard Essangabasi',
+  },
 ];
 
 export default function VoicesOfOpportunity() {

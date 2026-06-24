@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AskQuestionModal from './AskQuestionModal';
 import JoshuaPhoto from '../assets/joshua_oluwadepo.jpg';
 import ItunuoluwaPhoto from '../assets/itunuoluwa_soniregun.png';
+import RichardPhoto from '../assets/richard_essangabasi.jpg';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -43,6 +44,24 @@ const speakers = [
       tiktok: 'https://www.tiktok.com/@itunuoluwasoniregun1',
       twitter: 'https://x.com/SoniregunItunu1',
       linkedin: 'https://www.linkedin.com/in/rt-hon-soniregun-itunuoluwa-5a571a1aa',
+    },
+  },
+  {
+    id: 3,
+    name: 'Richard Essangabasi',
+    connexerType: 'TALENT & BUSINESS CONNEXER',
+    title: 'Co-founder/CEO Shard Network',
+    company: 'Shard Network',
+    topic: null,
+    photo: RichardPhoto,
+    featured: false,
+    askLabel: 'Ask Richard',
+    bio: 'Richard Essangabasi is a speaker, investor, business developer, and entrepreneur who has built and scaled brands such as Shard Network, Campus Pitch Africa, and Offar. He has spoken on global stages hosted by Google, Figma, Solana, Ethereum, and Base, empowering builders and entrepreneurs across Africa. At Connexa, his mission is to help attendees understand how to think globally, position strategically, and build opportunities that transcend borders.',
+    socials: {
+      instagram: 'https://www.instagram.com/theessangabasi',
+      tiktok: 'https://www.tiktok.com/@theessangabasi',
+      twitter: 'https://x.com/TheEssangabasi',
+      linkedin: 'https://www.linkedin.com/in/theessangabasi',
     },
   },
 ];
