@@ -5,6 +5,7 @@ import MosunmoluwaPhoto from '../assets/mosunmoluwa_david.png';
 import OmobolanlePhoto from '../assets/omobolanle_adigun.jpeg';
 import OlalekanPhoto from '../assets/olalekan_asani.jpg';
 import DavidOgooPhoto from '../assets/david_ogooluwa.png';
+import OluwatomiPhoto from '../assets/oluwatomi_adeife.png';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -82,6 +83,23 @@ const playgrounders = [
       tiktok: 'https://www.tiktok.com/@iamdotify',
       twitter: 'https://x.com/Iamdotify',
       linkedin: 'https://www.linkedin.com/in/iamdotify/',
+    },
+  },
+  {
+    id: 5,
+    name: 'Oluwatomi Adeife',
+    connexerType: 'TALENT & BUSINESS PLAYGROUNDER',
+    title: 'Founder & CEO, ProfilePro | Founder, CarryHer Nigeria',
+    company: 'ProfilePro',
+    topic: null,
+    photo: OluwatomiPhoto,
+    featured: false,
+    askLabel: 'Ask Oluwatomi',
+    bio: 'Oluwatomi Adeife is the Founder and CEO of ProfilePro and Founder of CarryHer Nigeria. She is a startup founder, talent ecosystem builder, and brand strategist passionate about connecting skilled young people to real opportunities. Through her work, she has trained, mentored, and connected talents with brands while helping businesses grow through effective marketing and brand strategy. Oluwatomi is committed to helping individuals turn their skills into income and guiding founders to build sustainable, opportunity-driven businesses.',
+    socials: {
+      instagram: 'https://www.instagram.com/oluwatomiadeife?igsh=bDZ2OTViMXA3YXky&utm_source=qr',
+      tiktok: 'https://www.tiktok.com/@oluwatomiadeife?_r=1&_t=ZS-97TtOSdzUGn',
+      twitter: 'https://x.com/oluwatomiadeife?s=21',
     },
   },
 ];

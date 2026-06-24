@@ -50,6 +50,14 @@ const quotes = [
     text: "Building something valuable is hard, but making people understand it is harder, and that is where most people lose.",
     name: 'David Ogooluwa (Dotify)',
   },
+  {
+    text: "You don't need to have everything figured out before you start. Start with what you have, and grow as you go.",
+    name: 'Oluwatomi Adeife',
+  },
+  {
+    text: "Talent alone is not enough. If people can't see your value, they can't pay for it. Learn to position yourself.",
+    name: 'Oluwatomi Adeife',
+  },
 ];
 
 export default function VoicesOfOpportunity() {
