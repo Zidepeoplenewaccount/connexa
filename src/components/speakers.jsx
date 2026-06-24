@@ -1,9 +1,9 @@
 import './speakers.css';
 import { useState } from 'react';
 import AskQuestionModal from './AskQuestionModal';
-import JoshuaPhoto from '../assets/joshua_oluwadepo.jpg';
-import ItunuoluwaPhoto from '../assets/itunuoluwa_soniregun.png';
-import RichardPhoto from '../assets/richard_essangabasi.jpg';
+import JoshuaPhoto from '../assets/joshua_oluwadepo.webp';
+import ItunuoluwaPhoto from '../assets/itunuoluwa_soniregun.webp';
+import RichardPhoto from '../assets/richard_essangabasi.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -118,7 +118,7 @@ export default function Speakers() {
               {/* ── Photo ── */}
               <div className="speaker-photo">
                 {speaker.photo ? (
-                  <img src={speaker.photo} alt={speaker.name} />
+                  <img src={speaker.photo} alt={speaker.name} loading="lazy" />
                 ) : (
                   <div className="speaker-photo-placeholder">
                     <span>{/*🎤*/}</span>

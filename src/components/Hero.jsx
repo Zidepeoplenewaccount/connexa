@@ -1,12 +1,12 @@
 import './Hero.css';
 import { useState, useEffect } from 'react';
-import zideLogo from '../assets/IMG_5735-removebg-preview2.png';
-import ArcLogo from '../assets/ARC_LOGO.png';
-import RightEvents from '../assets/IMG_9099.PNG';
-import plitverse from '../assets/IMG_0405.PNG';
-import mdLegalLogo from '../assets/md_legal_consults.png';
-import profileProLogo from '../assets/profilepro_logo.jpg';
-import carryHerLogo from '../assets/carryher_logo.jpg';
+import zideLogo from '../assets/IMG_5735-removebg-preview2.webp';
+import ArcLogo from '../assets/ARC_LOGO.webp';
+import RightEvents from '../assets/IMG_9099.webp';
+import plitverse from '../assets/IMG_0405.webp';
+import mdLegalLogo from '../assets/md_legal_consults.webp';
+import profileProLogo from '../assets/profilepro_logo.webp';
+import carryHerLogo from '../assets/carryher_logo.webp';
 
 const marqueeItems = [
   { text: 'Meet', color: 'var(--orange)' },

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { verifyPayment } from '../services/api';
-import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.png';
+import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.webp';
 
 const s = {
   page: {

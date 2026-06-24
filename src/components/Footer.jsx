@@ -1,7 +1,7 @@
 import './Footer.css';
-import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3).png';
-import zideLogo from '../assets/IMG_6707.PNG';
-import ArcLogo from '../assets/ARC_LOGO.png';
+import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3).webp';
+import zideLogo from '../assets/IMG_6707.webp';
+import ArcLogo from '../assets/ARC_LOGO.webp';
 
 export default function Footer() {
   return (

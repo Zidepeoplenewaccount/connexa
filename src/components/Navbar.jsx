@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.png';
+import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.webp';
 import './Navbar.css';
 //CONNEXA_LOGO-BLACK(3)-Photoroom.png
 

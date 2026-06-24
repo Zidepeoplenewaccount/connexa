@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react';
 import './Gallery.css';
-import GroupPhoto from '../assets/IMG_0132.jpg';
-import ZideTeamPhoto from '../assets/IMG_0164.jpg';
-import EmptyRoom from '../assets/MLD00002.jpg';
-import GirlHoldingIGThingy from '../assets/MLD00080.jpg';
-import SameGirlSmiling from '../assets/MLD00181.jpg';
-import MokiGoingOffStage from '../assets/MLD00332.jpg';
-import BackViewOfAppReview from '../assets/MLD00437.jpg';
-import MokiAskingQuestion from '../assets/MLD00501.jpg';
-import FirstSpeaker from '../assets/MLD00519.jpg';
-import LinkdinGuySpeaking from '../assets/MLD00575.jpg';
-import AnimatorGuySpeaking from '../assets/MLD00633.jpg';
-import HannahSpeaking from '../assets/MLD00651.jpg';
-import EstherSpeaking from '../assets/MLD00705.jpg';
-import LinkedinAndHrGuyClass from '../assets/MLD00732.jpg';
-import AnimatorGuyClass from '../assets/MLD00743.jpg';
-import CoreZideTeamPhoto from '../assets/MLD00876.jpg';
+import GroupPhoto from '../assets/IMG_0132.webp';
+import ZideTeamPhoto from '../assets/IMG_0164.webp';
+import EmptyRoom from '../assets/MLD00002.webp';
+import GirlHoldingIGThingy from '../assets/MLD00080.webp';
+import SameGirlSmiling from '../assets/MLD00181.webp';
+import MokiGoingOffStage from '../assets/MLD00332.webp';
+import BackViewOfAppReview from '../assets/MLD00437.webp';
+import MokiAskingQuestion from '../assets/MLD00501.webp';
+import FirstSpeaker from '../assets/MLD00519.webp';
+import LinkdinGuySpeaking from '../assets/MLD00575.webp';
+import AnimatorGuySpeaking from '../assets/MLD00633.webp';
+import HannahSpeaking from '../assets/MLD00651.webp';
+import EstherSpeaking from '../assets/MLD00705.webp';
+import LinkedinAndHrGuyClass from '../assets/MLD00732.webp';
+import AnimatorGuyClass from '../assets/MLD00743.webp';
+import CoreZideTeamPhoto from '../assets/MLD00876.webp';
 
 export default function Gallery() {
   const [currentSlide, setCurrentSlide] = useState(0);

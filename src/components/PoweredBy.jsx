@@ -1,4 +1,4 @@
-import zideLogo from '../assets/IMG_6707.PNG';
+import zideLogo from '../assets/IMG_6707.webp';
 
 export default function PoweredBy() {
   return (

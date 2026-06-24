@@ -1,5 +1,5 @@
 import './About.css';
-import zideLogo from '../assets/IMG_6707.PNG';
+import zideLogo from '../assets/IMG_6707.webp';
 
 const highlights = [
   { icon: '🛒', title: 'Live Marketplace', desc: 'Real buyers, real sellers, real transactions on the day' },

@@ -1,26 +1,26 @@
 import { useState, useEffect } from 'react';
 import './merch.css';
-import FaceCap from '../assets/IMG_6719.PNG';
+import FaceCap from '../assets/IMG_6719.webp';
 
-import OfficialTshirtWhite from '../assets/IMG_7761.PNG';
-import OfficialTshirtBlack from '../assets/IMG_7760.PNG';
-import BuildersTshirtBlack from '../assets/IMG_7767.PNG';
-import BuildersTshirtWhite from '../assets/IMG_7768.PNG';
-import TalentTshirtBlack from '../assets/IMG_7769.PNG';
-import TalentTshirtWhite from '../assets/IMG_7770.PNG';
-import VendorTshirtWhite from '../assets/IMG_7806.PNG';
-import VendorTshirtBlack from '../assets/IMG_7764.PNG';
-import VendorTshirtNavy from '../assets/IMG_7807.PNG';
+import OfficialTshirtWhite from '../assets/IMG_7761.webp';
+import OfficialTshirtBlack from '../assets/IMG_7760.webp';
+import BuildersTshirtBlack from '../assets/IMG_7767.webp';
+import BuildersTshirtWhite from '../assets/IMG_7768.webp';
+import TalentTshirtBlack from '../assets/IMG_7769.webp';
+import TalentTshirtWhite from '../assets/IMG_7770.webp';
+import VendorTshirtWhite from '../assets/IMG_7806.webp';
+import VendorTshirtBlack from '../assets/IMG_7764.webp';
+import VendorTshirtNavy from '../assets/IMG_7807.webp';
 
-import OfficialTshirtBundleWhite from '../assets/IMG_7990.PNG';
-import OfficialTshirtBundleBlack from '../assets/IMG_7989.PNG';
-import TalentTshirtBundleBlack from '../assets/IMG_7991.PNG';
-import TalentTshirtBundleWhite from '../assets/IMG_7992.PNG';
-import VendorTshirtBundleWhite from '../assets/IMG_7994.PNG';
-import VendorTshirtBundleBlack from '../assets/IMG_7993.PNG';
-import VendorTshirtBundleNavy from '../assets/IMG_7995.PNG';
-import BuildersTshirtBundleBlack from '../assets/IMG_7996.PNG';
-import BuildersTshirtBundleWhite from '../assets/IMG_7997.PNG';
+import OfficialTshirtBundleWhite from '../assets/IMG_7990.webp';
+import OfficialTshirtBundleBlack from '../assets/IMG_7989.webp';
+import TalentTshirtBundleBlack from '../assets/IMG_7991.webp';
+import TalentTshirtBundleWhite from '../assets/IMG_7992.webp';
+import VendorTshirtBundleWhite from '../assets/IMG_7994.webp';
+import VendorTshirtBundleBlack from '../assets/IMG_7993.webp';
+import VendorTshirtBundleNavy from '../assets/IMG_7995.webp';
+import BuildersTshirtBundleBlack from '../assets/IMG_7996.webp';
+import BuildersTshirtBundleWhite from '../assets/IMG_7997.webp';
 
 import { initializeMerchOrder } from '../services/api';
 import { getAffiliateCode } from '../utils/affiliate';

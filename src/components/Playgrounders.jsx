@@ -1,11 +1,11 @@
 import './speakers.css';
 import { useState } from 'react';
 import AskQuestionModal from './AskQuestionModal';
-import MosunmoluwaPhoto from '../assets/mosunmoluwa_david.png';
-import OmobolanlePhoto from '../assets/omobolanle_adigun.jpeg';
-import OlalekanPhoto from '../assets/olalekan_asani.jpg';
-import DavidOgooPhoto from '../assets/david_ogooluwa.png';
-import OluwatomiPhoto from '../assets/oluwatomi_adeife.png';
+import MosunmoluwaPhoto from '../assets/mosunmoluwa_david.webp';
+import OmobolanlePhoto from '../assets/omobolanle_adigun.webp';
+import OlalekanPhoto from '../assets/olalekan_asani.webp';
+import DavidOgooPhoto from '../assets/david_ogooluwa.webp';
+import OluwatomiPhoto from '../assets/oluwatomi_adeife.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -159,6 +159,7 @@ export default function Playgrounders() {
                     src={speaker.photo} 
                     alt={speaker.name}
                     className={speaker.photoClass || ''}
+                    loading="lazy"
                   />
                 ) : (
                   <div className="speaker-photo-placeholder">
