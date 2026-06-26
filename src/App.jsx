@@ -58,7 +58,6 @@ function HomePage() {
         <Speakers />
         <Playgrounders />
         <VoicesOfOpportunity />
-        <Gallery />
         <Tickets />
 
         <section className="affiliate-spotlight section reveal" id="share-earn">
@@ -80,6 +79,7 @@ function HomePage() {
         <Merch />
         <PartnerForm />
         <AffiliateSignup />
+        <Gallery />
       </main>
 
       <a href="#tickets" className="mobile-sticky-ticket-cta" aria-label="Get tickets">
