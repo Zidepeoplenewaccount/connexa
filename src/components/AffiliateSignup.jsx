@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaCheck, FaChartBar, FaCoins, FaChartLine, FaBullseye, FaComments, FaCopy, FaCheckCircle } from '../utils/icons';
+import { FaCheck, FaChartBar, FaCoins, FaChartLine, FaBullseye, FaComments, FaCopy, FaCheckCircle, FaLink } from '../utils/icons';
 import { signupAffiliate } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './affiliate-signup.css';
