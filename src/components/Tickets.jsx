@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaTicketAlt, FaLightbulb, FaGift, FaUsers, FaChartLine, FaCoins } from 'react-icons/fa';
+import { FaTicketAlt, FaLightbulb, FaGift, FaUsers, FaChartLine, FaCoins, FaGem } from 'react-icons/fa';
 import './Tickets.css';
 
 const SKILL_OPTIONS = [
@@ -278,7 +278,7 @@ const tickets = [
     id: 4,
     type: 'vip',
     passType: 'individual',
-    icon: <FaStar size={20} />,
+    icon: <FaGem size={20} />,
     iconClass: 'ticket-icon-gradient',
     label: 'Premium Individuals',
     name: 'Talent Pass — VIP',
