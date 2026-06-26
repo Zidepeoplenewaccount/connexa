@@ -28,6 +28,12 @@
   object-fit: contain;
 }
 
+@media (min-width: 769px) {
+  .navbar-logo {
+    margin-left: -20px;
+  }
+}
+
 .navbar-links {
   display: flex;
   align-items: center;
