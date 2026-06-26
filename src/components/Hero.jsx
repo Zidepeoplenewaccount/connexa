@@ -1,6 +1,6 @@
 import './Hero.css';
 import { useState, useEffect } from 'react';
-import { FaMapMarkerAlt, FaClock, FaStore, FaLightbulb, FaHandshake, FaTrophy } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaClock, FaStore, FaLightbulb, FaHandshake, FaTrophy } from '../utils/icons';
 import zideLogo from '../assets/IMG_5735-removebg-preview2.webp';
 import ArcLogo from '../assets/ARC_LOGO.webp';
 import RightEvents from '../assets/IMG_9099.webp';

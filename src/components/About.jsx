@@ -1,5 +1,5 @@
 import './About.css';
-import { FaShoppingCart, FaMicrophone, FaHandshake, FaTrophy } from 'react-icons/fa';
+import { FaShoppingCart, FaMicrophone, FaHandshake, FaTrophy } from '../utils/icons';
 import zideLogo from '../assets/IMG_6707.webp';
 
 const highlights = [

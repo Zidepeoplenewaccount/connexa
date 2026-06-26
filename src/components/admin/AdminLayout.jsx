@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { FaChartBar, FaTicketAlt, FaTrophy, FaVoteYea, FaBox, FaCreditCard, FaLink, FaQuestionCircle, FaMicrophone, FaCamera, FaGlobe, FaSignOutAlt, FaTags } from 'react-icons/fa';
+import { FaChartBar, FaTicketAlt, FaTrophy, FaVoteYea, FaBox, FaCreditCard, FaLink, FaQuestionCircle, FaMicrophone, FaCamera, FaGlobe, FaSignOutAlt, FaTags } from '../../utils/icons';
 import { adminLogout } from '../../services/adminApi';
 import './admin.css';
 

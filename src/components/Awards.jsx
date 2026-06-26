@@ -1,5 +1,5 @@
 import CandidateSignup from './CandidateSignup';
-import { FaLightbulb, FaStopwatch, FaFire } from 'react-icons/fa';
+import { FaLightbulb, FaStopwatch, FaFire } from '../utils/icons';
 import './Awards.css';
 
 export default function Awards() {

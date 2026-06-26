@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { FaMicrophone, FaBriefcase } from 'react-icons/fa';
+import { FaMicrophone, FaBriefcase } from '../../utils/icons';
 import { useNavigate } from 'react-router-dom';
 import {
   fetchSpeakerProfile,

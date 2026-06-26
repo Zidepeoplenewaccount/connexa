@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaLightbulb } from 'react-icons/fa';
+import { FaLightbulb } from '../utils/icons';
 import { submitSpeakerQuestion, findTicketsByEmail } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './AskQuestionModal.css';

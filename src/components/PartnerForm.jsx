@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaPhone, FaEnvelope, FaBullseye, FaHandshake, FaChartLine, FaLightbulb } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaBullseye, FaHandshake, FaChartLine, FaLightbulb } from '../utils/icons';
 import { submitPartnership } from '../services/api';
 import './PartnerForm.css';
 

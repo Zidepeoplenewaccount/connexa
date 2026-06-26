@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaTicketAlt, FaLightbulb, FaTimesCircle } from 'react-icons/fa';
+import { FaTicketAlt, FaLightbulb, FaTimesCircle } from '../../utils/icons';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { getAllTickets } from '../../services/adminApi';
 import '../../components/admin/admin.css';

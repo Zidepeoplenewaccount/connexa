@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { FaGem, FaBullseye, FaHandshake, FaTrophy, FaCheckCircle } from 'react-icons/fa';
+import { FaGem, FaBullseye, FaHandshake, FaTrophy, FaCheckCircle } from '../utils/icons';
 import { getUpgradeOptions, initializeUpgrade } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import Navbar from '../components/Navbar';

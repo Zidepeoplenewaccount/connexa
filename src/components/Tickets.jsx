@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaTicketAlt, FaLightbulb, FaGift, FaUsers, FaChartLine, FaCoins, FaGem } from 'react-icons/fa';
+import { FaTicketAlt, FaLightbulb, FaGift, FaUsers, FaChartLine, FaCoins, FaGem } from '../utils/icons';
 import './Tickets.css';
 
 const SKILL_OPTIONS = [

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { FaCheckCircle, FaTimesCircle, FaEnvelope, FaExclamationTriangle, FaVoteYea } from 'react-icons/fa';
+import { FaCheckCircle, FaTimesCircle, FaEnvelope, FaExclamationTriangle, FaVoteYea } from '../utils/icons';
 import { verifyPayment } from '../services/api';
 import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.webp';
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle } from '../utils/icons';
 import { getUpgradeOptions, initializeUpgrade } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './UpgradeTicketModal.css';

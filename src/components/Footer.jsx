@@ -1,5 +1,5 @@
 import './Footer.css';
-import { FaEnvelope, FaComments, FaPhone } from 'react-icons/fa';
+import { FaEnvelope, FaComments, FaPhone } from '../utils/icons';
 import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3).webp';
 import zideLogo from '../assets/IMG_6707.webp';
 import ArcLogo from '../assets/ARC_LOGO.webp';
