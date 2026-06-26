@@ -181,12 +181,12 @@ export default function AffiliateSignup() {
 
         <div className="affiliate-benefits">
           <div className="affiliate-benefit-card">
-            <div className="affiliate-benefit-icon">💰</div>
+            <div className="affiliate-benefit-icon"><FaCoins size={24} /></div>
             <h3>Up to 20% Commission</h3>
             <p>Tiered rates based on ticket price</p>
           </div>
           <div className="affiliate-benefit-card">
-            <div className="affiliate-benefit-icon">🔗</div>
+            <div className="affiliate-benefit-icon"><FaLink size={24} /></div>
             <h3>Unique Link</h3>
             <p>Track all your referrals</p>
           </div>
@@ -203,7 +203,7 @@ export default function AffiliateSignup() {
             <p>Direct bank transfers</p>
           </div>
           <div className="affiliate-benefit-card">
-            <div className="affiliate-benefit-icon">♾️</div>
+            <div className="affiliate-benefit-icon"><FaInfinity size={24} /></div>
             <h3>No Limits</h3>
             <p>Unlimited earning potential</p>
           </div>
@@ -212,7 +212,7 @@ export default function AffiliateSignup() {
         {/* CTA Button */}
         <div className="affiliate-cta">
           <button onClick={() => setShowModal(true)} className="affiliate-cta-btn">
-            💰 Join the Affiliate Program
+            <FaCoins size={16} /> Join the Affiliate Program
           </button>
           <p className="affiliate-cta-subtext">Start earning commission on every ticket sale</p>
         </div>
@@ -339,7 +339,7 @@ export default function AffiliateSignup() {
 
                 {/* Commission Info Box */}
                 <div className="affiliate-commission-notice">
-                  <strong>💰 Commission Structure:</strong> Earn up to 20% commission on ticket sales. Commissions are calculated on the total payment amount and paid monthly via bank transfer.
+                  <strong><FaCoins size={14} /> Commission Structure:</strong> Earn up to 20% commission on ticket sales. Commissions are calculated on the total payment amount and paid monthly via bank transfer.
                 </div>
 
                 {error && <div className="affiliate-error">{error}</div>}
@@ -381,7 +381,7 @@ export default function AffiliateSignup() {
                 </div>
 
                 <div className="affiliate-commission-tier">
-                  <div className="affiliate-tier-icon">💎</div>
+                  <div className="affiliate-tier-icon"><FaGem size={24} /></div>
                   <div className="affiliate-tier-content">
                     <h4>10% Commission</h4>
                     <p>For tickets <strong>₦30,000 and above</strong></p>
@@ -393,8 +393,8 @@ export default function AffiliateSignup() {
               </div>
 
               <div className="affiliate-modal-info">
-                <p>💰 <strong>Monthly Payouts:</strong> Commissions are paid monthly via direct bank transfer</p>
-                <p>📈 <strong>No Limits:</strong> The more you sell, the more you earn!</p>
+                <p><FaCoins size={14} /> <strong>Monthly Payouts:</strong> Commissions are paid monthly via direct bank transfer</p>
+                <p><FaChartLine size={14} /> <strong>No Limits:</strong> The more you sell, the more you earn!</p>
               </div>
 
               {/* Terms Checkboxes */}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaTicketAlt, FaLightbulb, FaGift, FaUsers } from 'react-icons/fa';
+import { FaTicketAlt, FaLightbulb, FaGift, FaUsers, FaChartLine, FaCoins } from 'react-icons/fa';
 import './Tickets.css';
 
 const SKILL_OPTIONS = [
@@ -278,7 +278,7 @@ const tickets = [
     id: 4,
     type: 'vip',
     passType: 'individual',
-    icon: '⭐',
+    icon: <FaStar size={20} />,
     iconClass: 'ticket-icon-gradient',
     label: 'Premium Individuals',
     name: 'Talent Pass — VIP',
@@ -327,7 +327,7 @@ const tickets = [
     id: 5,
     type: 'growth',
     passType: 'business',
-    icon: '📈',
+    icon: <FaChartLine size={20} />,
     iconClass: 'ticket-icon-green',
     label: 'Business Owners',
     name: 'Business Owner Pass',
@@ -1331,7 +1331,7 @@ export default function Tickets() {
               {selectedTicket.passType === 'individual' && selectedTicket.type !== 'connectors' && (
                 <>
                   <div className="ticket-group-promo">
-                    💰 Purchase tickets for 2–5 people and save on your group admission to Connexa 2026.
+                    <FaCoins size={14} /> Purchase tickets for 2–5 people and save on your group admission to Connexa 2026.
                   </div>
 
                   <div className="ticket-input-group">
