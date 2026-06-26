@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { FaStar, FaBullseye, FaHandshake, FaTrophy, FaCheckCircle } from 'react-icons/fa';
 import { getUpgradeOptions, initializeUpgrade } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import Navbar from '../components/Navbar';
@@ -127,22 +128,22 @@ export default function UpgradeTicket() {
                 <h3>Why Upgrade?</h3>
                 <div className="upgrade-benefits-grid">
                   <div className="upgrade-benefit-item">
-                    <span className="upgrade-benefit-icon">⭐</span>
+                    <span className="upgrade-benefit-icon"><FaStar size={20} /></span>
                     <h4>VIP Access</h4>
                     <p>Priority seating and exclusive areas</p>
                   </div>
                   <div className="upgrade-benefit-item">
-                    <span className="upgrade-benefit-icon">🎯</span>
+                    <span className="upgrade-benefit-icon"><FaBullseye size={20} /></span>
                     <h4>Priority Q&A</h4>
                     <p>Your questions answered first</p>
                   </div>
                   <div className="upgrade-benefit-item">
-                    <span className="upgrade-benefit-icon">🤝</span>
+                    <span className="upgrade-benefit-icon"><FaHandshake size={20} /></span>
                     <h4>Premium Access</h4>
                     <p>Connect with speakers and partners</p>
                   </div>
                   <div className="upgrade-benefit-item">
-                    <span className="upgrade-benefit-icon">🏆</span>
+                    <span className="upgrade-benefit-icon"><FaTrophy size={20} /></span>
                     <h4>Award Eligibility</h4>
                     <p>Qualify for recognition awards</p>
                   </div>
@@ -254,7 +255,7 @@ export default function UpgradeTicket() {
                 </>
               ) : (
                 <div className="upgrade-no-options">
-                  <div className="upgrade-no-options-icon">🎉</div>
+                  <div className="upgrade-no-options-icon"><FaCheckCircle size={40} color="#2db84b" /></div>
                   <h3>You're All Set!</h3>
                   <p>You already have the best ticket tier available. See you at Connexa 2026!</p>
                   <button 

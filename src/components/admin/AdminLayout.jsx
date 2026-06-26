@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { FaChartBar, FaTicketAlt, FaTrophy, FaVoteYea, FaBox, FaCreditCard, FaLink, FaQuestionCircle, FaMicrophone, FaCamera, FaGlobe, FaSignOutAlt, FaTags } from 'react-icons/fa';
 import { adminLogout } from '../../services/adminApi';
 import './admin.css';
 
@@ -40,43 +41,43 @@ export default function AdminLayout({ children }) {
 
           <nav className="admin-nav">
             <Link to="/admin/dashboard" className={isActive('/admin/dashboard') ? 'active' : ''}>
-              📊 Dashboard
+              <FaChartBar size={14} /> Dashboard
             </Link>
             <Link to="/admin/tickets" className={isActive('/admin/tickets') ? 'active' : ''}>
-              🎟️ Tickets
+              <FaTicketAlt size={14} /> Tickets
             </Link>
             <Link to="/admin/candidates" className={isActive('/admin/candidates') ? 'active' : ''}>
-              🏆 Candidates
+              <FaTrophy size={14} /> Candidates
             </Link>
             <Link to="/admin/votes" className={isActive('/admin/votes') ? 'active' : ''}>
-              🗳️ Votes
+              <FaVoteYea size={14} /> Votes
             </Link>
             <Link to="/admin/orders" className={isActive('/admin/orders') ? 'active' : ''}>
-              📦 Orders
+              <FaBox size={14} /> Orders
             </Link>
             <Link to="/admin/payments" className={isActive('/admin/payments') ? 'active' : ''}>
-              💳 Payments
+              <FaCreditCard size={14} /> Payments
             </Link>
             <Link to="/admin/affiliates" className={isActive('/admin/affiliates') ? 'active' : ''}>
-              🔗 Affiliates
+              <FaLink size={14} /> Affiliates
             </Link>
             <Link to="/admin/questions" className={isActive('/admin/questions') ? 'active' : ''}>
-              ❓ Questions
+              <FaQuestionCircle size={14} /> Questions
             </Link>
             <Link to="/admin/discount-codes" className="admin-nav-link">
-              🎟️ Discount Codes
+              <FaTags size={14} /> Discount Codes
             </Link>
             <Link to="/admin/connexers" className={isActive('/admin/connexers') ? 'active' : ''}>
-              🎤 Connexers
+              <FaMicrophone size={14} /> Connexers
             </Link>
             <Link to="/admin/scanner" className="admin-nav-link">
-              📷 Scanner
+              <FaCamera size={14} /> Scanner
             </Link>
           </nav>
 
           <div className="admin-nav-footer">
-            <a href="/">🌐 View Site</a>
-            <button onClick={handleLogout}>🚪 Logout</button>
+            <a href="/"><FaGlobe size={14} /> View Site</a>
+            <button onClick={handleLogout}><FaSignOutAlt size={14} /> Logout</button>
           </div>
         </aside>
 

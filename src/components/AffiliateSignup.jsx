@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FaCheck, FaChartBar, FaCoins, FaChartLine, FaBullseye, FaComments, FaCopy, FaCheckCircle } from 'react-icons/fa';
 import { signupAffiliate } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './affiliate-signup.css';
@@ -108,7 +109,7 @@ export default function AffiliateSignup() {
           <button className="affiliate-modal-close" onClick={closeAll}>×</button>
           
           <div className="affiliate-success">
-            <div className="affiliate-success-icon">🎉</div>
+            <div className="affiliate-success-icon"><FaCheckCircle size={40} color="#2db84b" /></div>
             <h2>Welcome to the Connexa Affiliate Program!</h2>
             <p>Your unique affiliate link has been generated.</p>
 
@@ -128,20 +129,20 @@ export default function AffiliateSignup() {
                   }}
                   className="affiliate-copy-btn"
                 >
-                  📋 Copy
+                  <FaCopy size={14} /> Copy
                 </button>
               </div>
               <small>Share this link to earn up to 20% commission on every ticket sale!</small>
             </div>
 
             <div className="affiliate-commission-info">
-              <h3>📊 Commission Details</h3>
+              <h3><FaChartBar size={16} /> Commission Details</h3>
               <ul>
-                <li>✅ Earn 20% on tickets under ₦30,000</li>
-                <li>✅ Earn 10% on tickets ₦30,000 and above</li>
-                <li>💰 Commissions paid monthly via bank transfer</li>
-                <li>📈 Track your earnings in real-time</li>
-                <li>🎯 No limit on how much you can earn</li>
+                <li><FaCheck size={12} /> Earn 20% on tickets under ₦30,000</li>
+                <li><FaCheck size={12} /> Earn 10% on tickets ₦30,000 and above</li>
+                <li><FaCoins size={12} /> Commissions paid monthly via bank transfer</li>
+                <li><FaChartLine size={12} /> Track your earnings in real-time</li>
+                <li><FaBullseye size={12} /> No limit on how much you can earn</li>
               </ul>
             </div>
 
@@ -154,7 +155,7 @@ export default function AffiliateSignup() {
                 rel="noopener noreferrer"
                 className="affiliate-whatsapp-btn"
               >
-                💬 Join WhatsApp Group
+                <FaComments size={14} /> Join WhatsApp Group
               </a>
             </div>
 
@@ -369,7 +370,7 @@ export default function AffiliateSignup() {
               
               <div className="affiliate-modal-breakdown">
                 <div className="affiliate-commission-tier">
-                  <div className="affiliate-tier-icon">🎯</div>
+                  <div className="affiliate-tier-icon"><FaBullseye size={24} /></div>
                   <div className="affiliate-tier-content">
                     <h4>20% Commission</h4>
                     <p>For tickets <strong>under ₦30,000</strong></p>

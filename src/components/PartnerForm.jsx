@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FaPhone, FaEnvelope, FaBullseye, FaHandshake, FaChartLine, FaLightbulb } from 'react-icons/fa';
 import { submitPartnership } from '../services/api';
 import './PartnerForm.css';
 
@@ -99,8 +100,8 @@ export default function PartnerForm() {
               Our team will get back to you shortly, or you can reach us directly at:
             </p>
             <div className="partner-contact">
-              <div>📞 <a href="tel:+2348185577843">+234 810 142 2732</a></div>
-              <div>✉️ <a href="mailto:partnerships@zidepeople.com">partnerships@zidepeople.com</a></div>
+              <div><FaPhone size={14} /> <a href="tel:+2348185577843">+234 810 142 2732</a></div>
+              <div><FaEnvelope size={14} /> <a href="mailto:partnerships@zidepeople.com">partnerships@zidepeople.com</a></div>
             </div>
             <p className="partner-success-footer">
               Together, we'll create an inspiring and impactful experience for everyone attending!<br/>
@@ -127,22 +128,22 @@ export default function PartnerForm() {
         {/* Partnership Benefits */}
         <div className="partner-benefits">
           <div className="partner-benefit-card">
-            <div className="partner-benefit-icon">🎯</div>
+            <div className="partner-benefit-icon"><FaBullseye size={24} /></div>
             <h3>Brand Visibility</h3>
             <p>Reach 2,000+ attendees and decision-makers</p>
           </div>
           <div className="partner-benefit-card">
-            <div className="partner-benefit-icon">🤝</div>
+            <div className="partner-benefit-icon"><FaHandshake size={24} /></div>
             <h3>Strategic Partnership</h3>
             <p>Connect with industry leaders and innovators</p>
           </div>
           <div className="partner-benefit-card">
-            <div className="partner-benefit-icon">📈</div>
+            <div className="partner-benefit-icon"><FaChartLine size={24} /></div>
             <h3>Market Impact</h3>
             <p>Position your brand at the forefront of flexible work</p>
           </div>
           <div className="partner-benefit-card">
-            <div className="partner-benefit-icon">💡</div>
+            <div className="partner-benefit-icon"><FaLightbulb size={24} /></div>
             <h3>Thought Leadership</h3>
             <p>Share your expertise with our community</p>
           </div>
@@ -151,7 +152,7 @@ export default function PartnerForm() {
         {/* CTA Button */}
         <div className="partner-cta">
           <button onClick={() => setShowModal(true)} className="partner-cta-btn">
-            🤝 Become a Sponsor or Partner
+            <FaHandshake size={16} /> Become a Sponsor or Partner
           </button>
           <p className="partner-cta-subtext">Join leading brands shaping the future of work</p>
           <p className="partner-email-text">

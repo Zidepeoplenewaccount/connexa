@@ -112,7 +112,7 @@ export default function UpgradeSuccess() {
           ✓
         </div>
         <h1 style={{ color: 'var(--green)', marginBottom: '20px', fontSize: '2.5rem' }}>
-          Upgrade Successful! 🎉
+          Upgrade Successful!
         </h1>
         <p style={{ fontSize: '1.2rem', marginBottom: '20px', lineHeight: '1.7' }}>
           Your ticket has been upgraded successfully! Check your email for the updated ticket.

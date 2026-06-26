@@ -1,4 +1,5 @@
 import CandidateSignup from './CandidateSignup';
+import { FaLightbulb, FaStopwatch, FaFire } from 'react-icons/fa';
 import './Awards.css';
 
 export default function Awards() {
@@ -115,15 +116,15 @@ export default function Awards() {
           <h3>Tips for a Strong Video:</h3>
           <div className="awards-tips-grid">
             <div className="awards-tip">
-              <div className="awards-tip-icon">💡</div>
+              <div className="awards-tip-icon"><FaLightbulb size={20} /></div>
               <p>Be authentic - tell your story in your own words.</p>
             </div>
             <div className="awards-tip">
-              <div className="awards-tip-icon">⏱️</div>
+              <div className="awards-tip-icon"><FaStopwatch size={20} /></div>
               <p>Keep it engaging - aim for 60–90 seconds.</p>
             </div>
             <div className="awards-tip">
-              <div className="awards-tip-icon">🔥</div>
+              <div className="awards-tip-icon"><FaFire size={20} /></div>
               <p>Show passion and vision - the panel is looking for meaningful connections and impact.</p>
             </div>
           </div>

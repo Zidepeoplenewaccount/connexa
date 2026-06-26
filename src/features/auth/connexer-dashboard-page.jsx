@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { FaMicrophone, FaBriefcase } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import {
   fetchSpeakerProfile,
@@ -193,10 +194,10 @@ export default function ConnexerDashboardFeaturePage() {
             <h2>Questions for You {questions.length > 0 && <span className="speaker-questions-count">{questions.length}</span>}</h2>
             <div className="speaker-questions-tabs">
               <button className={questionTab === 'talent' ? 'active' : ''} onClick={() => setQuestionTab('talent')}>
-                🎤 Talent Category
+                <FaMicrophone size={14} /> Talent Category
               </button>
               <button className={questionTab === 'business' ? 'active' : ''} onClick={() => setQuestionTab('business')}>
-                💼 Business Category
+                <FaBriefcase size={14} /> Business Category
               </button>
             </div>
           </div>

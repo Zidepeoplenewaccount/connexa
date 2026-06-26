@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { FaCheckCircle, FaTimesCircle, FaEnvelope, FaExclamationTriangle, FaVoteYea } from 'react-icons/fa';
 import { verifyPayment } from '../services/api';
 import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.webp';
 
@@ -226,7 +227,7 @@ export default function PaymentSuccess() {
 
           {status === 'success' && (
             <>
-              <div style={s.icon}>🎉</div>
+              <div style={s.icon}><FaCheckCircle size={48} color="#2db84b" /></div>
               <h2 style={{ ...s.title, color: '#2db84b' }}>Payment Confirmed!</h2>
               <p style={s.subtitle}>{message}</p>
 
@@ -264,7 +265,7 @@ export default function PaymentSuccess() {
 
               {voteItems.length > 0 && (
                 <div style={s.ticketBlock}>
-                  <div style={s.ticketId}>🗳️ {voteItems.length} Vote{voteItems.length > 1 ? 's' : ''} Recorded</div>
+                  <div style={s.ticketId}><FaVoteYea size={14} /> {voteItems.length} Vote{voteItems.length > 1 ? 's' : ''} Recorded</div>
                 </div>
               )}
 
@@ -286,8 +287,8 @@ export default function PaymentSuccess() {
               {/* Email note */}
               <div style={s.emailNote}>
                 {emailFailedCount > 0
-                  ? '⚠️ Your payment was successful, but we could not deliver some confirmation email(s) yet. Please contact support with your payment reference below.'
-                  : '✉️ Your ticket has been sent to your email. Check your inbox (and spam folder).'}
+                  ? <><FaExclamationTriangle size={14} /> Your payment was successful, but we could not deliver some confirmation email(s) yet. Please contact support with your payment reference below.</>
+                  : <><FaEnvelope size={14} /> Your ticket has been sent to your email. Check your inbox (and spam folder).</>}
               </div>
 
               {upgradeUrl && (
@@ -304,7 +305,7 @@ export default function PaymentSuccess() {
 
           {status === 'error' && (
             <>
-              <div style={s.icon}>❌</div>
+              <div style={s.icon}><FaTimesCircle size={48} color="#e8312a" /></div>
               <h2 style={{ ...s.title, color: '#e8312a' }}>Payment Failed</h2>
               <p style={s.subtitle}>{message}</p>
               <a href="/#tickets" style={s.btn}>Try Again</a>

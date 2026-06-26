@@ -1,4 +1,5 @@
 import './Footer.css';
+import { FaEnvelope, FaComments, FaPhone } from 'react-icons/fa';
 import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3).webp';
 import zideLogo from '../assets/IMG_6707.webp';
 import ArcLogo from '../assets/ARC_LOGO.webp';
@@ -22,35 +23,35 @@ export default function Footer() {
             {/* ADD CONTACT INFO */}
             <div className="footer-contact">
               <div className="footer-contact-item email">
-                <span className="footer-contact-icon">✉️</span>
+                <span className="footer-contact-icon"><FaEnvelope size={16} /></span>
                 <a href="mailto:partnerships@zidepeople.com" className="footer-contact-link">
                   partnerships@zidepeople.com.
                 </a>
 
                 <a href="mailto:partnerships@zidepeople.com" className="footer-contact-link-mobile">
-                  ✉️ partnerships@zidepeople.com.
+                  <FaEnvelope size={14} /> partnerships@zidepeople.com.
                 </a>
               </div>
 
               <div className="footer-contact-item">
-                <span className="footer-contact-icon">💬</span>
+                <span className="footer-contact-icon"><FaComments size={16} /></span>
                 <a href="https://wa.me/+2349067756473" target="_blank" rel="noreferrer" className="footer-contact-link">
                   Chat with us
                 </a>
 
                 <a href="https://wa.me/+2349067756473" target="_blank" rel="noreferrer" className="footer-contact-link-mobile">
-                  💬 Chat with us
+                  <FaComments size={14} /> Chat with us
                 </a>
               </div>
 
               <div className="footer-contact-item">
-                <span className="footer-contact-icon">📞</span>
+                <span className="footer-contact-icon"><FaPhone size={16} /></span>
                 <a href="tel:+2348101422732" className="footer-contact-link">
                   (+234) 810 142 2732
                 </a>
 
                 <a href="tel:+2348101422732" className="footer-contact-link-mobile">
-                  📞 (+234) 810 142 2732
+                  <FaPhone size={14} /> (+234) 810 142 2732
                 </a>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { FaCheckCircle } from 'react-icons/fa';
 import { getUpgradeOptions, initializeUpgrade } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './UpgradeTicketModal.css';
@@ -180,7 +181,7 @@ export default function UpgradeTicketModal({ initialTicketId = '', onClose }) {
               </>
             ) : (
               <div className="upgrade-no-options">
-                <p>🎉 You already have the best ticket tier available!</p>
+                <p><FaCheckCircle size={16} color="#2db84b" /> You already have the best ticket tier available!</p>
                 <button className="upgrade-back-btn" onClick={onClose}>
                   Close
                 </button>

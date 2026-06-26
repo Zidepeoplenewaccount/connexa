@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { FaTicketAlt, FaLightbulb, FaGift, FaUsers } from 'react-icons/fa';
 import './Tickets.css';
 
 const SKILL_OPTIONS = [
@@ -230,7 +231,7 @@ const tickets = [
     id: 1,
     type: 'general',
     passType: 'individual',
-    icon: '🎫',
+    icon: <FaTicketAlt size={20} />,
     iconClass: 'ticket-icon-white',
     label: 'Open Access',
     name: 'Marketplace Pass',
@@ -350,7 +351,7 @@ const tickets = [
     id: 6,
     type: 'showcase',
     passType: 'vendor',
-    icon: '💡',
+    icon: <FaLightbulb size={20} />,
     iconClass: 'ticket-icon-blue',
     label: 'Brand Visibility',
     name: 'Showcase Vendor Pass',
@@ -1117,7 +1118,7 @@ export default function Tickets() {
           {/* Discount Banner */}
           {discountActive && (
             <div className="tickets-discount-banner">
-              🎉 <strong>20% OFF</strong> all tickets (except Connectors Pass) - Limited time!
+              <FaGift size={14} /> <strong>20% OFF</strong> all tickets (except Connectors Pass) - Limited time!
             </div>
           )}
         </div>
@@ -1224,7 +1225,7 @@ export default function Tickets() {
             {/* Show discount info */}
             {getDiscountPercentage(selectedTicket.name) > 0 && (
               <div className="ticket-modal-discount-badge">
-                🎉 20% OFF - Save ₦{(selectedTicket.price - calculateTicketPrice(selectedTicket.name, selectedTicket.price)).toLocaleString()}
+                <FaGift size={14} /> 20% OFF - Save ₦{(selectedTicket.price - calculateTicketPrice(selectedTicket.name, selectedTicket.price)).toLocaleString()}
               </div>
             )}
 
@@ -1385,7 +1386,7 @@ export default function Tickets() {
 
                   {(quantity >= 2 && quantity <= 5 ) && selectedTicket.name !== 'Marketplace Pass' ? (
                     <div className="ticket-discount-badge">
-                      🎉 Group Discount: -₦{calculateDiscount(quantity).toLocaleString()}
+                      <FaUsers size={14} /> Group Discount: -₦{calculateDiscount(quantity).toLocaleString()}
                     </div>
                   ) : null}
 

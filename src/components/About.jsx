@@ -1,11 +1,12 @@
 import './About.css';
+import { FaShoppingCart, FaMicrophone, FaHandshake, FaTrophy } from 'react-icons/fa';
 import zideLogo from '../assets/IMG_6707.webp';
 
 const highlights = [
-  { icon: '🛒', title: 'Live Marketplace', desc: 'Real buyers, real sellers, real transactions on the day' },
-  { icon: '🎤', title: 'Connexer Sessions', desc: 'No regular speakers here. Connexers deliver a completely different experience.' },
-  { icon: '🤝', title: 'Opportunities', desc: 'Meet founders, talents, and decision-makers in Lagos' },
-  { icon: '🏆', title: 'Awards & Recognition', desc: 'Win visibility, prizes, and public acknowledgment' },
+  { icon: <FaShoppingCart size={24} />, title: 'Live Marketplace', desc: 'Real buyers, real sellers, real transactions on the day' },
+  { icon: <FaMicrophone size={24} />, title: 'Connexer Sessions', desc: 'No regular speakers here. Connexers deliver a completely different experience.' },
+  { icon: <FaHandshake size={24} />, title: 'Opportunities', desc: 'Meet founders, talents, and decision-makers in Lagos' },
+  { icon: <FaTrophy size={24} />, title: 'Awards & Recognition', desc: 'Win visibility, prizes, and public acknowledgment' },
 ];
 
 export default function About() {

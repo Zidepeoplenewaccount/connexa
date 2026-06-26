@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { FaTicketAlt, FaLightbulb, FaTimesCircle } from 'react-icons/fa';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { getAllTickets } from '../../services/adminApi';
 import '../../components/admin/admin.css';
@@ -184,7 +185,7 @@ export default function AdminScannerFeaturePage() {
       {/* Header */}
        <div className="scanner-header">
         <div>
-          <h1>🎫 Connexa 2026 Scanner</h1>
+          <h1><FaTicketAlt size={20} /> Connexa 2026 Scanner</h1>
           {!showNameInput && (
             <small style={{ color: 'rgba(255,255,255,0.6)' }}>
               Scanning as: <strong style={{ color: 'var(--orange)' }}>{scannerName}</strong>
@@ -343,7 +344,7 @@ export default function AdminScannerFeaturePage() {
                 color: 'rgba(255,255,255,0.5)',
                 fontSize: '13px'
               }}>
-                💡 Tip: Use this when QR code won't scan or for Connectors Pass codes
+                <FaLightbulb size={12} /> Tip: Use this when QR code won't scan or for Connectors Pass codes
               </small>
             </form>
           </>
@@ -351,7 +352,7 @@ export default function AdminScannerFeaturePage() {
           <div>
             <div id="qr-reader" ref={scannerRef}></div>
             <button onClick={stopScanning} className="scanner-btn scanner-btn-danger" style={{ marginTop: '16px' }}>
-              ❌ Stop Camera
+              <FaTimesCircle size={14} /> Stop Camera
             </button>
             
             {/* ADD MANUAL INPUT WHILE SCANNING */}

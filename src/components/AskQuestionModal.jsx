@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FaLightbulb } from 'react-icons/fa';
 import { submitSpeakerQuestion, findTicketsByEmail } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './AskQuestionModal.css';
@@ -299,7 +300,7 @@ export default function AskQuestionModal({ speaker, onClose }) {
               </div>
               {!isPriorityTicket && (
                 <div className="ticket-info-priority-warning">
-                  <strong>💡 Not a priority ticket?</strong>
+                  <strong><FaLightbulb size={14} /> Not a priority ticket?</strong>
                   <p>Upgrade to VIP, Business Owner, or Partner pass to get priority selection in Q&A sessions.</p>
                   <a href="/upgrade-ticket" className="ticket-upgrade-link">
                     Upgrade Your Ticket →

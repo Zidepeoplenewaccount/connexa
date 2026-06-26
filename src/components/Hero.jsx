@@ -1,5 +1,6 @@
 import './Hero.css';
 import { useState, useEffect } from 'react';
+import { FaMapMarkerAlt, FaClock, FaStore, FaLightbulb, FaHandshake, FaTrophy } from 'react-icons/fa';
 import zideLogo from '../assets/IMG_5735-removebg-preview2.webp';
 import ArcLogo from '../assets/ARC_LOGO.webp';
 import RightEvents from '../assets/IMG_9099.webp';
@@ -128,10 +129,10 @@ export default function Hero() {
 
         {/* Floating tags */}
         <div className="hero-floating-tags">
-          <div className="hero-tag hero-tag-1">🏪 Market Vendors</div>
-          <div className="hero-tag hero-tag-2">💡 Startups & Brands</div>
-          <div className="hero-tag hero-tag-3">🤝 Opportunities</div>
-          <div className="hero-tag hero-tag-4">🏆 Awards & Recognition</div>
+          <div className="hero-tag hero-tag-1"><FaStore size={14} /> Market Vendors</div>
+          <div className="hero-tag hero-tag-2"><FaLightbulb size={14} /> Startups & Brands</div>
+          <div className="hero-tag hero-tag-3"><FaHandshake size={14} /> Opportunities</div>
+          <div className="hero-tag hero-tag-4"><FaTrophy size={14} /> Awards & Recognition</div>
         </div>
 
         <div className="hero-content">
@@ -160,7 +161,7 @@ export default function Hero() {
 
           <div className="hero-details">
             <div className="hero-detail-item">
-              <span className="hero-detail-icon">📍</span>
+              <span className="hero-detail-icon"><FaMapMarkerAlt size={18} /></span>
               <span className="hero-detail-text">University of Lagos Indoor Sports Hall</span>
             </div>
             <div className="hero-detail-item">
@@ -175,7 +176,7 @@ export default function Hero() {
               <span className="hero-detail-text">28th November, 2026</span>
             </div>
             <div className="hero-detail-item">
-              <span className="hero-detail-icon">🕐</span>
+              <span className="hero-detail-icon"><FaClock size={18} /></span>
               <span className="hero-detail-text">Doors open 8:00 AM</span>
             </div>
           </div>
