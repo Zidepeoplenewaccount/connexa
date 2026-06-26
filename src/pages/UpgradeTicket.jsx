@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { FaStar, FaBullseye, FaHandshake, FaTrophy, FaCheckCircle } from 'react-icons/fa';
+import { FaGem, FaBullseye, FaHandshake, FaTrophy, FaCheckCircle } from 'react-icons/fa';
 import { getUpgradeOptions, initializeUpgrade } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import Navbar from '../components/Navbar';
@@ -128,7 +128,7 @@ export default function UpgradeTicket() {
                 <h3>Why Upgrade?</h3>
                 <div className="upgrade-benefits-grid">
                   <div className="upgrade-benefit-item">
-                    <span className="upgrade-benefit-icon"><FaStar size={20} /></span>
+                    <span className="upgrade-benefit-icon"><FaGem size={20} /></span>
                     <h4>VIP Access</h4>
                     <p>Priority seating and exclusive areas</p>
                   </div>
