@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaTicketAlt, FaLightbulb, FaGift, FaUsers, FaChartLine, FaCoins, FaGem } from '../utils/icons';
+import { FaTicketAlt, FaLightbulb, FaGift, FaUsers, FaChartLine, FaCoins, FaGem, FaLink, FaStore, FaTrophy } from '../utils/icons';
 import './Tickets.css';
 
 const SKILL_OPTIONS = [
@@ -255,7 +255,7 @@ const tickets = [
     id: 2,
     type: 'regular',
     passType: 'individual',
-    icon: '🎟️',
+    icon: <FaTicketAlt size={20} />,
     iconClass: 'ticket-icon-white',
     label: 'General Attendees',
     name: 'Talent Pass — Regular',
@@ -304,7 +304,7 @@ const tickets = [
     id: 3,
     type: 'connectors',
     passType: 'individual',
-    icon: '🔗',
+    icon: <FaLink size={20} />,
     iconClass: 'ticket-icon-blue',
     label: 'Strategic Opportunities',
     name: 'Connectors Pass',
@@ -381,7 +381,7 @@ const tickets = [
     id: 7,
     type: 'vendor',
     passType: 'vendor',
-    icon: '🏪',
+    icon: <FaStore size={20} />,
     iconClass: 'ticket-icon-orange',
     label: 'Direct Sales',
     name: 'Market Vendor Pass',
@@ -406,7 +406,7 @@ const tickets = [
     id: 8,
     type: 'vip-partner',
     passType: 'business',
-    icon: '👑',
+    icon: <FaTrophy size={20} />,
     iconClass: 'ticket-icon-rainbow',
     label: 'Sell • Showcase • Partner',
     name: 'VIP Partner Pass',
