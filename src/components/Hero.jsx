@@ -1,6 +1,6 @@
 import './Hero.css';
 import { useState, useEffect } from 'react';
-import { FaMapMarkerAlt, FaClock, FaStore, FaLightbulb, FaHandshake, FaTrophy } from '../utils/icons';
+import { FaMapMarkerAlt, FaClock, FaStore, FaBriefcase, FaHandshake, FaTrophy } from '../utils/icons';
 import zideLogo from '../assets/IMG_5735-removebg-preview2.webp';
 import ArcLogo from '../assets/ARC_LOGO.webp';
 import RightEvents from '../assets/IMG_9099.webp';
@@ -130,7 +130,7 @@ export default function Hero() {
         {/* Floating tags */}
         <div className="hero-floating-tags">
           <div className="hero-tag hero-tag-1"><FaStore size={14} /> Market Vendors</div>
-          <div className="hero-tag hero-tag-2"><FaLightbulb size={14} /> Startups & Brands</div>
+          <div className="hero-tag hero-tag-2"><FaBriefcase size={14} /> Startups & Brands</div>
           <div className="hero-tag hero-tag-3"><FaHandshake size={14} /> Opportunities</div>
           <div className="hero-tag hero-tag-4"><FaTrophy size={14} /> Awards & Recognition</div>
         </div>
