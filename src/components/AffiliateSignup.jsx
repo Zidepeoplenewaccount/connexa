@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaCheck, FaChartBar, FaCoins, FaChartLine, FaBullseye, FaComments, FaCopy, FaCheckCircle, FaLink, FaInfinity, FaGem } from '../utils/icons';
+import { FaCheck, FaChartBar, FaCoins, FaChartLine, FaBullseye, FaComments, FaCopy, FaCheckCircle, FaLink, FaInfinity, FaGem, FaCreditCard } from '../utils/icons';
 import { signupAffiliate } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './affiliate-signup.css';
@@ -181,29 +181,22 @@ export default function AffiliateSignup() {
 
         <div className="affiliate-benefits">
           <div className="affiliate-benefit-card">
-            <div className="affiliate-benefit-icon"><FaCoins size={24} /></div>
+            <div className="affiliate-benefit-icon"><FaCoins size={28} /></div>
             <h3>Up to 20% Commission</h3>
             <p>Tiered rates based on ticket price</p>
           </div>
           <div className="affiliate-benefit-card">
-            <div className="affiliate-benefit-icon"><FaLink size={24} /></div>
+            <div className="affiliate-benefit-icon"><FaLink size={28} /></div>
             <h3>Unique Link</h3>
             <p>Track all your referrals</p>
           </div>
           <div className="affiliate-benefit-card">
-            <span className="hero-detail-icon">
-              <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
-              </svg>
-            </span>
+            <div className="affiliate-benefit-icon"><FaCreditCard size={28} /></div>
             <h3>Monthly Payouts</h3>
             <p>Direct bank transfers</p>
           </div>
           <div className="affiliate-benefit-card">
-            <div className="affiliate-benefit-icon"><FaInfinity size={24} /></div>
+            <div className="affiliate-benefit-icon"><FaInfinity size={28} /></div>
             <h3>No Limits</h3>
             <p>Unlimited earning potential</p>
           </div>
