@@ -318,6 +318,26 @@ body::before {
   }
 }
 
+@media (max-width: 480px) {
+  .affiliate-benefit-icon svg,
+  .partner-benefit-icon svg,
+  .ticket-icon svg,
+  .about-highlight-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .hero-tag svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .footer-contact-link-mobile svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+}
+
 
 
 
