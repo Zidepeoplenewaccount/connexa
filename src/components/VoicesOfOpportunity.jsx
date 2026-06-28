@@ -66,6 +66,14 @@ const quotes = [
     text: "Access is one of the major things standing between an African builder and the global stage, but if you don't have the ability to unlearn and relearn then even Access becomes useless.",
     name: 'Richard Essangabasi',
   },
+  {
+    text: "I believe opportunities don't just happen — they're prepared for. Through continuous learning, meaningful relationships, and intentional growth, we can position ourselves for the opportunities we hope to attract.",
+    name: 'Jonathan Makinde',
+  },
+  {
+    text: "Don't just search for opportunities. Invest in becoming the kind of person opportunities are looking for.",
+    name: 'Jonathan Makinde',
+  },
 ];
 
 export default function VoicesOfOpportunity() {

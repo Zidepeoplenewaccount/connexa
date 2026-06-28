@@ -6,6 +6,7 @@ import OmobolanlePhoto from '../assets/omobolanle_adigun.webp';
 import OlalekanPhoto from '../assets/olalekan_asani.webp';
 import DavidOgooPhoto from '../assets/david_ogooluwa.webp';
 import OluwatomiPhoto from '../assets/oluwatomi_adeife.webp';
+import JonathanPhoto from '../assets/jonathan_makinde.png';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -100,6 +101,23 @@ const playgrounders = [
       instagram: 'https://www.instagram.com/oluwatomiadeife?igsh=bDZ2OTViMXA3YXky&utm_source=qr',
       tiktok: 'https://www.tiktok.com/@oluwatomiadeife?_r=1&_t=ZS-97TtOSdzUGn',
       twitter: 'https://x.com/oluwatomiadeife?s=21',
+    },
+  },
+  {
+    id: 6,
+    name: 'Jonathan Makinde',
+    connexerType: 'TALENT & BUSINESS PLAYGROUNDER',
+    title: 'Learning and Development Professional',
+    company: '',
+    topic: null,
+    photo: JonathanPhoto,
+    featured: false,
+    askLabel: 'Ask Jonathan',
+    bio: 'Jonathan Makinde is an HR professional specializing in Learning & Development, dedicated to helping people grow, learn, and reach their full potential. Through his work in corporate learning, he collaborates with leaders, subject-matter experts, and professionals to create impactful learning experiences that equip individuals with the skills and confidence to seize new opportunities while helping organizations unlock the full potential of their people and build high-performing teams. As a Talent & Business Playgrounder, he is passionate about connecting people with insights, opportunities, and meaningful relationships that drive career growth, business success, and lasting impact.',
+    socials: {
+      instagram: 'https://www.instagram.com/that__hr_guy?igsh=MTlkbXZnc3Nwd3Y4aw==',
+      tiktok: 'https://www.tiktok.com/@jay_mankind?_r=1&_t=ZS-97aq64xvt1I',
+      linkedin: 'https://www.linkedin.com/in/jonathanmakinde',
     },
   },
 ];
