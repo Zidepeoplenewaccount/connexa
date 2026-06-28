@@ -307,6 +307,10 @@ body::before {
     letter-spacing: 0.3px;
     box-shadow: 0 12px 26px rgba(0,0,0,0.35);
     -webkit-tap-highlight-color: transparent;
+    max-width: calc(100vw - 24px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .mobile-sticky-ticket-cta:link,
@@ -319,6 +323,11 @@ body::before {
 }
 
 @media (max-width: 480px) {
+  .mobile-sticky-ticket-cta {
+    font-size: 12px;
+    padding: 12px 10px;
+  }
+
   .affiliate-benefit-icon svg,
   .partner-benefit-icon svg,
   .ticket-icon svg,

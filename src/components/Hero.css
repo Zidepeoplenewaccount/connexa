@@ -632,6 +632,8 @@
   .hero-sponsors {
     margin-top: 60px;
     padding: 32px 0;
+    width: 100%;
+    margin-left: 0;
   }
 
   .hero-sponsors-label {
