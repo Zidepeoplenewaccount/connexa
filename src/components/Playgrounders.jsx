@@ -88,13 +88,14 @@ const playgrounders = [
   },
   {
     id: 5,
-    name: 'Oluwatomi Adeife',
+    name: 'Adeife Oluwatomi',
     connexerType: 'TALENT & BUSINESS PLAYGROUNDER',
     title: 'Founder and CEO of ProfilePro',
     company: 'ProfilePro',
     topic: null,
     photo: OluwatomiPhoto,
     featured: false,
+    photoClass: 'zoom-out-face',
     askLabel: 'Ask Oluwatomi',
     bio: 'Oluwatomi Adeife is the Founder and CEO of ProfilePro and Founder of CarryHer Nigeria. She is a startup founder, talent ecosystem builder, and brand strategist passionate about connecting skilled young people to real opportunities. Through her work, she has trained, mentored, and connected talents with brands while helping businesses grow through effective marketing and brand strategy. Oluwatomi is committed to helping individuals turn their skills into income and guiding founders to build sustainable, opportunity-driven businesses.',
     socials: {
@@ -112,6 +113,7 @@ const playgrounders = [
     topic: null,
     photo: JonathanPhoto,
     featured: false,
+    photoClass: 'zoom-out-face',
     askLabel: 'Ask Jonathan',
     bio: 'Jonathan Makinde is an HR professional specializing in Learning & Development, dedicated to helping people grow, learn, and reach their full potential. Through his work in corporate learning, he collaborates with leaders, subject-matter experts, and professionals to create impactful learning experiences that equip individuals with the skills and confidence to seize new opportunities while helping organizations unlock the full potential of their people and build high-performing teams. As a Talent & Business Playgrounder, he is passionate about connecting people with insights, opportunities, and meaningful relationships that drive career growth, business success, and lasting impact.',
     socials: {

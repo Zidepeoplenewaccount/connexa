@@ -52,11 +52,11 @@ const quotes = [
   },
   {
     text: "You don't need to have everything figured out before you start. Start with what you have, and grow as you go.",
-    name: 'Oluwatomi Adeife',
+    name: 'Adeife Oluwatomi',
   },
   {
     text: "Talent alone is not enough. If people can't see your value, they can't pay for it. Learn to position yourself.",
-    name: 'Oluwatomi Adeife',
+    name: 'Adeife Oluwatomi',
   },
   {
     text: "Cook until you become the recipe.",
