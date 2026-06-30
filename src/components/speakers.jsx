@@ -4,6 +4,9 @@ import AskQuestionModal from './AskQuestionModal';
 import JoshuaPhoto from '../assets/joshua_oluwadepo.webp';
 import ItunuoluwaPhoto from '../assets/itunuoluwa_soniregun.webp';
 import RichardPhoto from '../assets/richard_essangabasi.webp';
+import AmarachiPhoto from '../assets/AmarachiIMG_1222.PNG';
+import AnuliPhoto from '../assets/AnuliIMG_1242.JPG.jpeg';
+import SeyiPhoto from '../assets/SeyiIMG_1257.PNG';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -62,6 +65,75 @@ const speakers = [
       tiktok: 'https://www.tiktok.com/@theessangabasi',
       twitter: 'https://x.com/TheEssangabasi',
       linkedin: 'https://www.linkedin.com/in/theessangabasi',
+    },
+  },
+
+
+  {
+    id: 4,
+    name: 'Amarachi Agu',
+    connexerType: 'BUSINESS CONNEXER',
+    title: 'AI Educator and Consultant',
+    company: '',
+    topic: null,
+    photo: AmarachiPhoto,
+    featured: false,
+    askLabel: 'Ask Amarachi',
+    bio: `Amarachi Agu is an AI Educator and Consultant who helps people understand not just AI tools, but how to use them to adapt, grow, and create real opportunities in a fast-changing world. Her work breaks down complex AI concepts into practical, everyday language that professionals,
+    founders, and creators can immediately apply to their work. At Connexa 2026, she will connect with attendees as an AI Talent & Business Connexer, helping them see how AI can become a tool for growth rather than a source of anxiety and leaving them with clear, actionable ways to
+    start using it in their own journey.
+    `,
+    socials: {
+      instagram: 'https://www.instagram.com/hadassahh_e?igsh=MXYweWR6eGd2YW9n',
+      tiktok: 'https://www.tiktok.com/@hadassah_e0?_r=1&_t=ZS-97dyx8qqPx7',
+      linkedin: 'https://www.linkedin.com/in/amarachi-agu-h3',
+    },
+  },
+
+  {
+    id: 5,
+    name: 'Barr. (Mrs) Anulika Enemuo',
+    connexerType: 'BUSINESS CONNEXER',
+    title: 'CEO, Ohan Corporate Services Ltd',
+    company: 'Ohan Corporate Services Ltd',
+    topic: null,
+    photo: AnuliPhoto,
+    featured: false,
+    askLabel: 'Ask Barr. Anulika',
+    bio: `Anulika Enemuo is a business coach, corporate trainer, and multi-industry entrepreneur with over 15 years of business experience. With a background in International Commercial Law and over a decade of building successful businesses, she is passionate about helping entrepreneurs and organizations achieve sustainable growth. A recognized expert in sales, marketing, and business strategy, Coach Anuli has trained over 5,000 business owners and professionals, equipping them with practical, high-conversion strategies to increase revenue and scale their businesses. She is the creator of the bestselling
+    Marketing Made Easy course and regularly consults for organizations on workforce
+    optimization, sales, and business growth. As a Talent & Business Connexer ,Coach Anuli will share practical, tested strategies that help business owners accelerate growth, improve sales, and position their businesses for measurable results in as little as 60 days when consistently applied. 
+    `,
+    socials: {
+      instagram: ' https://www.instagram.com/coachanuli?igsh=MWlmYW9uZnZod2h1Mg==',
+      tiktok: 'https://www.tiktok.com/@anulikaenemuo?_r=1&_t=ZS-97dyz9wWPKP',
+      linkedin: 'https://www.linkedin.com/in/anulika-enemuo-116b93110?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
+    },
+  },
+
+  {
+    id: 6,
+    name: 'Seyi Olaniyan',
+    connexerType: 'BUSINESS CONNEXER',
+    title: 'CEO/ Creative Director, YellowLyfe',
+    company: 'YellowLyfe Hq',
+    topic: null,
+    photo: SeyiPhoto,
+    featured: false,
+    askLabel: 'Ask Seyi',
+    bio: `Seyi Olaniyan is a brand strategist, business builder, and Founder of YellowLyfe Company, a people-first experiences company focused on fostering meaningful connections, community, and
+    work-life balance. With over a decade of experience in media, marketing, brand development, and project execution, Seyi has worked with local and international brands to shape culture, build strong
+    brand identities, and drive business growth. His expertise spans brand strategy, storytelling, partnerships, and experiential marketing.
+
+    Inspired by the growing disconnect between professional success and personal wellbeing, he
+    founded YellowLyfe to create experiences that bring people together and help them thrive both personally and professionally.
+
+    As a Business Connexer at Connxer 2026, Seyi will be connecting with founders, professionals, and business leaders seeking to expand their networks, build strategic partnerships, strengthen
+    their brands, and unlock new opportunities for growth and collaboration.
+    `,
+    socials: {
+      instagram: 'https://www.instagram.com/seyiolaniyan_?igsh=bmVtbjgwbm56emM2',
+      linkedin: 'https://www.linkedin.com/in/seyi-olaniyan-0281b3173?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
     },
   },
 ];

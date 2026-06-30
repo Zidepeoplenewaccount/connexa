@@ -74,6 +74,19 @@ const quotes = [
     text: "Don't just search for opportunities. Invest in becoming the kind of person opportunities are looking for.",
     name: 'Jonathan Makinde',
   },
+
+  {
+    text: "I started out just as confused by AI as everyone else, the difference is I decided to figure it out publicly, so others wouldn’t have to start from zero. The winners in this age of technology are not the ones who fear AI, they are the ones who use it. People who learn to work with AI will always replace those who don't.",
+    name: 'Amarachi Agu',
+  },
+  {
+    text: "I thought passion was enough, until I realized you can be passionate and still be broke. Great products don't sell themselves; every business owner must become a great salesperson. Learn to never take no for an answer, If they say NO, it only means “Not Right Now” give it time and ask again… Play the long game. Every NO gets you closer to your next YES.",
+    name: 'Barr. (Mrs) Anulika Enemuo',
+  },
+  {
+    text: "I've spent years learning that the right room can change your career, but sometimes you have to create that room yourself. A brand is not what you say about yourself; it's what people remember when you're not in the room.",
+    name: 'Seyi Olaniyan',
+  },
 ];
 
 export default function VoicesOfOpportunity() {
