@@ -78,6 +78,7 @@ const speakers = [
     topic: null,
     photo: AmarachiPhoto,
     featured: false,
+    photoClass: 'photo-shift-down',
     askLabel: 'Ask Amarachi',
     bio: `Amarachi Agu is an AI Educator and Consultant who helps people understand not just AI tools, but how to use them to adapt, grow, and create real opportunities in a fast-changing world. Her work breaks down complex AI concepts into practical, everyday language that professionals,
     founders, and creators can immediately apply to their work. At Connexa 2026, she will connect with attendees as an AI Talent & Business Connexer, helping them see how AI can become a tool for growth rather than a source of anxiety and leaving them with clear, actionable ways to
@@ -121,6 +122,7 @@ const speakers = [
     photo: SeyiPhoto,
     photoClass: 'zoom-out-photo-seyi',
     featured: false,
+    photoClass: 'zoom-out-face',
     askLabel: 'Ask Seyi',
     bio: `Seyi Olaniyan is a brand strategist, business builder, and Founder of YellowLyfe Company, a people-first experiences company focused on fostering meaningful connections, community, and
     work-life balance. With over a decade of experience in media, marketing, brand development, and project execution, Seyi has worked with local and international brands to shape culture, build strong
