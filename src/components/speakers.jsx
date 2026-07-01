@@ -4,9 +4,9 @@ import AskQuestionModal from './AskQuestionModal';
 import JoshuaPhoto from '../assets/joshua_oluwadepo.webp';
 import ItunuoluwaPhoto from '../assets/itunuoluwa_soniregun.webp';
 import RichardPhoto from '../assets/richard_essangabasi.webp';
-import AmarachiPhoto from '../assets/AmarachiIMG_1222.PNG';
-import AnuliPhoto from '../assets/AnuliIMG_1242.JPG.jpeg';
-import SeyiPhoto from '../assets/SeyiIMG_1257.PNG';
+import AmarachiPhoto from '../assets/AmarachiIMG_1222.webp';
+import AnuliPhoto from '../assets/AnuliIMG_1242.JPG.webp';
+import SeyiPhoto from '../assets/SeyiIMG_1257.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -119,6 +119,7 @@ const speakers = [
     company: 'YellowLyfe Hq',
     topic: null,
     photo: SeyiPhoto,
+    photoClass: 'zoom-out-photo-seyi',
     featured: false,
     askLabel: 'Ask Seyi',
     bio: `Seyi Olaniyan is a brand strategist, business builder, and Founder of YellowLyfe Company, a people-first experiences company focused on fostering meaningful connections, community, and
@@ -159,7 +160,7 @@ export default function Speakers() {
 
 
   return (
-    <section className="speakers section" id="speakers">
+    <section className="speakers section" id="connexers">
       <div className="container">
 
         <div className="speakers-header reveal">
@@ -190,7 +191,7 @@ export default function Speakers() {
               {/* ── Photo ── */}
               <div className="speaker-photo">
                 {speaker.photo ? (
-                  <img src={speaker.photo} alt={speaker.name} loading="lazy" />
+                  <img src={speaker.photo} alt={speaker.name} className={speaker.photoClass || ''} loading="lazy" />
                 ) : (
                   <div className="speaker-photo-placeholder">
                     <span>{/*🎤*/}</span>

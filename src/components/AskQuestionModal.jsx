@@ -190,7 +190,7 @@ export default function AskQuestionModal({ speaker, onClose }) {
     <div className="question-modal-overlay" onClick={onClose}>
       <div className="question-modal" onClick={(e) => e.stopPropagation()}>
         <button className="question-modal-close" onClick={onClose}>×</button>
-        
+         
         {/* Header */}
         <h2 className="question-modal-title2">
           {speaker.connexerType ? `${speaker.connexerType}` : 'Connexer'}

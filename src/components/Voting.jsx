@@ -166,7 +166,7 @@ export default function Voting() {
           <div className="voting-grid">
             {currentCandidates.length === 0 ? (
               <div className="voting-empty">
-                {/*<p>No candidates yet. Check back soon!</p>*/}
+                <p>No candidates yet. Check back soon!</p>
               </div>
             ) : (
               currentCandidates.map((candidate, i) => (

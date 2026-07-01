@@ -492,6 +492,17 @@
   .question-form-actions button {
     width: 100%;
   }
+
+  .question-modal-close {
+    display: block;
+    background: none;
+    border: none;
+  }
+  .question-modal-close:hover {
+    background: none;
+    border-color: none;
+    transform: rotate(0deg);
+  }
 }
 
 /* Email Lookup */
@@ -605,5 +616,4 @@
 .question-email-lookup-result small {
   color: rgba(255,255,255,0.6);
   font-size: 12px;
-}
 }

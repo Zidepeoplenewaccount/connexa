@@ -11,6 +11,8 @@ import Playgrounders from './components/Playgrounders';
 import VoicesOfOpportunity from './components/VoicesOfOpportunity';
 import Gallery from './components/Gallery';
 import Tickets from './components/Tickets';
+import Awards from './components/Awards';
+import Voting from './components/Voting';
 import FAQ from './components/FAQ';
 import Merch from './components/merch';
 import PartnerForm from './components/PartnerForm';
@@ -75,6 +77,8 @@ function HomePage() {
           </div>
         </section>
 
+        <Awards />
+        <Voting />
         <FAQ />
         <Merch />
         <PartnerForm />
