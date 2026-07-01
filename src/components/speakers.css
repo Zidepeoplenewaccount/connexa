@@ -219,8 +219,8 @@
 
 .speaker-photo img.zoom-out-face {
   object-fit: cover;
-  object-position: center top;
-  transform: scale(0.85);
+  object-position: center 15%;
+  transform: scale(1);
 }
 
 .speaker-card:hover .speaker-photo img {
