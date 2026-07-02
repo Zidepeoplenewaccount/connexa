@@ -7,7 +7,7 @@ import OlalekanPhoto from '../assets/olalekan_asani.webp';
 import DavidOgooPhoto from '../assets/david_ogooluwa.webp';
 import OluwatomiPhoto from '../assets/oluwatomi_adeife.webp';
 import JonathanPhoto from '../assets/jonathan_makinde.png';
-import CadmusPhoto from '../assets/cadmus.webp';
+import CadmusPhoto from '../assets/Cadmus.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
