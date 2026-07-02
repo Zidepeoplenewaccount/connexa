@@ -7,6 +7,7 @@ import OlalekanPhoto from '../assets/olalekan_asani.webp';
 import DavidOgooPhoto from '../assets/david_ogooluwa.webp';
 import OluwatomiPhoto from '../assets/oluwatomi_adeife.webp';
 import JonathanPhoto from '../assets/jonathan_makinde.png';
+import CadmusPhoto from '../assets/cadmus.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -120,6 +121,29 @@ const playgrounders = [
       instagram: 'https://www.instagram.com/that__hr_guy?igsh=MTlkbXZnc3Nwd3Y4aw==',
       tiktok: 'https://www.tiktok.com/@jay_mankind?_r=1&_t=ZS-97aq64xvt1I',
       linkedin: 'https://www.linkedin.com/in/jonathanmakinde',
+    },
+  },
+
+  {
+    id: 7,
+    name: 'Sonayon Cadmus',
+    connexerType: 'TALENT & BUSINESS PLAYGROUNDER',
+    title: 'Fashion Business Strategist | Fashion Educationist | Founder',
+    company: 'Dear Fashion Designers & Cadmus de Vogue',
+    topic: null,
+    photo: CadmusPhoto,
+    featured: false,
+    photoClass: '',
+    askLabel: 'Ask Sonayon',
+    bio: `Sonayon Cadmus is a Fashion Business Strategist, Fashion Educationist, and founder of the Dear Fashion Designers Community. She equips fashion entrepreneurs with the knowledge and strategy to build sustainable brands through initiatives like the Ready-to-Wear Blueprint Masterclass, Vision Board Retreat for Fashion Designers, Fashion Beyond Borders, and personalized business mentorship. She is passionate about connecting creatives to opportunities, global exposure, and the right networks for growth.
+
+    At Connexa, Sonayon will share how intentional networking, value creation, and strategic positioning can open doors that talent alone cannot.
+    `,
+    socials: {
+      instagram: 'https://www.instagram.com/sonayon_cadmus?igsh=MTN3Z2xoMmVsdWNleg==',
+      tiktok: 'https://www.tiktok.com/@sonayon_cadmus?_r=1&_t=ZS-97gufKeQj3s',
+      linkedin: 'https://www.linkedin.com/in/sonayon-cadmus-b163b91a2?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
+      twitter: 'https://x.com/sonayoncadmus?s=21',
     },
   },
 ];

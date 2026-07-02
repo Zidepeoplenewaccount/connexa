@@ -87,6 +87,10 @@ const quotes = [
     text: "I've spent years learning that the right room can change your career, but sometimes you have to create that room yourself. A brand is not what you say about yourself; it's what people remember when you're not in the room.",
     name: 'Seyi Olaniyan',
   },
+  {
+    text: "I know what it feels like to have the talent but not know how to position it. Everything changed when I stopped waiting for opportunities and started creating them. “Your ideas don’t need to be anything too hard in the grand scheme of things. Start with what you have, execute consistently, and let the journey refine the vision.”",
+    name: 'Sonayon Cadmus',
+  },
 ];
 
 export default function VoicesOfOpportunity() {

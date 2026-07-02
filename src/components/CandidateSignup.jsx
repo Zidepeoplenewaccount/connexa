@@ -259,7 +259,7 @@ export default function CandidateSignup() {
       </form>
 
       <div className="candidate-note">
-        <strong>Note:</strong> Award open to Vendors, Brand Showcases, and Individual VIPs only. 
+        <strong>Note:</strong> Award open to Vendors, Brand Showcases, and Talent VIPs only. 
         Applications are subject to review and approval.
       </div>
     </div>
