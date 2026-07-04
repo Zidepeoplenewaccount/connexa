@@ -2,6 +2,19 @@ import CandidateSignup from './CandidateSignup';
 import { FaLightbulb, FaStopwatch, FaFire } from '../utils/icons';
 import './Awards.css';
 
+const BriefcaseIcon = () => (
+  <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path>
+  </svg>
+);
+ 
+const StarIcon = () => (
+  <svg width="70" height="70" viewBox="0 0 24 24" fill="white" stroke="white" strokeWidth="1.5">
+    <polygon points="12 2 15.09 10.26 24 10.27 17.18 16.29 20.27 24.54 12 18.53 3.73 24.54 6.82 16.29 0 10.27 8.91 10.26 12 2"></polygon>
+  </svg>
+);
+
 export default function Awards() {
   return (
     <section className="awards-section" id="awards">
@@ -25,12 +38,16 @@ export default function Awards() {
           </p>
           <div className="awards-questions">
             <div className="awards-question-card">
-              <div className="awards-question-icon">🏢</div>
+              <div className="awards-question-icon">
+                <BriefcaseIcon />
+              </div>
               <p><strong>For Business Owners:</strong></p>
               <p>"Connexa means to my business..."</p>
             </div>
             <div className="awards-question-card">
-              <div className="awards-question-icon">⭐</div>
+              <div className="awards-question-icon">
+                <StarIcon />
+              </div>
               <p><strong>For Talent:</strong></p>
               <p>"Connexa means to me as a Talent..."</p>
             </div>
