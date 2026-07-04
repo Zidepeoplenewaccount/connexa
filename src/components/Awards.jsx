@@ -159,7 +159,7 @@ export default function Awards() {
             Share your story. Inspire the community. Claim your spotlight.
           </p>
           <div className="awards-eligibility">
-            <strong>Award Open To:</strong> Vendors, Brand Showcases, and Individual VIPs Only
+            <strong>Award Open To:</strong> Market & Showcase Vendors, Talent VIPs, and VIP Partners only
           </div>
         </div>
 
