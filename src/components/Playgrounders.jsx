@@ -8,6 +8,7 @@ import DavidOgooPhoto from '../assets/david_ogooluwa.webp';
 import OluwatomiPhoto from '../assets/oluwatomi_adeife.webp';
 import JonathanPhoto from '../assets/jonathan_makinde.png';
 import CadmusPhoto from '../assets/Cadmus.webp';
+import SamuelPhoto from '../assets/SamuelPhoto.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -144,6 +145,38 @@ const playgrounders = [
       tiktok: 'https://www.tiktok.com/@sonayon_cadmus?_r=1&_t=ZS-97gufKeQj3s',
       linkedin: 'https://www.linkedin.com/in/sonayon-cadmus-b163b91a2?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
       twitter: 'https://x.com/sonayoncadmus?s=21',
+    },
+  },
+
+  {
+    id: 8,
+    name: 'Samuel Olatunde',
+    connexerType: 'BUSINESS PLAYGROUNDER',
+    title: 'Co-Founder & COO',
+    company: 'Edala Development',
+    topic: null,
+    photo: SamuelPhoto,
+    featured: false,
+    photoClass: '',
+    askLabel: 'Ask Samuel',
+    bio: `Samuel Olatunde is the Co-founder and Chief Operating Officer of Edala Development, a
+      real estate development company delivering residential, hospitality, and commercial
+      assets across Lagos and Ibadan.
+
+      He leads the company’s operations across the full development lifecycle, overseeing project execution, capital deployment, sales strategy, and investor engagement. Under his
+      leadership, Edala has delivered multiple developments across Lekki, Ikeja, Surulere, and
+      Ibadan, creating investment-driven assets designed for long-term value creation.
+      Beyond his work in development, Samuel is committed to advancing entrepreneurship
+      and practical business leadership. He is the convener of 10X, a workshop platform that equips entrepreneurs with the frameworks and execution principles required to build and
+      scale sustainable ventures. Through multiple editions, the platform has reached hundreds
+      of entrepreneurs and provided direct support and funding to selected participants while
+      building a growing community of ambitious founders.
+      His work sits at the intersection of real estate development, capital, and entrepreneurial
+      leadership, with a focus on 
+    `,
+    socials: {
+      instagram: 'https://www.instagram.com/gov_lee?igsh=cjB3YnRqcjZ4dmFp',
+      linkedin: 'https://www.linkedin.com/in/samuelolatunde?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
     },
   },
 ];
