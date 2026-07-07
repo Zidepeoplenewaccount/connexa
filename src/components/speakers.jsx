@@ -153,8 +153,7 @@ const speakers = [
     featured: false,
     photoClass: 'zoom-out-face',
     askLabel: 'Ask Stella',
-    bio: `Seyi Olaniyan is a brand strategist, business builder, and Founder of YellowLyfe Company, a people-first experiences company focused on fostering meaningful connections, community, and
-    work-Stella Ijeoma Olugbemi is a Corporate Communications, Corporate Social
+    bio: `Stella Ijeoma Olugbemi is a Corporate Communications, Corporate Social
     Responsibility (CSR), Brand and Events professional with over 21 years of experience
     spanning Banking, Oil & Gas, Healthcare, Telecommunications, Construction and the
     Power sector.
@@ -166,7 +165,7 @@ const speakers = [
     An advocate for sustainability and purposeful leadership, Stella has successfully led
     numerous CSR and employee volunteering initiatives aligned with the United Nations
     Sustainable Development Goals (SDGs). She also champions youth empowerment
-    through innovative programmes that equip young people with future-ready skills
+    through innovative programmes that equip young people with future-ready skills.
     `,
     socials: {
       linkedin: 'https://www.linkedin.com/in/stella-ijeoma-olugbemi-anipr-645a508?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
