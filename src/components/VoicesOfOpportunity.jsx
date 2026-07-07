@@ -91,6 +91,14 @@ const quotes = [
     text: "I know what it feels like to have the talent but not know how to position it. Everything changed when I stopped waiting for opportunities and started creating them. “Your ideas don’t need to be anything too hard in the grand scheme of things. Start with what you have, execute consistently, and let the journey refine the vision.”",
     name: 'Sonayon Cadmus',
   },
+  {
+    text: "I know what it means to have the skills but not the room to show them, so I learned how-to knock-on doors myself Nobody fades because they ran out of talent, they fade because nobody invested in what came next",
+    name: 'Seyi Busari',
+  },
+  {
+    text: "I didn't start out as the lead, I started out as 'Timini' and built from there, one role, one project, at a time. Acting gets you seen once. It's the work behind the scenes, producing, directing, building, that keeps you relevant.",
+    name: 'Tobi Makinde',
+  },
 ];
 
 export default function VoicesOfOpportunity() {

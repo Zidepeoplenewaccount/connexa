@@ -8,6 +8,8 @@ import AmarachiPhoto from '../assets/AmarachiIMG_1222.webp';
 import AnuliPhoto from '../assets/AnuliIMG_1242.JPG.webp';
 import SeyiPhoto from '../assets/SeyiIMG_1257.webp';
 import StellaIjeomaPhoto from '../assets/StellaIjeoma.webp';
+import SeyiBusariImage from '../assets/SeyiBusariImage.webp';
+import TobiMakindeImage from '../assets/TobiMakindeImage.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -16,6 +18,27 @@ import { FaTiktok, FaXTwitter } from "react-icons/fa6";
 const speakers = [
   {
     id: 1,
+    name: 'Tobi Makinde',
+    connexerType: '',
+    title: 'Founder/Film-Maker',
+    company: 'Tobi Makinde Production',
+    topic: null, 
+    photo: TobiMakindeImage,
+    featured: true,
+    photoClass: 'zoom-out-face',
+    askLabel: 'Ask Tobi',
+    bio: `Tobi Makinde is a Nigerian filmmaker who first captured audiences with his role as "Timini" in the hit TV series Jenifa's Diary. He went on to co-direct Battle on Buka Street alongside Funke Akindele, one of Nollywood's highest-grossing films to date. His acting range was further cemented in 2024 with his acclaimed portrayal of "Shina Judah," a hoodlum in the blockbuster A Tribe Called Judah, earning praise from both critics and audiences alike. Beyond acting, Tobi is also a producer, driving projects such as The Tobi Makinde Show (TTM) and the movie “No One Has to Know” proof of a career built not just on performance, but on ownership and creative vision across the industry.`,
+    instagramUrl: 'https://www.instagram.com/connexalagos',
+    socials: {
+      instagram: 'https://www.instagram.com/tobimakinde?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+      linkedin: 'https://www.linkedin.com/in/tobi-makinde-51b40234b/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BWoPquwYfQDqrOMxspYp7ag%3D%3D',
+      tiktok: 'https://www.tiktok.com/@tobimakinde?_r=1&_t=ZS-97ojZEmtlVF',
+      twitter: ' https://x.com/tobimakinde01?s=21&t=Fw3NUKk6YQG3OXtNtd0p5w',
+    },
+  },
+
+  {
+    id: 2,
     name: 'Joshua Oluwadepo',
     connexerType: 'TALENT CONNEXER',
     title: 'Senior Recruitment Consultant',
@@ -32,7 +55,7 @@ const speakers = [
     },
   },
   {
-    id: 2,
+    id: 3,
     name: 'Rt. Hon Itunuoluwa Maria Soniregun',
     connexerType: 'TALENT CONNEXER',
     title: 'First Female Speaker, Lagos State Youth Parliament',
@@ -51,7 +74,7 @@ const speakers = [
     },
   },
   {
-    id: 3,
+    id: 4,
     name: 'Richard Essangabasi',
     connexerType: 'TALENT & BUSINESS CONNEXER',
     title: 'Co-founder/CEO Shard Network',
@@ -71,7 +94,7 @@ const speakers = [
 
 
   {
-    id: 4,
+    id: 5,
     name: 'Amarachi Agu',
     connexerType: 'BUSINESS CONNEXER',
     title: 'AI Educator and Consultant',
@@ -93,7 +116,7 @@ const speakers = [
   },
 
   {
-    id: 5,
+    id: 6,
     name: 'Barr. (Mrs) Anulika Enemuo',
     connexerType: 'BUSINESS CONNEXER',
     title: 'CEO, Ohan Corporate Services Ltd',
@@ -114,7 +137,7 @@ const speakers = [
   },
 
   {
-    id: 6,
+    id: 7,
     name: 'Seyi Olaniyan',
     connexerType: 'BUSINESS CONNEXER',
     title: 'Founder/Creative Director, YellowLyfe HQ',
@@ -142,8 +165,8 @@ const speakers = [
   },
 
   {
-    id: 7,
-    name: 'STELLA IJEOMA OLUGBEMI',
+    id: 8,
+    name: 'Stella Ijeoma Olugbemi',
     connexerType: 'BUSINESS CONNEXER',
     title: 'CSR, Brand and Events Manager',
     company: 'Egbin Power Plc',
@@ -169,6 +192,27 @@ const speakers = [
     `,
     socials: {
       linkedin: 'https://www.linkedin.com/in/stella-ijeoma-olugbemi-anipr-645a508?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
+    },
+  },
+
+  {
+    id: 9,
+    name: 'Seyi Busari',
+    connexerType: 'TALENT CONNEXER',
+    title: 'Founder/CEO',
+    company: 'MediabossAfrica Limited',
+    topic: null,
+    photo: SeyiBusariImage,
+    photoClass: 'zoom-out-photo',
+    featured: false,
+    photoClass: 'zoom-out-face',
+    askLabel: 'Ask Seyi',
+    bio: `Oluwaseyi Busari is a Creative Industry Builder and Media Growth Leader who helps African creatives and entertainment brands convert visibility into measurable influence and opportunity. As Founder of Mediaboss Africa, he has driven audience growth, talent positioning, and high-impact media campaigns for leading personalities and brands, including the relaunch of The Tobi Makinde Show, which generated over 1 million impressions in 72 hours. Known for building the systems, partnerships, and platforms that accelerate growth, he is committed to helping African talent scale sustainably and compete globally.
+    `,
+    socials: {
+      instagram: ' https://www.instagram.com/seyibusareal ?utm_source=ig web button share sheet&igsh=ZD NIZDcOMzIxNw==',
+      twitter: 'https://x.com/seyibusareal?s=11',
+      linkedin: 'https://www.linkedin.com/in/oluwaseyibusari/?lipi=urn%3Ali%3Apage%3Ad_flagship3 profile view_base_contact_details%3Bhfu2oL30QL2vXqeA9kYGdA%3D%3D',
     },
   },
 ];
