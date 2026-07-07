@@ -7,6 +7,7 @@ import RichardPhoto from '../assets/richard_essangabasi.webp';
 import AmarachiPhoto from '../assets/AmarachiIMG_1222.webp';
 import AnuliPhoto from '../assets/AnuliIMG_1242.JPG.webp';
 import SeyiPhoto from '../assets/SeyiIMG_1257.webp';
+import StellaIjeomaPhoto from '../assets/StellaIjeoma.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -137,6 +138,38 @@ const speakers = [
     socials: {
       instagram: 'https://www.instagram.com/seyiolaniyan_?igsh=bmVtbjgwbm56emM2',
       linkedin: 'https://www.linkedin.com/in/seyi-olaniyan-0281b3173?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
+    },
+  },
+
+  {
+    id: 7,
+    name: 'STELLA IJEOMA OLUGBEMI',
+    connexerType: 'BUSINESS CONNEXER',
+    title: 'CSR, Brand and Events Manager',
+    company: 'Egbin Power Plc',
+    topic: null,
+    photo: StellaIjeomaPhoto,
+    photoClass: 'zoom-out-photo',
+    featured: false,
+    photoClass: 'zoom-out-face',
+    askLabel: 'Ask Stella',
+    bio: `Seyi Olaniyan is a brand strategist, business builder, and Founder of YellowLyfe Company, a people-first experiences company focused on fostering meaningful connections, community, and
+    work-Stella Ijeoma Olugbemi is a Corporate Communications, Corporate Social
+    Responsibility (CSR), Brand and Events professional with over 21 years of experience
+    spanning Banking, Oil & Gas, Healthcare, Telecommunications, Construction and the
+    Power sector.
+    She currently serves as the CSR, Brand and Events Manager at Egbin Power Plc,
+    the largest thermal power generating plant in Sub-Saharan Africa, where she leads
+    initiatives that strengthen corporate reputation, build strategic stakeholder
+    relationships, deliver impactful community development programmes and create
+    memorable brand experiences.
+    An advocate for sustainability and purposeful leadership, Stella has successfully led
+    numerous CSR and employee volunteering initiatives aligned with the United Nations
+    Sustainable Development Goals (SDGs). She also champions youth empowerment
+    through innovative programmes that equip young people with future-ready skills
+    `,
+    socials: {
+      linkedin: 'https://www.linkedin.com/in/stella-ijeoma-olugbemi-anipr-645a508?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
     },
   },
 ];
