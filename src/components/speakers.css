@@ -228,6 +228,12 @@
   transform: scale(1);
 }
 
+.speaker-photo img.zoom-out-face-olanrewaju {
+  object-fit: cover;
+  object-position: center 15%;
+  transform: scale(1);
+}
+
 .speaker-photo img.photo-shift-down {
   object-fit: cover;
   object-position: center 35%;

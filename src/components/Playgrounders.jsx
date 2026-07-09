@@ -9,6 +9,7 @@ import OluwatomiPhoto from '../assets/oluwatomi_adeife.webp';
 import JonathanPhoto from '../assets/jonathan_makinde.png';
 import CadmusPhoto from '../assets/Cadmus.webp';
 import SamuelPhoto from '../assets/SamuelPhoto.webp';
+import OlansilePhoto from '../assets/OlansilePhoto.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -177,6 +178,25 @@ const playgrounders = [
     socials: {
       instagram: 'https://www.instagram.com/gov_lee?igsh=cjB3YnRqcjZ4dmFp',
       linkedin: 'https://www.linkedin.com/in/samuelolatunde?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
+    },
+  },
+
+  {
+    id: 9,
+    name: 'Olansile Olanrewaju',
+    connexerType: 'BUSINESS PLAYGROUNDER',
+    title: 'Business Development Strategist | Agribusiness Entrepreneur |  Youth Development Advocate',
+    company: 'Co-Founder, Cassavaverse Limited Founder, LXA Nigeria',
+    topic: null,
+    photo: OlansilePhoto,
+    featured: false,
+    photoClass: 'zoom-out-face-olanrewaju',
+    askLabel: 'Ask Olansile',
+    bio: `Olansile Olanrewaju, popularly known as Advantage, is an entrepreneur and business growth strategist passionate about helping businesses scale and creating economic opportunities for young Africans. As the Founder of LXA Nigeria and Co-Founder of Cassavaverse Limited, he has built businesses across logistics, agribusiness, and enterprise development while supporting entrepreneurs with practical growth strategies. At Connexa, he’ll engage business owners on building sustainable businesses, creating systems for growth, leveraging opportunities, and turning ideas into scalable ventures.
+    `,
+    socials: {
+      instagram: 'https://www.instagram.com/advantageofibadan?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+      linkedin: 'https://www.linkedin.com/in/olansile?utm_source=share_via&utm_cont',
     },
   },
 ];
