@@ -99,6 +99,10 @@ const quotes = [
     text: "I didn't start out as the lead, I started out as 'Timini' and built from there, one role, one project, at a time. Acting gets you seen once. It's the work behind the scenes, producing, directing, building, that keeps you relevant.",
     name: 'Tobi Makinde',
   },
+  {
+    text: "I've discovered that the right partnership can create more impact than the biggest investment. The next big business may not be another factory. It may be the platform that helps a thousand factories succeed",
+    name: 'Olansile Olanrewaju',
+  },
 ];
 
 export default function VoicesOfOpportunity() {
