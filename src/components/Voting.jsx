@@ -165,8 +165,25 @@ export default function Voting() {
         {!loading && (
           <div className="voting-grid">
             {currentCandidates.length === 0 ? (
-              <div className="voting-empty">
-                <p>No candidates yet. Check back soon!</p>
+              <div className="voting-empty-state">
+                <div className="voting-skeleton-row">
+                  {[1, 2, 3, 4].map((n) => (
+                    <div key={n} className="voting-mini-skeleton">
+                      <div className="voting-mini-badge">Soon</div>
+                      <div className="voting-mini-line voting-mini-title"></div>
+                      <div className="voting-mini-line voting-mini-text"></div>
+                      <div className="voting-mini-line voting-mini-text short"></div>
+                      <div className="voting-mini-stats">
+                        <div className="voting-mini-stat"></div>
+                        <div className="voting-mini-stat"></div>
+                      </div>
+                      <div className="voting-mini-btn"></div>
+                    </div>
+                  ))}
+                </div>
+                <p className="voting-empty-notice">
+                  Nominees are being finalized — check back soon to cast your vote.
+                </p>
               </div>
             ) : (
               currentCandidates.map((candidate, i) => (

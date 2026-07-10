@@ -26,6 +26,13 @@ const MicIcon = () => (
   </svg>
 );
  
+const CloseIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </svg>
+);
+ 
 const ELIGIBLE_TICKETS = [
   'Market Vendor Pass',
   'Showcase Vendor Pass',
@@ -34,6 +41,9 @@ const ELIGIBLE_TICKETS = [
 ];
  
 export default function CandidateSignup() {
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+ 
   // Ticket verification states
   const [step, setStep] = useState('ticket'); // 'ticket' or 'form'
   const [ticketId, setTicketId] = useState('');
@@ -63,6 +73,43 @@ export default function CandidateSignup() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+ 
+  // Reset everything back to the initial ticket step (used by the close button
+  // and by the "submit another application" flow)
+  function resetFlow() {
+    setStep('ticket');
+    setTicketId('');
+    setTicketDetails(null);
+    setIsEligible(false);
+    setTicketError('');
+    setShowEmailLookup(false);
+    setLookupEmail('');
+    setLookupError('');
+    setLookupResults([]);
+    setCandidateType('business');
+    setFormData({
+      name: '',
+      description: '',
+      email: '',
+      phone: '',
+      videoUrl: '',
+      instagram: '',
+      tiktok: '',
+      challenge: '',
+      whyDeserve: ''
+    });
+    setSubmitted(false);
+    setError('');
+  }
+ 
+  function handleOpenModal() {
+    setIsModalOpen(true);
+  }
+ 
+  function handleCloseModal() {
+    setIsModalOpen(false);
+    resetFlow();
+  }
  
   // Ticket verification handlers
   async function handleVerifyTicket(e) {
@@ -203,373 +250,413 @@ export default function CandidateSignup() {
     setTicketError('');
   }
  
-  // Success Screen
-  if (submitted) {
-    return (
-      <div className="candidate-signup-success">
-        <div className="candidate-success-icon">✓</div>
-        <h3>Application Submitted!</h3>
-        <p>Thank you for entering the Connexa 2026 Awards!</p>
-        <p>Your application is under review. We'll notify you once it's approved.</p>
-        <button
-          onClick={() => {
-            setSubmitted(false);
-            setStep('ticket');
-            setTicketId('');
-            setTicketDetails(null);
-            setFormData({
-              name: '',
-              description: '',
-              email: '',
-              phone: '',
-              videoUrl: '',
-              instagram: '',
-              tiktok: '',
-              challenge: '',
-              whyDeserve: ''
-            });
-          }}
-          className="candidate-btn"
-        >
-          Submit Another Application
-        </button>
-      </div>
-    );
-  }
- 
- 
- 
-  // Application Form
-  if (step === 'form' && isEligible && ticketDetails) {
-    return (
-      <div className="candidate-signup-form">
-        <h3>Enter the Challenge</h3>
-        <p className="candidate-signup-subtitle">Submit your application to participate</p>
- 
-        <form onSubmit={handleSubmit}>
-          {/* Category Selection */}
-          <div className="candidate-form-group">
-            <label>I am applying as: *</label>
-            <div className="candidate-radio-group">
-              <label className="candidate-radio">
-                <input
-                  type="radio"
-                  name="candidateType"
-                  value="business"
-                  checked={candidateType === 'business'}
-                  onChange={(e) => setCandidateType(e.target.value)}
-                />
-                <BriefcaseIcon />
-                <span>Business Owner</span>
-              </label>
-              <label className="candidate-radio">
-                <input
-                  type="radio"
-                  name="candidateType"
-                  value="individual"
-                  checked={candidateType === 'individual'}
-                  onChange={(e) => setCandidateType(e.target.value)}
-                />
-                <StarIcon />
-                <span>Talent</span>
-              </label>
-            </div>
-          </div>
- 
-          {/* Name */}
-          <div className="candidate-form-group">
-            <label htmlFor="name">
-              {candidateType === 'business' ? 'Business Name' : 'Full Name'} *
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
- 
-          {/* Description */}
-          <div className="candidate-form-group">
-            <label htmlFor="description">
-              {candidateType === 'business' ? 'Business Description' : 'Your Bio'} *
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              rows="4"
-              placeholder={candidateType === 'business'
-                ? 'Tell us about your business and what you do...'
-                : 'Tell us about yourself and your skills...'
-              }
-              required
-            />
-          </div>
- 
-          {/* Email */}
-          <div className="candidate-form-group">
-            <label htmlFor="email">Email *</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
- 
-          {/* Phone */}
-          <div className="candidate-form-group">
-            <label htmlFor="phone">Phone Number *</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-          </div>
- 
-          {/* Video URL */}
-          <div className="candidate-form-group">
-            <label htmlFor="videoUrl">Instagram Video URL (optional)</label>
-            <input
-              type="url"
-              id="videoUrl"
-              name="videoUrl"
-              value={formData.videoUrl}
-              onChange={handleChange}
-              placeholder="https://instagram.com/reel/..."
-            />
-            <small>Paste your Instagram reel/video link here</small>
-          </div>
- 
-          {/* Instagram Handle */}
-          <div className="candidate-form-group">
-            <label htmlFor="instagram">Instagram Handle (optional)</label>
-            <input
-              type="text"
-              id="instagram"
-              name="instagram"
-              value={formData.instagram}
-              onChange={handleChange}
-              placeholder="@yourusername"
-            />
-          </div>
- 
-          {/* TikTok Handle */}
-          <div className="candidate-form-group">
-            <label htmlFor="tiktok">TikTok Handle (optional)</label>
-            <input
-              type="text"
-              id="tiktok"
-              name="tiktok"
-              value={formData.tiktok}
-              onChange={handleChange}
-              placeholder="@yourusername"
-            />
-          </div>
- 
-          {/* Business-only fields */}
-          {candidateType === 'business' && (
-            <>
-              <div className="candidate-form-group">
-                <label htmlFor="challenge">What challenges does your business face? (optional)</label>
-                <textarea
-                  id="challenge"
-                  name="challenge"
-                  value={formData.challenge}
-                  onChange={handleChange}
-                  rows="3"
-                />
-              </div>
- 
-              <div className="candidate-form-group">
-                <label htmlFor="whyDeserve">Why do you deserve this award? (optional)</label>
-                <textarea
-                  id="whyDeserve"
-                  name="whyDeserve"
-                  value={formData.whyDeserve}
-                  onChange={handleChange}
-                  rows="3"
-                />
-              </div>
-            </>
-          )}
- 
-          {error && <div className="candidate-error">{error}</div>}
- 
-          <button type="submit" className="candidate-btn" disabled={loading}>
-            {loading ? 'Submitting...' : 'Submit Application'}
-          </button>
- 
+  // ═══════════════════════════════════════════════════════════
+  // Renders the current step's content (unchanged logic/markup)
+  // ═══════════════════════════════════════════════════════════
+  function renderContent() {
+    // Success Screen
+    if (submitted) {
+      return (
+        <div className="candidate-signup-success">
+          <div className="candidate-success-icon">✓</div>
+          <h3>Application Submitted!</h3>
+          <p>Thank you for entering the Connexa 2026 Awards!</p>
+          <p>Your application is under review. We'll notify you once it's approved.</p>
           <button
-            type="button"
-            className="candidate-btn"
-            onClick={handleBackToTicket}
-            disabled={loading}
-            style={{
-              background: 'transparent',
-              border: '2px solid var(--border)',
-              color: 'var(--white)',
-              marginTop: '8px'
+            onClick={() => {
+              setSubmitted(false);
+              setStep('ticket');
+              setTicketId('');
+              setTicketDetails(null);
+              setFormData({
+                name: '',
+                description: '',
+                email: '',
+                phone: '',
+                videoUrl: '',
+                instagram: '',
+                tiktok: '',
+                challenge: '',
+                whyDeserve: ''
+              });
             }}
+            className="candidate-btn"
           >
-            Back to Ticket Verification
+            Submit Another Application
           </button>
-        </form>
-      </div>
-    );
-  }
- 
-  // ═══════════════════════════════════════════════════════════
-  // Ineligible Warning (CHECK BEFORE TICKET FORM)
-  // ═══════════════════════════════════════════════════════════
-  if (step === 'ticket' && ticketDetails && !isEligible) {
-    return (
-      <div className="candidate-signup-form">
-        <h3>Ticket Not Eligible</h3>
-        <p className="candidate-signup-subtitle">
-          Your ticket type is not eligible for this challenge
-        </p>
- 
-        <div className="candidate-note" style={{ background: 'rgba(232,49,42,0.15)', borderColor: 'rgba(232,49,42,0.3)' }}>
-          <strong style={{ color: 'var(--red)' }}>Not Eligible:</strong>
-          <p style={{ color: 'rgba(255,255,255,0.8)' }}>
-            Your current ticket type <strong>{ticketDetails.ticket_type}</strong> is not eligible for the Connexa 2026 Awards.
-          </p>
         </div>
+      );
+    }
  
-        <div className="candidate-note">
-          <strong>Eligible Tickets:</strong>
-          <ul style={{ margin: '8px 0 0 0', paddingLeft: '20px' }}>
-            <li>Market Vendor Pass</li>
-            <li>Showcase Vendor Pass</li>
-            <li>Talent Pass — VIP</li>
-            <li>VIP Partner Pass</li>
-          </ul>
-          <p style={{ margin: '12px 0 0 0' }}>Applications are subject to review and approval.</p>
-        </div>
- 
-        <button
-          onClick={() => {
-            setStep('ticket');
-            setTicketDetails(null);
-            setIsEligible(false);
-            setTicketId('');
-            setTicketError('');
-          }}
-          className="candidate-btn"
-          style={{ marginTop: '24px' }}
-        >
-          Try Another Ticket
-        </button>
-      </div>
-    );
-  }
- 
-  // ═══════════════════════════════════════════════════════════
-  // Ticket Verification Step (SHOW IF NOT VERIFIED OR NOT ELIGIBLE)
-  // ═══════════════════════════════════════════════════════════
-  if (step === 'ticket') {
-    return (
-      <div className="candidate-signup-form">
-        <h3>Enter the Challenge</h3>
-        <p className="candidate-signup-subtitle">Verify your ticket to participate</p>
- 
-        <form onSubmit={handleVerifyTicket}>
-          <div className="question-form-group">
-            <label htmlFor="ticketId">Ticket ID *</label>
-            <input
-              type="text"
-              id="ticketId"
-              value={ticketId}
-              onChange={(e) => setTicketId(e.target.value.toUpperCase())}
-              placeholder="e.g., CNX2026-ABC123"
-              required
-              autoFocus
-              style={{
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                fontFamily: 'monospace'
-              }}
-            />
-            <small style={{ marginTop: '8px' }}>
-              Find your ticket ID in your confirmation email or ticket receipt
-            </small>
+    // Application Form
+    if (step === 'form' && isEligible && ticketDetails) {
+      return (
+        <div className="candidate-signup-form">
+          <div className="awards-eligibility">
+            <strong>Award Open To:</strong> Market & Showcase Vendors, Talent VIPs, and VIP Partners only
           </div>
+
+          <h3>Enter the Challenge</h3>
+          <p className="candidate-signup-subtitle">Submit your application to participate</p>
  
-          {/* Find ticket by email */}
-          <div className="candidate-email-lookup">
-            <button
-              type="button"
-              className="candidate-email-lookup-toggle"
-              onClick={() => setShowEmailLookup(!showEmailLookup)}
-            >
-              Don't have your ticket ID? Find it by email
+          <form onSubmit={handleSubmit}>
+            {/* Category Selection */}
+            <div className="candidate-form-group">
+              <label>I am applying as: *</label>
+              <div className="candidate-radio-group">
+                <label className="candidate-radio">
+                  <input
+                    type="radio"
+                    name="candidateType"
+                    value="business"
+                    checked={candidateType === 'business'}
+                    onChange={(e) => setCandidateType(e.target.value)}
+                  />
+                  <BriefcaseIcon />
+                  <span>Business Owner</span>
+                </label>
+                <label className="candidate-radio">
+                  <input
+                    type="radio"
+                    name="candidateType"
+                    value="individual"
+                    checked={candidateType === 'individual'}
+                    onChange={(e) => setCandidateType(e.target.value)}
+                  />
+                  <StarIcon />
+                  <span>Talent</span>
+                </label>
+              </div>
+            </div>
+ 
+            {/* Name */}
+            <div className="candidate-form-group">
+              <label htmlFor="name">
+                {candidateType === 'business' ? 'Business Name' : 'Full Name'} *
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+ 
+            {/* Description */}
+            <div className="candidate-form-group">
+              <label htmlFor="description">
+                {candidateType === 'business' ? 'Business Description' : 'Your Bio'} *
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows="4"
+                placeholder={candidateType === 'business'
+                  ? 'Tell us about your business and what you do...'
+                  : 'Tell us about yourself and your skills...'
+                }
+                required
+              />
+            </div>
+ 
+            {/* Email */}
+            <div className="candidate-form-group">
+              <label htmlFor="email">Email *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+ 
+            {/* Phone */}
+            <div className="candidate-form-group">
+              <label htmlFor="phone">Phone Number *</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+ 
+            {/* Video URL */}
+            <div className="candidate-form-group">
+              <label htmlFor="videoUrl">Instagram Video URL (optional)</label>
+              <input
+                type="url"
+                id="videoUrl"
+                name="videoUrl"
+                value={formData.videoUrl}
+                onChange={handleChange}
+                placeholder="https://instagram.com/reel/..."
+              />
+              <small>Paste your Instagram reel/video link here</small>
+            </div>
+ 
+            {/* Instagram Handle */}
+            <div className="candidate-form-group">
+              <label htmlFor="instagram">Instagram Handle (optional)</label>
+              <input
+                type="text"
+                id="instagram"
+                name="instagram"
+                value={formData.instagram}
+                onChange={handleChange}
+                placeholder="@yourusername"
+              />
+            </div>
+ 
+            {/* TikTok Handle */}
+            <div className="candidate-form-group">
+              <label htmlFor="tiktok">TikTok Handle (optional)</label>
+              <input
+                type="text"
+                id="tiktok"
+                name="tiktok"
+                value={formData.tiktok}
+                onChange={handleChange}
+                placeholder="@yourusername"
+              />
+            </div>
+ 
+            {/* Business-only fields */}
+            {candidateType === 'business' && (
+              <>
+                <div className="candidate-form-group">
+                  <label htmlFor="challenge">What challenges does your business face? (optional)</label>
+                  <textarea
+                    id="challenge"
+                    name="challenge"
+                    value={formData.challenge}
+                    onChange={handleChange}
+                    rows="3"
+                  />
+                </div>
+ 
+                <div className="candidate-form-group">
+                  <label htmlFor="whyDeserve">Why do you deserve this award? (optional)</label>
+                  <textarea
+                    id="whyDeserve"
+                    name="whyDeserve"
+                    value={formData.whyDeserve}
+                    onChange={handleChange}
+                    rows="3"
+                  />
+                </div>
+              </>
+            )}
+ 
+            {error && <div className="candidate-error">{error}</div>}
+ 
+            <button type="submit" className="candidate-btn" disabled={loading}>
+              {loading ? 'Submitting...' : 'Submit Application'}
             </button>
  
-            {showEmailLookup && (
-              <div className="candidate-email-lookup-form">
-                <input
-                  type="email"
-                  value={lookupEmail}
-                  onChange={(e) => setLookupEmail(e.target.value)}
-                  placeholder="Enter the email used to purchase your ticket"
-                  className="candidate-email-lookup-input"
-                />
-                <button
-                  type="button"
-                  className="candidate-email-lookup-btn"
-                  onClick={handleFindByEmail}
-                  disabled={lookupLoading}
-                >
-                  {lookupLoading ? 'Finding...' : 'Find My Ticket'}
-                </button>
-                {lookupError && <div className="candidate-error">{lookupError}</div>}
-                {lookupResults.length > 0 && (
-                  <div className="candidate-email-lookup-results">
-                    {lookupResults.map((ticket) => (
-                      <button
-                        key={ticket.ticket_id}
-                        type="button"
-                        className="candidate-email-lookup-result"
-                        onClick={() => handleSelectLookupTicket(ticket)}
-                      >
-                        <strong>{ticket.ticket_id}</strong>
-                        <small>{ticket.attendee_name} · {ticket.ticket_type}</small>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
+            <button
+              type="button"
+              className="candidate-btn"
+              onClick={handleBackToTicket}
+              disabled={loading}
+              style={{
+                background: 'transparent',
+                border: '2px solid var(--border)',
+                color: 'var(--white)',
+                marginTop: '8px'
+              }}
+            >
+              Back to Ticket Verification
+            </button>
+          </form>
+        </div>
+      );
+    }
+ 
+    // ═══════════════════════════════════════════════════════════
+    // Ineligible Warning (CHECK BEFORE TICKET FORM)
+    // ═══════════════════════════════════════════════════════════
+    if (step === 'ticket' && ticketDetails && !isEligible) {
+      return (
+        <div className="candidate-signup-form">
+          <h3>Ticket Not Eligible</h3>
+          <p className="candidate-signup-subtitle">
+            Your ticket type is not eligible for this challenge
+          </p>
+ 
+          <div className="candidate-note" style={{ background: 'rgba(232,49,42,0.15)', borderColor: 'rgba(232,49,42,0.3)' }}>
+            <strong style={{ color: 'var(--red)' }}>Not Eligible:</strong>
+            <p style={{ color: 'rgba(255,255,255,0.8)' }}>
+              Your current ticket type <strong>{ticketDetails.ticket_type}</strong> is not eligible for the Connexa 2026 Awards.
+            </p>
           </div>
  
-          {ticketError && <div className="candidate-error">{ticketError}</div>}
+          <div className="candidate-note">
+            <strong>Eligible Tickets:</strong>
+            <ul style={{ margin: '8px 0 0 0', paddingLeft: '20px' }}>
+              <li>Market Vendor Pass</li>
+              <li>Showcase Vendor Pass</li>
+              <li>Talent Pass — VIP</li>
+              <li>VIP Partner Pass</li>
+            </ul>
+            <p style={{ margin: '12px 0 0 0' }}>Applications are subject to review and approval.</p>
+          </div>
  
           <button
-            type="submit"
+            onClick={() => {
+              setStep('ticket');
+              setTicketDetails(null);
+              setIsEligible(false);
+              setTicketId('');
+              setTicketError('');
+            }}
             className="candidate-btn"
-            disabled={ticketLoading}
+            style={{ marginTop: '24px' }}
           >
-            {ticketLoading ? 'Verifying...' : 'Verify Ticket'}
+            Try Another Ticket
           </button>
-        </form>
- 
-        <div className="candidate-note">
-          <strong>Note:</strong> Award open to Market & Showcase Vendors, Talent VIPs, and VIP Partners only.
-          Applications are subject to review and approval.
         </div>
-      </div>
-    );
+      );
+    }
+ 
+    // ═══════════════════════════════════════════════════════════
+    // Ticket Verification Step (SHOW IF NOT VERIFIED OR NOT ELIGIBLE)
+    // ═══════════════════════════════════════════════════════════
+    if (step === 'ticket') {
+      return (
+        <div className="candidate-signup-form">
+          <div className="awards-eligibility">
+            <strong>Award Open To:</strong> Market & Showcase Vendors, Talent VIPs, and VIP Partners only
+          </div>
+
+          <h3>Enter the Challenge</h3>
+          <p className="candidate-signup-subtitle">Verify your ticket to participate</p>
+ 
+          <form onSubmit={handleVerifyTicket}>
+            <div className="question-form-group">
+              <label htmlFor="ticketId">Ticket ID *</label>
+              <input
+                type="text"
+                id="ticketId"
+                value={ticketId}
+                onChange={(e) => setTicketId(e.target.value.toUpperCase())}
+                placeholder="e.g., CNX2026-ABC123"
+                required
+                style={{
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px',
+                  fontFamily: 'monospace'
+                }}
+              />
+              <small style={{ marginTop: '8px' }}>
+                Find your ticket ID in your confirmation email or ticket receipt
+              </small>
+            </div>
+ 
+            {/* Find ticket by email */}
+            <div className="candidate-email-lookup">
+              <button
+                type="button"
+                className="candidate-email-lookup-toggle"
+                onClick={() => setShowEmailLookup(!showEmailLookup)}
+              >
+                Don't have your ticket ID? Find it by email
+              </button>
+ 
+              {showEmailLookup && (
+                <div className="candidate-email-lookup-form">
+                  <input
+                    type="email"
+                    value={lookupEmail}
+                    onChange={(e) => setLookupEmail(e.target.value)}
+                    placeholder="Enter the email used to purchase your ticket"
+                    className="candidate-email-lookup-input"
+                  />
+                  <button
+                    type="button"
+                    className="candidate-email-lookup-btn"
+                    onClick={handleFindByEmail}
+                    disabled={lookupLoading}
+                  >
+                    {lookupLoading ? 'Finding...' : 'Find My Ticket'}
+                  </button>
+                  {lookupError && <div className="candidate-error">{lookupError}</div>}
+                  {lookupResults.length > 0 && (
+                    <div className="candidate-email-lookup-results">
+                      {lookupResults.map((ticket) => (
+                        <button
+                          key={ticket.ticket_id}
+                          type="button"
+                          className="candidate-email-lookup-result"
+                          onClick={() => handleSelectLookupTicket(ticket)}
+                        >
+                          <strong>{ticket.ticket_id}</strong>
+                          <small>{ticket.attendee_name} · {ticket.ticket_type}</small>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+ 
+            {ticketError && <div className="candidate-error">{ticketError}</div>}
+ 
+            <button
+              type="submit"
+              className="candidate-btn"
+              disabled={ticketLoading}
+            >
+              {ticketLoading ? 'Verifying...' : 'Verify Ticket'}
+            </button>
+          </form>
+ 
+          <div className="candidate-note">
+            <strong>Note:</strong> Award open to Market & Showcase Vendors, Talent VIPs, and VIP Partners only.
+            Applications are subject to review and approval.
+          </div>
+        </div>
+      );
+    }
+ 
+    return null;
   }
  
-  return null;
+  return (
+    <>
+      {/* Trigger Button */}
+      <button className="candidate-modal-trigger-btn" onClick={handleOpenModal}>
+        Enter the Challenge
+      </button>
+ 
+      {/* Modal */}
+      {isModalOpen && (
+        <div
+          className="candidate-modal-overlay"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) handleCloseModal();
+          }}
+        >
+          <div className="candidate-modal-content">
+            <button
+              className="candidate-modal-close"
+              onClick={handleCloseModal}
+              aria-label="Close"
+            >
+              <CloseIcon />
+            </button>
+            {renderContent()}
+          </div>
+        </div>
+      )}
+    </>
+  );
 }

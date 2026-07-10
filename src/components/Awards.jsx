@@ -158,12 +158,11 @@ export default function Awards() {
           <p className="awards-cta-text">
             Share your story. Inspire the community. Claim your spotlight.
           </p>
-          <div className="awards-eligibility">
-            <strong>Award Open To:</strong> Market & Showcase Vendors, Talent VIPs, and VIP Partners only
-          </div>
+
+          <CandidateSignup />
         </div>
 
-        <CandidateSignup />
+        
       </div>
     </section>
   );

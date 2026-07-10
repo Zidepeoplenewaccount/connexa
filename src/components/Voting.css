@@ -71,6 +71,116 @@
   margin-bottom: 48px;
 }
 
+
+.voting-empty-state {
+  margin-bottom: 48px;
+}
+
+.voting-skeleton-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 4px;
+}
+
+.voting-mini-skeleton {
+  position: relative;
+  flex: 0 0 auto;
+  width: 130px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.voting-mini-badge {
+  position: absolute;
+  top: -8px;
+  right: 10px;
+  background: var(--orange);
+  color: var(--black);
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--radius-xl);
+}
+
+.voting-mini-line {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.05) 25%,
+    rgba(255,255,255,0.11) 37%,
+    rgba(255,255,255,0.05) 63%
+  );
+  background-size: 400% 100%;
+  animation: votingShimmer 1.8s ease-in-out infinite;
+}
+
+.voting-mini-title {
+  width: 70%;
+  height: 11px;
+  margin-top: 4px;
+}
+
+.voting-mini-text {
+  width: 100%;
+}
+
+.voting-mini-text.short {
+  width: 60%;
+}
+
+.voting-mini-stats {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.voting-mini-stat {
+  flex: 1;
+  height: 26px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.08) 37%,
+    rgba(255,255,255,0.04) 63%
+  );
+  background-size: 400% 100%;
+  animation: votingShimmer 1.8s ease-in-out infinite;
+}
+
+.voting-mini-btn {
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid rgba(245,166,35,0.2);
+  background: rgba(245,166,35,0.05);
+  margin-top: 2px;
+}
+
+@keyframes votingShimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.voting-empty-notice {
+  text-align: center;
+  margin-top: 20px;
+  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+}
+
+
 .voting-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -539,5 +649,12 @@
   .voting-breakdown {
     flex-direction: column;
     gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .voting-mini-skeleton {
+    width: 110px;
+    padding: 12px 10px;
   }
 }
