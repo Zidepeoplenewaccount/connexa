@@ -363,8 +363,7 @@ const tickets = [
     price: 110000,
     available: 35,
     features: [
-      'Bring your own booth setup (limited to approved sizes).',
-      'Dedicated exhibition space to showcase your brand, app, or service.',
+      'Dedicated exhibition space provided. Bring your own branded booth materials (banners, flyers, displays, and company props) for setup.',
       'Physical marketplace presence within Connexa’s Opportunity Playground.',
       'Opportunity to sell, demonstrate, and showcase products or services.',
       'Build visibility in front of founders, talents, and decision-makers.',
