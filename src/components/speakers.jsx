@@ -168,7 +168,7 @@ const speakers = [
 
   {
     id: 8,
-    name: 'Stella Ijeoma Olugbemi2',
+    name: 'Stella Ijeoma Olugbemi',
     connexerType: 'BUSINESS CONNEXER',
     title: 'CSR, Brand and Events Manager',
     company: 'Egbin Power Plc',
