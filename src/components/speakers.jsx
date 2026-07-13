@@ -202,7 +202,7 @@ const speakers = [
     name: 'Seyi Busari',
     connexerType: 'TALENT CONNEXER',
     title: 'Founder/CEO',
-    company: 'MediabossAfrica Limited',
+    company: 'Mediaboss Africa',
     topic: null,
     photo: SeyiBusariImage,
     photoClass: 'zoom-out-photo',
