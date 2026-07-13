@@ -7,7 +7,7 @@ import RichardPhoto from '../assets/richard_essangabasi.webp';
 import AmarachiPhoto from '../assets/AmarachiIMG_1222.webp';
 import AnuliPhoto from '../assets/AnuliIMG_1242.JPG.webp';
 import SeyiPhoto from '../assets/SeyiIMG_1257.webp';
-import StellaIjeomaPhoto from '../assets/StellaIjeoma.webp';
+import StellaIjeomaPhoto from '../assets/StellaIjeoma-copy.webp';
 import SeyiBusariImage from '../assets/SeyiBusariImage.webp';
 import TobiMakindeImage from '../assets/TobiMakindeImage.webp';
 import EstherOyeleyeImage from '../assets/EstherOyeleyeImage.webp';
