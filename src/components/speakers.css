@@ -234,6 +234,13 @@
   transform: scale(1);
 }
 
+.speaker-photo img.zoom-out-face-eniola {
+  object-position: center 35%;
+  transform: scale(1.2);
+  position: relative;
+  bottom: -0px;
+}
+
 .speaker-photo img.photo-shift-down {
   object-fit: cover;
   object-position: center 35%;

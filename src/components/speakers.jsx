@@ -10,7 +10,7 @@ import SeyiPhoto from '../assets/SeyiIMG_1257.webp';
 import StellaIjeomaPhoto from '../assets/StellaIjeoma-copy.webp';
 import SeyiBusariImage from '../assets/SeyiBusariImage.webp';
 import TobiMakindeImage from '../assets/TobiMakindeImage.webp';
-import EstherOyeleyeImage from '../assets/EstherOyeleyeImage.webp';
+import EniolaOyeleyeImage from '../assets/EniolaOyeleyeImage.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -205,7 +205,6 @@ const speakers = [
     company: 'Mediaboss Africa',
     topic: null,
     photo: SeyiBusariImage,
-    photoClass: 'zoom-out-photo',
     featured: false,
     photoClass: 'zoom-out-face',
     askLabel: 'Ask Seyi',
@@ -220,15 +219,16 @@ const speakers = [
 
   {
     id: 10,
-    name: 'Esther Oyeleye',
+    name: 'Eniola Oyeleye',
     connexerType: 'TALENT & BUSINESS CONNEXER',
     title: 'Founder, Zidepeople & Co-Convener, Connexa',
     company: '',
     topic: null,
-    photo: EstherOyeleyeImage,
+    photo: EniolaOyeleyeImage,
+    photoClass: 'zoom-out-face-eniola',
     featured: false,
-    askLabel: 'Ask Esther',
-    bio: `Esther Oyeleye has spent her career turning opportunities into outcomes. As the Founder of Zidepeople and Co-Convener of Connexa, she’s passionate about helping people and businesses discover opportunities that change lives.
+    askLabel: 'Ask Eniola',
+    bio: `Eniola Oyeleye has spent her career turning opportunities into outcomes. As the Founder of Zidepeople and Co-Convener of Connexa, she’s passionate about helping people and businesses discover opportunities that change lives.
 
     As a Talent & Business Connexer, she’ll show you how to spot opportunities others miss, position yourself or your business for growth, and take action when opportunity comes knocking. 
     `,
