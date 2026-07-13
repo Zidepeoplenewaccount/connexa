@@ -377,7 +377,7 @@ const tickets = [
       'Staff access tickets are included in the booth package.',
       'Limited to one booth per brand.'
     ],
-    bestFor: 'Best for: Businesses that want both visibility and active selling opportunities, while also gaining practical business support and real-time engagement inside Africa’s first Opportunity Playground.',
+    bestFor: 'Businesses that want both visibility and active selling opportunities, while also gaining practical business support and real-time engagement inside Africa’s first Opportunity Playground.',
     cta: 'Get Showcase Pass',
     notice: 'Not suitable for large physical product displays',
     ctaClass: 'cta-blue',
