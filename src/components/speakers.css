@@ -284,7 +284,12 @@
   padding: 4px 10px;
   border-radius: var(--radius-xl);
 }
-
+.speaker-featured-star {
+  color: var(--orange);
+  filter: brightness(0.7);
+  font-size: 15px;
+  line-height: 1;
+}
 /* Body */
 .speaker-body {
   padding: 20px;

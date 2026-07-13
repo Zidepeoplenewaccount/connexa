@@ -103,6 +103,18 @@ const quotes = [
     text: "I've discovered that the right partnership can create more impact than the biggest investment. The next big business may not be another factory. It may be the platform that helps a thousand factories succeed",
     name: 'Olansile Olanrewaju',
   },
+  {
+    text: "I've discovered that the right partnership can create more impact than the biggest investment. The next big business may not be another factory. It may be the platform that helps a thousand factories succeed",
+    name: 'Stella Ijeoma Olugbemi',
+  },
+  {
+    text: "I speak to remind people that they’re never too lost to find their way back to themselves. You don’t have to have it all together to start becoming who you’re meant to be.",
+    name: 'Tamara Edwards',
+  },
+  {
+    text: "If I can connect thousands of Nigerians to opportunities, you can create one for yourself too. Don’t let where you are stop you from becoming who you can be.",
+    name: 'Esther Oyeleye',
+  },
 ];
 
 export default function VoicesOfOpportunity() {

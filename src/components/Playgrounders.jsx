@@ -10,6 +10,7 @@ import JonathanPhoto from '../assets/jonathan_makinde.png';
 import CadmusPhoto from '../assets/Cadmus.webp';
 import SamuelPhoto from '../assets/SamuelPhoto.webp';
 import OlansilePhoto from '../assets/OlansilePhoto.webp';
+import TamaraPhoto from '../assets/Tamara.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -180,7 +181,6 @@ const playgrounders = [
       linkedin: 'https://www.linkedin.com/in/samuelolatunde?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
     },
   },
-
   {
     id: 9,
     name: 'Olansile Olanrewaju',
@@ -197,6 +197,23 @@ const playgrounders = [
     socials: {
       instagram: 'https://www.instagram.com/advantageofibadan?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
       linkedin: 'https://www.linkedin.com/in/olansile?utm_source=share_via&utm_cont',
+    },
+  },
+  {
+    id: 10,
+    name: 'Tamara Edwards',
+    connexerType: 'TALENT PLAYGROUNDER',
+    title: 'Social Media Creator & Model',
+    company: '',
+    topic: null,
+    photo: TamaraPhoto,
+    featured: false,
+    photoClass: 'zoom-out-face-olanrewaju',
+    askLabel: 'Ask Tamara',
+    bio: `I am known for speaking up for young adults, particularly Gen Z between the ages of 18–25. As a Talent Playgrounder, I’ll help young people connect to real opportunities by exposing them to new ways of thinking, inspiring personal growth, and empowering them to discover themselves and build better lives.
+    `,
+    socials: {
+      tiktok: 'www.tiktok.com/@tamaraedwards5',
     },
   },
 ];

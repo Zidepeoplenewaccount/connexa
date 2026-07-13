@@ -10,6 +10,7 @@ import SeyiPhoto from '../assets/SeyiIMG_1257.webp';
 import StellaIjeomaPhoto from '../assets/StellaIjeoma.webp';
 import SeyiBusariImage from '../assets/SeyiBusariImage.webp';
 import TobiMakindeImage from '../assets/TobiMakindeImage.webp';
+import EstherOyeleyeImage from '../assets/EstherOyeleyeImage.webp';
 
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -25,6 +26,7 @@ const speakers = [
     topic: null, 
     photo: TobiMakindeImage,
     featured: true,
+    star: true,
     photoClass: 'zoom-out-face',
     askLabel: 'Ask Tobi',
     bio: `Tobi Makinde is a Nigerian filmmaker who first captured audiences with his role as "Timini" in the hit TV series Jenifa's Diary. He went on to co-direct Battle on Buka Street alongside Funke Akindele, one of Nollywood's highest-grossing films to date. His acting range was further cemented in 2024 with his acclaimed portrayal of "Shina Judah," a hoodlum in the blockbuster A Tribe Called Judah, earning praise from both critics and audiences alike. Beyond acting, Tobi is also a producer, driving projects such as The Tobi Makinde Show (TTM) and the movie “No One Has to Know” proof of a career built not just on performance, but on ownership and creative vision across the industry.`,
@@ -210,9 +212,31 @@ const speakers = [
     bio: `Oluwaseyi Busari is a Creative Industry Builder and Media Growth Leader who helps African creatives and entertainment brands convert visibility into measurable influence and opportunity. As Founder of Mediaboss Africa, he has driven audience growth, talent positioning, and high-impact media campaigns for leading personalities and brands, including the relaunch of The Tobi Makinde Show, which generated over 1 million impressions in 72 hours. Known for building the systems, partnerships, and platforms that accelerate growth, he is committed to helping African talent scale sustainably and compete globally.
     `,
     socials: {
-      instagram: ' https://www.instagram.com/seyibusareal ?utm_source=ig web button share sheet&igsh=ZD NIZDcOMzIxNw==',
+      instagram: ' https://www.instagram.com/seyibusareal_?igsh=ZTBzY3hqbXFiZWh4',
       twitter: 'https://x.com/seyibusareal?s=11',
       linkedin: 'https://www.linkedin.com/in/oluwaseyibusari/?lipi=urn%3Ali%3Apage%3Ad_flagship3 profile view_base_contact_details%3Bhfu2oL30QL2vXqeA9kYGdA%3D%3D',
+    },
+  },
+
+  {
+    id: 10,
+    name: 'Esther Oyeleye',
+    connexerType: 'TALENT & BUSINESS CONNEXER',
+    title: 'Founder, Zidepeople & Co-Convener, Connexa',
+    company: '',
+    topic: null,
+    photo: EstherOyeleyeImage,
+    featured: false,
+    askLabel: 'Ask Esther',
+    bio: `Esther Oyeleye has spent her career turning opportunities into outcomes. As the Founder of Zidepeople and Co-Convener of Connexa, she’s passionate about helping people and businesses discover opportunities that change lives.
+
+    As a Talent & Business Connexer, she’ll show you how to spot opportunities others miss, position yourself or your business for growth, and take action when opportunity comes knocking. 
+    `,
+    socials: {
+      instagram: ' https://www.instagram.com/zidepeople?igsh=eXdnYWwwY3c1c3hj',
+      tiktok: 'https://www.tiktok.com/@zidepeople?_r=1&_t=ZN-97ykhGG9we6',
+      twitter: 'https://x.com/zidepeople?s=11',
+      linkedin: 'https://www.linkedin.com/in/oyeleyeeniola',
     },
   },
 ];
@@ -279,7 +303,10 @@ export default function Speakers() {
 
                 {/* ── Featured badge ── */}
                 {speaker.featured && (
-                  <div className="speaker-featured-badge">Featured</div>
+                  <div className="speaker-featured-badge">
+                    Headline
+                    {speaker.star && <span className="speaker-featured-star">★</span>}
+                  </div>
                 )}
               </div>
 
