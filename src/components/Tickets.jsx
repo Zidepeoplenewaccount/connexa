@@ -360,7 +360,7 @@ const tickets = [
     label: 'Brand Visibility',
     name: 'Showcase Vendor Pass',
     subtitle: 'Showcase your Product and Learn at The Opportunity Playground ',
-    price: 110000,
+    price: 100000,
     available: 35,
     features: [
       'Dedicated exhibition space provided. Bring your own branded booth materials (banners, flyers, displays, and company props) for setup.',
@@ -391,7 +391,7 @@ const tickets = [
     label: 'Direct Sales',
     name: 'Market Vendor Pass',
     subtitle: 'Sell & Learn at The Opportunity Playground',
-    price: 120000,
+    price: 100000,
     available: 52,
     features: [
       'Tent and booth setup provided by the Connexa team.',
