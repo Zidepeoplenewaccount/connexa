@@ -98,7 +98,7 @@ const speakers = [
   {
     id: 5,
     name: 'Amarachi Agu',
-    connexerType: 'BUSINESS CONNEXER',
+    connexerType: 'TALENT & BUSINESS CONNEXER',
     title: 'AI Educator and Consultant',
     company: '',
     topic: null,
