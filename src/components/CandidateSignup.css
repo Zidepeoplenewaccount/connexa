@@ -525,10 +525,10 @@
   right: 12px;
   width: 40px;
   height: 40px;
-  background: #ffffff;
-  color: #000000;
+  background: none;
+  color: #ffffff;
   border: none;
-  border-radius: 50%;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -538,9 +538,8 @@
 }
  
 .candidate-modal-close:hover {
-  background: var(--orange);
-  color: #000000;
-  transform: rotate(90deg);
+  color: var(--orange);
+  transform: scale(1.2);
 }
  
 
