@@ -302,7 +302,7 @@ export default function CandidateSignup() {
             <strong>Award Open To:</strong> Market & Showcase Vendors, Talent VIPs, and VIP Partners only
           </div>
 
-          <h3>Register for Awards</h3>
+          <h3>Register for CONNEXA Awards</h3>
           <p className="candidate-signup-subtitle">Submit your application to participate</p>
  
           <form onSubmit={handleSubmit}>
@@ -566,7 +566,7 @@ export default function CandidateSignup() {
             <strong>Award Open To:</strong> Market & Showcase Vendors, Talent VIPs, and VIP Partners only
           </div>
 
-          <h3>Register for Awards</h3>
+          <h3>Register for CONNEXA Awards</h3>
           <p className="candidate-signup-subtitle">Verify your ticket to participate</p>
  
           <form onSubmit={handleVerifyTicket}>
@@ -663,7 +663,7 @@ export default function CandidateSignup() {
     <>
       {/* Trigger Button */}
       <button className="candidate-modal-trigger-btn" onClick={handleOpenModal}>
-        Register for Awards
+        Register for CONNEXA Awards
       </button>
  
       {/* Modal */}
