@@ -15,21 +15,78 @@ const StarIcon = () => (
   </svg>
 );
 
+export const TALENT_CATEGORIES = [
+  'What Connexa Means To Me (Talent)',
+  'Career Breakthrough of the Year',
+  'Remote Talent of the Year',
+  'Future Leader Award',
+  'Opportunity Creator Award',
+  'Creative Talent of the Year',
+  'Talent of the Year',
+];
+
+export const BUSINESS_CATEGORIES = [
+  'What Connexa Means To Me (Business)',
+  'Business of the Year',
+  'Startup of the Year',
+  'Small Business Excellence Award',
+  'Innovation Award',
+  'Customer Experience Award',
+  'Employer of Opportunity Award',
+  'Community Impact Business Award',
+];
+
 export default function Awards() {
   return (
     <section className="awards-section" id="awards">
       <div className="container">
         <div className="awards-header">
-          <span className="section-tag">CHALLENGE</span>
+          <span className="section-tag">AWARDS</span>
           <h2 className="section-title">
-            "What Connexa Means To Me" <span className="highlight-red">Challenge</span>
+            Connexa 2026 <span className="highlight-red">Awards</span>
           </h2>
           <p className="awards-subtitle">
-            Two categories. Big prizes. Real visibility.
+            Multiple categories. Big prizes. Real visibility.
           </p>
         </div>
 
+        {/* Award Categories */}
+        <div className="awards-categories">
+          <div className="awards-categories-grid">
+            <div className="awards-category-column">
+              <div className="awards-question-card">
+                <div className="awards-question-icon">
+                  <StarIcon />
+                </div>
+                <p><strong>Talent Awards</strong></p>
+                <ul className="awards-category-list">
+                  {TALENT_CATEGORIES.map((cat) => (
+                    <li key={cat}>{cat}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="awards-category-column">
+              <div className="awards-question-card">
+                <div className="awards-question-icon">
+                  <BriefcaseIcon />
+                </div>
+                <p><strong>Business Awards</strong></p>
+                <ul className="awards-category-list">
+                  {BUSINESS_CATEGORIES.map((cat) => (
+                    <li key={cat}>{cat}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* "What Connexa Means To Me" Section */}
         <div className="awards-intro">
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', fontWeight: 800, marginBottom: '24px', color: 'var(--white)' }}>
+            "What Connexa Means To Me"
+          </h3>
           <p>
             Connexa is more than an event - it's a movement. Now we want to hear what it means to you.
           </p>
@@ -64,24 +121,14 @@ export default function Awards() {
             <div className="awards-prize-card">
               <div className="awards-prize-category">Business Owners</div>
               <div className="awards-prize-item">
-                <span className="awards-prize-position">🥇 1st Runner-Up</span>
-                <span className="awards-prize-amount">Cash Prices to be Won</span>
-              </div>
-              <div className="awards-prize-item">
-                <span className="awards-prize-position">🥈 2nd Runner-Up</span>
-                <span className="awards-prize-amount">Cash Prices to be Won</span>
+                <span className="awards-prize-amount">Cash Prizes to be Won</span>
               </div>
             </div>
 
             <div className="awards-prize-card">
               <div className="awards-prize-category">Talent</div>
               <div className="awards-prize-item">
-                <span className="awards-prize-position">🥇 1st Runner-Up</span>
-                <span className="awards-prize-amount">Cash Prices to be Won</span>
-              </div>
-              <div className="awards-prize-item">
-                <span className="awards-prize-position">🥈 2nd Runner-Up</span>
-                <span className="awards-prize-amount">Cash Prices to be Won</span>
+                <span className="awards-prize-amount">Cash Prizes to be Won</span>
               </div>
             </div>
           </div>
@@ -150,8 +197,7 @@ export default function Awards() {
         {/* Final Stage */}
         <div className="awards-final">
           <h3>Final Stage</h3>
-          <p>The top 2 from each category (based on Instagram engagement) will be invited to pitch their story live at Connexa.</p>
-          <p>A panel of judges at the event will select the winners from the finalists.</p>
+          <p>The Connexa Opportunity Awards winners will be crowned at Connexa 2026.</p>
         </div>
 
         <div className="awards-cta">

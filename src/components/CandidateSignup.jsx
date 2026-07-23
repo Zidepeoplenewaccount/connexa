@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { signupBusinessCandidate, signupIndividualCandidate, findTicketsByEmail } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
+import { TALENT_CATEGORIES, BUSINESS_CATEGORIES } from './Awards';
 import './CandidateSignup.css';
  
 // SVG Icons
@@ -68,7 +69,8 @@ export default function CandidateSignup() {
     instagram: '',
     tiktok: '',
     challenge: '',
-    whyDeserve: ''
+    whyDeserve: '',
+    category: ''
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -96,7 +98,8 @@ export default function CandidateSignup() {
       instagram: '',
       tiktok: '',
       challenge: '',
-      whyDeserve: ''
+      whyDeserve: '',
+      category: ''
     });
     setSubmitted(false);
     setError('');
@@ -216,6 +219,7 @@ export default function CandidateSignup() {
           tiktok_handle: formData.tiktok || null,
           challenge: formData.challenge || null,
           why_deserve: formData.whyDeserve || null,
+          category: formData.category || null,
           ticket_id: ticketDetails.ticket_id,
           ticket_type: ticketDetails.ticket_type
         });
@@ -228,6 +232,7 @@ export default function CandidateSignup() {
           video_url: formData.videoUrl || null,
           instagram_handle: formData.instagram || null,
           tiktok_handle: formData.tiktok || null,
+          category: formData.category || null,
           ticket_id: ticketDetails.ticket_id,
           ticket_type: ticketDetails.ticket_type
         });
@@ -277,7 +282,8 @@ export default function CandidateSignup() {
                 instagram: '',
                 tiktok: '',
                 challenge: '',
-                whyDeserve: ''
+                whyDeserve: '',
+                category: ''
               });
             }}
             className="candidate-btn"
@@ -296,7 +302,7 @@ export default function CandidateSignup() {
             <strong>Award Open To:</strong> Market & Showcase Vendors, Talent VIPs, and VIP Partners only
           </div>
 
-          <h3>Enter the Challenge</h3>
+          <h3>Register for Awards</h3>
           <p className="candidate-signup-subtitle">Submit your application to participate</p>
  
           <form onSubmit={handleSubmit}>
@@ -310,7 +316,10 @@ export default function CandidateSignup() {
                     name="candidateType"
                     value="business"
                     checked={candidateType === 'business'}
-                    onChange={(e) => setCandidateType(e.target.value)}
+                    onChange={(e) => {
+                      setCandidateType(e.target.value);
+                      setFormData(prev => ({ ...prev, category: '' }));
+                    }}
                   />
                   <BriefcaseIcon />
                   <span>Business Owner</span>
@@ -321,7 +330,10 @@ export default function CandidateSignup() {
                     name="candidateType"
                     value="individual"
                     checked={candidateType === 'individual'}
-                    onChange={(e) => setCandidateType(e.target.value)}
+                    onChange={(e) => {
+                      setCandidateType(e.target.value);
+                      setFormData(prev => ({ ...prev, category: '' }));
+                    }}
                   />
                   <StarIcon />
                   <span>Talent</span>
@@ -329,6 +341,23 @@ export default function CandidateSignup() {
               </div>
             </div>
  
+            {/* Award Category */}
+            <div className="candidate-form-group">
+              <label htmlFor="category">Award Category *</label>
+              <select
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select a category</option>
+                {(candidateType === 'business' ? BUSINESS_CATEGORIES : TALENT_CATEGORIES).map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+
             {/* Name */}
             <div className="candidate-form-group">
               <label htmlFor="name">
@@ -537,7 +566,7 @@ export default function CandidateSignup() {
             <strong>Award Open To:</strong> Market & Showcase Vendors, Talent VIPs, and VIP Partners only
           </div>
 
-          <h3>Enter the Challenge</h3>
+          <h3>Register for Awards</h3>
           <p className="candidate-signup-subtitle">Verify your ticket to participate</p>
  
           <form onSubmit={handleVerifyTicket}>
@@ -634,7 +663,7 @@ export default function CandidateSignup() {
     <>
       {/* Trigger Button */}
       <button className="candidate-modal-trigger-btn" onClick={handleOpenModal}>
-        Enter the Challenge
+        Register for Awards
       </button>
  
       {/* Modal */}

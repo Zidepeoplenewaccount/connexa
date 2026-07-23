@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Voting.css';
 import { getCandidates, initializeVote } from '../services/api';
+import { TALENT_CATEGORIES, BUSINESS_CATEGORIES } from './Awards';
 
 
 // Add this at the top of the Voting component, right after the state declarations
@@ -10,6 +11,7 @@ import { getCandidates, initializeVote } from '../services/api';
 
 export default function Voting() {
   const [activeTab, setActiveTab] = useState('businesses');
+  const [activeCategory, setActiveCategory] = useState('all');
   const [businesses, setBusinesses] = useState([]);
   const [talents, setTalents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -123,7 +125,11 @@ export default function Voting() {
     return () => observer.disconnect();
   }, [activeTab]);
 
-  const currentCandidates = activeTab === 'businesses' ? businesses : talents;
+  const currentCategories = activeTab === 'businesses' ? BUSINESS_CATEGORIES : TALENT_CATEGORIES;
+  const allCandidates = activeTab === 'businesses' ? businesses : talents;
+  const currentCandidates = activeCategory === 'all'
+    ? allCandidates
+    : allCandidates.filter(c => c.category === activeCategory);
 
   return (
     <section className="voting section" id="voting">
@@ -131,27 +137,46 @@ export default function Voting() {
         <div className="voting-header reveal">
           <div className="section-tag">Vote</div>
           <h2 className="section-title">
-            Support Your <span className="highlight-orange">Favorites</span>
+            Support Your <span className="highlight-orange">Favourites</span>
           </h2>
           <p>
-            Cast your vote and help your favorite businesses and talents win at Connexa 2026.
+            Cast your vote and help your favourite businesses and talents win at Connexa 2026.
           </p>
         </div>
 
-        {/* Tabs */}
+        {/* Main Tabs */}
         <div className="voting-tabs reveal">
           <button
             className={`voting-tab ${activeTab === 'businesses' ? 'active' : ''}`}
-            onClick={() => setActiveTab('businesses')}
+            onClick={() => { setActiveTab('businesses'); setActiveCategory('all'); }}
           >
             Business Award
           </button>
           <button
             className={`voting-tab ${activeTab === 'talents' ? 'active' : ''}`}
-            onClick={() => setActiveTab('talents')}
+            onClick={() => { setActiveTab('talents'); setActiveCategory('all'); }}
           >
             Talent Award
           </button>
+        </div>
+
+        {/* Category Filter */}
+        <div className="voting-category-tabs reveal">
+          <button
+            className={`voting-category-tab ${activeCategory === 'all' ? 'active' : ''}`}
+            onClick={() => setActiveCategory('all')}
+          >
+            All
+          </button>
+          {currentCategories.map((cat) => (
+            <button
+              key={cat}
+              className={`voting-category-tab ${activeCategory === cat ? 'active' : ''}`}
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
         </div>
 
         {/* Loading State */}
