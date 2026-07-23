@@ -521,8 +521,8 @@
  
 .candidate-modal-close {
   position: absolute;
-  top: -14px;
-  right: -14px;
+  top: 12px;
+  right: 12px;
   width: 40px;
   height: 40px;
   background: var(--surface-2);
@@ -533,7 +533,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  z-index: 1001;
+  z-index: 1010;
 }
  
 .candidate-modal-close:hover {
@@ -807,8 +807,8 @@
   }
 
   .candidate-modal-close {
-    top: -10px;
-    right: -10px;
+    top: 8px;
+    right: 8px;
   }
 }
  
