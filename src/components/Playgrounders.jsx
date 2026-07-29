@@ -100,7 +100,7 @@ const playgrounders = [
     photo: OluwatomiPhoto,
     featured: false,
     photoClass: 'zoom-out-face',
-    askLabel: 'Ask Oluwatomi',
+    askLabel: 'Ask Adeife',
     bio: 'Oluwatomi Adeife is the Founder and CEO of ProfilePro and Founder of CarryHer Nigeria. She is a startup founder, talent ecosystem builder, and brand strategist passionate about connecting skilled young people to real opportunities. Through her work, she has trained, mentored, and connected talents with brands while helping businesses grow through effective marketing and brand strategy. Oluwatomi is committed to helping individuals turn their skills into income and guiding founders to build sustainable, opportunity-driven businesses.',
     socials: {
       instagram: 'https://www.instagram.com/oluwatomiadeife?igsh=bDZ2OTViMXA3YXky&utm_source=qr',
