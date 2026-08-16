@@ -372,7 +372,7 @@ const tickets = [
       'Access to selected speaker sessions and learning experiences.',
       'Eligibility for the Connexa Brand Recognition Award.',
       'Strong brand exposure in a high-traffic, opportunity-driven environment.',
-      'Maximum of 2 staff members per booth.',
+      'Maximum of 2 staff members per booth (2 people per brand).',
       'Staff access tickets are included in the booth package.',
       'Limited to one booth per brand.'
     ],
@@ -1846,7 +1846,7 @@ export default function Tickets() {
 
                   {vendorData.supportAssistant === 'own' && (
                     <div className="ticket-info-box">
-                      ℹ️ Your assistant must register and purchase an individual ticket separately.
+                      ℹ️ Your Vendor Pass allows you to come with one staff. This means only two people from the same brand can attend with one Vendor Pass.
                     </div>
                   )}
 
