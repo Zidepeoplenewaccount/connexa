@@ -8,6 +8,7 @@ import plitverse from '../assets/IMG_0405.webp';
 import mdLegalLogo from '../assets/md_legal_consults.webp';
 import profileProLogo from '../assets/profilepro_logo.webp';
 import carryHerLogo from '../assets/carryher_logo.webp';
+import UnmaskADHDLogo from '../assets/png-logo.webp'
 
 const marqueeItems = [
   { text: 'Meet', color: 'var(--orange)' },
@@ -29,6 +30,7 @@ const sponsors = [
   { name: '', logo: mdLegalLogo },
   { name: '', logo: profileProLogo },
   { name: '', logo: carryHerLogo },
+  { name: '', logo: UnmaskADHDLogo },
   { name: '', logo: zideLogo },
   { name: '', logo: ArcLogo },
   { name: '', logo: RightEvents },
@@ -36,6 +38,7 @@ const sponsors = [
   { name: '', logo: mdLegalLogo },
   { name: '', logo: profileProLogo },
   { name: '', logo: carryHerLogo },
+  { name: '', logo: UnmaskADHDLogo },
 ];
 
 export default function Hero() {

@@ -113,7 +113,7 @@ const quotes = [
   },
   {
     text: "If I can connect thousands of Nigerians to opportunities, you can create one for yourself too. Don’t let where you are stop you from becoming who you can be.",
-    name: 'Esther Oyeleye',
+    name: 'Eniola Oyeleye',
   },
 ];
 
