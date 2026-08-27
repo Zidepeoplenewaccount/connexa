@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setupAxiosErrorHandling } from '../utils/errorMessages';
 
-const BACKEND_URL = 'https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net';
+const BACKEND_URL = 'https://connexa-backend-i53r.onrender.com';
 //const BACKEND_URL = 'http://127.0.0.1:8000';
 
 const getAuthToken = () => localStorage.getItem('admin_token');
