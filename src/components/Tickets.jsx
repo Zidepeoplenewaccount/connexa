@@ -260,7 +260,7 @@ const tickets = [
     label: 'General Attendees',
     name: 'Talent Pass — Regular',
     subtitle: 'Learn, connect, and discover opportunities',
-    price: 50,
+    price: 100,
     available: 2700,  // ADD THIS
     features: [
       'Access to all Connexers & Playgrounders sessions, keynote conversations, and panel discussions.',
