@@ -274,10 +274,10 @@ export default function Voting() {
                     <div className="voting-stat-number">{candidate.vote_count || 0}</div>
                     <div className="voting-stat-label">Votes</div>
                   </div>
-                  <div className="voting-stat">
+                  {/*<div className="voting-stat">
                     <div className="voting-stat-number">₦{((candidate.vote_count || 0) * 100).toLocaleString()}</div>
                     <div className="voting-stat-label">Raised</div>
-                  </div>
+                  </div>*/}
                 </div>
 
                 <button
@@ -303,7 +303,7 @@ export default function Voting() {
               Vote for {selectedCandidate.business_name || selectedCandidate.individual_name}
             </h3>
 
-            <p className="voting-modal-price">₦100 per vote</p>
+            {/*<p className="voting-modal-price">₦100 per vote</p>*/}
 
             {/* ADD QUANTITY SELECTOR HERE */}
             <div className="voting-quantity-selector">
@@ -332,9 +332,9 @@ export default function Voting() {
                   +
                 </button>
               </div>
-              <div className="voting-total-price">
+              {/*<div className="voting-total-price">
                 Total: ₦{(voteQuantity * 100).toLocaleString()}
-              </div>
+              </div>*/}
             </div>
 
             <form className="voting-modal-form" onSubmit={handleVoteSubmit}>
@@ -369,7 +369,7 @@ export default function Voting() {
                 className="voting-modal-submit"
                 disabled={voteLoading}
               >
-                {voteLoading ? 'Processing...' : `Pay ₦${(voteQuantity * 100).toLocaleString()} →`}
+                {voteLoading ? 'Processing...' : `Pay →`}
               </button>
             </form>
           </div>
