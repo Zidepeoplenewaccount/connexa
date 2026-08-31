@@ -236,7 +236,7 @@ const tickets = [
     label: 'Open Access',
     name: 'Marketplace Pass',
     subtitle: 'Access the Connexa Showcase Floor, shop from 100+ vendors, discover new brands, and experience the energy of the Opportunity Playground.',
-    price: 100,
+    price: 3000,
     available: 52,
     features: [
       'Access to outdoor vendor marketplace',
@@ -260,7 +260,7 @@ const tickets = [
     label: 'General Attendees',
     name: 'Talent Pass — Regular',
     subtitle: 'Learn, connect, and discover opportunities',
-    price: 5000,
+    price: 100,
     available: 2700,  // ADD THIS
     features: [
       'Access to all Connexers & Playgrounders sessions, keynote conversations, and panel discussions.',
