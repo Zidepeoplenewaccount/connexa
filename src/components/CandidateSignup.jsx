@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { signupBusinessCandidate, signupIndividualCandidate, findTicketsByEmail } from '../services/api';
+import { signupBusinessCandidate, signupIndividualCandidate, findTicketsByEmail, getTicketById } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import { TALENT_CATEGORIES, BUSINESS_CATEGORIES } from './Awards';
 import './CandidateSignup.css';
@@ -127,15 +127,7 @@ export default function CandidateSignup() {
     setTicketLoading(true);
  
     try {
-      const response = await fetch(
-        `https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net/tickets/${ticketId.trim()}`
-      );
- 
-      if (!response.ok) {
-        throw new Error('Ticket not found');
-      }
- 
-      const details = await response.json();
+      const details = await getTicketById(ticketId.trim());
  
       setTicketDetails(details);
       const eligible = ELIGIBLE_TICKETS.includes(details.ticket_type);

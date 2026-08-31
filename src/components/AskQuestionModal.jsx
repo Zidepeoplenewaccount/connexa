@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaLightbulb } from '../utils/icons';
-import { submitSpeakerQuestion, findTicketsByEmail } from '../services/api';
+import { submitSpeakerQuestion, findTicketsByEmail, getTicketById } from '../services/api';
 import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages';
 import './AskQuestionModal.css';
  
@@ -55,15 +55,7 @@ export default function AskQuestionModal({ speaker, onClose }) {
  
     try {
       // Fetch ticket details from backend
-      const response = await fetch(
-        `https://connexa-aahsexcjcfakfhbd.southafricanorth-01.azurewebsites.net/tickets/${ticketId.trim()}`
-      );
-      
-      if (!response.ok) {
-        throw new Error('Ticket not found');
-      }
- 
-      const details = await response.json();
+      const details = await getTicketById(ticketId.trim());
       
       setTicketDetails(details);
       setIsPriorityTicket(PRIORITY_TICKETS.includes(details.ticket_type));

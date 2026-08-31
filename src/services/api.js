@@ -265,6 +265,16 @@ export const validateTicketId = async (ticketId) => {
   }
 };
 
+export const getTicketById = async (ticketId) => {
+  try {
+    const response = await axios.get(`${BACKEND_URL}/tickets/${encodeURIComponent(ticketId)}`);
+    return response.data;
+  } catch (error) {
+    console.error('Get ticket by ID failed:', error);
+    throw error;
+  }
+};
+
 export const findTicketsByEmail = async (email) => {
   try {
     const response = await axios.get(`${BACKEND_URL}/speaker-questions/find-ticket-by-email`, {
