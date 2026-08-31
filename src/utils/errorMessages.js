@@ -34,6 +34,24 @@ function getContextAwareMessage(fieldType) {
   return '';
 }
 
+function isSafeReadableBackendMessage(normalized) {
+  if (!normalized) return false;
+
+  const technicalSignals = [
+    'traceback',
+    'type_error',
+    'validationerror',
+    'sqlalchemy',
+    'pydantic',
+    'exception',
+    'stack trace',
+    'integrityerror',
+    'keyerror',
+  ];
+
+  return !technicalSignals.some((signal) => normalized.includes(signal));
+}
+
 function mapTechnicalToFriendly(rawMessage, fieldType) {
   const normalized = normalizeText(rawMessage);
 
@@ -83,6 +101,11 @@ function mapTechnicalToFriendly(rawMessage, fieldType) {
 
   if (normalized.includes('password') && normalized.includes('at least')) {
     return 'Please use a stronger password.';
+  }
+
+  // Preserve readable backend messages for user actions (e.g. duplicates).
+  if (isSafeReadableBackendMessage(normalized) && rawMessage) {
+    return String(rawMessage).trim();
   }
 
   return getContextAwareMessage(fieldType) || DEFAULT_FALLBACK;
