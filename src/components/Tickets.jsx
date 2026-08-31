@@ -236,7 +236,7 @@ const tickets = [
     label: 'Open Access',
     name: 'Marketplace Pass',
     subtitle: 'Access the Connexa Showcase Floor, shop from 100+ vendors, discover new brands, and experience the energy of the Opportunity Playground.',
-    price: 3000,
+    price: 100,
     available: 52,
     features: [
       'Access to outdoor vendor marketplace',
