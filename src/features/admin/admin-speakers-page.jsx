@@ -3,7 +3,7 @@ import AdminLayout from '../../components/admin/AdminLayout';
 import axios from 'axios';
 import { getUserFriendlyError, logTechnicalError } from '../../utils/errorMessages';
 
-const BACKEND_URL = 'https://connexa-backend-i53r.onrender.com';
+const BACKEND_URL = 'https://zidepeople-backend.onrender.com';
 //const BACKEND_URL = 'http://127.0.0.1:8000';
 
 const getAuth = () => ({ headers: { Authorization: localStorage.getItem('admin_token') } });

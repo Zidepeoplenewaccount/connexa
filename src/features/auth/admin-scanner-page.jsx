@@ -100,7 +100,7 @@ export default function AdminScannerFeaturePage() {
             const scannerName = localStorage.getItem('scanner_name') || 'Scanner Staff';
             
             const response = await fetch(
-            `${'https://connexa-backend-i53r.onrender.com'}/tickets/${ticketId}/scan?scanned_by=${encodeURIComponent(scannerName)}`, 
+            `${'https://zidepeople-backend.onrender.com'}/tickets/${ticketId}/scan?scanned_by=${encodeURIComponent(scannerName)}`, 
             {
                 method: 'PATCH',
                 headers: {

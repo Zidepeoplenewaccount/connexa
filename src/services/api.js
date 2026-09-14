@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_URL = 'https://connexa-backend-i53r.onrender.com';
+const BACKEND_URL = 'https://zidepeople-backend.onrender.com';
 //const BACKEND_URL = 'http://127.0.0.1:8000';
 
 export const getAffiliateCode = () => {
