@@ -369,7 +369,7 @@ export default function Voting() {
                 className="voting-modal-submit"
                 disabled={voteLoading}
               >
-                {voteLoading ? 'Processing...' : `Pay →`}
+                {voteLoading ? 'Processing...' : `Vote`}
               </button>
             </form>
           </div>
