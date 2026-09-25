@@ -9,6 +9,10 @@ import mdLegalLogo from '../assets/md_legal_consults.webp';
 import profileProLogo from '../assets/profilepro_logo.webp';
 import carryHerLogo from '../assets/carryher_logo.webp';
 import UnmaskADHDLogo from '../assets/png-logo.webp'
+import DesignRocks from '../assets/IMG_3773.webp';
+import MyStudentMarketplace from '../assets/IMG_3763.webp';
+import TF from '../assets/IMG_4349.webp';
+import EnchantedDigitalAcademy from '../assets/IMG_3823.webp';
 
 const marqueeItems = [
   { text: 'Meet', color: 'var(--orange)' },
@@ -31,6 +35,10 @@ const sponsors = [
   { name: '', logo: profileProLogo },
   { name: '', logo: carryHerLogo },
   { name: '', logo: UnmaskADHDLogo },
+  { name: '', logo: DesignRocks },
+  { name: '', logo: MyStudentMarketplace },
+  { name: '', logo: TF },
+  { name: '', logo: EnchantedDigitalAcademy },
   { name: '', logo: zideLogo },
   { name: '', logo: ArcLogo },
   { name: '', logo: RightEvents },
@@ -39,6 +47,10 @@ const sponsors = [
   { name: '', logo: profileProLogo },
   { name: '', logo: carryHerLogo },
   { name: '', logo: UnmaskADHDLogo },
+  { name: '', logo: DesignRocks },
+  { name: '', logo: MyStudentMarketplace },
+  { name: '', logo: TF },
+  { name: '', logo: EnchantedDigitalAcademy },
 ];
 
 export default function Hero() {
