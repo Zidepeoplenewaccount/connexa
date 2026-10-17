@@ -14,23 +14,25 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: 'About', href: '#about' },
-    { label: 'Gallery', href: '#gallery' },
+    { label: 'About', href: '/#about' },
+    { label: 'Gallery', href: '/#gallery' },
+    { label: 'Exhibit at Connexa', href: '/exhibitors' },
     //{ label: 'Tickets', href: '#tickets' },
-    { label: 'Awards', href: '#awards' },
-    { label: 'Connexers', href: '#connexers' },
-    { label: 'Merch', href: '#merch' },
-    { label: 'Become A Sponsor', href: '#partner-form' },
+    { label: 'Awards', href: '/#awards' },
+    { label: 'Connexers', href: '/#connexers' },
+    { label: 'Merch', href: '/#merch' },
+    { label: 'Become A Sponsor', href: '/#partner-form' },
     { label: 'Contact Us', href: 'tel:+2348101422732' },
   ];
 
   const navLinksMobile = [
-    { label: 'About', href: '#about' },
-    { label: 'Gallery', href: '#gallery' },
-    { label: 'Awards', href: '#awards' },
-    { label: 'Connexers', href: '#connexers' },
-    { label: 'Merch', href: '#merch' },
-    { label: 'Become A Sponsor', href: '#partner-form' },
+    { label: 'About', href: '/#about' },
+    { label: 'Gallery', href: '/#gallery' },
+    { label: 'Exhibit at Connexa', href: '/exhibitors' },
+    { label: 'Awards', href: '/#awards' },
+    { label: 'Connexers', href: '/#connexers' },
+    { label: 'Merch', href: '/#merch' },
+    { label: 'Become A Sponsor', href: '/#partner-form' },
     { label: 'Contact Us', href: 'tel:+2348101422732' },
   ];
 
@@ -46,7 +48,7 @@ export default function Navbar() {
             {navLinks.map(link => (
               <a key={link.label} href={link.href}>{link.label}</a>
             ))}
-            <a href="#tickets" className="navbar-cta">Get Your Connexa Ticket</a>
+            <a href="/#tickets" className="navbar-cta">Get Your Connexa Ticket</a>
           </div>
 
           <button
@@ -77,7 +79,7 @@ export default function Navbar() {
           </a>
         ))}
         <a
-          href="#tickets"
+          href="/#tickets"
           className="navbar-mobile-cta"
           onClick={() => setMobileOpen(false)}
           style={{ color: 'var(--orange)' }}
