@@ -35,7 +35,7 @@ export default function ExhibitorPage() {
             </p>
             <div className="exhibitor-hero-actions">
               <a className="exhibitor-primary-cta" href="#tickets">Explore Exhibitor Passes</a>
-              <a className="exhibitor-secondary-cta" href="/#partner-form">Ask about partnerships</a>
+              <a className="exhibitor-secondary-cta" href="mailto:partnerships@zidepeople.com?subject=Connexa%20Lagos%202026%20Partnership%20Enquiry">Ask about partnerships</a>
             </div>
             <div className="exhibitor-event-facts">
               <div><span>DATE</span><strong>Saturday, 28 November 2026</strong></div>
