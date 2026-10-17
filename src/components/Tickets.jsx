@@ -1107,7 +1107,7 @@ export default function Tickets({ vendorOnly = false }) {
 
 
   return (
-    <section className="tickets section" id="tickets">
+    <section className={`tickets section${vendorOnly ? ' exhibitor-ticket-section' : ''}`} id="tickets">
       <div className="container">
         <div className="tickets-header reveal">
           <div className="section-tag">{vendorOnly ? 'Exhibit & Sell' : 'Tickets'}</div>
@@ -1176,6 +1176,10 @@ export default function Tickets({ vendorOnly = false }) {
                 {hasDiscount ? (
                   <div className="ticket-price-container">
                     <div className="ticket-price-original">₦{ticket.price.toLocaleString()}</div>
+                    <div className="ticket-price-discounted">₦{discountedPrice.toLocaleString()}</div>
+                  </div>
+                ) : vendorOnly ? (
+                  <div className="ticket-price-container">
                     <div className="ticket-price-discounted">₦{discountedPrice.toLocaleString()}</div>
                   </div>
                 ) : null}
