@@ -138,6 +138,7 @@
 }
 
 .navbar-mobile.open {
+  display: flex;
   opacity: 1;
   visibility: visible;
 }
