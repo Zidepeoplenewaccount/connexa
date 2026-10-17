@@ -25,6 +25,7 @@ import VoteSuccess from './pages/VoteSuccess';
 import MerchSuccess from './pages/MerchSuccess';
 import UpgradeSuccess from './pages/UpgradeSuccess';
 import UpgradeTicket from './pages/UpgradeTicket';
+import ExhibitorPage from './pages/ExhibitorPage';
 
 import AdminLogin from './features/auth/admin-login-page';
 import AdminDashboard from './features/admin/admin-dashboard-page';
@@ -101,6 +102,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/exhibitors" element={<ExhibitorPage />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/vote-success" element={<VoteSuccess />} />
         <Route path="/merch-success" element={<MerchSuccess />} />
