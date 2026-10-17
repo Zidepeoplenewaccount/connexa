@@ -28,6 +28,8 @@
 .exhibitor-contact-note a,.exhibitor-inline-link { color: var(--orange); font-weight: 700; }
 .exhibitor-inline-link { display: inline-block; margin-top: 14px; text-decoration: none; }
 .exhibitor-ticket-intro { margin-top: 10px !important; font-size: 14px !important; }
+/* Keep exhibitor pass content visible even when the global scroll-reveal observer has not initialized on SPA navigation. */
+.exhibitor-ticket-section .reveal { opacity: 1; transform: none; }
 @media (max-width: 760px) {
  .exhibitor-hero { padding: 120px 0 52px; }
  .exhibitor-event-facts,.exhibitor-benefit-grid,.exhibitor-faq-grid { grid-template-columns: 1fr; }
