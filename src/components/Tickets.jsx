@@ -454,7 +454,7 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeEmail(email));
 }
 
-export default function Tickets() {
+export default function Tickets({ vendorOnly = false }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
   
@@ -1107,19 +1107,21 @@ export default function Tickets() {
 
 
   return (
-    <section className="tickets section" id="tickets">
+    <section className={`tickets section${vendorOnly ? ' exhibitor-ticket-section' : ''}`} id="tickets">
       <div className="container">
         <div className="tickets-header reveal">
-          <div className="section-tag">Tickets</div>
+          <div className="section-tag">{vendorOnly ? 'Exhibit & Sell' : 'Tickets'}</div>
           <h2 className="section-title">
-            Tickets for Connexa Lagos: <span className="highlight-orange">Join the Opportunity Playground</span>
+            {vendorOnly ? <>Choose Your Exhibition Pass for <span className="highlight-orange">Connexa Lagos 2026</span></> : <>Tickets for Connexa Lagos: <span className="highlight-orange">Join the Opportunity Playground</span></>}
           </h2>
-          <p>Connexa is an opportunity playground in Lagos, Nigeria where people connect to real opportunities. Your ticket gives you access to people, ideas, and outcomes that move you forward.</p>
+          <p>{vendorOnly ? 'Showcase your products, meet potential customers, and grow your brand at Connexa Lagos on 28 November 2026 at the University of Lagos Indoor Sports Hall.' : 'Connexa is an opportunity playground in Lagos, Nigeria where people connect to real opportunities. Your ticket gives you access to people, ideas, and outcomes that move you forward.'}</p>
+          {vendorOnly && <p className="exhibitor-ticket-intro">Compare the Showcase Vendor Pass and Market Vendor Pass below, then complete the same secure checkout used for all Connexa tickets.</p>}
+          {!vendorOnly && <a className="exhibitor-inline-link" href="/exhibitors">Want to exhibit or sell your products at Connexa? Explore exhibitor passes →</a>}
 
-          <div className="tickets-upgrade-strip">
+          {!vendorOnly && <div className="tickets-upgrade-strip">
             <span>Already bought a ticket? Limited slots available. Tickets selling fast.</span>
             <a href="/upgrade-ticket" className="tickets-upgrade-link">Upgrade now</a>
-          </div>
+          </div>}
           
           {/* Discount Banner */}
           {discountActive && (
@@ -1130,7 +1132,7 @@ export default function Tickets() {
         </div>
 
         <div className="tickets-grid">
-          {tickets.filter(t => t.name !== 'Marketplace Pass').map((ticket, i) => {
+          {tickets.filter(t => vendorOnly ? ['Showcase Vendor Pass', 'Market Vendor Pass'].includes(t.name) : t.name !== 'Marketplace Pass').map((ticket, i) => {
             const discountedPrice = calculateTicketPrice(ticket.name, ticket.price);
             const hasDiscount = discountedPrice < ticket.price;
             const hasLowStock =
@@ -1176,6 +1178,10 @@ export default function Tickets() {
                     <div className="ticket-price-original">₦{ticket.price.toLocaleString()}</div>
                     <div className="ticket-price-discounted">₦{discountedPrice.toLocaleString()}</div>
                   </div>
+                ) : vendorOnly ? (
+                  <div className="ticket-price-container">
+                    <div className="ticket-price-discounted">₦{discountedPrice.toLocaleString()}</div>
+                  </div>
                 ) : null}
 
                 <div className="ticket-divider" />
@@ -1214,10 +1220,11 @@ export default function Tickets() {
           })}
         </div>
 
-        <p className="tickets-note reveal">
+        {!vendorOnly && <p className="tickets-note reveal">
           Connexa tickets are your entry into Lagos opportunities.<br />
           They are about <span>access, opportunity, and results.</span>
-        </p>
+        </p>}
+        {vendorOnly && <p className="tickets-note reveal">Exhibition space is limited. Choose the pass that matches your setup and sales goals.</p>}
       </div>
 
       {/* Payment Modal */}
