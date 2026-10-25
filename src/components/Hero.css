@@ -111,11 +111,12 @@
 
 .hero-title-sub {
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 3vw, 2rem);
-  font-weight: 500;
+  font-size: clamp(0.7rem, 1.35vw, 1rem);
+  font-weight: 600;
   color: rgba(255,255,255,0.5);
-  letter-spacing: 0.1em;
+  letter-spacing: clamp(0.01em, 0.08vw, 0.06em);
   text-transform: uppercase;
+  white-space: nowrap;
   margin-bottom: 32px;
   animation: fadeInUp 0.7s ease 0.2s forwards;
   opacity: 0;
@@ -677,7 +678,8 @@
     font-size: 4vh;
   }
   .hero-title-sub {
-    font-size: 2vh;
+    font-size: 0.55rem;
+    letter-spacing: 0;
   }
   .countdown-item {
     padding: 2px 4px;
