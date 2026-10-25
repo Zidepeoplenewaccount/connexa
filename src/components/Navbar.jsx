@@ -21,7 +21,6 @@ export default function Navbar() {
     { label: 'Awards', href: '/#awards' },
     { label: 'Connexers', href: '/#connexers' },
     { label: 'Be a Connexer or Playgrounder', href: 'https://forms.gle/s7wtJdWTa2bWQsZJ7' },
-    { label: 'Be a Connexer or Playgrounder', href: 'https://forms.gle/s7wtJdWTa2bWQsZJ7' },
     { label: 'Merch', href: '/#merch' },
     { label: 'Become A Sponsor', href: '/#partner-form' },
     { label: 'Contact Us', href: 'tel:+2348101422732' },
