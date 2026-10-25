@@ -23,7 +23,6 @@ export default function Navbar() {
     { label: 'Be a Connexer or Playgrounder', href: 'https://forms.gle/s7wtJdWTa2bWQsZJ7' },
     { label: 'Merch', href: '/#merch' },
     { label: 'Become A Sponsor', href: '/#partner-form' },
-    { label: 'Contact Us', href: 'tel:+2348101422732' },
   ];
 
   const navLinksMobile = [
@@ -50,6 +49,10 @@ export default function Navbar() {
             {navLinks.map(link => (
               <a key={link.label} href={link.href}>{link.label}</a>
             ))}
+          </div>
+
+          <div className="navbar-actions">
+            <a className="navbar-contact" href="tel:+2348101422732">Contact Us</a>
             <a href="/#tickets" className="navbar-cta">Get Your Connexa Ticket</a>
           </div>
 
