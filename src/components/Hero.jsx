@@ -166,7 +166,7 @@ export default function Hero() {
           </h1>
           <span className="hero-subtitle">The Opportunity Playground in Lagos, Nigeria</span>
 
-          <p className="hero-title-sub">BUSINESS GROWTH · TALENT · CONNECTIONS</p>
+          <p className="hero-title-sub">DISCOVER OPPORTUNITIES · MEET BUSINESSES · EXPERIENCE MORE</p>
 
           <p className="hero-description">
             Connexa is an opportunity playground in Lagos where people connect to real opportunities.
