@@ -61,18 +61,6 @@ function HomePage() {
         <Speakers />
         <Playgrounders />
 
-        <section className="section reveal" id="join-connexers" style={{ padding: '64px 0', background: 'linear-gradient(135deg, #123f2c 0%, #242044 100%)', color: '#fff' }}>
-          <div className="container" style={{ textAlign: 'center', maxWidth: '860px' }}>
-            <p style={{ color: '#ff9d36', fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '12px' }}>Join the Connexa Community</p>
-            <h2 style={{ color: '#fff', marginBottom: '16px' }}>Do you want to be a Connexer or Playgrounder?</h2>
-            <p style={{ color: 'rgba(255,255,255,0.88)', fontSize: '1.08rem', lineHeight: 1.7, margin: '0 auto 26px', maxWidth: '720px' }}>
-              Join us at Connexa: The Opportunity Playground, our flagship event bringing talent, businesses and opportunity together. Tell us about yourself by completing the form.
-            </p>
-            <a href="https://forms.gle/s7wtJdWTa2bWQsZJ7" target="_blank" rel="noreferrer" className="affiliate-spotlight-btn" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#ff9d36', color: '#172018', fontWeight: 800, padding: '14px 24px', borderRadius: '8px', textDecoration: 'none' }}>
-              Fill Out the Form →
-            </a>
-          </div>
-        </section>
         <VoicesOfOpportunity />
         <Tickets />
 
