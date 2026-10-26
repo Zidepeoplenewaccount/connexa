@@ -1132,7 +1132,7 @@ export default function Tickets({ vendorOnly = false }) {
         </div>
 
         <div className="tickets-grid">
-          {tickets.filter(t => vendorOnly ? ['Showcase Vendor Pass', 'Market Vendor Pass'].includes(t.name) : t.name !== 'Marketplace Pass').map((ticket, i) => {
+          {tickets.filter(t => vendorOnly ? ['Showcase Vendor Pass', 'Market Vendor Pass'].includes(t.name) : true).map((ticket, i) => {
             const discountedPrice = calculateTicketPrice(ticket.name, ticket.price);
             const hasDiscount = discountedPrice < ticket.price;
             const hasLowStock =
@@ -1144,12 +1144,16 @@ export default function Tickets({ vendorOnly = false }) {
             return (
               <div
                 key={ticket.type}
-                className={`ticket-card reveal${ticket.featured ? ' featured' : ''}`}
+                className={`ticket-card reveal${ticket.featured ? ' featured' : ''}${ticket.type === 'regular' ? ' ticket-card-popular' : ''}`}
                 data-type={ticket.type}
                 style={{ transitionDelay: `${(i % 3) * 0.1}s` }}
               >
                 {hasDiscount && (
                   <div className="ticket-card-badge badge-discount">20% OFF</div>
+                )}
+
+                {ticket.type === 'regular' && !hasDiscount && (
+                  <div className="ticket-card-badge ticket-card-badge-popular">MOST POPULAR</div>
                 )}
 
                 {!hasDiscount && ticket.badge && (
@@ -1172,17 +1176,11 @@ export default function Tickets({ vendorOnly = false }) {
                   </div>
                 )}
 
-                {/* Show discount pricing */}
-                {hasDiscount ? (
-                  <div className="ticket-price-container">
-                    <div className="ticket-price-original">₦{ticket.price.toLocaleString()}</div>
-                    <div className="ticket-price-discounted">₦{discountedPrice.toLocaleString()}</div>
-                  </div>
-                ) : vendorOnly ? (
-                  <div className="ticket-price-container">
-                    <div className="ticket-price-discounted">₦{discountedPrice.toLocaleString()}</div>
-                  </div>
-                ) : null}
+                <div className="ticket-price-container">
+                  {hasDiscount && <div className="ticket-price-original">₦{ticket.price.toLocaleString()}</div>}
+                  <div className="ticket-price-discounted">₦{discountedPrice.toLocaleString()}</div>
+                  <span className="ticket-price-caption">{ticket.passType === 'vendor' ? 'per vendor package' : ticket.passType === 'business' ? 'per pass' : 'per person'}</span>
+                </div>
 
                 <div className="ticket-divider" />
 
