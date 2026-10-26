@@ -133,3 +133,10 @@
   .exhibitor-fit-section,.exhibitor-how-section { padding: 52px 0; }
   .exhibitor-ticket-heading { padding-top: 44px; }
 }
+
+
+/* Keep the Showcase Vendor Pass display limitation legible on its card. */
+.exhibitor-page .exhibitor-display-limit,
+.exhibitor-page .exhibitor-pass-card li.exhibitor-display-limit {
+  color: #ffffff !important;
+}
