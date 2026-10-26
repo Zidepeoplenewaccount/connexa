@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './SponsorsPartners.css';
 import arcLogo from '../assets/ARC_LOGO.webp';
 import unmaskAdhdLogo from '../assets/png-logo.webp';
@@ -21,6 +22,9 @@ const partners = [
 ];
 
 export default function SponsorsPartners() {
+  const [unavailableLogos, setUnavailableLogos] = useState([]);
+  const visiblePartners = partners.filter((partner) => !unavailableLogos.includes(partner.key));
+
   return (
     <section className="sponsors-partners-section section" id="sponsors-partners">
       <div className="container">
@@ -30,9 +34,14 @@ export default function SponsorsPartners() {
           <p>We appreciate the organisations helping bring the Connexa Opportunity Playground to life.</p>
         </div>
         <div className="sponsors-partners-logos">
-          {partners.map((partner) => (
+          {visiblePartners.map((partner) => (
             <div className={`sponsors-partners-logo-card sponsors-partners-logo-${partner.key}`} key={partner.key} aria-label={partner.name}>
-              <img src={partner.logo} alt={partner.name} loading="lazy" />
+              <img
+                src={partner.logo}
+                alt={partner.name}
+                loading="lazy"
+                onError={() => setUnavailableLogos((current) => current.includes(partner.key) ? current : [...current, partner.key])}
+              />
             </div>
           ))}
         </div>
