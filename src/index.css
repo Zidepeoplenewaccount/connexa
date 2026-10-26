@@ -66,3 +66,26 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+/* App-wide layout reset for full-width, mobile-first Connexa pages */
+:root {
+  color-scheme: light;
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+html { scroll-padding-top: 88px; }
+body {
+  display: block;
+  place-items: initial;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #ffffff;
+}
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid rgba(253, 96, 37, .55);
+  outline-offset: 3px;
+}
