@@ -511,3 +511,14 @@
   border-color: #FD6025 !important;
   color: #021C1B !important;
 }
+
+
+/* Partnership benefit icons should be white, not inherited from the accent colour. */
+.partner-benefit-icon,
+.partner-benefit-icon svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.partner-benefit-icon svg path {
+  fill: #ffffff !important;
+}
