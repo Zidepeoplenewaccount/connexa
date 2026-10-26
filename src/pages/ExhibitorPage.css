@@ -37,3 +37,99 @@
  .exhibitor-benefits,.exhibitor-faq { padding: 52px 0; }
  .exhibitor-hero-actions a { width: 100%; }
 }
+
+
+/* Small-business-first exhibitor page refresh */
+.exhibitor-page {
+  background: #ffffff;
+  color: #101817;
+}
+.exhibitor-page .exhibitor-hero {
+  background: #021C1B;
+  color: #ffffff;
+  padding-top: 160px;
+  padding-bottom: 78px;
+}
+.exhibitor-page .exhibitor-hero h1,
+.exhibitor-page .exhibitor-hero h1 span,
+.exhibitor-page .exhibitor-hero .exhibitor-hero-copy,
+.exhibitor-page .exhibitor-hero .exhibitor-event-facts strong,
+.exhibitor-page .exhibitor-small-business-note { color: #ffffff; }
+.exhibitor-page .exhibitor-hero h1 span { color: #FD6025; }
+.exhibitor-page .exhibitor-hero .exhibitor-hero-copy { color: rgba(255,255,255,.82); }
+.exhibitor-page .exhibitor-primary-cta { background: #FD6025; color: #021C1B; }
+.exhibitor-page .exhibitor-secondary-cta { border-color: rgba(255,255,255,.38); color: #ffffff; }
+.exhibitor-page .exhibitor-event-facts div { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); }
+.exhibitor-page .exhibitor-event-facts span { color: rgba(255,255,255,.68); }
+.exhibitor-small-business-note { margin: 24px 0 0; max-width: 760px; line-height: 1.7; font-size: 14px; }
+.exhibitor-page .exhibitor-benefits { background: #ffffff; color: #101817; }
+.exhibitor-page .exhibitor-section-heading h2,
+.exhibitor-page .exhibitor-benefit-grid h3,
+.exhibitor-page .exhibitor-faq-grid h3,
+.exhibitor-page .exhibitor-fit-section h2,
+.exhibitor-page .exhibitor-how-grid h3,
+.exhibitor-page .exhibitor-ticket-heading h2 { color: #101817; }
+.exhibitor-page .exhibitor-section-heading > p:last-child,
+.exhibitor-page .exhibitor-benefit-grid p,
+.exhibitor-page .exhibitor-faq-grid p,
+.exhibitor-page .exhibitor-fit-section p,
+.exhibitor-page .exhibitor-how-grid p { color: #53615f; }
+.exhibitor-page .exhibitor-benefit-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.exhibitor-page .exhibitor-benefit-grid article { background: #f6f8f7; border-color: #e2e9e7; border-radius: 18px; padding: 28px; }
+.exhibitor-page .exhibitor-benefit-grid article > span,
+.exhibitor-page .exhibitor-how-grid article > span { color: #FD6025; }
+.exhibitor-fit-section { background: #f2f6f4; padding: 76px 0; }
+.exhibitor-fit-inner { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: clamp(30px,6vw,80px); }
+.exhibitor-fit-inner h2 { font-size: clamp(2rem,4vw,3.25rem); line-height: 1.08; letter-spacing: -.04em; margin: 0 0 18px; }
+.exhibitor-fit-inner p { line-height: 1.8; color: #53615f; }
+.exhibitor-fit-list { display: grid; gap: 12px; }
+.exhibitor-fit-list li { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border: 1px solid #dfe8e4; border-radius: 12px; background: #ffffff; color: #243330; font-weight: 600; line-height: 1.5; }
+.exhibitor-fit-list li span { color: #0c6a51; font-weight: 900; }
+.exhibitor-how-section { background: #ffffff; padding: 76px 0; }
+.exhibitor-how-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
+.exhibitor-how-grid article { border-top: 3px solid #021C1B; padding: 26px 22px; background: #f7f9f8; border-radius: 0 0 14px 14px; }
+.exhibitor-how-grid article > span { font-size: 12px; font-weight: 900; letter-spacing: .12em; }
+.exhibitor-how-grid h3 { margin: 12px 0 8px; font-size: 1.2rem; }
+.exhibitor-how-grid p { font-size: 14px; line-height: 1.7; }
+.exhibitor-page .exhibitor-faq { background: #021C1B; color: #ffffff; padding: 78px 0; }
+.exhibitor-page .exhibitor-faq .exhibitor-section-heading h2,
+.exhibitor-page .exhibitor-faq .exhibitor-section-heading > p:last-child { color: #ffffff; }
+.exhibitor-page .exhibitor-faq .exhibitor-section-heading > p:last-child { opacity: .78; }
+.exhibitor-page .exhibitor-faq-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+.exhibitor-page .exhibitor-faq-grid article { background: #ffffff; color: #101817; border: 1px solid rgba(255,255,255,.12); padding: clamp(22px,3vw,34px); }
+.exhibitor-page .exhibitor-faq-grid h3 { margin-top: 10px; }
+.exhibitor-page .exhibitor-faq-grid p { color: #53615f; }
+.exhibitor-pass-kicker { font-size: 10px !important; letter-spacing: .14em; font-weight: 900; color: #a8451b !important; }
+.exhibitor-pass-choice ul { display: grid; gap: 9px; margin: 18px 0; padding: 0; list-style: none; }
+.exhibitor-pass-choice li { color: #34413e; font-size: 13px; line-height: 1.55; }
+.exhibitor-pass-choice li::before { content: "✓"; color: #0c6a51; font-weight: 900; margin-right: 9px; }
+.exhibitor-page .exhibitor-pass-choice-featured { border: 2px solid #FD6025 !important; }
+.exhibitor-pass-link { display: inline-flex; gap: 8px; margin-top: 8px; color: #021C1B; font-weight: 900; font-size: 13px; }
+.exhibitor-pass-link:hover { color: #a8451b; }
+.exhibitor-ticket-heading { padding-top: 64px; text-align: center; }
+.exhibitor-ticket-heading h2 { font-size: clamp(2rem,4vw,3rem); line-height: 1.1; margin-bottom: 12px; }
+.exhibitor-ticket-heading > p:last-child { color: rgba(255,255,255,.76); }
+.exhibitor-page .exhibitor-contact-note { color: rgba(255,255,255,.78); text-align: center; margin-top: 26px; }
+.exhibitor-page .exhibitor-contact-note a { color: #FD6025; }
+.exhibitor-page .exhibitor-ticket-section { background: #021C1B; color: #ffffff; }
+.exhibitor-page .exhibitor-ticket-section .section-title,
+.exhibitor-page .exhibitor-ticket-section .section-tag,
+.exhibitor-page .exhibitor-ticket-section .tickets-header p { color: #ffffff; }
+.exhibitor-page .exhibitor-ticket-section .ticket-card { background: #ffffff; color: #101817; }
+.exhibitor-page .exhibitor-ticket-section .ticket-name,
+.exhibitor-page .exhibitor-ticket-section .ticket-price-discounted { color: #101817; }
+.exhibitor-page .exhibitor-ticket-section .ticket-feature { color: #34413e; }
+.exhibitor-page .exhibitor-ticket-section .ticket-best-for { color: #53615f; background: #f2f6f4; }
+.exhibitor-page .exhibitor-ticket-section .ticket-best-for strong { color: #101817; }
+.exhibitor-page .exhibitor-ticket-section .ticket-cta { background: #021C1B; color: #ffffff; }
+.exhibitor-page .exhibitor-ticket-section .ticket-card-popular .ticket-cta { background: #FD6025; color: #021C1B; }
+.exhibitor-page .exhibitor-ticket-section .ticket-divider { background: #e2e9e7; border-color: #e2e9e7; }
+@media (max-width: 760px) {
+  .exhibitor-page .exhibitor-hero { padding: 120px 0 52px; }
+  .exhibitor-fit-inner { grid-template-columns: 1fr; gap: 28px; }
+  .exhibitor-page .exhibitor-benefit-grid,
+  .exhibitor-how-grid,
+  .exhibitor-page .exhibitor-faq-grid { grid-template-columns: 1fr; }
+  .exhibitor-fit-section,.exhibitor-how-section { padding: 52px 0; }
+  .exhibitor-ticket-heading { padding-top: 44px; }
+}
