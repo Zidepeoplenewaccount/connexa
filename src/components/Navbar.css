@@ -236,7 +236,7 @@
 
 /* Deep-green navigation at every scroll position */
 .navbar { background: rgba(2, 28, 27, .97) !important; border-bottom: 1px solid rgba(255,255,255,.12); }
-.navbar .navbar-logo img { filter: brightness(0) invert(1); }
+
 .navbar .navbar-links a { color: #ffffff !important; }
 .navbar .navbar-links a:hover { color: var(--orange) !important; }
 .navbar .navbar-hamburger span { background: #ffffff !important; }
