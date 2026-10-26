@@ -228,30 +228,6 @@ import { getUserFriendlyError, logTechnicalError } from '../utils/errorMessages'
 
 const tickets = [
   {
-    id: 1,
-    type: 'general',
-    passType: 'individual',
-    icon: <FaTicketAlt size={20} />,
-    iconClass: 'ticket-icon-white',
-    label: 'Open Access',
-    name: 'Marketplace Pass',
-    subtitle: 'Access the Connexa Showcase Floor, shop from 100+ vendors, discover new brands, and experience the energy of the Opportunity Playground.',
-    price: 3000,
-    available: 52,
-    features: [
-      'Access to outdoor vendor marketplace',
-      'Shop from 100+ vendors and businesses',
-      'Discover and support new brands on the spot',
-      'Opportunity to meet vendors and access real opportunities',
-      'Experience the energy of the Opportunity Playground',
-    ],
-    bestFor: 'Anyone who wants to shop with vendors and feel the energy of the Opportunity Playground.',
-    cta: 'Get Marketplace Pass',
-    ctaClass: '',
-    dotColor: 'rgba(255,255,255,0.5)',
-    hideLowStockBadge: true,
-  },
-  {
     id: 2,
     type: 'regular',
     passType: 'individual',
@@ -635,7 +611,7 @@ export default function Tickets({ vendorOnly = false }) {
         if (selectedTicket.passType === 'individual') {
           const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
           const baseAmount = ticketPrice * quantity;
-          const groupDiscount = selectedTicket.name === 'Marketplace Pass' ? 0 : calculateDiscount(quantity);
+          const groupDiscount = calculateDiscount(quantity);
           amount = baseAmount - groupDiscount;
         } else if (selectedTicket.passType === 'vendor') {
           const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
@@ -737,7 +713,6 @@ export default function Tickets({ vendorOnly = false }) {
       
       // Accept both current and legacy names for regular/base tickets
       const validTypes = [
-        'Marketplace Pass',
         'Talent Pass — Regular',
         'Individual Pass — Regular',
         'General Access Ticket',
@@ -751,7 +726,7 @@ export default function Tickets({ vendorOnly = false }) {
       } else {
         setConnectorsTicketValid(false);
         setConnectorsTicketData(null);
-        setError('Connectors Pass requires a Marketplace or Individual Regular ticket');
+        setError('Connectors Pass requires a valid individual regular ticket');
       }
     } catch (err) {
       setConnectorsTicketValid(false);
@@ -901,7 +876,7 @@ export default function Tickets({ vendorOnly = false }) {
 
       if (isIndividual) {
         const baseAmount = ticketPrice * quantity;
-        const groupDiscount = selectedTicket.name === 'Marketplace Pass' ? 0 : calculateDiscount(quantity);
+        const groupDiscount = calculateDiscount(quantity);
         let subtotal = baseAmount - groupDiscount;
         const isRegularDiscountCodeApplied = discountValid && validatedCodeType === 'discount';
         const isSpeakerCodeApplied = (discountValid && validatedCodeType === 'connexer') || (!discountValid && speakerData && speakerCode);
@@ -1395,7 +1370,7 @@ export default function Tickets({ vendorOnly = false }) {
                     ))}
                   </div>
 
-                  {(quantity >= 2 && quantity <= 5 ) && selectedTicket.name !== 'Marketplace Pass' ? (
+                  {(quantity >= 2 && quantity <= 5 ) && true ? (
                     <div className="ticket-discount-badge">
                       <FaUsers size={14} /> Group Discount: -₦{calculateDiscount(quantity).toLocaleString()}
                     </div>
@@ -1431,8 +1406,7 @@ export default function Tickets({ vendorOnly = false }) {
                     <div className="ticket-modal-total-breakdown">
                       {(() => {
                         // Calculate all values
-                        const isMarketplacePass = selectedTicket.name === 'Marketplace Pass';
-                        const groupDiscount = isMarketplacePass ? 0 : calculateDiscount(quantity);
+                        const groupDiscount = calculateDiscount(quantity);
                         const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
                         const subtotal = ticketPrice * quantity;
                         const total = subtotal - groupDiscount;
@@ -1638,8 +1612,7 @@ export default function Tickets({ vendorOnly = false }) {
                     <span>Total Amount</span>
                     <div className="ticket-modal-total-breakdown">
                       {(() => {
-                        const isMarketplacePass = selectedTicket.name === 'Marketplace Pass';
-                        const groupDiscount = isMarketplacePass ? 0 : calculateDiscount(quantity);
+                        const groupDiscount = calculateDiscount(quantity);
                         const ticketPrice = calculateTicketPrice(selectedTicket.name, selectedTicket.price);
                         const subtotal = ticketPrice * quantity;
                         let total = subtotal - groupDiscount;
