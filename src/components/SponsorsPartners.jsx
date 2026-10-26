@@ -1,25 +1,15 @@
 import './SponsorsPartners.css';
-import arcLogo from '../assets/ARC_LOGO.webp';
-import carryHerLogo from '/IMG_3892.PNG';
-import profileProLogo from '/IMG_3891.PNG';
-import unmaskAdhdLogo from '../assets/png-logo.webp';
 
 const partners = [
-  { name: 'ARC', key: 'arc', logo: arcLogo },
-  { name: 'CarryHer', key: 'carryher', logo: carryHerLogo },
-  { name: 'ProfilePro', key: 'profilepro', logo: profileProLogo },
-  { name: 'Unmask ADHD', key: 'unmask-adhd', logo: unmaskAdhdLogo },
-  { name: 'Rights Events', key: 'rights-events', logo: '/RE%20Full%20Logo%20-%20Colored.PNG' },
-  { name: 'Plitverse', key: 'plitverse', logo: '/Plitverse%20-%202.jpg' },
-  { name: 'My Student Marketplace', key: 'my-student-marketplace', logo: '/IMG_3763-transparent.svg' },
-  { name: 'Partner logo', key: 'img-3773', logo: '/IMG_3773.jpg' },
-  { name: 'Partner logo', key: 'img-3823', logo: '/IMG_3823.jpg' },
-  { name: 'Partner logo', key: 'img-4349', logo: '/IMG_4349.png' },
-  { name: 'Partner logo', key: 'img-5433', logo: '/IMG_5433.PNG' },
-  { name: 'Partner logo', key: 'img-6775', logo: '/IMG_6775.jpg' },
-  { name: 'Connexa Flyer Design', key: 'connexa-flyer-1', logo: '/CONNEXA%20FLYER%20DESIGNS.PNG' },
+  { name: 'CarryHer', key: 'carryher', logo: '/carry%20her.PNG' },
+  { name: 'DesignWR', key: 'designwr', logo: '/designwr.jpg' },
+  { name: 'Enchanted', key: 'enchanted', logo: '/enchanted.jpg' },
+  { name: 'GoLearn', key: 'golearn', logo: '/golearn.jpg' },
+  { name: 'My Student Marketplace', key: 'marketplace', logo: '/marketplace.jpg' },
+  { name: 'ProfilePro', key: 'profilepro', logo: '/profilepro.jpg' },
   { name: 'Taron', key: 'taron', logo: '/taron.jpg' },
-  { name: 'Partner logo', key: 'f20bc0bf', logo: '/F20BC0BF-B460-41A8-82F1-65B2AF558F66.PNG' },
+  { name: 'Turnit', key: 'turnit', logo: '/turnit.jpg' },
+  { name: 'Zidepeople', key: 'zidepeople', logo: '/zidepeople.jpg' },
 ];
 
 export default function SponsorsPartners() {
