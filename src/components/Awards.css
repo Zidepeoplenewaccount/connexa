@@ -3,6 +3,21 @@
   background: var(--surface);
 }
 
+/* Improve contrast: award names and category labels use solid white. */
+.awards-category-list,
+.awards-category-list li,
+.awards-category-list li strong,
+.awards-category-column .awards-question-card > p,
+.awards-category-column .awards-question-card > p strong {
+  color: #ffffff !important;
+  opacity: 1;
+}
+
+.awards-section {
+  padding: 100px 0;
+  background: var(--surface);
+}
+
 .awards-header {
   text-align: center;
   max-width: 800px;
