@@ -108,7 +108,7 @@ export default function ExhibitorPage() {
                 <p className="exhibitor-pass-kicker">BEST FOR BRAND PRESENTATION</p>
                 <h3>Showcase Vendor Pass</h3>
                 <p>For brands that want to present products or services, demonstrate what they do and build visibility. A dedicated exhibition space is provided. Bring your own branded booth materials, such as banners, flyers and displays.</p>
-                <ul><li>Showcase and demonstrate your offer</li><li>Build brand awareness and business connections</li><li>Maximum of 2 staff members per booth</li><li>Not suitable for large physical product displays</li></ul>
+                <ul><li>Showcase and demonstrate your offer</li><li>Build brand awareness and business connections</li><li>Maximum of 2 staff members per booth</li><li className="exhibitor-display-limit">Not suitable for large physical product displays</li></ul>
                 <a href="#tickets" className="exhibitor-pass-link">View Showcase Vendor Pass <span aria-hidden="true">→</span></a>
               </article>
               <article className="exhibitor-pass-choice exhibitor-pass-choice-featured">
