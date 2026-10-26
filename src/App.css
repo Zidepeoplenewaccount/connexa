@@ -576,3 +576,110 @@ body::before {
 .navbar-mobile { background: #021C1B !important; color: #ffffff !important; }
 .conversion-final-cta, .conversion-site .footer, .footer { background-color: #021C1B; color: #ffffff; }
 .conversion-final-cta h2, .conversion-final-cta p, .conversion-final-cta small, .footer h2, .footer h3, .footer p, .footer a { color: #ffffff; }
+
+
+/* === Connexa contrast and spacing refinements === */
+/* The main navigation itself (not only the opened mobile menu) uses deep green. */
+.conversion-site .navbar {
+  background: rgba(2, 28, 27, .97) !important;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.conversion-site .navbar .navbar-links a,
+.conversion-site .navbar .navbar-contact { color: #ffffff !important; }
+.conversion-site .navbar .navbar-links a:hover { color: #FD6025 !important; }
+.conversion-site .navbar .navbar-logo img { filter: brightness(0) invert(1); }
+.conversion-site .navbar .navbar-hamburger span { background: #ffffff !important; }
+.conversion-site .navbar-mobile { background: #021C1B !important; color: #ffffff !important; }
+.conversion-site .navbar-mobile a,
+.conversion-site .navbar-mobile-close { color: #ffffff !important; }
+.conversion-site .navbar-mobile a:hover { color: #FD6025 !important; }
+.conversion-site .navbar-mobile .navbar-mobile-cta { color: #021C1B !important; background: #FD6025; padding: 14px 20px; border-radius: 10px; }
+
+/* Requested campaign sections use deep green with readable white copy. */
+.conversion-site .gallery-section,
+.conversion-site .affiliate-signup-section,
+.conversion-site .awards-section,
+.conversion-site .merch,
+.conversion-site .voices {
+  background: #021C1B !important;
+  color: #ffffff;
+}
+.conversion-site .gallery-section .section-title,
+.conversion-site .gallery-section .gallery-header p,
+.conversion-site .affiliate-signup-section .section-title,
+.conversion-site .affiliate-signup-section .affiliate-header p,
+.conversion-site .awards-section .section-title,
+.conversion-site .awards-section .awards-subtitle,
+.conversion-site .awards-section .awards-rules h3,
+.conversion-site .awards-section .awards-guidelines h3,
+.conversion-site .awards-section .awards-tips h3,
+.conversion-site .awards-section .awards-final p,
+.conversion-site .awards-section .awards-cta-text,
+.conversion-site .awards-section .awards-category-list li,
+.conversion-site .awards-section .awards-rules-list li,
+.conversion-site .awards-section .awards-guideline-section li,
+.conversion-site .awards-section .awards-tip p,
+.conversion-site .merch .section-title,
+.conversion-site .merch-header p,
+.conversion-site .merch .merch-desc,
+.conversion-site .merch .merch-body p,
+.conversion-site .merch .merch-body h3,
+.conversion-site .voices .section-title,
+.conversion-site .voices .voices-quote-text,
+.conversion-site .voices .voices-quote-author {
+  color: #ffffff !important;
+}
+.conversion-site .awards-section .awards-rules-list,
+.conversion-site .awards-section .awards-guideline-section,
+.conversion-site .awards-section .awards-tip,
+.conversion-site .awards-section .awards-prize-card,
+.conversion-site .merch .merch-card,
+.conversion-site .voices .voices-slide {
+  background: rgba(255,255,255,.055) !important;
+  border-color: rgba(255,255,255,.16);
+}
+.conversion-site .awards-section .awards-tip-icon,
+.conversion-site .awards-section .awards-tip-icon svg,
+.conversion-site .awards-section .awards-rules-list svg,
+.conversion-site .merch .merch-card svg,
+.conversion-site .voices .voices-slide svg,
+.conversion-site .speakers svg {
+  color: #ffffff !important;
+  stroke: #ffffff;
+}
+.conversion-site .awards-section .awards-tip-icon svg { fill: none; }
+.conversion-site .awards-section .awards-guideline-section li,
+.conversion-site .awards-section .awards-rules-list li,
+.conversion-site .awards-section .awards-tip p { color: #ffffff !important; }
+.conversion-site .awards-section .awards-rules-list strong,
+.conversion-site .awards-section .awards-guideline-section strong { color: #ffffff !important; }
+.conversion-site .merch .merch-desc { color: #ffffff !important; opacity: .92; }
+.conversion-site .merch .merch-tagline { color: #FD6025 !important; }
+.conversion-site .voices .voices-header .section-tag { color: #ffffff; }
+.conversion-site .voices .voices-slide { border: 1px solid rgba(255,255,255,.15); }
+
+/* Connexers and Playgrounders use the available page width rather than a narrow content column. */
+.conversion-site .speakers > .container,
+.conversion-site #playgrounders > .container {
+  width: min(1600px, 100%) !important;
+  max-width: none !important;
+  padding-left: clamp(20px, 4vw, 64px);
+  padding-right: clamp(20px, 4vw, 64px);
+}
+.conversion-site .speakers-grid { gap: clamp(14px, 1.7vw, 26px); }
+
+/* Light sections remain clean white, with dark copy for accessible contrast. */
+.conversion-site .about,
+.conversion-site .tickets,
+.conversion-site .faq,
+.conversion-site .voting,
+.conversion-site .partner-form-section,
+.conversion-site .partner-form {
+  background-color: #ffffff;
+}
+.conversion-site .voting .section-title,
+.conversion-site .voting .voting-header p { color: #111111; }
+.conversion-site .voting .voting-card { background: #f7f8f7; }
+.conversion-site .voting .voting-card-name { color: #111111; }
