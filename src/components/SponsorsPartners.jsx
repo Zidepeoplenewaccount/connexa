@@ -5,13 +5,18 @@ import profileProLogo from '/IMG_3891.PNG';
 import unmaskAdhdLogo from '../assets/png-logo.webp';
 
 const partners = [
-  { name: 'ARC', logo: arcLogo, kind: 'image' },
-  { name: 'CarryHer', logo: carryHerLogo, kind: 'image' },
-  { name: 'ProfilePro', logo: profileProLogo, kind: 'image' },
-  { name: 'Unmask ADHD', logo: unmaskAdhdLogo, kind: 'image' },
-  { name: 'Rights Events', kind: 'wordmark', className: 'rights-events' },
-  { name: 'Go Learn', kind: 'wordmark', className: 'go-learn' },
-  { name: 'DWR', kind: 'wordmark', className: 'dwr' },
+  { name: 'ARC', logo: arcLogo },
+  { name: 'CarryHer', logo: carryHerLogo },
+  { name: 'ProfilePro', logo: profileProLogo },
+  { name: 'Unmask ADHD', logo: unmaskAdhdLogo },
+  { name: 'Rights Events', logo: '/RE%20Full%20Logo%20-%20Colored.PNG' },
+  { name: 'Plitverse', logo: '/Plitverse%20-%202.PNG' },
+  { name: 'Additional partner logo 1', logo: '/IMG_3763.png' },
+  { name: 'Additional partner logo 2', logo: '/IMG_3773.jpg' },
+  { name: 'Additional partner logo 3', logo: '/IMG_3823.jpg' },
+  { name: 'Additional partner logo 4', logo: '/IMG_4349.png' },
+  { name: 'Additional partner logo 5', logo: '/IMG_5433.PNG' },
+  { name: 'Additional partner logo 6', logo: '/IMG_6775.jpg' },
 ];
 
 export default function SponsorsPartners() {
@@ -26,9 +31,7 @@ export default function SponsorsPartners() {
         <div className="sponsors-partners-logos">
           {partners.map((partner) => (
             <div className="sponsors-partners-logo-card" key={partner.name} aria-label={partner.name}>
-              {partner.kind === 'image'
-                ? <img src={partner.logo} alt={partner.name} loading="lazy" />
-                : <span className={`sponsors-partners-wordmark ${partner.className}`}>{partner.name}</span>}
+              <img src={partner.logo} alt={partner.name} loading="lazy" />
             </div>
           ))}
         </div>
