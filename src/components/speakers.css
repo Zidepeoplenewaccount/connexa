@@ -473,3 +473,26 @@
 @media (max-width: 640px) {
   .speakers > .container { padding-left: 16px; padding-right: 16px; }
 }
+
+
+/* Keep the card bottoms and Ask buttons aligned across both people sections. */
+.conversion-site #connexers .speakers-grid,
+.conversion-site #playgrounders .speakers-grid { align-items: stretch; }
+.conversion-site #connexers .speaker-card,
+.conversion-site #playgrounders .speaker-card { display: flex; flex-direction: column; height: 100%; }
+.conversion-site #connexers .speaker-body,
+.conversion-site #playgrounders .speaker-body { display: flex; flex-direction: column; flex: 1; }
+.conversion-site #connexers .speaker-bio,
+.conversion-site #playgrounders .speaker-bio { min-height: 154px; display: flex; flex-direction: column; align-items: flex-start; }
+.conversion-site #connexers .speaker-bio p,
+.conversion-site #playgrounders .speaker-bio p { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.conversion-site #connexers .speaker-read-more,
+.conversion-site #playgrounders .speaker-read-more { margin-top: auto; }
+.conversion-site #connexers .speaker-socials,
+.conversion-site #playgrounders .speaker-socials { margin-top: auto; padding-top: 8px; min-height: 44px; align-items: center; }
+.conversion-site #connexers .speaker-ask-btn,
+.conversion-site #playgrounders .speaker-ask-btn { margin-top: 12px; flex-shrink: 0; min-height: 46px; }
+@media (max-width: 640px) {
+  .conversion-site #connexers .speaker-bio,
+  .conversion-site #playgrounders .speaker-bio { min-height: 138px; }
+}
