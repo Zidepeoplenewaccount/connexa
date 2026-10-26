@@ -700,3 +700,62 @@
     display: none;
   }
 }
+
+/* Partner marquees framing the hero; reduced motion is respected. */
+.conversion-site .conversion-hero-content { z-index: 2; }
+.hero-partner-rail {
+  position: absolute;
+  z-index: 1;
+  top: 15%;
+  bottom: 13%;
+  width: clamp(84px, 9vw, 132px);
+  overflow: hidden;
+  opacity: .9;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+}
+.hero-partner-rail-left { left: clamp(12px, 2.3vw, 36px); }
+.hero-partner-rail-right { right: clamp(12px, 2.3vw, 36px); }
+.hero-partner-rail-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  animation: hero-partner-scroll-up 32s linear infinite;
+}
+.hero-partner-rail-right .hero-partner-rail-track { animation-name: hero-partner-scroll-down; }
+.hero-partner-logo {
+  width: 100%;
+  min-height: 76px;
+  padding: 12px;
+  flex: 0 0 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 14px;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 8px 28px rgba(0,0,0,.12);
+}
+.hero-partner-logo img { max-width: 100%; max-height: 48px; object-fit: contain; }
+.hero-partner-wordmark {
+  color: #102d2a;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.05;
+  font-weight: 900;
+  letter-spacing: -.04em;
+}
+.hero-partner-wordmark-go-learn { color: #e95522; }
+.hero-partner-wordmark-dwr { font-size: 21px; letter-spacing: .08em; }
+.hero-partner-wordmark-rights-events { font-family: Georgia, serif; letter-spacing: -.02em; }
+.hero-partner-rail:hover .hero-partner-rail-track { animation-play-state: paused; }
+@keyframes hero-partner-scroll-up { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+@keyframes hero-partner-scroll-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+@media (max-width: 1100px) {
+  .hero-partner-rail { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-partner-rail-track { animation: none !important; }
+}
