@@ -271,8 +271,7 @@ export default function Speakers() {
             Connexers <span className="highlight-blue"></span>
           </h2>
           <p>
-            Get answers from talents and business connexers who are 
-            building, hiring, growing, and creating opportunities.
+            Connexers are people who have created opportunities and are ready to share how they did it. Meet them in person, ask questions and learn from their real journeys.
           </p>
         </div>
         <div className="question-priority-notice">
