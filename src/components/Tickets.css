@@ -1331,3 +1331,13 @@
 .skill-dropdown-trigger .skill-dropdown-placeholder {
   color: #000000;
 }
+
+
+/* Keep the skill selector readable with its black prompt text. */
+.skill-dropdown-trigger.ticket-input {
+  background: #ffffff;
+  color: #000000;
+}
+.skill-dropdown-trigger .skill-dropdown-arrow {
+  color: #000000;
+}
