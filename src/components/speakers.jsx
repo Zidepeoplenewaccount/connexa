@@ -148,7 +148,6 @@ const speakers = [
     photo: SeyiPhoto,
     photoClass: 'zoom-out-photo-seyi',
     featured: false,
-    photoClass: 'zoom-out-face',
     askLabel: 'Ask Seyi',
     bio: `Seyi Olaniyan is a brand strategist, business builder, and Founder of YellowLyfe Company, a people-first experiences company focused on fostering meaningful connections, community, and
     work-life balance. With over a decade of experience in media, marketing, brand development, and project execution, Seyi has worked with local and international brands to shape culture, build strong
@@ -176,7 +175,6 @@ const speakers = [
     photo: StellaIjeomaPhoto,
     photoClass: 'zoom-out-photo',
     featured: false,
-    photoClass: 'zoom-out-face',
     askLabel: 'Ask Stella',
     bio: `Stella Ijeoma Olugbemi is a Corporate Communications, Corporate Social
     Responsibility (CSR), Brand and Events professional with over 21 years of experience
