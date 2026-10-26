@@ -10,7 +10,7 @@ const partners = [
   { name: 'ProfilePro', key: 'profilepro', logo: profileProLogo },
   { name: 'Unmask ADHD', key: 'unmask-adhd', logo: unmaskAdhdLogo },
   { name: 'Rights Events', key: 'rights-events', logo: '/RE%20Full%20Logo%20-%20Colored.PNG' },
-  { name: 'Plitverse', key: 'plitverse', logo: '/Plitverse%20-%202.PNG' },
+  { name: 'Plitverse', key: 'plitverse', logo: '/Plitverse%20-%202.jpg' },
   { name: 'My Student Marketplace', key: 'my-student-marketplace', logo: '/IMG_3763-transparent.svg' },
   { name: 'Partner logo', key: 'img-3773', logo: '/IMG_3773.jpg' },
   { name: 'Partner logo', key: 'img-3823', logo: '/IMG_3823.jpg' },
@@ -18,7 +18,7 @@ const partners = [
   { name: 'Partner logo', key: 'img-5433', logo: '/IMG_5433.PNG' },
   { name: 'Partner logo', key: 'img-6775', logo: '/IMG_6775.jpg' },
   { name: 'Connexa Flyer Design', key: 'connexa-flyer-1', logo: '/CONNEXA%20FLYER%20DESIGNS.PNG' },
-  { name: 'Connexa Flyer Design 2', key: 'connexa-flyer-2', logo: '/CONNEXA%20FLYER%20DESIGNS%202.PNG' },
+  { name: 'Taron', key: 'taron', logo: '/taron.jpg' },
   { name: 'Partner logo', key: 'f20bc0bf', logo: '/F20BC0BF-B460-41A8-82F1-65B2AF558F66.PNG' },
 ];
 
