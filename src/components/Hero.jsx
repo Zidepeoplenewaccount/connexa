@@ -9,9 +9,14 @@ const heroPartners = [
   { name: 'CarryHer', logo: carryHerLogo },
   { name: 'ProfilePro', logo: profileProLogo },
   { name: 'Unmask ADHD', logo: unmaskAdhdLogo },
-  { name: 'Rights Events', wordmark: 'RIGHTS EVENTS' },
-  { name: 'Go Learn', wordmark: 'GO LEARN' },
-  { name: 'DWR', wordmark: 'DWR' },
+  { name: 'Rights Events', logo: '/RE%20Full%20Logo%20-%20Colored.PNG' },
+  { name: 'Plitverse', logo: '/Plitverse%20-%202.PNG' },
+  { name: 'Additional partner logo 1', logo: '/IMG_3763.png' },
+  { name: 'Additional partner logo 2', logo: '/IMG_3773.jpg' },
+  { name: 'Additional partner logo 3', logo: '/IMG_3823.jpg' },
+  { name: 'Additional partner logo 4', logo: '/IMG_4349.png' },
+  { name: 'Additional partner logo 5', logo: '/IMG_5433.PNG' },
+  { name: 'Additional partner logo 6', logo: '/IMG_6775.jpg' },
 ];
 
 function PartnerRail({ side }) {
@@ -21,9 +26,7 @@ function PartnerRail({ side }) {
       <div className="hero-partner-rail-track">
         {logos.map((partner, index) => (
           <div className="hero-partner-logo" key={`${partner.name}-${index}`} title={partner.name}>
-            {partner.logo
-              ? <img src={partner.logo} alt={partner.name} loading="lazy" />
-              : <span className={`hero-partner-wordmark hero-partner-wordmark-${partner.name.toLowerCase().replace(/[^a-z]+/g, '-')}`}>{partner.wordmark}</span>}
+            <img src={partner.logo} alt={partner.name} loading="lazy" />
           </div>
         ))}
       </div>
