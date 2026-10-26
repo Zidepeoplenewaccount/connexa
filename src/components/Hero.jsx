@@ -11,7 +11,7 @@ const heroPartners = [
   { name: 'Unmask ADHD', key: 'unmask-adhd', logo: unmaskAdhdLogo },
   { name: 'Rights Events', key: 'rights-events', logo: '/RE%20Full%20Logo%20-%20Colored.PNG' },
   { name: 'Plitverse', key: 'plitverse', logo: '/Plitverse%20-%202.PNG' },
-  { name: 'My Student Marketplace', key: 'my-student-marketplace', logo: '/IMG_3763.png' },
+  { name: 'My Student Marketplace', key: 'my-student-marketplace', logo: '/IMG_3763-transparent.svg' },
   { name: 'Partner logo', key: 'img-3773', logo: '/IMG_3773.jpg' },
   { name: 'Partner logo', key: 'img-3823', logo: '/IMG_3823.jpg' },
   { name: 'Partner logo', key: 'img-4349', logo: '/IMG_4349.png' },
