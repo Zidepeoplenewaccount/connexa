@@ -1,12 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-const melody = [261.63, 329.63, 392.00, 329.63, 293.66, 349.23, 440.00, 349.23];
-
 export default function FloatingControls() {
-  const audioContextRef = useRef(null);
-  const masterGainRef = useRef(null);
-  const musicTimerRef = useRef(null);
-  const noteIndexRef = useRef(0);
+  const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
@@ -14,62 +9,19 @@ export default function FloatingControls() {
     const updateScrollState = () => setShowBackToTop(window.scrollY > 420);
     updateScrollState();
     window.addEventListener('scroll', updateScrollState, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', updateScrollState);
-      if (musicTimerRef.current) window.clearInterval(musicTimerRef.current);
-      if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-        audioContextRef.current.close();
-      }
-    };
+    return () => window.removeEventListener('scroll', updateScrollState);
   }, []);
 
-  const playNote = (context, master, frequency) => {
-    const oscillator = context.createOscillator();
-    const noteGain = context.createGain();
-    const now = context.currentTime;
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(frequency, now);
-    noteGain.gain.setValueAtTime(0.0001, now);
-    noteGain.gain.exponentialRampToValueAtTime(0.055, now + 0.06);
-    noteGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.58);
-    oscillator.connect(noteGain);
-    noteGain.connect(master);
-    oscillator.start(now);
-    oscillator.stop(now + 0.62);
-  };
-
   const toggleMusic = async () => {
-    if (isPlaying) {
-      if (musicTimerRef.current) window.clearInterval(musicTimerRef.current);
-      musicTimerRef.current = null;
-      if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-        await audioContextRef.current.close();
-      }
-      audioContextRef.current = null;
-      masterGainRef.current = null;
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (!audio.paused) {
+      audio.pause();
       setIsPlaying(false);
       return;
     }
-
     try {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContextClass) throw new Error('Web Audio is unavailable in this browser.');
-      const context = new AudioContextClass();
-      const master = context.createGain();
-      master.gain.setValueAtTime(0.72, context.currentTime);
-      master.connect(context.destination);
-      await context.resume();
-
-      audioContextRef.current = context;
-      masterGainRef.current = master;
-      noteIndexRef.current = 0;
-      playNote(context, master, melody[noteIndexRef.current]);
-      noteIndexRef.current = 1;
-      musicTimerRef.current = window.setInterval(() => {
-        if (context.state !== 'running') return;
-        playNote(context, master, melody[noteIndexRef.current]);
-        noteIndexRef.current = (noteIndexRef.current + 1) % melody.length;
-      }, 560);
+      await audio.play();
       setIsPlaying(true);
     } catch (error) {
       console.error('Connexa music could not start:', error);
@@ -79,6 +31,16 @@ export default function FloatingControls() {
 
   return (
     <>
+      <audio
+        ref={audioRef}
+        src="/zidepeople%20audio.mp3"
+        loop
+        preload="auto"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onEnded={() => setIsPlaying(false)}
+        aria-label="Connexa background music"
+      />
       <button
         type="button"
         className={`connexa-music-control${isPlaying ? ' is-playing' : ''}`}
@@ -90,7 +52,6 @@ export default function FloatingControls() {
         <span className="connexa-music-label">{isPlaying ? 'Pause music' : 'Play music'}</span>
         {isPlaying && <span className="connexa-music-equalizer" aria-hidden="true"><i /><i /><i /></span>}
       </button>
-
       {showBackToTop && (
         <button
           type="button"
