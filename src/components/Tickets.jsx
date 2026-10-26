@@ -1090,7 +1090,6 @@ export default function Tickets({ vendorOnly = false }) {
             {vendorOnly ? <>Choose Your Exhibition Pass for <span className="highlight-orange">Connexa Lagos 2026</span></> : <>Tickets for Connexa Lagos: <span className="highlight-orange">Join the Opportunity Playground</span></>}
           </h2>
           <p>{vendorOnly ? 'Showcase your products, meet potential customers, and grow your brand at Connexa Lagos on 28 November 2026 at the University of Lagos Indoor Sports Hall.' : 'Connexa is an opportunity playground in Lagos, Nigeria where people connect to real opportunities. Your ticket gives you access to people, ideas, and outcomes that move you forward.'}</p>
-          {vendorOnly && <p className="exhibitor-ticket-intro">Compare the Showcase Vendor Pass and Market Vendor Pass below, then complete the same secure checkout used for all Connexa tickets.</p>}
           {!vendorOnly && <a className="exhibitor-inline-link" href="/exhibitors">Want to exhibit or sell your products at Connexa? Explore exhibitor passes →</a>}
 
           {!vendorOnly && <div className="tickets-upgrade-strip">
