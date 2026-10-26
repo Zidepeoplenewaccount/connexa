@@ -759,3 +759,12 @@ body::before {
 .conversion-site #playgrounders .priority-text,
 .conversion-site #playgrounders .priority-text strong,
 .conversion-site #playgrounders .priority-text p { color: #ffffff !important; }
+
+
+/* Powered-by label and tagline should remain white on the dark footer area. */
+.conversion-site ~ .about-powered,
+.about-powered,
+.about-powered .about-powered-label,
+.about-powered .about-powered-tagline {
+  color: #ffffff !important;
+}
