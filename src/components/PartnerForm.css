@@ -490,3 +490,9 @@
     padding: 16px 32px;
   }
 }
+/* Keep a clear visual gap after the Partnership Portfolio link. */
+.partner-portfolio-wrapper { margin-top: 32px; margin-bottom: 36px; padding-bottom: 8px; }
+.partner-portfolio-btn { display: inline-flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+@media (max-width: 768px) {
+  .partner-portfolio-wrapper { margin-top: 28px; margin-bottom: 32px; }
+}
