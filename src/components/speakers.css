@@ -467,3 +467,9 @@
     font-size: 13px;
   }
 }
+/* Give Connexers and Playgrounders room to breathe on wide screens. */
+.speakers > .container { width: min(1600px, 100%); max-width: none; padding-left: clamp(20px, 4vw, 64px); padding-right: clamp(20px, 4vw, 64px); }
+.speakers-grid { gap: clamp(14px, 1.7vw, 26px); }
+@media (max-width: 640px) {
+  .speakers > .container { padding-left: 16px; padding-right: 16px; }
+}
