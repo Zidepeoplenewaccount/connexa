@@ -16,6 +16,7 @@ import Voting from './components/Voting';
 import FAQ from './components/FAQ';
 import Merch from './components/merch';
 import PartnerForm from './components/PartnerForm';
+import SponsorsPartners from './components/SponsorsPartners';
 import AffiliateSignup from './components/AffiliateSignup';
 import PoweredBy from './components/PoweredBy';
 import Footer from './components/Footer';
@@ -78,6 +79,7 @@ function HomePage() {
         <Playgrounders />
         <VoicesOfOpportunity />
         <Tickets />
+        <SponsorsPartners />
         <FAQ />
 
 
