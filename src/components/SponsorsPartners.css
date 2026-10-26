@@ -67,3 +67,28 @@
   .sponsors-partners-logo-card { min-height: 126px; padding: 14px; }
   .sponsors-partners-logo-card img { max-height: 94px; }
 }
+
+/* Individual sizing for the newly added artwork and oversized partner marks. */
+.sponsors-partners-logo-img-3773 img,
+.sponsors-partners-logo-img-3823 img,
+.sponsors-partners-logo-img-4349 img,
+.sponsors-partners-logo-plitverse img,
+.sponsors-partners-logo-img-6775 img {
+  width: 72%;
+  max-width: 72%;
+  max-height: 82px;
+  object-fit: contain;
+}
+.sponsors-partners-logo-my-student-marketplace img {
+  width: 78%;
+  max-width: 78%;
+  mix-blend-mode: multiply;
+}
+.sponsors-partners-logo-connexa-flyer-1 img,
+.sponsors-partners-logo-connexa-flyer-2 img,
+.sponsors-partners-logo-f20bc0bf img {
+  width: 76%;
+  max-width: 76%;
+  max-height: 86px;
+  object-fit: contain;
+}
