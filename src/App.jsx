@@ -55,7 +55,7 @@ function HomePage() {
     <>
       <Loader />
       <Navbar />
-      <main>
+      <main className="conversion-site">
         <Hero />
         <About />
         <section className="conversion-audience section" id="who-its-for">
@@ -80,15 +80,7 @@ function HomePage() {
         <Tickets />
         <FAQ />
 
-        <section className="conversion-final-cta">
-          <div className="container">
-            <p className="conversion-eyebrow">ONE ROOM. ONE DAY. NEW POSSIBILITIES.</p>
-            <h2>Your next move starts <span>when you show up.</span></h2>
-            <p>Join 2,000+ people expected at Africa’s first Opportunity Playground on 28 November in Lagos.</p>
-            <a href="#tickets" className="btn-primary conversion-primary-cta">Get Your Ticket <span aria-hidden="true">→</span></a>
-            <small>28 November 2026 · UNILAG Indoor Sports Hall, Akoka</small>
-          </div>
-        </section>
+
 
         <section className="affiliate-spotlight section" id="share-earn">
           <div className="container">
@@ -111,6 +103,16 @@ function HomePage() {
         <PartnerForm />
         <AffiliateSignup />
         <Gallery />
+
+        <section className="conversion-final-cta">
+          <div className="container">
+            <p className="conversion-eyebrow">ONE ROOM. ONE DAY. NEW POSSIBILITIES.</p>
+            <h2>Your next move starts <span>when you show up.</span></h2>
+            <p>Join 2,000+ people expected at Africa’s first Opportunity Playground on 28 November in Lagos.</p>
+            <a href="#tickets" className="btn-primary conversion-primary-cta">Get Your Ticket <span aria-hidden="true">→</span></a>
+            <small>28 November 2026 · UNILAG Indoor Sports Hall, Akoka</small>
+          </div>
+        </section>
       </main>
 
       <a href="#tickets" className="mobile-sticky-ticket-cta" aria-label="Get tickets">
