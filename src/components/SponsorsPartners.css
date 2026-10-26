@@ -14,245 +14,56 @@
 .sponsors-partners-heading p { margin: 0; color: #555555; line-height: 1.7; }
 .sponsors-partners-logos {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  align-items: stretch;
-  max-width: 1040px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  align-items: center;
+  max-width: 1180px;
   margin: 0 auto;
 }
 .sponsors-partners-logo-card {
-  min-height: 132px;
-  padding: 24px;
+  min-width: 0;
+  height: 84px;
+  min-height: 84px;
+  padding: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   background: #ffffff;
   border: 1px solid #e9e9e9;
-  border-radius: 14px;
+  border-radius: 9px;
 }
 .sponsors-partners-logo-card img {
   display: block;
-  width: auto;
+  width: 100%;
+  height: 68px;
   max-width: 100%;
-  max-height: 82px;
+  max-height: 68px;
+  object-fit: contain;
+  transform: none;
+}
+.sponsors-partners-logo-carryher img,
+.sponsors-partners-logo-designwr img,
+.sponsors-partners-logo-enchanted img,
+.sponsors-partners-logo-golearn img,
+.sponsors-partners-logo-marketplace img,
+.sponsors-partners-logo-profilepro img,
+.sponsors-partners-logo-taron img,
+.sponsors-partners-logo-turnit img,
+.sponsors-partners-logo-zidepeople img {
   object-fit: contain;
 }
-.sponsors-partners-wordmark {
-  display: inline-block;
-  text-align: center;
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -.04em;
-  color: #102d2a;
-  font-size: clamp(18px, 2vw, 25px);
-}
-.sponsors-partners-wordmark.rights-events { font-family: Georgia, serif; letter-spacing: -.02em; }
-.sponsors-partners-wordmark.go-learn { color: #FD6025; }
-.sponsors-partners-wordmark.dwr { font-size: clamp(30px, 3vw, 40px); letter-spacing: .08em; }
-.sponsors-partners-wordmark.unmask-adhd { font-size: clamp(16px, 1.8vw, 22px); letter-spacing: -.03em; }
 .sponsors-partners-cta { margin-top: 28px; text-align: center; }
 .sponsors-partners-cta p { margin: 0 0 10px; color: #555555; }
 .sponsors-partners-cta a { color: #c94b1a; font-weight: 800; text-decoration: none; }
 .sponsors-partners-cta a:hover { color: #FD6025; }
 .sponsors-partners-cta a span { padding-left: 5px; }
-@media (max-width: 760px) {
-  .sponsors-partners-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .sponsors-partners-logo-card { min-height: 108px; padding: 18px; }
-}
 
-/* Give every supplied sponsor/partner mark more visual space. */
-.sponsors-partners-logo-card { min-height: 150px; padding: 18px; }
-.sponsors-partners-logo-card img { width: 100%; max-width: 100%; max-height: 112px; object-fit: contain; }
-@media (max-width: 760px) {
-  .sponsors-partners-logo-card { min-height: 126px; padding: 14px; }
-  .sponsors-partners-logo-card img { max-height: 94px; }
-}
-
-/* Individual sizing for the newly added artwork and oversized partner marks. */
-.sponsors-partners-logo-img-3773 img,
-.sponsors-partners-logo-img-3823 img,
-.sponsors-partners-logo-img-4349 img,
-.sponsors-partners-logo-plitverse img,
-.sponsors-partners-logo-img-6775 img {
-  width: 72%;
-  max-width: 72%;
-  max-height: 82px;
-  object-fit: contain;
-}
-.sponsors-partners-logo-my-student-marketplace img {
-  width: 78%;
-  max-width: 78%;
-  mix-blend-mode: multiply;
-}
-.sponsors-partners-logo-connexa-flyer-1 img,
-.sponsors-partners-logo-connexa-flyer-2 img,
-.sponsors-partners-logo-f20bc0bf img {
-  width: 76%;
-  max-width: 76%;
-  max-height: 86px;
-  object-fit: contain;
-}
-
-/* Compact sponsor grid: smaller cards, with the artwork itself enlarged where needed. */
-.sponsors-partners-logos { gap: 12px; max-width: 960px; }
-.sponsors-partners-logo-card {
-  min-height: 92px;
-  padding: 10px;
-  overflow: hidden;
-  border-radius: 10px;
-}
-.sponsors-partners-logo-card img {
-  width: 100%;
-  max-width: 100%;
-  max-height: 68px;
-  object-fit: contain;
-}
-.sponsors-partners-logo-img-3823 img,
-.sponsors-partners-logo-img-3773 img,
-.sponsors-partners-logo-img-4349 img,
-.sponsors-partners-logo-plitverse img,
-.sponsors-partners-logo-img-6775 img,
-.sponsors-partners-logo-my-student-marketplace img,
-.sponsors-partners-logo-connexa-flyer-1 img,
-.sponsors-partners-logo-connexa-flyer-2 img,
-.sponsors-partners-logo-f20bc0bf img {
-  width: 100%;
-  max-width: 100%;
-  max-height: 74px;
-  transform: scale(1.18);
-  object-fit: contain;
-}
-.sponsors-partners-logo-my-student-marketplace img {
-  transform: scale(1.04);
-  mix-blend-mode: normal;
-}
-@media (max-width: 760px) {
-  .sponsors-partners-logos { gap: 9px; }
-  .sponsors-partners-logo-card { min-height: 78px; padding: 7px; }
-  .sponsors-partners-logo-card img { max-height: 58px; }
-  .sponsors-partners-logo-img-3823 img,
-  .sponsors-partners-logo-img-3773 img,
-  .sponsors-partners-logo-img-4349 img,
-  .sponsors-partners-logo-plitverse img,
-  .sponsors-partners-logo-img-6775 img,
-  .sponsors-partners-logo-connexa-flyer-1 img,
-  .sponsors-partners-logo-connexa-flyer-2 img,
-  .sponsors-partners-logo-f20bc0bf img { transform: scale(1.12); }
-}
-
-/* Final artwork crop: keep cards compact and crop source-file whitespace. */
-.sponsors-partners-logo-card { min-height: 82px; padding: 8px; }
-.sponsors-partners-logo-card img { max-height: 64px; }
-.sponsors-partners-logo-img-3823 img,
-.sponsors-partners-logo-img-3773 img,
-.sponsors-partners-logo-img-4349 img,
-.sponsors-partners-logo-plitverse img,
-.sponsors-partners-logo-img-6775 img,
-.sponsors-partners-logo-connexa-flyer-1 img,
-.sponsors-partners-logo-connexa-flyer-2 img,
-.sponsors-partners-logo-f20bc0bf img {
-  width: 100%;
-  height: 64px;
-  max-height: 64px;
-  object-fit: cover;
-  transform: none;
-}
-.sponsors-partners-logo-img-3823 img { object-position: center 46%; }
-.sponsors-partners-logo-img-3773 img { object-position: center 50%; }
-.sponsors-partners-logo-img-4349 img { object-fit: contain; transform: scale(1.45); }
-.sponsors-partners-logo-plitverse img { object-fit: contain; transform: scale(1.5); }
-.sponsors-partners-logo-img-6775 img { object-position: center 50%; }
-.sponsors-partners-logo-connexa-flyer-1 img,
-.sponsors-partners-logo-connexa-flyer-2 img { object-position: center 50%; }
-.sponsors-partners-logo-f20bc0bf img { object-position: center 50%; }
-.sponsors-partners-logo-my-student-marketplace img { width: 100%; max-height: 64px; transform: none; }
-@media (max-width: 760px) {
-  .sponsors-partners-logo-card { min-height: 72px; padding: 6px; }
-  .sponsors-partners-logo-card img { max-height: 56px; }
-  .sponsors-partners-logo-img-3823 img,
-  .sponsors-partners-logo-img-3773 img,
-  .sponsors-partners-logo-img-6775 img,
-  .sponsors-partners-logo-connexa-flyer-1 img,
-  .sponsors-partners-logo-connexa-flyer-2 img,
-  .sponsors-partners-logo-f20bc0bf img { height: 56px; max-height: 56px; }
-}
-
-
-/* Definitive logo visibility pass: compact cards, larger artwork, no destructive image cropping. */
-.sponsors-partners-logos { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; max-width: 960px; }
-.sponsors-partners-logo-card { min-height: 88px; padding: 6px; overflow: hidden; border-radius: 10px; }
-.sponsors-partners-logo-card img { display: block; width: 100%; max-width: 100%; height: 72px; max-height: 72px; object-fit: contain; }
-.sponsors-partners-logo-img-3823 img,
-.sponsors-partners-logo-img-3773 img,
-.sponsors-partners-logo-img-4349 img,
-.sponsors-partners-logo-plitverse img,
-.sponsors-partners-logo-img-6775 img,
-.sponsors-partners-logo-connexa-flyer-1 img,
-.sponsors-partners-logo-connexa-flyer-2 img,
-.sponsors-partners-logo-f20bc0bf img { transform: scale(1.32); }
-.sponsors-partners-logo-img-4349 img { transform: scale(1.42); }
-.sponsors-partners-logo-plitverse img { transform: scale(1.48); }
-.sponsors-partners-logo-my-student-marketplace img { transform: scale(1.28); mix-blend-mode: normal; }
-@media (max-width: 760px) {
-  .sponsors-partners-logos { gap: 8px; }
-  .sponsors-partners-logo-card { min-height: 76px; padding: 4px; }
-  .sponsors-partners-logo-card img { height: 62px; max-height: 62px; }
-  .sponsors-partners-logo-img-3823 img,
-  .sponsors-partners-logo-img-3773 img,
-  .sponsors-partners-logo-img-4349 img,
-  .sponsors-partners-logo-plitverse img,
-  .sponsors-partners-logo-img-6775 img,
-  .sponsors-partners-logo-connexa-flyer-1 img,
-  .sponsors-partners-logo-connexa-flyer-2 img,
-  .sponsors-partners-logo-f20bc0bf img { transform: scale(1.22); }
-  .sponsors-partners-logo-img-4349 img { transform: scale(1.32); }
-  .sponsors-partners-logo-plitverse img { transform: scale(1.38); }
-  .sponsors-partners-logo-my-student-marketplace img { transform: scale(1.18); }
-}
-
-
-/* Requested layout: seven compact logo cards per row on desktop. */
-.sponsors-partners-logos {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 10px;
-  max-width: 1180px;
-  align-items: center;
-}
-.sponsors-partners-logo-card {
-  min-width: 0;
-  min-height: 76px;
-  height: 76px;
-  padding: 6px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-.sponsors-partners-logo-card img {
-  display: block;
-  width: 100%;
-  height: 62px;
-  max-width: 100%;
-  max-height: 62px;
-  object-fit: contain;
-  transform: none;
-}
-/* Enlarge artwork with built-in whitespace while keeping the full logo visible. */
-.sponsors-partners-logo-img-3823 img,
-.sponsors-partners-logo-img-3773 img,
-.sponsors-partners-logo-img-4349 img,
-.sponsors-partners-logo-plitverse img,
-.sponsors-partners-logo-img-6775 img,
-.sponsors-partners-logo-connexa-flyer-1 img,
-.sponsors-partners-logo-connexa-flyer-2 img,
-.sponsors-partners-logo-f20bc0bf img { transform: scale(1.18); }
-.sponsors-partners-logo-img-4349 img { transform: scale(1.28); }
-.sponsors-partners-logo-plitverse img { transform: scale(1.32); }
-.sponsors-partners-logo-my-student-marketplace img { transform: scale(1.12); mix-blend-mode: normal; }
 @media (max-width: 1000px) {
   .sponsors-partners-logos { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
   .sponsors-partners-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .sponsors-partners-logo-card { height: 72px; min-height: 72px; padding: 5px; }
-  .sponsors-partners-logo-card img { height: 60px; max-height: 60px; }
+  .sponsors-partners-logo-card { height: 76px; min-height: 76px; padding: 5px; }
+  .sponsors-partners-logo-card img { height: 64px; max-height: 64px; }
 }
