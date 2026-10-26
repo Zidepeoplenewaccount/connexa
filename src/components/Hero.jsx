@@ -1,7 +1,7 @@
 import './Hero.css';
 import arcLogo from '../assets/ARC_LOGO.webp';
-import carryHerLogo from '/IMG_3892.PNG';
-import profileProLogo from '/IMG_3891.PNG';
+const carryHerLogo = '/carry%20her.PNG';
+const profileProLogo = '/profilepro.jpg';
 import unmaskAdhdLogo from '../assets/png-logo.webp';
 
 const heroPartners = [
