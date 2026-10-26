@@ -566,3 +566,6 @@ body::before {
 
 .mobile-sticky-ticket-cta { background: #FD6025 !important; color: #080808 !important; }
 .mobile-sticky-ticket-cta:hover, .mobile-sticky-ticket-cta:focus, .mobile-sticky-ticket-cta:active { background: #FD6025 !important; color: #080808 !important; }
+
+.conversion-site .ticket-card-badge-discount-below { top: 50px; }
+.conversion-site .ticket-card-popular { padding-top: 30px; }
