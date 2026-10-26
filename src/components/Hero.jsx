@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import './Hero.css';
+import arcLogo from '../assets/ARC_LOGO.webp';
 
 const heroPartners = [
+  { name: 'ARC Studio', key: 'arc-studio', logo: arcLogo },
   { name: 'CarryHer', key: 'carryher', logo: '/carry%20her.PNG' },
   { name: 'ProfilePro', key: 'profilepro', logo: '/profilepro.jpg' },
   { name: 'Rights Events', key: 'rights-events', logo: '/RE%20Full%20Logo%20-%20Colored.PNG' },
