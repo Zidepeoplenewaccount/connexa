@@ -2,15 +2,17 @@ import './SponsorsPartners.css';
 import arcLogo from '../assets/ARC_LOGO.webp';
 import carryHerLogo from '../assets/carryher_logo.webp';
 import profileProLogo from '../assets/profilepro_logo.webp';
+import unmaskAdhdLogo from '../assets/png-logo.webp';
 
 const partners = [
   { name: 'ARC', logo: arcLogo, kind: 'image' },
   { name: 'CarryHer', logo: carryHerLogo, kind: 'image' },
   { name: 'ProfilePro', logo: profileProLogo, kind: 'image' },
+  { name: 'Unmask ADHD', logo: unmaskAdhdLogo, kind: 'image' },
   { name: 'Rights Events', kind: 'wordmark', className: 'rights-events' },
   { name: 'Go Learn', kind: 'wordmark', className: 'go-learn' },
   { name: 'DWR', kind: 'wordmark', className: 'dwr' },
-  { name: 'Unmask ADHD', kind: 'wordmark', className: 'unmask-adhd' },
+
 ];
 
 export default function SponsorsPartners() {
