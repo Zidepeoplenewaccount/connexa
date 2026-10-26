@@ -683,3 +683,72 @@ body::before {
 .conversion-site .voting .voting-header p { color: #111111; }
 .conversion-site .voting .voting-card { background: #f7f8f7; }
 .conversion-site .voting .voting-card-name { color: #111111; }
+
+
+/* Latest Connexa visual refinements */
+.conversion-site .hero.conversion-hero {
+  min-height: 100svh;
+  padding: 108px 0 34px;
+}
+.conversion-site .conversion-hero-content { width: min(1060px, 100%); }
+.conversion-site .conversion-hero .conversion-hero-title {
+  font-size: clamp(2.8rem, 6.8vw, 5.6rem);
+  line-height: .98;
+  margin-bottom: 16px;
+}
+.conversion-site .conversion-hero .conversion-hero-description {
+  max-width: 980px;
+  font-size: clamp(.98rem, 1.45vw, 1.12rem);
+  line-height: 1.48;
+  margin-bottom: 16px;
+}
+.conversion-site .conversion-hero-proof { margin-bottom: 18px; gap: 8px; }
+.conversion-site .conversion-hero-proof span { padding: 7px 10px; }
+.conversion-site .conversion-primary-cta { padding: 15px 28px; }
+@media (max-height: 850px) and (min-width: 769px) {
+  .conversion-site .hero.conversion-hero { padding-top: 92px; padding-bottom: 24px; }
+  .conversion-site .conversion-hero .hero-badge { margin-bottom: 14px; }
+  .conversion-site .conversion-eyebrow { margin-bottom: 10px !important; }
+  .conversion-site .conversion-hero .conversion-hero-title { font-size: clamp(2.7rem, 6vw, 5rem); margin-bottom: 12px; }
+  .conversion-site .conversion-hero .conversion-hero-description { margin-bottom: 12px; }
+  .conversion-site .conversion-hero-proof { margin-bottom: 14px; }
+  .conversion-site .conversion-hero-note { margin-top: 10px !important; }
+}
+
+/* Awards on dark green: keep headings, category labels and toggle/card text legible. */
+.conversion-site .awards-section .awards-question-card,
+.conversion-site .awards-section .awards-category-column,
+.conversion-site .awards-section .awards-question-card p,
+.conversion-site .awards-section .awards-question-card strong,
+.conversion-site .awards-section .awards-category-list,
+.conversion-site .awards-section .awards-category-list li,
+.conversion-site .awards-section .awards-header .section-title,
+.conversion-site .awards-section .awards-intro p,
+.conversion-site .awards-section .awards-prizes h3,
+.conversion-site .awards-section .awards-prize-item,
+.conversion-site .awards-section .awards-final h3,
+.conversion-site .awards-section .awards-final p { color: #ffffff !important; }
+.conversion-site .awards-section .awards-question-card { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18); }
+.conversion-site .awards-section .awards-category-list { color: #ffffff !important; }
+
+/* Connexers use the deep brand green; Playgrounders retain a distinct bright-green accent. */
+.conversion-site #connexers { background: #021C1B; color: #ffffff; }
+.conversion-site #connexers .section-title,
+.conversion-site #connexers .speakers-header p,
+.conversion-site #connexers .speaker-name,
+.conversion-site #connexers .speaker-title,
+.conversion-site #connexers .speaker-company,
+.conversion-site #connexers .speaker-bio p { color: #ffffff !important; }
+.conversion-site #connexers .speaker-card { background: #07312e; border-color: rgba(255,255,255,.16); }
+.conversion-site #connexers .speaker-bio { background: rgba(255,255,255,.07); border-left-color: #04F80D; }
+.conversion-site #connexers .speaker-social { color: #021C1B !important; background: #04F80D !important; border-color: #04F80D !important; }
+.conversion-site #connexers .speaker-social svg { color: #021C1B !important; fill: currentColor; }
+.conversion-site #connexers .speaker-ask-btn { background: #04F80D !important; color: #021C1B !important; border-color: #04F80D !important; }
+.conversion-site #playgrounders { background: #f5f8f5; color: #111111; }
+.conversion-site #playgrounders .section-title { color: #111111 !important; }
+.conversion-site #playgrounders .speakers-header p { color: #4b554d !important; }
+.conversion-site #playgrounders .speaker-social { color: #021C1B !important; background: #04F80D !important; border-color: #04F80D !important; }
+.conversion-site #playgrounders .speaker-social svg { color: #021C1B !important; fill: currentColor; }
+.conversion-site #playgrounders .speaker-ask-btn { background: #04F80D !important; color: #021C1B !important; border-color: #04F80D !important; }
+.conversion-site #playgrounders .speaker-connexer-type { color: #021C1B !important; background: rgba(4,248,13,.16); border-left-color: #04F80D; }
+.conversion-site #playgrounders .question-priority-notice { display: none !important; }
