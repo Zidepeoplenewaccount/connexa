@@ -1,12 +1,20 @@
 import './SponsorsPartners.css';
+import arcLogo from '../assets/ARC_LOGO.webp';
+import unmaskAdhdLogo from '../assets/png-logo.webp';
 
 const partners = [
+  { name: 'ARC', key: 'arc', logo: arcLogo },
   { name: 'CarryHer', key: 'carryher', logo: '/carry%20her.PNG' },
+  { name: 'ProfilePro', key: 'profilepro', logo: '/profilepro.jpg' },
+  { name: 'Unmask ADHD', key: 'unmask-adhd', logo: unmaskAdhdLogo },
+  { name: 'Rights Events', key: 'rights-events', logo: '/RE%20Full%20Logo%20-%20Colored.PNG' },
+  { name: 'Plitverse', key: 'plitverse', logo: '/Plitverse%20-%202.jpg' },
+  { name: 'Partner logo', key: 'img-5433', logo: '/IMG_5433.PNG' },
+  { name: 'Partner logo', key: 'f20bc0bf', logo: '/F20BC0BF-B460-41A8-82F1-65B2AF558F66.PNG' },
   { name: 'DesignWR', key: 'designwr', logo: '/designwr.jpg' },
   { name: 'Enchanted', key: 'enchanted', logo: '/enchanted.jpg' },
   { name: 'GoLearn', key: 'golearn', logo: '/golearn.jpg' },
   { name: 'My Student Marketplace', key: 'marketplace', logo: '/marketplace.jpg' },
-  { name: 'ProfilePro', key: 'profilepro', logo: '/profilepro.jpg' },
   { name: 'Taron', key: 'taron', logo: '/taron.jpg' },
   { name: 'Turnit', key: 'turnit', logo: '/turnit.jpg' },
   { name: 'Zidepeople', key: 'zidepeople', logo: '/zidepeople.jpg' },
