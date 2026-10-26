@@ -1,7 +1,7 @@
 import './Hero.css';
 import arcLogo from '../assets/ARC_LOGO.webp';
-import carryHerLogo from '../assets/carryher_logo.webp';
-import profileProLogo from '../assets/profilepro_logo.webp';
+import carryHerLogo from '/IMG_3892.PNG';
+import profileProLogo from '/IMG_3891.PNG';
 import unmaskAdhdLogo from '../assets/png-logo.webp';
 
 const heroPartners = [
@@ -12,7 +12,6 @@ const heroPartners = [
   { name: 'Rights Events', wordmark: 'RIGHTS EVENTS' },
   { name: 'Go Learn', wordmark: 'GO LEARN' },
   { name: 'DWR', wordmark: 'DWR' },
-
 ];
 
 function PartnerRail({ side }) {
