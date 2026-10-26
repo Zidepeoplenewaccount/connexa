@@ -569,3 +569,10 @@ body::before {
 
 .conversion-site .ticket-card-badge-discount-below { top: 50px; }
 .conversion-site .ticket-card-popular { padding-top: 30px; }
+
+
+/* Brand dark surfaces use Connexa deep green; maintain white contrast on dark sections. */
+.navbar.scrolled { background: rgba(2, 28, 27, .96) !important; }
+.navbar-mobile { background: #021C1B !important; color: #ffffff !important; }
+.conversion-final-cta, .conversion-site .footer, .footer { background-color: #021C1B; color: #ffffff; }
+.conversion-final-cta h2, .conversion-final-cta p, .conversion-final-cta small, .footer h2, .footer h3, .footer p, .footer a { color: #ffffff; }
