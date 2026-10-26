@@ -100,7 +100,7 @@ function SkillDropdown({ value, onChange }) {
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className={displayValue || value === 'Other' ? 'skill-dropdown-value' : 'skill-dropdown-placeholder'}>
-          {displayValue || (value === 'Other' ? 'Other (custom)' : "What's your skill?")}
+          {displayValue || (value === 'Other' ? 'Other (custom)' : 'What is your role or primary skill?')}
         </span>
         <svg className={`skill-dropdown-arrow ${isOpen ? 'rotated' : ''}`} width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1121,6 +1121,17 @@ export default function Tickets({ vendorOnly = false }) {
                 className={`ticket-card reveal${ticket.featured ? ' featured' : ''}${ticket.type === 'regular' ? ' ticket-card-popular' : ''}`}
                 data-type={ticket.type}
                 style={{ transitionDelay: `${(i % 3) * 0.1}s` }}
+                onClick={(event) => {
+                  if (!event.target.closest('button')) openModal(ticket);
+                }}
+                onKeyDown={(event) => {
+                  if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) {
+                    event.preventDefault();
+                    openModal(ticket);
+                  }
+                }}
+                tabIndex={0}
+                aria-label={`Select ${ticket.name}`}
               >
                 {hasDiscount && (
                   <div className={`ticket-card-badge badge-discount${ticket.type === 'regular' ? ' ticket-card-badge-discount-below' : ''}`}>20% OFF</div>
