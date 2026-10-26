@@ -248,7 +248,7 @@ export default function Playgrounders() {
             Playgrounders <span className="highlight-blue"></span>
           </h2>
           <p>
-            Learn from people who have built careers, created impact, and unlocked opportunities.
+            Playgrounders bring experience from specific fields. Meet people who can share practical insight, point you towards opportunities and help you think about your next move.
           </p>
         </div>
         <div className="question-priority-notice">
