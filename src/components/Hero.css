@@ -766,3 +766,28 @@
 .hero-partner-logo { min-height: 96px; flex-basis: 96px; padding: 8px; }
 .hero-partner-logo img { width: 100%; max-width: 100%; max-height: 78px; object-fit: contain; }
 @media (max-width: 1100px) { .hero-partner-rail { display: none; } }
+
+/* Reduce the apparent scale of logo artwork with oversized artwork/whitespace. */
+.hero-partner-logo-img-3773 img,
+.hero-partner-logo-img-3823 img,
+.hero-partner-logo-img-4349 img,
+.hero-partner-logo-plitverse img,
+.hero-partner-logo-img-6775 img {
+  width: 72%;
+  max-width: 72%;
+  max-height: 62px;
+  object-fit: contain;
+}
+.hero-partner-logo-my-student-marketplace img {
+  width: 82%;
+  max-width: 82%;
+  mix-blend-mode: multiply;
+}
+.hero-partner-logo-connexa-flyer-1 img,
+.hero-partner-logo-connexa-flyer-2 img,
+.hero-partner-logo-f20bc0bf img {
+  width: 76%;
+  max-width: 76%;
+  max-height: 68px;
+  object-fit: contain;
+}
