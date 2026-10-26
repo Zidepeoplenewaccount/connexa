@@ -1,5 +1,4 @@
 import './Hero.css';
-import connexaLogo from '../assets/CONNEXA_LOGO-BLACK(3)-Photoroom.webp';
 
 export default function Hero() {
   return (
@@ -20,7 +19,6 @@ export default function Hero() {
         <a href="#tickets" className="btn-primary conversion-primary-cta">Get Your Ticket <span aria-hidden="true">→</span></a>
         <p className="conversion-hero-note">Saturday, 28 November 2026 · UNILAG Indoor Sports Hall, Akoka · Doors open 8 AM</p>
       </div>
-      <div className="conversion-hero-logo" aria-hidden="true"><img src={connexaLogo} alt="" /></div>
     </section>
   );
 }
