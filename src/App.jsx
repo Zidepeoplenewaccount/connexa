@@ -58,13 +58,39 @@ function HomePage() {
       <main>
         <Hero />
         <About />
+        <section className="conversion-audience section" id="who-its-for">
+          <div className="container">
+            <div className="conversion-section-heading">
+              <p className="section-tag">There is a place for you</p>
+              <h2 className="section-title">Come for what you need. <span>Leave with more.</span></h2>
+              <p>Whatever stage you are at, CONNEXA gives you a room full of people, ideas and possibilities to explore.</p>
+            </div>
+            <div className="conversion-audience-grid">
+              <article><span className="conversion-audience-symbol">01</span><h3>Talent</h3><p>Show your skills, meet businesses and discover your next opportunity.</p></article>
+              <article><span className="conversion-audience-symbol">02</span><h3>Business owners</h3><p>Get practical ideas, meet potential customers and find ways to grow.</p></article>
+              <article><span className="conversion-audience-symbol">03</span><h3>Creatives</h3><p>Put your work in the room and meet people who value what you create.</p></article>
+              <article><span className="conversion-audience-symbol">04</span><h3>Students</h3><p>Explore career paths, ask questions and meet people doing the work.</p></article>
+              <article><span className="conversion-audience-symbol">05</span><h3>Entrepreneurs</h3><p>Find fresh perspectives, potential collaborators and business opportunities.</p></article>
+            </div>
+          </div>
+        </section>
         <Speakers />
         <Playgrounders />
-
         <VoicesOfOpportunity />
         <Tickets />
+        <FAQ />
 
-        <section className="affiliate-spotlight section reveal" id="share-earn">
+        <section className="conversion-final-cta">
+          <div className="container">
+            <p className="conversion-eyebrow">ONE ROOM. ONE DAY. NEW POSSIBILITIES.</p>
+            <h2>Your next move starts <span>when you show up.</span></h2>
+            <p>Join 2,000+ people expected at Africa’s first Opportunity Playground on 28 November in Lagos.</p>
+            <a href="#tickets" className="btn-primary conversion-primary-cta">Get Your Ticket <span aria-hidden="true">→</span></a>
+            <small>28 November 2026 · UNILAG Indoor Sports Hall, Akoka</small>
+          </div>
+        </section>
+
+        <section className="affiliate-spotlight section" id="share-earn">
           <div className="container">
             <div className="affiliate-spotlight-inner">
               <div>
@@ -81,7 +107,6 @@ function HomePage() {
 
         <Awards />
         <Voting />
-        <FAQ />
         <Merch />
         <PartnerForm />
         <AffiliateSignup />
@@ -89,7 +114,7 @@ function HomePage() {
       </main>
 
       <a href="#tickets" className="mobile-sticky-ticket-cta" aria-label="Get tickets">
-        Join the Opportunity Playground →
+        Get Your Ticket →
       </a>
 
       <PoweredBy />
