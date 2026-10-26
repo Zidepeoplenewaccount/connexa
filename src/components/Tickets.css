@@ -1323,16 +1323,21 @@
 }
 
 
-/* Keep ticket popup group descriptions and skill prompts readable on every pass. */
+/* Black text for ticket popup descriptions, skill prompts, selected skills, and totals. */
 .ticket-group-promo {
   color: #000000;
 }
-.skill-dropdown-trigger .skill-dropdown-placeholder {
-  color: #000000;
-}
+.skill-dropdown-trigger .skill-dropdown-placeholder,
+.skill-dropdown-trigger .skill-dropdown-value,
 .skill-dropdown-trigger.ticket-input {
   color: #000000;
 }
 .skill-dropdown-trigger .skill-dropdown-arrow {
+  color: #000000;
+}
+.ticket-modal-total,
+.ticket-modal-total > span,
+.ticket-modal-total-breakdown,
+.ticket-modal-total-breakdown strong {
   color: #000000;
 }
