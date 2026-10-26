@@ -20,6 +20,7 @@ import SponsorsPartners from './components/SponsorsPartners';
 import AffiliateSignup from './components/AffiliateSignup';
 import PoweredBy from './components/PoweredBy';
 import Footer from './components/Footer';
+import FloatingControls from './components/FloatingControls';
 
 import PaymentSuccess from './components/paymentSuccess';
 import VoteSuccess from './pages/VoteSuccess';
@@ -123,6 +124,7 @@ function HomePage() {
 
       <PoweredBy />
       <Footer />
+      <FloatingControls />
     </>
   );
 }
