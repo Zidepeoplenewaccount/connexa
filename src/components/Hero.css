@@ -791,3 +791,26 @@
   max-height: 68px;
   object-fit: contain;
 }
+
+/* Zoom artwork within the existing scrolling rail cards, without enlarging the cards. */
+.hero-partner-logo { overflow: hidden; }
+.hero-partner-logo-img-3823 img,
+.hero-partner-logo-img-3773 img,
+.hero-partner-logo-img-4349 img,
+.hero-partner-logo-plitverse img,
+.hero-partner-logo-img-6775 img,
+.hero-partner-logo-connexa-flyer-1 img,
+.hero-partner-logo-connexa-flyer-2 img,
+.hero-partner-logo-f20bc0bf img {
+  width: 100%;
+  max-width: 100%;
+  max-height: 78px;
+  transform: scale(1.18);
+  object-fit: contain;
+}
+.hero-partner-logo-my-student-marketplace img {
+  width: 100%;
+  max-width: 100%;
+  max-height: 78px;
+  transform: scale(1.04);
+}
