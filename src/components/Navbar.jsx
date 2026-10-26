@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import connexaLogo from '../assets/png-logo.webp';
 import './Navbar.css';
 //CONNEXA_LOGO-BLACK(3)-Photoroom.png
 
@@ -43,7 +42,7 @@ export default function Navbar() {
       <nav className={`navbar${scrolled ? ' scrolled' : ''}${mobileOpen ? ' open' : ''}`}>
         <div className="container navbar-inner">
           <a href="/#" className="navbar-logo">
-            <img src={connexaLogo} alt="Connexa" />
+            <img src="/CONNEXA_LOGO-BLACK(3)-Photoroom.png" alt="Connexa" />
           </a>
 
           <div className="navbar-links">
