@@ -4,9 +4,13 @@ import carryHerLogo from '../assets/carryher_logo.webp';
 import profileProLogo from '../assets/profilepro_logo.webp';
 
 const partners = [
-  { name: 'ARC', logo: arcLogo },
-  { name: 'CarryHer', logo: carryHerLogo },
-  { name: 'ProfilePro', logo: profileProLogo },
+  { name: 'ARC', logo: arcLogo, kind: 'image' },
+  { name: 'CarryHer', logo: carryHerLogo, kind: 'image' },
+  { name: 'ProfilePro', logo: profileProLogo, kind: 'image' },
+  { name: 'Rights Events', kind: 'wordmark', className: 'rights-events' },
+  { name: 'Go Learn', kind: 'wordmark', className: 'go-learn' },
+  { name: 'DWR', kind: 'wordmark', className: 'dwr' },
+  { name: 'Unmask ADHD', kind: 'wordmark', className: 'unmask-adhd' },
 ];
 
 export default function SponsorsPartners() {
@@ -20,8 +24,10 @@ export default function SponsorsPartners() {
         </div>
         <div className="sponsors-partners-logos">
           {partners.map((partner) => (
-            <div className="sponsors-partners-logo-card" key={partner.name}>
-              <img src={partner.logo} alt={partner.name} loading="lazy" />
+            <div className="sponsors-partners-logo-card" key={partner.name} aria-label={partner.name}>
+              {partner.kind === 'image'
+                ? <img src={partner.logo} alt={partner.name} loading="lazy" />
+                : <span className={`sponsors-partners-wordmark ${partner.className}`}>{partner.name}</span>}
             </div>
           ))}
         </div>
