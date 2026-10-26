@@ -1321,3 +1321,13 @@
 @media (max-width: 760px) {
   .exhibitor-ticket-section .tickets-grid { grid-template-columns: 1fr; }
 }
+
+
+/* Improve contrast for ticket popup group description and skill prompt on every pass. */
+.ticket-group-promo {
+  color: #000000;
+  background: #fff8e8;
+}
+.skill-dropdown-trigger .skill-dropdown-placeholder {
+  color: #000000;
+}
