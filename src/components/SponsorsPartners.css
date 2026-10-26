@@ -92,3 +92,50 @@
   max-height: 86px;
   object-fit: contain;
 }
+
+/* Compact sponsor grid: smaller cards, with the artwork itself enlarged where needed. */
+.sponsors-partners-logos { gap: 12px; max-width: 960px; }
+.sponsors-partners-logo-card {
+  min-height: 92px;
+  padding: 10px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.sponsors-partners-logo-card img {
+  width: 100%;
+  max-width: 100%;
+  max-height: 68px;
+  object-fit: contain;
+}
+.sponsors-partners-logo-img-3823 img,
+.sponsors-partners-logo-img-3773 img,
+.sponsors-partners-logo-img-4349 img,
+.sponsors-partners-logo-plitverse img,
+.sponsors-partners-logo-img-6775 img,
+.sponsors-partners-logo-my-student-marketplace img,
+.sponsors-partners-logo-connexa-flyer-1 img,
+.sponsors-partners-logo-connexa-flyer-2 img,
+.sponsors-partners-logo-f20bc0bf img {
+  width: 100%;
+  max-width: 100%;
+  max-height: 74px;
+  transform: scale(1.18);
+  object-fit: contain;
+}
+.sponsors-partners-logo-my-student-marketplace img {
+  transform: scale(1.04);
+  mix-blend-mode: normal;
+}
+@media (max-width: 760px) {
+  .sponsors-partners-logos { gap: 9px; }
+  .sponsors-partners-logo-card { min-height: 78px; padding: 7px; }
+  .sponsors-partners-logo-card img { max-height: 58px; }
+  .sponsors-partners-logo-img-3823 img,
+  .sponsors-partners-logo-img-3773 img,
+  .sponsors-partners-logo-img-4349 img,
+  .sponsors-partners-logo-plitverse img,
+  .sponsors-partners-logo-img-6775 img,
+  .sponsors-partners-logo-connexa-flyer-1 img,
+  .sponsors-partners-logo-connexa-flyer-2 img,
+  .sponsors-partners-logo-f20bc0bf img { transform: scale(1.12); }
+}
