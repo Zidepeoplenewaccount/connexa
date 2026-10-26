@@ -2,15 +2,17 @@ import './Hero.css';
 import arcLogo from '../assets/ARC_LOGO.webp';
 import carryHerLogo from '../assets/carryher_logo.webp';
 import profileProLogo from '../assets/profilepro_logo.webp';
+import unmaskAdhdLogo from '../assets/png-logo.webp';
 
 const heroPartners = [
   { name: 'ARC', logo: arcLogo },
   { name: 'CarryHer', logo: carryHerLogo },
   { name: 'ProfilePro', logo: profileProLogo },
+  { name: 'Unmask ADHD', logo: unmaskAdhdLogo },
   { name: 'Rights Events', wordmark: 'RIGHTS EVENTS' },
   { name: 'Go Learn', wordmark: 'GO LEARN' },
   { name: 'DWR', wordmark: 'DWR' },
-  { name: 'Unmask ADHD', wordmark: 'UNMASK ADHD' },
+
 ];
 
 function PartnerRail({ side }) {
