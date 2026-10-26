@@ -496,3 +496,18 @@
 @media (max-width: 768px) {
   .partner-portfolio-wrapper { margin-top: 28px; margin-bottom: 32px; }
 }
+
+
+/* Connexa Partnership Portfolio button */
+.partner-portfolio-btn {
+  background: #021C1B !important;
+  color: #ffffff !important;
+  border: 1px solid #021C1B !important;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.partner-portfolio-btn:hover,
+.partner-portfolio-btn:focus-visible {
+  background: #FD6025 !important;
+  border-color: #FD6025 !important;
+  color: #021C1B !important;
+}
