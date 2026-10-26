@@ -814,3 +814,21 @@
   max-height: 78px;
   transform: scale(1.04);
 }
+
+/* Crop built-in whitespace in the requested logo artwork inside the hero rails. */
+.hero-partner-logo { overflow: hidden; }
+.hero-partner-logo-img-3823 img,
+.hero-partner-logo-img-3773 img,
+.hero-partner-logo-img-6775 img,
+.hero-partner-logo-connexa-flyer-1 img,
+.hero-partner-logo-connexa-flyer-2 img,
+.hero-partner-logo-f20bc0bf img {
+  width: 100%;
+  height: 78px;
+  max-height: 78px;
+  object-fit: cover;
+  transform: none;
+}
+.hero-partner-logo-img-4349 img { width: 100%; max-height: 78px; object-fit: contain; transform: scale(1.35); }
+.hero-partner-logo-plitverse img { width: 100%; max-height: 78px; object-fit: contain; transform: scale(1.45); }
+.hero-partner-logo-my-student-marketplace img { width: 100%; max-height: 78px; transform: none; }
