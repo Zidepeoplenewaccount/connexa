@@ -7,7 +7,7 @@ export default function Hero() {
       <div className="hero-content conversion-hero-content">
         <div className="hero-badge"><span className="hero-badge-dot" /> Lagos, Nigeria · 28 November 2026</div>
         <p className="conversion-eyebrow">AFRICA'S FIRST OPPORTUNITY PLAYGROUND</p>
-        <h1 className="hero-title conversion-hero-title">Your next opportunity could be <span>at Connexa.</span></h1>
+        <h1 className="hero-title conversion-hero-title">Your next opportunity could be <span>in this room.</span></h1>
         <p className="hero-description conversion-hero-description">
           CONNEXA brings talent and businesses together face to face for one powerful day of discovering opportunities, meeting the people who can move you forward, shopping, selling and making things happen.
         </p>
