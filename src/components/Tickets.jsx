@@ -100,7 +100,7 @@ function SkillDropdown({ value, onChange }) {
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className={displayValue || value === 'Other' ? 'skill-dropdown-value' : 'skill-dropdown-placeholder'}>
-          {displayValue || (value === 'Other' ? 'Other (custom)' : 'What's your skill?')}
+          {displayValue || (value === 'Other' ? 'Other (custom)' : "What's your skill?")}
         </span>
         <svg className={`skill-dropdown-arrow ${isOpen ? 'rotated' : ''}`} width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
