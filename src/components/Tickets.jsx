@@ -1149,10 +1149,10 @@ export default function Tickets({ vendorOnly = false }) {
                 style={{ transitionDelay: `${(i % 3) * 0.1}s` }}
               >
                 {hasDiscount && (
-                  <div className="ticket-card-badge badge-discount">20% OFF</div>
+                  <div className={`ticket-card-badge badge-discount${ticket.type === 'regular' ? ' ticket-card-badge-discount-below' : ''}`}>20% OFF</div>
                 )}
 
-                {ticket.type === 'regular' && !hasDiscount && (
+                {ticket.type === 'regular' && (
                   <div className="ticket-card-badge ticket-card-badge-popular">MOST POPULAR</div>
                 )}
 
