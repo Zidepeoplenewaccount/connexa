@@ -96,8 +96,6 @@ export default function ExhibitorPage() {
           </div>
         </section>
 
-        <Tickets vendorOnly />
-
         <section className="exhibitor-faq">
           <div className="container">
             <div className="exhibitor-section-heading">
@@ -121,14 +119,11 @@ export default function ExhibitorPage() {
                 <a href="#tickets" className="exhibitor-pass-link">View Market Vendor Pass <span aria-hidden="true">→</span></a>
               </article>
             </div>
-            <div className="exhibitor-ticket-heading" id="tickets">
-              <p className="exhibitor-eyebrow">RESERVE YOUR SPACE</p>
-              <h2>Choose your exhibitor pass.</h2>
-              <p>Review the pass details and select the option that fits your business. Spaces are limited.</p>
-            </div>
             <p className="exhibitor-contact-note">Not sure which pass fits your setup? <a href="mailto:partnerships@zidepeople.com?subject=Help%20choosing%20a%20Connexa%20vendor%20pass">Talk to the Connexa team before purchasing.</a></p>
           </div>
         </section>
+
+        <Tickets vendorOnly />
       </main>
       <Footer />
     </>
