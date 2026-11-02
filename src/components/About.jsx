@@ -7,10 +7,14 @@ const contrasts = [
 ];
 
 const highlights = [
-  { title: 'Meet businesses', desc: 'Talk directly with founders, brands and people building things.' },
-  { title: 'Show what you can do', desc: 'Bring your talent, ideas, products or services into the room.' },
-  { title: 'Learn by engaging', desc: 'Get practical insights from people who have built their own paths.' },
-  { title: 'Buy, sell and discover', desc: 'Explore the marketplace, find new brands and create opportunities.' },
+  { title: 'Opportunity matching', desc: 'Meet businesses, founders and people looking for the skills, services and ideas you can bring to the table.' },
+  { title: 'Skill matching', desc: 'Put your skills in front of people who may need them. Discover where your abilities fit and turn conversations into real opportunities.' },
+  { title: 'Talent and business games', desc: 'Take part in interactive challenges that get talents and businesses talking, connecting and discovering what they can do together.' },
+  { title: 'Meet businesses', desc: 'Talk directly with founders, brands and decision-makers. Ask questions, introduce yourself and make connections beyond exchanging contact details.' },
+  { title: 'Show what you can do', desc: 'Bring your talent, ideas, products or services into the room. Let people experience what you offer instead of just telling them about it.' },
+  { title: 'Learn by engaging', desc: 'Get practical insights from people who have built businesses and created opportunities. Learn through real conversations and hands-on experiences.' },
+  { title: 'Buy, sell and discover', desc: 'Explore the marketplace, meet new brands, find actual customers, make sales and discover products and services worth knowing.' },
+  { title: 'Stay for the after-party', desc: 'When the activities wind down, stay back to relax, celebrate and keep the conversations going at the Connexa after-party.' },
 ];
 
 export default function About() {
@@ -42,6 +46,30 @@ export default function About() {
               <p>{item.desc}</p>
             </article>
           ))}
+        </div>
+        <div className="conversion-why">
+          <div className="conversion-why-heading">
+            <p className="section-tag">WHY PEOPLE ARE GETTING THEIR TICKETS</p>
+            <h2 className="section-title">There’s a reason people want to be in this room.</h2>
+          </div>
+          <div className="conversion-why-grid">
+            <article className="conversion-why-card">
+              <h3>“It’s a first.”</h3>
+              <p>People are curious about experiencing Africa’s first Opportunity Playground — a space built around participation, discovery and real connections.</p>
+            </article>
+            <article className="conversion-why-card">
+              <h3>“I’ve been before. It led somewhere.”</h3>
+              <p>People who have attended previous Zidepeople experiences have shared how the connections they made helped them find job opportunities. They’re coming back because showing up can open doors.</p>
+            </article>
+            <article className="conversion-why-card">
+              <h3>“There’s room for everyone.”</h3>
+              <p>Whether you’re a professional, creative, student, service provider, founder or business owner, there’s a place for you to meet people and explore what’s possible.</p>
+            </article>
+            <article className="conversion-why-card">
+              <h3>“My business can grow here.”</h3>
+              <p>Business owners can meet actual customers, showcase what they sell, make sales on the spot and learn from other businesses while doing business.</p>
+            </article>
+          </div>
         </div>
         <div className="conversion-inline-cta"><a href="#tickets" className="conversion-text-link">Find your pass and be in the room <span aria-hidden="true">→</span></a></div>
       </div>
