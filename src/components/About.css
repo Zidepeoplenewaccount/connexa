@@ -281,3 +281,9 @@
     padding: 20px;
   }
 }
+
+
+/* Keep the ticket-reason card titles bright and clearly readable */
+.conversion-why-card h3 {
+  color: #ffffff;
+}
