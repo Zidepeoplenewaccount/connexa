@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import { useScrollReveal } from './hooks/ScrollReveal';
 
@@ -141,6 +141,8 @@ export default function App() {
         <Route path="/upgrade-ticket" element={<UpgradeTicket />} />
         <Route path="/upgrade-success" element={<UpgradeSuccess />} />
 
+        <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+        <Route path="/admin/" element={<Navigate to="/admin/login" replace />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
           path="/admin/dashboard"
