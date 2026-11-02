@@ -976,3 +976,77 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Ticket-holder-only merchandise access gate */
+.merch-access-section {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+}
+
+.merch-access-card {
+  width: min(100%, 560px);
+  margin: 0 auto;
+  padding: 44px;
+  text-align: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.merch-access-card .section-tag {
+  margin-bottom: 14px;
+}
+
+.merch-access-card .section-title {
+  margin-bottom: 14px;
+}
+
+.merch-access-card > p {
+  max-width: 430px;
+  margin: 0 auto 28px;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.7;
+}
+
+.merch-access-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.merch-access-form label {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.merch-access-form .merch-modal-submit {
+  margin-top: 6px;
+}
+
+.merch-access-error {
+  padding: 11px 14px;
+  color: var(--red);
+  background: rgba(232, 49, 42, 0.1);
+  border: 1px solid rgba(232, 49, 42, 0.28);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.merch-access-help {
+  display: block;
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+  .merch-access-card {
+    padding: 28px 20px;
+  }
+}
