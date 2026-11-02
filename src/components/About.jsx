@@ -71,7 +71,7 @@ export default function About() {
             </article>
           </div>
         </div>
-        <div className="conversion-inline-cta"><a href="#tickets" className="conversion-text-link">Find your pass and be in the room <span aria-hidden="true">→</span></a></div>
+        <div className="conversion-inline-cta"><a href="#tickets" className="conversion-text-link">Find your pass and be in the Opportunity Playground <span aria-hidden="true">→</span></a></div>
       </div>
     </section>
   );
