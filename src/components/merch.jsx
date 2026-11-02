@@ -291,6 +291,8 @@ export default function Merch() {
   const [ticketValidating, setTicketValidating] = useState(false);
   const [ticketValid, setTicketValid] = useState(false);
   const [ticketData, setTicketData] = useState(null);
+  const [storeAccessGranted, setStoreAccessGranted] = useState(false);
+  const [accessError, setAccessError] = useState('');
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -373,6 +375,37 @@ export default function Merch() {
     }, 500);
   }
 
+  async function unlockMerchStore(e) {
+    e.preventDefault();
+    const enteredTicketId = ticketId.trim();
+
+    if (enteredTicketId.length < 8) {
+      setAccessError('Please enter a valid ticket ID.');
+      return;
+    }
+
+    setTicketValidating(true);
+    setAccessError('');
+
+    try {
+      const data = await validateTicketId(enteredTicketId);
+      if (!data || data.valid === false) {
+        throw new Error('Ticket not recognised');
+      }
+      setTicketId(enteredTicketId);
+      setTicketValid(true);
+      setTicketData(data);
+      setBuyerName(data.attendee_name || '');
+      setStoreAccessGranted(true);
+    } catch (err) {
+      setTicketValid(false);
+      setTicketData(null);
+      setAccessError('We could not verify that ticket ID. Please check it and try again.');
+    } finally {
+      setTicketValidating(false);
+    }
+  }
+
   async function validateDiscount(code, amount) {
     if (!code || code.length < 3) {
       setDiscountValid(false);
@@ -436,11 +469,8 @@ export default function Merch() {
     // Reset form
     setBuyerName('');
     setBuyerPhone('');
-    setTicketId('');
     setDeliveryAddress('');
     setError('');
-    setTicketValid(false);
-    setTicketData(null);
 
     // Reset discount code
     setDiscountCode('');
@@ -621,6 +651,42 @@ export default function Merch() {
     ? allProducts
     : allProducts.filter(p => p.filter === activeFilter);
 
+  if (!storeAccessGranted) {
+    return (
+      <section className="merch section merch-access-section" id="merch">
+        <div className="container">
+          <div className="merch-access-card">
+            <div className="section-tag">Exclusive Connexa Access</div>
+            <h2 className="section-title">Merch is for <span className="highlight-green">ticket holders.</span></h2>
+            <p>Enter the ticket ID from your Connexa confirmation email to unlock the official merchandise store.</p>
+            <form className="merch-access-form" onSubmit={unlockMerchStore}>
+              <label htmlFor="merch-access-ticket">Your Connexa Ticket ID</label>
+              <input
+                id="merch-access-ticket"
+                type="text"
+                className="merch-input"
+                placeholder="Enter your ticket ID"
+                value={ticketId}
+                onChange={(e) => {
+                  setTicketId(e.target.value);
+                  setAccessError('');
+                }}
+                autoComplete="off"
+                required
+              />
+              {ticketValidating && <small className="merch-validating">Verifying your ticket...</small>}
+              {accessError && <div className="merch-access-error" role="alert">{accessError}</div>}
+              <button className="merch-modal-submit" type="submit" disabled={ticketValidating || !ticketId.trim()}>
+                {ticketValidating ? 'Verifying...' : 'Unlock Merchandise'}
+              </button>
+            </form>
+            <small className="merch-access-help">Your ticket ID is in the ticket confirmation email you received after purchase.</small>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="merch section" id="merch">
       <div className="container">
@@ -761,25 +827,9 @@ export default function Merch() {
 
               <form className="merch-modal-form" onSubmit={handlePurchase}>
                 
-                {/* TICKET ID - REQUIRED */}
-                <div className="merch-input-group">
-                  <label>Ticket ID * <small>(You must have a Connexa ticket)</small></label>
-                  <input
-                    type="text"
-                    className="merch-input"
-                    placeholder="e.g., CNX2026-ABC123"
-                    value={ticketId}
-                    onChange={(e) => handleTicketIdChange(e.target.value)}
-                    required
-                  />
-                  {ticketValidating && (
-                    <small className="merch-validating">Validating ticket...</small>
-                  )}
-                  {ticketValid && ticketData && (
-                    <div className="merch-valid-badge">
-                      ✓ Valid {ticketData.ticket_type} - {ticketData.attendee_name}
-                    </div>
-                  )}
+                {/* Ticket verified before the store was unlocked */}
+                <div className="merch-valid-badge">
+                  ✓ Ticket verified: {ticketData?.attendee_name || 'Connexa ticket holder'}
                 </div>
 
                 {/* COLOR & SIZE SELECTION */}
