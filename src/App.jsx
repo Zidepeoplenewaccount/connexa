@@ -28,6 +28,7 @@ import MerchSuccess from './pages/MerchSuccess';
 import UpgradeSuccess from './pages/UpgradeSuccess';
 import UpgradeTicket from './pages/UpgradeTicket';
 import ExhibitorPage from './pages/ExhibitorPage';
+import AffiliateProgramPage from './pages/AffiliateProgramPage';
 
 import AdminLogin from './features/auth/admin-login-page';
 import AdminDashboard from './features/admin/admin-dashboard-page';
@@ -135,6 +136,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/exhibitors" element={<ExhibitorPage />} />
+        <Route path="/affiliates" element={<AffiliateProgramPage />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/vote-success" element={<VoteSuccess />} />
         <Route path="/merch-success" element={<MerchSuccess />} />
