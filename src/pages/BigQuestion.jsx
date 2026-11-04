@@ -19,6 +19,7 @@ export default function BigQuestionPage() {
   const [soundEnabled,setSoundEnabled]=useState(false);
   const [acknowledged,setAcknowledged]=useState(false);
   const audioRef=useRef(null);
+  const alarmNodesRef=useRef([]);
   const ticketRef=useRef('');
 
   async function unlockSound() {
@@ -31,23 +32,45 @@ export default function BigQuestionPage() {
     } catch { setSoundEnabled(false); }
   }
 
-  function playAlert() {
+  async function startAlarm() {
     const ctx=audioRef.current;
-    if(!ctx || ctx.state!=='running') return;
-    // A loud, short brass-like "BAA!" call. The effect is repeated until
-    // the attendee acknowledges the call.
-    const now=ctx.currentTime;
-    const oscillator=ctx.createOscillator();
-    const gain=ctx.createGain();
-    oscillator.type='sawtooth';
-    oscillator.frequency.setValueAtTime(260,now);
-    oscillator.frequency.exponentialRampToValueAtTime(145,now+0.75);
-    gain.gain.setValueAtTime(0.001,now);
-    gain.gain.linearRampToValueAtTime(0.72,now+0.06);
-    gain.gain.setValueAtTime(0.72,now+0.42);
-    gain.gain.exponentialRampToValueAtTime(0.001,now+0.82);
-    oscillator.connect(gain); gain.connect(ctx.destination);
-    oscillator.start(now); oscillator.stop(now+0.84);
+    if(!ctx) return;
+    try {
+      if(ctx.state==='suspended') await ctx.resume();
+      if(ctx.state!=='running' || alarmNodesRef.current.length) return;
+
+      // Keep one horn tone running continuously. A low-frequency oscillator
+      // makes it pulse like a repeated "PAAH" until the attendee acknowledges.
+      const carrier=ctx.createOscillator();
+      const volume=ctx.createGain();
+      const pulse=ctx.createOscillator();
+      const pulseDepth=ctx.createGain();
+      const now=ctx.currentTime;
+
+      carrier.type='sawtooth';
+      carrier.frequency.setValueAtTime(185,now);
+      volume.gain.setValueAtTime(0.39,now);
+      pulse.type='sine';
+      pulse.frequency.setValueAtTime(1.05,now);
+      pulseDepth.gain.setValueAtTime(0.34,now);
+
+      carrier.connect(volume);
+      volume.connect(ctx.destination);
+      pulse.connect(pulseDepth);
+      pulseDepth.connect(volume.gain);
+
+      carrier.start(now);
+      pulse.start(now);
+      alarmNodesRef.current=[carrier,pulse];
+    } catch {}
+  }
+
+  function stopAlarm() {
+    alarmNodesRef.current.forEach(node=>{
+      try { node.stop(); } catch {}
+      try { node.disconnect(); } catch {}
+    });
+    alarmNodesRef.current=[];
   }
 
   async function validate(e) {
@@ -82,10 +105,12 @@ export default function BigQuestionPage() {
   },[submitted]);
 
   useEffect(()=>{
-    if(status!=='called' || acknowledged || !soundEnabled) return;
-    playAlert();
-    const alarm=window.setInterval(playAlert,1300);
-    return ()=>window.clearInterval(alarm);
+    if(status!=='called' || acknowledged || !soundEnabled) {
+      stopAlarm();
+      return;
+    }
+    startAlarm();
+    return ()=>stopAlarm();
   },[status,acknowledged,soundEnabled]);
 
   return <main style={page}><div style={{maxWidth:620,margin:'0 auto',paddingTop:20}}>
@@ -106,11 +131,11 @@ export default function BigQuestionPage() {
       </form>}
       {submitted && <div>
         <h2 style={{fontSize:26}}>Your question is in.</h2>
-        <p style={{color:'#c8d7d5',lineHeight:1.6,marginTop:10}}>Keep this page open and your phone volume on. Approval does not mean you are being called yet. When the facilitator calls you, a loud repeating alarm will continue until you acknowledge it.</p>
+        <p style={{color:'#c8d7d5',lineHeight:1.6,marginTop:10}}>Keep this page open and your phone volume on. Approval does not mean you are being called yet. When the facilitator calls you, a continuous pulsing alarm will play until you click “I’m here — stop sound”.</p>
         <p style={{marginTop:20,fontWeight:800}}>STATUS: <span style={{color:status==='called'?'#FD6025':'#b9d4d0'}}>{status.toUpperCase()||'PENDING'}</span></p>
         {status==='called' && !acknowledged && <div style={{marginTop:22,padding:20,background:'#FD6025',borderRadius:14}}>
           <h2 style={{fontSize:28}}>IT’S YOUR TURN!</h2><p style={{marginTop:8}}>Your question is up next. Please make your way to the facilitator.</p>
-          <button style={{...button,background:'#021C1B'}} onClick={()=>setAcknowledged(true)}>I’m on my way</button>
+          <button style={{...button,background:'#021C1B'}} onClick={()=>{stopAlarm();setAcknowledged(true);}}>I’m here — stop sound</button>
         </div>}
         {acknowledged && <p style={{marginTop:18}}>Thank you. Please make your way to the facilitator.</p>}
         {!soundEnabled && <button style={button} onClick={unlockSound}>Enable sound alert</button>}
