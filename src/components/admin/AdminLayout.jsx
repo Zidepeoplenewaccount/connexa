@@ -64,6 +64,12 @@ export default function AdminLayout({ children }) {
             <Link to="/admin/questions" className={isActive('/admin/questions') ? 'active' : ''}>
               <FaQuestionCircle size={14} /> Questions
             </Link>
+            <Link to="/admin/opportunity-questions" className={isActive('/admin/opportunity-questions') ? 'active' : ''}>
+              <FaQuestionCircle size={14} /> The Big Question
+            </Link>
+            <Link to="/admin/dice" className={isActive('/admin/dice') ? 'active' : ''}>
+              <FaTags size={14} /> Roll the Dice
+            </Link>
             <Link to="/admin/discount-codes" className="admin-nav-link">
               <FaTags size={14} /> Discount Codes
             </Link>

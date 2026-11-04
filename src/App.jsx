@@ -29,6 +29,10 @@ import UpgradeSuccess from './pages/UpgradeSuccess';
 import UpgradeTicket from './pages/UpgradeTicket';
 import ExhibitorPage from './pages/ExhibitorPage';
 import AffiliateProgramPage from './pages/AffiliateProgramPage';
+import BigQuestionPage from './pages/BigQuestion';
+import RollTheDicePage from './pages/RollTheDice';
+import AdminOpportunityQuestions from './pages/AdminOpportunityQuestions';
+import AdminDice from './pages/AdminDice';
 
 import AdminLogin from './features/auth/admin-login-page';
 import AdminDashboard from './features/admin/admin-dashboard-page';
@@ -135,6 +139,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/ask" element={<BigQuestionPage />} />
+        <Route path="/roll-the-dice" element={<RollTheDicePage />} />
         <Route path="/exhibitors" element={<ExhibitorPage />} />
         <Route path="/affiliates" element={<AffiliateProgramPage />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
@@ -145,6 +151,8 @@ export default function App() {
 
         <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
         <Route path="/admin/" element={<Navigate to="/admin/login" replace />} />
+        <Route path="/admin/opportunity-questions" element={<ProtectedRoute><AdminOpportunityQuestions /></ProtectedRoute>} />
+        <Route path="/admin/dice" element={<ProtectedRoute><AdminDice /></ProtectedRoute>} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
           path="/admin/dashboard"
