@@ -30,6 +30,8 @@ export const getOpportunityQuestionsAdmin = async (status = '') =>
   (await activityApi.get('/connexa-activities/admin/questions', { params: status ? { status } : {} })).data;
 export const updateOpportunityQuestionAdmin = async (id, action) =>
   (await activityApi.patch(`/connexa-activities/admin/questions/${id}`, { action })).data;
+export const deleteOpportunityQuestionAdmin = async (id) =>
+  (await activityApi.delete(`/connexa-activities/admin/questions/${id}`)).data;
 export const getDiceOverviewAdmin = async () =>
   (await activityApi.get('/connexa-activities/admin/dice/overview')).data;
 export const createDiceTeamAdmin = async (payload) =>
