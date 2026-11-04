@@ -3,6 +3,13 @@ import axios from 'axios';
 const BACKEND_URL = 'https://zidepeople-backend.onrender.com';
 const activityApi = axios.create({ baseURL: BACKEND_URL });
 
+// Reuse the existing Connexa admin session for protected activity endpoints.
+activityApi.interceptors.request.use((config) => {
+  const token = localStorage.getItem('admin_token');
+  if (token) config.headers.Authorization = token;
+  return config;
+});
+
 export const validateActivityTicket = async (ticket_id) =>
   (await activityApi.post('/connexa-activities/ticket/validate', { ticket_id })).data;
 export const submitOpportunityQuestion = async (payload) =>
