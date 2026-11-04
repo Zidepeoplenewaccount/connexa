@@ -20,6 +20,8 @@ export const getDiceChallenges = async () =>
   (await activityApi.get('/connexa-activities/dice/challenges')).data;
 export const getDiceTeam = async (ticketId) =>
   (await activityApi.get(`/connexa-activities/dice/team/${encodeURIComponent(ticketId)}`)).data;
+export const assignDiceTeam = async (ticketId) =>
+  (await activityApi.post('/connexa-activities/dice/team/assign', { ticket_id: ticketId })).data;
 export const submitDiceRoll = async (payload) =>
   (await activityApi.post('/connexa-activities/dice/roll', payload)).data;
 export const completeDiceRound = async (roundId, payload) =>
