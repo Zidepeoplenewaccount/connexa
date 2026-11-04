@@ -34,12 +34,20 @@ export default function BigQuestionPage() {
   function playAlert() {
     const ctx=audioRef.current;
     if(!ctx || ctx.state!=='running') return;
+    // A loud, short brass-like "BAA!" call. The effect is repeated until
+    // the attendee acknowledges the call.
+    const now=ctx.currentTime;
     const oscillator=ctx.createOscillator();
     const gain=ctx.createGain();
-    oscillator.type='sine'; oscillator.frequency.value=880;
-    gain.gain.value=0.18;
+    oscillator.type='sawtooth';
+    oscillator.frequency.setValueAtTime(260,now);
+    oscillator.frequency.exponentialRampToValueAtTime(145,now+0.75);
+    gain.gain.setValueAtTime(0.001,now);
+    gain.gain.linearRampToValueAtTime(0.72,now+0.06);
+    gain.gain.setValueAtTime(0.72,now+0.42);
+    gain.gain.exponentialRampToValueAtTime(0.001,now+0.82);
     oscillator.connect(gain); gain.connect(ctx.destination);
-    oscillator.start(); oscillator.stop(ctx.currentTime+0.35);
+    oscillator.start(now); oscillator.stop(now+0.84);
   }
 
   async function validate(e) {
@@ -66,13 +74,19 @@ export default function BigQuestionPage() {
         const data=await getOpportunityQuestionStatus(ticketRef.current);
         if(!active) return;
         setStatus(data.status);
-        if(data.called && !acknowledged && soundEnabled) playAlert();
       } catch {}
     };
     poll();
     const timer=window.setInterval(poll,4000);
     return ()=>{active=false;window.clearInterval(timer);};
-  },[submitted,acknowledged,soundEnabled]);
+  },[submitted]);
+
+  useEffect(()=>{
+    if(status!=='called' || acknowledged || !soundEnabled) return;
+    playAlert();
+    const alarm=window.setInterval(playAlert,1300);
+    return ()=>window.clearInterval(alarm);
+  },[status,acknowledged,soundEnabled]);
 
   return <main style={page}><div style={{maxWidth:620,margin:'0 auto',paddingTop:20}}>
     <div style={{fontWeight:900,letterSpacing:3,color:'#FD6025'}}>CONNEXA</div>
@@ -92,7 +106,7 @@ export default function BigQuestionPage() {
       </form>}
       {submitted && <div>
         <h2 style={{fontSize:26}}>Your question is in.</h2>
-        <p style={{color:'#c8d7d5',lineHeight:1.6,marginTop:10}}>Keep this page open and your phone volume on. Approval does not mean you are being called yet. We will alert you here when the facilitator is ready for your question.</p>
+        <p style={{color:'#c8d7d5',lineHeight:1.6,marginTop:10}}>Keep this page open and your phone volume on. Approval does not mean you are being called yet. When the facilitator calls you, a loud repeating alarm will continue until you acknowledge it.</p>
         <p style={{marginTop:20,fontWeight:800}}>STATUS: <span style={{color:status==='called'?'#FD6025':'#b9d4d0'}}>{status.toUpperCase()||'PENDING'}</span></p>
         {status==='called' && !acknowledged && <div style={{marginTop:22,padding:20,background:'#FD6025',borderRadius:14}}>
           <h2 style={{fontSize:28}}>IT’S YOUR TURN!</h2><p style={{marginTop:8}}>Your question is up next. Please make your way to the facilitator.</p>
@@ -103,6 +117,6 @@ export default function BigQuestionPage() {
       </div>}
       {error && <p role="alert" style={{color:'#ff9b8b',marginTop:16}}>{error}</p>}
     </section>
-    <p style={{color:'#8da7a3',fontSize:12,lineHeight:1.5}}>For the alert to sound, keep this page open in your browser. Browser audio may not play if your phone is locked, muted or the browser is suspended.</p>
+    <p style={{color:'#8da7a3',fontSize:12,lineHeight:1.5}}>For the repeating alarm to work, keep this page open, your phone volume on and your browser active. Browser audio may stop if your phone is locked, muted or the browser is suspended.</p>
   </div></main>;
 }
