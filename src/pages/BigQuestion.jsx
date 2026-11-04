@@ -44,7 +44,7 @@ export default function BigQuestionPage() {
 
   async function validate(e) {
     e.preventDefault(); setBusy(true); setError('');
-    try { const data=await validateActivityTicket(ticketId.trim()); setTicket(data); ticketRef.current=data.ticket_id; await unlockSound(); }
+    try { await unlockSound(); const data=await validateActivityTicket(ticketId.trim()); setTicket(data); ticketRef.current=data.ticket_id; }
     catch(err) { setError(err.response?.data?.detail||'We could not validate that ticket ID. Check it and try again.'); }
     finally { setBusy(false); }
   }
