@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { FaChartBar, FaTicketAlt, FaTrophy, FaVoteYea, FaBox, FaCreditCard, FaLink, FaQuestionCircle, FaMicrophone, FaCamera, FaGlobe, FaSignOutAlt, FaTags, FaDice } from '../../utils/icons';
+import { FaChartBar, FaTicketAlt, FaTrophy, FaVoteYea, FaBox, FaCreditCard, FaLink, FaQuestionCircle, FaMicrophone, FaCamera, FaGlobe, FaSignOutAlt, FaTags } from '../../utils/icons';
 import { adminLogout } from '../../services/adminApi';
 import './admin.css';
 
@@ -68,7 +68,7 @@ export default function AdminLayout({ children }) {
               <FaQuestionCircle size={14} /> The Big Question
             </Link>
             <Link to="/admin/dice" className={isActive('/admin/dice') ? 'active' : ''}>
-              <FaDice size={14} /> Roll the Dice
+              <FaTags size={14} /> Roll the Dice
             </Link>
             <Link to="/admin/discount-codes" className="admin-nav-link">
               <FaTags size={14} /> Discount Codes
