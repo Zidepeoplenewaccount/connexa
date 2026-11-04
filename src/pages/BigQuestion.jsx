@@ -98,7 +98,7 @@ export default function BigQuestionPage() {
           <h2 style={{fontSize:28}}>IT’S YOUR TURN!</h2><p style={{marginTop:8}}>Your question is up next. Please make your way to the facilitator.</p>
           <button style={{...button,background:'#021C1B'}} onClick={()=>setAcknowledged(true)}>I’m on my way</button>
         </div>}
-        {acknowledged && <p style={{marginTop:18}}>Thank you. The facilitator has been alerted that you acknowledged the call.</p>}
+        {acknowledged && <p style={{marginTop:18}}>Thank you. Please make your way to the facilitator.</p>}
         {!soundEnabled && <button style={button} onClick={unlockSound}>Enable sound alert</button>}
       </div>}
       {error && <p role="alert" style={{color:'#ff9b8b',marginTop:16}}>{error}</p>}
