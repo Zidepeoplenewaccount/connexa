@@ -6,6 +6,7 @@ import Loader from './components/Loader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
+import OpportunityPlaygroundSessions from './components/OpportunityPlaygroundSessions';
 import Speakers from './components/speakers';
 import Playgrounders from './components/Playgrounders';
 import VoicesOfOpportunity from './components/VoicesOfOpportunity';
@@ -83,6 +84,7 @@ function HomePage() {
         </section>
         <Speakers />
         <Playgrounders />
+        <OpportunityPlaygroundSessions />
         <VoicesOfOpportunity />
         <Tickets />
         <SponsorsPartners />
