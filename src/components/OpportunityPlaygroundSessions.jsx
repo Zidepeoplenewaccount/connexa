@@ -7,7 +7,7 @@ const GROUP_COPY = {
 };
 function PersonCard({ person }) {
  const [group,name,category,activity]=person;
- const initials=name.split(/\\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase();
+ const initials=name.trim().split(' ').filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase();
  const featured=activity!=='Opportunity Conversations';
  return <article className="ops-person-card">
   <div className="ops-person-photo" aria-label={`Photo of ${name} pending identity-matched upload`}>
