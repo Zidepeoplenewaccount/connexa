@@ -60,7 +60,7 @@ function PersonCard({ person, onAsk }) {
   return (
     <article className="ops-person-card">
       <div className="ops-person-photo">
-        <img src={photo} alt={name} loading="lazy" />
+        <img className={name === 'Mrs Stella Ijeoma Olugbemi' ? 'ops-photo-stella' : undefined} src={photo} alt={name} loading="lazy" />
       </div>
       <div className="ops-person-details">
         <span className="ops-person-category">{category}</span>
