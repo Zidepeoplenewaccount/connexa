@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './OpportunityPlaygroundSessions.css';
+import AskQuestionModal from './AskQuestionModal';
 
 // Reuse the exact participant image assets already used by the Connexers
 // and Playgrounders sections of the Connexa website.
@@ -52,8 +53,8 @@ const PEOPLE = {
   ]
 };
 
-function PersonCard({ person }) {
-  const [, name, category, activity, photo] = person;
+function PersonCard({ person, onAsk }) {
+  const [group, name, category, activity, photo] = person;
   const featured = activity !== 'Opportunity Conversations';
 
   return (
@@ -67,6 +68,20 @@ function PersonCard({ person }) {
         <p className={featured ? 'ops-activity ops-activity-featured' : 'ops-activity'}>
           {featured && <b aria-hidden="true">✦ </b>}{activity}
         </p>
+        <button
+          type="button"
+          className="ops-ask-button"
+          onClick={() => onAsk({
+            name,
+            connexerType: `${group === 'CONNEXERS' ? 'CONNEXER' : 'PLAYGROUNDER'} · ${category}`,
+            title: category,
+            company: '',
+            socials: {},
+            topic: null
+          })}
+        >
+          ASK A QUESTION
+        </button>
       </div>
     </article>
   );
@@ -74,6 +89,7 @@ function PersonCard({ person }) {
 
 export default function OpportunityPlaygroundSessions() {
   const [active, setActive] = useState('am');
+  const [selectedPerson, setSelectedPerson] = useState(null);
   const rows = PEOPLE[active];
 
   return (
@@ -105,7 +121,7 @@ export default function OpportunityPlaygroundSessions() {
                 <div><h3>{group}</h3></div>
               </div>
               <div className="ops-people-grid">
-                {rows.filter(person => person[0] === group).map(person => <PersonCard key={person[1]} person={person} />)}
+                {rows.filter(person => person[0] === group).map(person => <PersonCard key={person[1]} person={person} onAsk={setSelectedPerson} />)}
               </div>
             </section>
           ))}
@@ -120,6 +136,12 @@ export default function OpportunityPlaygroundSessions() {
           <a className="ops-ticket-button" href="#tickets">GET YOUR TICKET <span aria-hidden="true">→</span></a>
         </div>
       </div>
+      {selectedPerson && (
+        <AskQuestionModal
+          speaker={selectedPerson}
+          onClose={() => setSelectedPerson(null)}
+        />
+      )}
     </section>
   );
 }
