@@ -15,6 +15,7 @@ export default function Navbar() {
   const navLinks = [
     { label: 'About', href: '/#about' },
     { label: 'Gallery', href: '/#gallery' },
+    { label: 'Sessions', href: '/#sessions' },
     { label: 'Exhibit at Connexa', href: '/exhibitors' },
     //{ label: 'Tickets', href: '#tickets' },
     { label: 'Awards', href: '/#awards' },
