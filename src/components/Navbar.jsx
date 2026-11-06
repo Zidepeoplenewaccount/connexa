@@ -29,6 +29,7 @@ export default function Navbar() {
   const navLinksMobile = [
     { label: 'About', href: '/#about' },
     { label: 'Gallery', href: '/#gallery' },
+    { label: 'Sessions', href: '/#sessions' },
     { label: 'Exhibit at Connexa', href: '/exhibitors' },
     { label: 'Awards', href: '/#awards' },
     { label: 'Connexers', href: '/#connexers' },
