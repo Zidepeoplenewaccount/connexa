@@ -1203,8 +1203,6 @@ export default function Tickets({ vendorOnly = false }) {
           })}
         </div>
 
-        </div>
-
         {!vendorOnly && (
           <div className="partner-ticket-offers" aria-label="Partner ticket discounts">
             <div className="partner-ticket-offers-heading">
