@@ -1347,3 +1347,107 @@
 .exhibitor-ticket-section .ticket-card {
   cursor: pointer;
 }
+
+
+/* Partner ticket discount offers */
+.partner-ticket-offers {
+  margin: 28px 0 32px;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid rgba(253, 96, 37, 0.38);
+  border-radius: var(--radius-lg, 16px);
+  background: linear-gradient(135deg, rgba(253, 96, 37, 0.10), rgba(2, 28, 27, 0.82));
+}
+.partner-ticket-offers-heading {
+  text-align: center;
+  margin-bottom: 22px;
+}
+.partner-ticket-offers-kicker {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--orange, #fd6025);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+}
+.partner-ticket-offers-heading h3 {
+  margin: 0 0 8px;
+  color: var(--white, #fff);
+  font-family: var(--font-display, inherit);
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+}
+.partner-ticket-offers-heading p {
+  margin: 0;
+  color: rgba(255,255,255,0.72);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.partner-ticket-offers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.partner-ticket-offer {
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  background: rgba(0,0,0,0.24);
+}
+.partner-ticket-offer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.partner-ticket-offer-name {
+  color: var(--white, #fff);
+  font-size: 19px;
+  font-weight: 800;
+}
+.partner-ticket-offer-discount {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(45,184,75,0.16);
+  color: #70df91;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.partner-ticket-offer p {
+  margin: 12px 0 16px;
+  color: rgba(255,255,255,0.72);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.partner-ticket-code-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 13px;
+  border: 1px dashed rgba(253,96,37,0.65);
+  border-radius: 8px;
+  background: rgba(253,96,37,0.08);
+}
+.partner-ticket-code {
+  color: var(--orange, #fd6025);
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: 1.8px;
+}
+.partner-ticket-code-hint {
+  color: rgba(255,255,255,0.55);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+@media (max-width: 640px) {
+  .partner-ticket-offers-grid {
+    grid-template-columns: 1fr;
+  }
+  .partner-ticket-offer {
+    padding: 16px;
+  }
+}
