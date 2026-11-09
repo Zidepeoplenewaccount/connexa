@@ -1105,6 +1105,40 @@ export default function Tickets({ vendorOnly = false }) {
           )}
         </div>
 
+        {!vendorOnly && (
+          <div className="partner-ticket-offers" aria-label="Partner ticket discounts">
+            <div className="partner-ticket-offers-heading">
+              <span className="partner-ticket-offers-kicker">EXCLUSIVE PARTNER OFFERS</span>
+              <h3>Get 20% off your Connexa ticket</h3>
+              <p>Choose a partner code and enter it in the discount code field during checkout.</p>
+            </div>
+            <div className="partner-ticket-offers-grid">
+              <article className="partner-ticket-offer">
+                <div className="partner-ticket-offer-top">
+                  <span className="partner-ticket-offer-name">DWR</span>
+                  <span className="partner-ticket-offer-discount">20% OFF</span>
+                </div>
+                <p>Use this code when purchasing your Connexa ticket.</p>
+                <div className="partner-ticket-code-row">
+                  <span className="partner-ticket-code">DWR</span>
+                  <span className="partner-ticket-code-hint">DISCOUNT CODE</span>
+                </div>
+              </article>
+              <article className="partner-ticket-offer">
+                <div className="partner-ticket-offer-top">
+                  <span className="partner-ticket-offer-name">GoLearn</span>
+                  <span className="partner-ticket-offer-discount">20% OFF</span>
+                </div>
+                <p>Use this code when purchasing your Connexa ticket.</p>
+                <div className="partner-ticket-code-row">
+                  <span className="partner-ticket-code">GOLEARN</span>
+                  <span className="partner-ticket-code-hint">DISCOUNT CODE</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        )}
+
         <div className="tickets-grid">
           {tickets.filter(t => vendorOnly ? ['Showcase Vendor Pass', 'Market Vendor Pass'].includes(t.name) : true).map((ticket, i) => {
             const discountedPrice = calculateTicketPrice(ticket.name, ticket.price);
