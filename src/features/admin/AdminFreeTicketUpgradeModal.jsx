@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getUpgradeOptions } from '../../services/api';
 import { adminUpgradeTicket } from '../../services/adminApi';
-import './UpgradeTicketModal.css';
+import '../../components/UpgradeTicketModal.css';
 
 export default function AdminFreeTicketUpgradeModal({ ticket, onClose, onUpgraded }) {
   const [options, setOptions] = useState([]);
