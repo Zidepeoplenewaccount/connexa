@@ -233,17 +233,15 @@ export default function AdminTicketsFeaturePage() {
                       </td>
                       <td>
                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                          {!['Connectors Pass', 'Connexa Pass'].includes(ticket.ticket_type) && (
-                            <button
-                              type="button"
-                              className="admin-table-btn"
-                              style={{ background: '#FD6025', borderColor: '#FD6025', color: '#fff' }}
-                              onClick={() => setTicketToUpgrade(ticket)}
-                              title="Upgrade this ticket"
-                            >
-                              Upgrade Ticket
-                            </button>
-                          )}
+                          <button
+                            type="button"
+                            className="admin-table-btn"
+                            style={{ background: '#FD6025', borderColor: '#FD6025', color: '#fff' }}
+                            onClick={() => setTicketToUpgrade(ticket)}
+                            title="Upgrade this ticket"
+                          >
+                            Upgrade Ticket
+                          </button>
                           <button
                             className="admin-table-btn"
                             onClick={() => handleDelete(ticket.ticket_id)}
