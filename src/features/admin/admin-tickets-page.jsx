@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getAllTickets, getAllPayments, getAllDiscountCodes, deleteTicket, exportTickets } from '../../services/adminApi';
+import UpgradeTicketModal from '../../components/UpgradeTicketModal';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
 
@@ -9,6 +10,7 @@ export default function AdminTicketsFeaturePage() {
   const [discountCodeMap, setDiscountCodeMap] = useState({});
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [ticketToUpgrade, setTicketToUpgrade] = useState(null);
 
   useEffect(() => {
     fetchTickets();
@@ -230,12 +232,25 @@ export default function AdminTicketsFeaturePage() {
                         {vendorDetails || '—'}
                       </td>
                       <td>
-                        <button
-                          className="admin-table-btn"
-                          onClick={() => handleDelete(ticket.ticket_id)}
-                        >
-                          🗑️ Delete
-                        </button>
+                        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                          {!['Connectors Pass', 'Connexa Pass'].includes(ticket.ticket_type) && (
+                            <button
+                              type="button"
+                              className="admin-table-btn"
+                              style={{ background: '#FD6025', borderColor: '#FD6025', color: '#fff' }}
+                              onClick={() => setTicketToUpgrade(ticket)}
+                              title="Upgrade this ticket"
+                            >
+                              Upgrade Ticket
+                            </button>
+                          )}
+                          <button
+                            className="admin-table-btn"
+                            onClick={() => handleDelete(ticket.ticket_id)}
+                          >
+                            🗑️ Delete
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -249,6 +264,13 @@ export default function AdminTicketsFeaturePage() {
       <div style={{ marginTop: '16px', color: 'rgba(255,255,255,0.5)', fontSize: '14px' }}>
         Showing {filtered.length} ticket(s)
       </div>
+
+      {ticketToUpgrade && (
+        <UpgradeTicketModal
+          initialTicketId={ticketToUpgrade.ticket_id}
+          onClose={() => setTicketToUpgrade(null)}
+        />
+      )}
     </AdminLayout>
   );
 }
