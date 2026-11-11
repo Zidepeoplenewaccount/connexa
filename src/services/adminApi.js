@@ -49,6 +49,13 @@ export const deleteTicket = async (ticketId) => {
   return response.data;
 };
 
+export const adminUpgradeTicket = async (ticketId, upgradeToTicketType) => {
+  const response = await adminAxios.post(`/admin/tickets/${encodeURIComponent(ticketId)}/upgrade`, {
+    upgrade_to_ticket_type: upgradeToTicketType,
+  });
+  return response.data;
+};
+
 export const exportTickets = async () => {
   const response = await adminAxios.get('/admin/export/tickets', { responseType: 'blob' });
   return response.data;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getAllTickets, getAllPayments, getAllDiscountCodes, deleteTicket, exportTickets } from '../../services/adminApi';
-import UpgradeTicketModal from '../../components/UpgradeTicketModal';
+import AdminFreeTicketUpgradeModal from './AdminFreeTicketUpgradeModal';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
 
@@ -264,9 +264,10 @@ export default function AdminTicketsFeaturePage() {
       </div>
 
       {ticketToUpgrade && (
-        <UpgradeTicketModal
-          initialTicketId={ticketToUpgrade.ticket_id}
+        <AdminFreeTicketUpgradeModal
+          ticket={ticketToUpgrade}
           onClose={() => setTicketToUpgrade(null)}
+          onUpgraded={fetchTickets}
         />
       )}
     </AdminLayout>
