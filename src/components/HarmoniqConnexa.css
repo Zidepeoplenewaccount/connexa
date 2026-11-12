@@ -20,7 +20,9 @@
 .harmoniq-scan-copy h3{font-size:clamp(25px,3vw,36px);line-height:1.15;letter-spacing:-.04em;margin:0 0 12px}
 .harmoniq-scan-copy>p:not(.harmoniq-powered){font-size:15px;line-height:1.7;color:#666;max-width:520px;margin:0 0 22px}
 .harmoniq-card-button{display:inline-flex;align-items:center;gap:22px;background:#a02020;color:#fff;text-decoration:none;padding:15px 24px;border-radius:999px;font-weight:750;transition:transform .2s,background .2s}
-.harmoniq-card-button:hover{background:#811818;transform:translateY(-2px)}
+.harmoniq-card-button:hover,.harmoniq-card-button:focus,.harmoniq-card-button:focus-visible,.harmoniq-card-button:active,.harmoniq-card-button:visited{background:#a02020!important;color:#fff!important;text-decoration:none!important}
+.harmoniq-card-button:hover{transform:translateY(-2px)}
+.harmoniq-card-button:focus-visible{outline:3px solid #a02020;outline-offset:3px}
 .harmoniq-scan-copy small{display:block;color:#888;font-size:12px;margin-top:14px}
 .harmoniq-qr-link{justify-self:center;text-decoration:none;color:#222;text-align:center;font-size:10px;font-weight:800;letter-spacing:.1em}
 .harmoniq-qr-frame{background:#fff;border-radius:14px;padding:12px;box-shadow:0 8px 28px #0000000d;margin-bottom:12px}
