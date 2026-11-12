@@ -1,7 +1,7 @@
 import React from 'react';
 import './HarmoniqConnexa.css';
 
-const CONNEXA_LOGO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 150'%3E%3Ctext x='8' y='112' font-family='Arial,sans-serif' font-size='112' font-weight='800' fill='%23000'%3ECONNE%3C/text%3E%3Cpath d='M480 30 L535 85 L480 140 M535 30 L480 85 L535 140 M535 85 L590 30 M535 85 L590 140' fill='none' stroke-width='16' stroke-linecap='round' stroke-linejoin='round' stroke='%23e43b35'/%3E%3Cpath d='M500 85 L550 35 M500 85 L550 135' fill='none' stroke='%23f39b22' stroke-width='15' stroke-linecap='round'/%3E%3Cpath d='M550 85 L600 35 M550 85 L600 135' fill='none' stroke='%234fba54' stroke-width='15' stroke-linecap='round'/%3E%3Cpath d='M525 105 L575 145' fill='none' stroke='%2325a9d6' stroke-width='15' stroke-linecap='round'/%3E%3Ctext x='605' y='112' font-family='Arial,sans-serif' font-size='112' font-weight='800' fill='%23000'%3EA%3C/text%3E%3C/svg%3E";
+const CONNEXA_LOGO = '/IMG_6716.jpg';
 const HARMONIQ_LOGO = '/harmoniq-logo.svg';
 const QR_ROWS = [
   '000000000000000000000000000000000000000000000',
