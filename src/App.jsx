@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import './App.css';
 import { useScrollReveal } from './hooks/ScrollReveal';
 
@@ -59,6 +60,19 @@ import ScannerProtectedRoute from './features/auth/scanner-protected-route';
 
 function HomePage() {
   useScrollReveal();
+
+  useEffect(() => {
+    const scrollToHashTarget = () => {
+      const targetId = decodeURIComponent(window.location.hash.slice(1));
+      if (!targetId) return;
+      window.setTimeout(() => {
+        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 350);
+    };
+    scrollToHashTarget();
+    window.addEventListener('hashchange', scrollToHashTarget);
+    return () => window.removeEventListener('hashchange', scrollToHashTarget);
+  }, []);
 
   return (
     <>
