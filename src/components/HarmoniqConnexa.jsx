@@ -93,7 +93,7 @@ export default function HarmoniqConnexa() {
             <p className="harmoniq-powered">POWERED BY HARMONIQ</p>
             <h3>Make your card before you arrive.</h3>
             <p>Scan the code to create your digital contact card. Then use it to exchange details throughout the day.</p>
-            <a className="harmoniq-card-button" href="https://harmoniq.wstech.studio/e/connexa/?src=qr" target="_blank" rel="noreferrer">Make your card <span aria-hidden="true">↗</span></a>
+            <a className="harmoniq-card-button" href="https://harmoniq.wstech.studio/e/connexa/?src=qr" target="_blank" rel="noreferrer">Make your card</a>
             <small>One scan. Easier introductions. Better follow-ups.</small>
           </div>
           <a className="harmoniq-qr-link" href="https://harmoniq.wstech.studio/e/connexa/?src=qr" target="_blank" rel="noreferrer" aria-label="Scan or open Harmoniq CONNEXA digital card registration">
