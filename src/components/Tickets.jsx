@@ -1205,14 +1205,12 @@ export default function Tickets({ vendorOnly = false }) {
                 )}
 
                 <div className="ticket-countdown" aria-label="Countdown to Connexa on 28 November 2026">
-                  <span className="ticket-countdown-label">TIME LEFT TO CONNEXA</span>
                   {countdownRemaining > 0 ? (
-                    <div className="ticket-countdown-units" aria-live="off">
-                      <span><strong>{countdownDays}</strong><small>DAYS</small></span>
-                      <span><strong>{String(countdownHours).padStart(2, '0')}</strong><small>HRS</small></span>
-                      <span><strong>{String(countdownMinutes).padStart(2, '0')}</strong><small>MINS</small></span>
-                      <span><strong>{String(countdownSeconds).padStart(2, '0')}</strong><small>SECS</small></span>
-                    </div>
+                    <strong className="ticket-countdown-live">
+                      {countdownDays > 0
+                        ? `${countdownDays} ${countdownDays === 1 ? 'day' : 'days'} left`
+                        : 'Less than a day left'}
+                    </strong>
                   ) : (
                     <strong className="ticket-countdown-live">The Opportunity Playground is live!</strong>
                   )}
