@@ -76,8 +76,8 @@ export default function HarmoniqConnexa() {
           </div>
           <a className="harmoniq-qr-link" href="https://harmoniq.wstech.studio/e/connexa/?src=qr" target="_blank" rel="noreferrer" aria-label="Scan or open Harmoniq CONNEXA digital card registration">
             <div className="harmoniq-qr-frame">
-              <svg viewBox="0 0 21 21" role="img" aria-label="QR code for Harmoniq CONNEXA digital contact cards" shapeRendering="crispEdges">
-                <rect width="21" height="21" fill="#fff" />
+              <svg viewBox="0 0 41 41" role="img" aria-label="QR code for Harmoniq CONNEXA digital contact cards" shapeRendering="crispEdges">
+                <rect width="41" height="41" fill="#fff" />
                 {QR_ROWS.map((row, y) => row.split('').map((cell, x) => cell === '1' ? <rect key={y + '-' + x} x={x} y={y} width="1" height="1" fill="#080808" /> : null)}
               </svg>
             </div>
