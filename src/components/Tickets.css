@@ -1456,3 +1456,54 @@
     padding: 17px;
   }
 }
+
+
+/* Live event countdown shown on every ticket card, directly above its purchase CTA. */
+.ticket-countdown {
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: 14px;
+  padding: 12px 10px;
+  border: 1px solid rgba(253, 96, 37, 0.32);
+  border-radius: var(--radius-md);
+  background: rgba(253, 96, 37, 0.07);
+  text-align: center;
+}
+.ticket-countdown-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+.ticket-countdown-units {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+.ticket-countdown-units span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.ticket-countdown-units strong {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2vw, 22px);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.ticket-countdown-units small {
+  color: rgba(255,255,255,0.58);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+.ticket-countdown-live {
+  display: block;
+  color: var(--white);
+  font-size: 13px;
+}

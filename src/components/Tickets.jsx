@@ -431,6 +431,18 @@ function isValidEmail(email) {
 }
 
 export default function Tickets({ vendorOnly = false }) {
+  // Shared live countdown to the Connexa event start (10:00 AM WAT, 28 November 2026).
+  const [countdownNow, setCountdownNow] = useState(() => Date.now());
+  useEffect(() => {
+    const interval = window.setInterval(() => setCountdownNow(Date.now()), 1000);
+    return () => window.clearInterval(interval);
+  }, []);
+  const eventStart = new Date('2026-11-28T10:00:00+01:00').getTime();
+  const countdownRemaining = Math.max(0, eventStart - countdownNow);
+  const countdownDays = Math.floor(countdownRemaining / 86400000);
+  const countdownHours = Math.floor((countdownRemaining % 86400000) / 3600000);
+  const countdownMinutes = Math.floor((countdownRemaining % 3600000) / 60000);
+  const countdownSeconds = Math.floor((countdownRemaining % 60000) / 1000);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
   
@@ -1191,6 +1203,20 @@ export default function Tickets({ vendorOnly = false }) {
                     <span className="ticket-notice-text">{ticket.notice}</span>
                   </div>
                 )}
+
+                <div className="ticket-countdown" aria-label="Countdown to Connexa on 28 November 2026">
+                  <span className="ticket-countdown-label">TIME LEFT TO CONNEXA</span>
+                  {countdownRemaining > 0 ? (
+                    <div className="ticket-countdown-units" aria-live="off">
+                      <span><strong>{countdownDays}</strong><small>DAYS</small></span>
+                      <span><strong>{String(countdownHours).padStart(2, '0')}</strong><small>HRS</small></span>
+                      <span><strong>{String(countdownMinutes).padStart(2, '0')}</strong><small>MINS</small></span>
+                      <span><strong>{String(countdownSeconds).padStart(2, '0')}</strong><small>SECS</small></span>
+                    </div>
+                  ) : (
+                    <strong className="ticket-countdown-live">The Opportunity Playground is live!</strong>
+                  )}
+                </div>
 
                 <button
                   onClick={() => openModal(ticket)}
