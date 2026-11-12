@@ -1,0 +1,28 @@
+.harmoniq-section{background:#fff;color:#111;padding:88px 24px;scroll-margin-top:90px}
+.harmoniq-wrap{max-width:1120px;margin:0 auto}
+.harmoniq-partnership-logos{display:flex;align-items:center;justify-content:center;gap:30px;margin:0 auto 54px;max-width:680px}
+.harmoniq-connexa-logo{width:min(38%,260px);height:76px;object-fit:contain}
+.harmoniq-brand-logo{width:min(43%,300px);height:76px;object-fit:contain}
+.harmoniq-times{font-size:30px;font-weight:300;color:#aaa}
+.harmoniq-copy{text-align:center;max-width:760px;margin:0 auto 42px}
+.harmoniq-kicker,.harmoniq-powered{font-size:11px;letter-spacing:.19em;font-weight:800;color:#a02020;margin:0 0 15px}
+.harmoniq-copy h2{font-size:clamp(38px,6vw,68px);line-height:1.04;letter-spacing:-.055em;margin:0;font-weight:850}
+.harmoniq-copy h2 span{color:#a02020}
+.harmoniq-intro{font-size:17px;line-height:1.6;color:#666;margin:18px auto 0;max-width:590px}
+.harmoniq-journey{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid #e8e8e8;border-bottom:1px solid #e8e8e8;margin:0 0 42px}
+.harmoniq-step{padding:27px 30px 30px;position:relative}
+.harmoniq-step+.harmoniq-step{border-left:1px solid #e8e8e8}
+.harmoniq-step-number{font-size:12px;color:#aaa;font-weight:800}
+.harmoniq-step-label{font-size:11px;letter-spacing:.17em;font-weight:800;color:#a02020;margin:15px 0 9px}
+.harmoniq-step h3{font-size:21px;line-height:1.2;margin:0 0 9px;letter-spacing:-.025em}
+.harmoniq-step>p:last-child{font-size:14px;line-height:1.6;color:#686868;margin:0}
+.harmoniq-scan-panel{background:#f7f7f7;border:1px solid #ededed;border-radius:22px;padding:34px 42px;display:grid;grid-template-columns:1fr 245px;align-items:center;gap:34px}
+.harmoniq-scan-copy h3{font-size:clamp(25px,3vw,36px);line-height:1.15;letter-spacing:-.04em;margin:0 0 12px}
+.harmoniq-scan-copy>p:not(.harmoniq-powered){font-size:15px;line-height:1.7;color:#666;max-width:520px;margin:0 0 22px}
+.harmoniq-card-button{display:inline-flex;align-items:center;gap:22px;background:#a02020;color:#fff;text-decoration:none;padding:15px 24px;border-radius:999px;font-weight:750;transition:transform .2s,background .2s}
+.harmoniq-card-button:hover{background:#811818;transform:translateY(-2px)}
+.harmoniq-scan-copy small{display:block;color:#888;font-size:12px;margin-top:14px}
+.harmoniq-qr-link{justify-self:center;text-decoration:none;color:#222;text-align:center;font-size:10px;font-weight:800;letter-spacing:.1em}
+.harmoniq-qr-frame{background:#fff;border-radius:14px;padding:12px;box-shadow:0 8px 28px #0000000d;margin-bottom:12px}
+.harmoniq-qr-frame svg{display:block;width:210px;height:210px}
+@media(max-width:700px){.harmoniq-section{padding:60px 18px}.harmoniq-partnership-logos{gap:14px;margin-bottom:38px}.harmoniq-connexa-logo,.harmoniq-brand-logo{height:48px}.harmoniq-times{font-size:22px}.harmoniq-copy{margin-bottom:30px}.harmoniq-intro{font-size:15px}.harmoniq-journey{grid-template-columns:1fr;margin-bottom:28px}.harmoniq-step{padding:20px 18px}.harmoniq-step+.harmoniq-step{border-left:0;border-top:1px solid #e8e8e8}.harmoniq-step-label{margin-top:10px}.harmoniq-scan-panel{grid-template-columns:1fr;padding:25px 20px;gap:26px}.harmoniq-scan-copy{text-align:center}.harmoniq-scan-copy>p:not(.harmoniq-powered){margin-left:auto;margin-right:auto}.harmoniq-qr-frame svg{width:220px;height:220px}}
