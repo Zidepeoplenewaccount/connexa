@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './SponsorsPartners.css';
 import arcLogo from '../assets/ARC_LOGO.webp';
 import unmaskAdhdLogo from '../assets/png-logo.webp';
+const harmoniqLogo = '/harmoniq-logo.svg';
 
 const partners = [
   { name: 'ARC', key: 'arc', logo: arcLogo },
@@ -19,6 +20,7 @@ const partners = [
   { name: 'Taron', key: 'taron', logo: '/taron.jpg' },
   { name: 'Turnit', key: 'turnit', logo: '/turnit.jpg' },
   { name: 'Zidepeople', key: 'zidepeople', logo: '/zidepeople.jpg' },
+  { name: 'Harmoniq', key: 'harmoniq', logo: harmoniqLogo },
 ];
 
 export default function SponsorsPartners() {
