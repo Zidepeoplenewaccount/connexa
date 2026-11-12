@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './Hero.css';
 import arcLogo from '../assets/ARC_LOGO.webp';
+const harmoniqLogo = '/harmoniq-logo.svg';
 
 const heroPartners = [
   { name: 'ARC Studio', key: 'arc-studio', logo: arcLogo },
@@ -17,6 +18,7 @@ const heroPartners = [
   { name: 'Taron', key: 'taron', logo: '/taron.jpg' },
   { name: 'Turnit', key: 'turnit', logo: '/turnit.jpg' },
   { name: 'Zidepeople', key: 'zidepeople', logo: '/zidepeople.jpg' },
+  { name: 'Harmoniq', key: 'harmoniq', logo: harmoniqLogo },
 ];
 
 function PartnerRail({ side }) {
