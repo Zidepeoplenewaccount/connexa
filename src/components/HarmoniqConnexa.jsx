@@ -1,7 +1,7 @@
 import React from 'react';
 import './HarmoniqConnexa.css';
 
-const CONNEXA_LOGO = '/IMG_6716.jpg';
+const CONNEXA_LOGO = '/IMG_6029.jpg';
 const HARMONIQ_LOGO = '/harmoniq-logo.svg';
 const QR_ROWS = [
   '000000000000000000000000000000000000000000000',
