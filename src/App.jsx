@@ -10,6 +10,7 @@ import OpportunityPlaygroundSessions from './components/OpportunityPlaygroundSes
 import Speakers from './components/speakers';
 import Playgrounders from './components/Playgrounders';
 import VoicesOfOpportunity from './components/VoicesOfOpportunity';
+import HarmoniqConnexa from './components/HarmoniqConnexa';
 import Gallery from './components/Gallery';
 import Tickets from './components/Tickets';
 import Awards from './components/Awards';
@@ -85,6 +86,7 @@ function HomePage() {
         <Speakers />
         <Playgrounders />
         <OpportunityPlaygroundSessions />
+        <HarmoniqConnexa />
         <VoicesOfOpportunity />
         <Tickets />
         <SponsorsPartners />
