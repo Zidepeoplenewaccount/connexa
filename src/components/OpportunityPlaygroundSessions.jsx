@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './OpportunityPlaygroundSessions.css';
-import AskQuestionModal from './AskQuestionModal';
+import QuestionsClosedNotice from './QuestionsClosedNotice';
 
 // Reuse the exact participant image assets already used by the Connexers
 // and Playgrounders sections of the Connexa website.
@@ -89,7 +89,7 @@ function PersonCard({ person, onAsk }) {
 
 export default function OpportunityPlaygroundSessions() {
   const [active, setActive] = useState('am');
-  const [selectedPerson, setSelectedPerson] = useState(null);
+  const [showClosedNotice, setShowClosedNotice] = useState(false);
   const rows = PEOPLE[active];
 
   return (
@@ -121,7 +121,7 @@ export default function OpportunityPlaygroundSessions() {
                 <div><h3>{group}</h3></div>
               </div>
               <div className="ops-people-grid">
-                {rows.filter(person => person[0] === group).map(person => <PersonCard key={person[1]} person={person} onAsk={setSelectedPerson} />)}
+                {rows.filter(person => person[0] === group).map(person => <PersonCard key={person[1]} person={person} onAsk={() => setShowClosedNotice(true)} />)}
               </div>
             </section>
           ))}
@@ -136,12 +136,7 @@ export default function OpportunityPlaygroundSessions() {
           <a className="ops-ticket-button" href="#tickets">GET YOUR TICKET <span aria-hidden="true">→</span></a>
         </div>
       </div>
-      {selectedPerson && (
-        <AskQuestionModal
-          speaker={selectedPerson}
-          onClose={() => setSelectedPerson(null)}
-        />
-      )}
+      {showClosedNotice && <QuestionsClosedNotice onClose={() => setShowClosedNotice(false)} />}
     </section>
   );
 }
