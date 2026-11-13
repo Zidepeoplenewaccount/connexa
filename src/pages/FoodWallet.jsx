@@ -23,6 +23,7 @@ export default function FoodWalletPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [receipt, setReceipt] = useState(null);
 
   useEffect(() => {
     getFoodWalletVendors()
@@ -92,7 +93,7 @@ export default function FoodWalletPage() {
       setQuantity('1');
       setAmount('');
       setVendorName('');
-      setConfirmationReceipt(result.transaction);
+      setReceipt(result.transaction);
     } catch (err) {
       setError(err.response?.data?.detail || 'We could not record this purchase. Please try again.');
       setConfirmation(null);
@@ -100,9 +101,6 @@ export default function FoodWalletPage() {
       setLoading(false);
     }
   }
-
-  const [receipt, setReceipt] = useState(null);
-  const setConfirmationReceipt = (transaction) => setReceipt(transaction);
 
   return (
     <main className="food-wallet-page">
