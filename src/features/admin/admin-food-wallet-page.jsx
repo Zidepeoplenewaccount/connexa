@@ -69,6 +69,7 @@ export default function AdminFoodWalletPage() {
           <p style={{ color: 'rgba(255,255,255,.55)', marginTop: 6 }}>Attendee purchases, vendor totals and reimbursement records.</p>
         </div>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <button className="admin-btn admin-btn-outline" onClick={() => { window.location.href = '/admin/food-wallet/registers'; }}>Print vendor registers</button>
           <button className="admin-btn admin-btn-outline" onClick={() => load(true)} disabled={refreshing}>{refreshing ? 'Refreshing…' : '↻ Refresh'}</button>
           <button className="admin-btn" onClick={exportCsv}>Export CSV</button>
         </div>
