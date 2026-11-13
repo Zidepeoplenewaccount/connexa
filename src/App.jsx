@@ -50,6 +50,7 @@ import AdminDiscountCodes from './features/admin/admin-discount-codes-page';
 import AdminSpeakers from './features/admin/admin-speakers-page';
 import AdminQuestionsPage from './features/admin/admin-questions-page';
 import AdminFoodWallet from './features/admin/admin-food-wallet-page';
+import AdminFoodWalletRegisters from './features/admin/admin-food-wallet-registers-page';
 
 import SpeakerLogin from './features/auth/connexer-login-page';
 import ConnexerDashboardPage from './features/auth/connexer-dashboard-page';
@@ -239,6 +240,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/admin/food-wallet/registers" element={<ProtectedRoute><AdminFoodWalletRegisters /></ProtectedRoute>} />
         <Route
           path="/admin/questions"
           element={
