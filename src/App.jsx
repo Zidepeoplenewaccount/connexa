@@ -30,6 +30,7 @@ import VoteSuccess from './pages/VoteSuccess';
 import MerchSuccess from './pages/MerchSuccess';
 import UpgradeSuccess from './pages/UpgradeSuccess';
 import UpgradeTicket from './pages/UpgradeTicket';
+import FoodWalletPage from './pages/FoodWallet';
 import ExhibitorPage from './pages/ExhibitorPage';
 import AffiliateProgramPage from './pages/AffiliateProgramPage';
 import BigQuestionPage from './pages/BigQuestion';
@@ -48,6 +49,7 @@ import AdminAffiliates from './features/admin/admin-affiliates-page';
 import AdminDiscountCodes from './features/admin/admin-discount-codes-page';
 import AdminSpeakers from './features/admin/admin-speakers-page';
 import AdminQuestionsPage from './features/admin/admin-questions-page';
+import AdminFoodWallet from './features/admin/admin-food-wallet-page';
 
 import SpeakerLogin from './features/auth/connexer-login-page';
 import ConnexerDashboardPage from './features/auth/connexer-dashboard-page';
@@ -166,6 +168,7 @@ export default function App() {
         <Route path="/merch-success" element={<MerchSuccess />} />
         <Route path="/upgrade-ticket" element={<UpgradeTicket />} />
         <Route path="/upgrade-success" element={<UpgradeSuccess />} />
+        <Route path="/vendor" element={<FoodWalletPage />} />
 
         <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
         <Route path="/admin/" element={<Navigate to="/admin/login" replace />} />
@@ -225,6 +228,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <AdminAffiliates />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/food-wallet"
+          element={
+            <ProtectedRoute>
+              <AdminFoodWallet />
             </ProtectedRoute>
           }
         />
