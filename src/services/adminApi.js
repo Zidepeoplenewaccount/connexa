@@ -248,3 +248,9 @@ export const getDiscountStats = async () => {
   });
   return response.data;
 };
+
+// Connexa Food Wallet
+export const getFoodWalletOverview = async () => {
+  const response = await adminAxios.get('/connexa-food-wallet/admin/overview');
+  return response.data;
+};
