@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { getFoodWalletOverview } from '../../services/adminApi';
+import { getFoodWalletOverview, deleteFoodWalletTransaction } from '../../services/adminApi';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
 
@@ -15,6 +15,7 @@ export default function AdminFoodWalletPage() {
   const [vendorFilter, setVendorFilter] = useState('');
   const [search, setSearch] = useState('');
   const [error, setError] = useState('');
+  const [deletingId, setDeletingId] = useState(null);
 
   const load = useCallback(async (silent = false) => {
     if (silent) setRefreshing(true);
@@ -33,6 +34,23 @@ export default function AdminFoodWalletPage() {
 
   useEffect(() => { load(); }, [load]);
 
+  async function deleteTransaction(row) {
+    const confirmed = window.confirm(
+      'Delete this food wallet transaction for ' + row.attendee_name + ' (' + row.ticket_id + ')? The amount will be restored to the attendee\'s available allowance.'
+    );
+    if (!confirmed) return;
+
+    setDeletingId(row.id);
+    setError('');
+    try {
+      await deleteFoodWalletTransaction(row.id);
+      await load(true);
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Unable to delete this food wallet transaction.');
+    } finally {
+      setDeletingId(null);
+    }
+  }
   const transactions = data?.transactions || [];
   const filtered = useMemo(() => transactions.filter((row) => {
     const matchesVendor = !vendorFilter || row.vendor_name === vendorFilter;
@@ -116,10 +134,10 @@ export default function AdminFoodWalletPage() {
         </div>
         <div className="admin-table-scroll">
           <table className="admin-table">
-            <thead><tr><th>Time</th><th>Vendor</th><th>Attendee / Ticket ID</th><th>Item</th><th>Qty</th><th>Amount</th><th>Reference</th></tr></thead>
+            <thead><tr><th>Time</th><th>Vendor</th><th>Attendee / Ticket ID</th><th>Item</th><th>Qty</th><th>Amount</th><th>Reference</th><th>Action</th></tr></thead>
             <tbody>
               {filtered.length === 0 ? (
-                <tr><td colSpan="7" style={{ textAlign: 'center', padding: 36, color: 'rgba(255,255,255,.5)' }}>No food wallet transactions yet.</td></tr>
+                <tr><td colSpan="8" style={{ textAlign: 'center', padding: 36, color: 'rgba(255,255,255,.5)' }}>No food wallet transactions yet.</td></tr>
               ) : filtered.map((row) => (
                 <tr key={row.id}>
                   <td style={{ whiteSpace: 'nowrap' }}>{row.created_at ? new Date(row.created_at).toLocaleString('en-NG', { dateStyle: 'short', timeStyle: 'short' }) : '—'}</td>
@@ -129,6 +147,16 @@ export default function AdminFoodWalletPage() {
                   <td>{row.quantity}</td>
                   <td style={{ fontWeight: 800 }}>{money(row.amount)}</td>
                   <td><code>{row.confirmation_code}</code></td>
+                  <td>
+                    <button
+                      className="admin-btn admin-btn-outline"
+                      style={{ color: '#ff8b8b', borderColor: 'rgba(255,100,100,.45)', padding: '7px 10px' }}
+                      onClick={() => deleteTransaction(row)}
+                      disabled={deletingId === row.id}
+                    >
+                      {deletingId === row.id ? 'Deleting…' : 'Delete'}
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
