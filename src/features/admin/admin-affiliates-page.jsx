@@ -7,7 +7,8 @@ import {
   bulkMarkCommissionsPaid,
   toggleAffiliate,
   createAffiliate,
-  deleteAffiliate 
+  deleteAffiliate,
+  resendAffiliateReferralNotification
 } from '../../services/adminApi';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
@@ -108,6 +109,18 @@ export default function AdminAffiliatesFeaturePage() {
       fetchAffiliatesAndStats();
     } catch (error) {
       alert('Failed to toggle affiliate');
+    }
+  }
+
+  async function handleResendReferralEmail(code) {
+    const ticketId = prompt('Enter the ticket ID for this referral email:');
+    if (!ticketId || !ticketId.trim()) return;
+    if (!confirm(`Resend the referral notification for ticket ${ticketId.trim()} to this affiliate?`)) return;
+    try {
+      const result = await resendAffiliateReferralNotification(code, ticketId.trim());
+      alert(`Referral email sent to ${result.recipient}. Commission on this ticket: ₦${Number(result.commission_this_ticket || 0).toLocaleString()}. Total commission: ₦${Number(result.total_commission_earned || 0).toLocaleString()}.`);
+    } catch (error) {
+      alert(error?.response?.data?.detail || 'Unable to resend referral notification.');
     }
   }
 
@@ -340,6 +353,14 @@ export default function AdminAffiliatesFeaturePage() {
                           style={{ marginRight: '8px' }}
                         >
                           {affiliates.find(a => a.code === affiliate.code)?.is_active ? '🚫' : '✅'}
+                        </button>
+                        <button
+                          className="admin-table-btn"
+                          onClick={() => handleResendReferralEmail(affiliate.code)}
+                          title="Resend referral email for an existing ticket"
+                          style={{ marginRight: '8px' }}
+                        >
+                          Resend Email
                         </button>
                         <button 
                           className="admin-table-btn"
