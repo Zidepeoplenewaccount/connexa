@@ -1,6 +1,6 @@
 import './speakers.css';
 import { useState } from 'react';
-import AskQuestionModal from './AskQuestionModal';
+import QuestionsClosedNotice from './QuestionsClosedNotice';
 import MosunmoluwaPhoto from '../assets/mosunmoluwa_david.webp';
 import OmobolanlePhoto from '../assets/omobolanle_adigun.webp';
 import OlalekanPhoto from '../assets/olalekan_asani.webp';
@@ -227,14 +227,10 @@ const socialIcons = {
 
 
 export default function Playgrounders() {
-  const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+  const [showClosedNotice, setShowClosedNotice] = useState(false);
 
-  function openQuestionModal(speaker) {
-    setSelectedSpeaker(speaker);
-  }
-
-  function closeQuestionModal() {
-    setSelectedSpeaker(null);
+  function openQuestionModal() {
+    setShowClosedNotice(true);
   }
 
 
@@ -363,7 +359,7 @@ export default function Playgrounders() {
                 {speaker.name !== 'Coming Soon' && (
                   <button 
                     className="speaker-ask-btn"
-                    onClick={() => openQuestionModal(speaker)}
+                    onClick={openQuestionModal}
                   >
                     {speaker.askLabel}
                   </button>
@@ -375,12 +371,7 @@ export default function Playgrounders() {
 
       </div>
 
-      {selectedSpeaker && (
-        <AskQuestionModal 
-          speaker={selectedSpeaker} 
-          onClose={closeQuestionModal}
-        />
-      )}
+      {showClosedNotice && <QuestionsClosedNotice onClose={() => setShowClosedNotice(false)} />}
     </section>
   );
 }
