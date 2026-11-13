@@ -146,6 +146,11 @@ export const getAllAffiliates = async () => {
   return response.data;
 };
 
+export const getAffiliateReferrals = async (code) => {
+  const response = await adminAxios.get(`/affiliates/admin/${encodeURIComponent(code)}/referrals`);
+  return response.data;
+};
+
 export const getAffiliateStats = async () => {
   const response = await adminAxios.get('/affiliates/admin/stats');
   return response.data;
