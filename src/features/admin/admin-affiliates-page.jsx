@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { 
   getAllAffiliates, 
   getAffiliateStats,
+  getAffiliateReferrals,
   getAllCommissions,
   markCommissionPaid,
   bulkMarkCommissionsPaid,
@@ -24,7 +25,9 @@ export default function AdminAffiliatesFeaturePage() {
   const [filterStatus, setFilterStatus] = useState('');
   const [showModal, setShowModal] = useState(false);  
   const [showDetailsModal, setShowDetailsModal] = useState(false);  
-  const [selectedAffiliate, setSelectedAffiliate] = useState(null);  
+  const [selectedAffiliate, setSelectedAffiliate] = useState(null);
+  const [affiliateReferrals, setAffiliateReferrals] = useState([]);
+  const [referralsLoading, setReferralsLoading] = useState(false);  
   const [formData, setFormData] = useState({  
     fullName: '',
     email: '',
@@ -112,12 +115,11 @@ export default function AdminAffiliatesFeaturePage() {
     }
   }
 
-  async function handleResendReferralEmail(code) {
-    const ticketId = prompt('Enter the ticket ID for this referral email:');
-    if (!ticketId || !ticketId.trim()) return;
-    if (!confirm(`Resend the referral notification for ticket ${ticketId.trim()} to this affiliate?`)) return;
+  async function handleResendReferralEmail(code, ticketId) {
+    if (!ticketId) return;
+    if (!confirm(`Resend the referral notification for ticket ${ticketId} to this affiliate?`)) return;
     try {
-      const result = await resendAffiliateReferralNotification(code, ticketId.trim());
+      const result = await resendAffiliateReferralNotification(code, ticketId);
       alert(`Referral email sent to ${result.recipient}. Commission on this ticket: ₦${Number(result.commission_this_ticket || 0).toLocaleString()}. Total commission: ₦${Number(result.total_commission_earned || 0).toLocaleString()}.`);
     } catch (error) {
       alert(error?.response?.data?.detail || 'Unable to resend referral notification.');
@@ -162,15 +164,27 @@ export default function AdminAffiliatesFeaturePage() {
     setShowModal(true);
   }
 
-  function viewAffiliateDetails(code) {
+  async function viewAffiliateDetails(code) {
     const affiliate = affiliates.find(a => a.code === code);
     const affiliateStats = stats.find(s => s.code === code);
-    
+
     setSelectedAffiliate({
       ...affiliate,
       ...affiliateStats
     });
+    setAffiliateReferrals([]);
+    setReferralsLoading(true);
     setShowDetailsModal(true);
+
+    try {
+      const result = await getAffiliateReferrals(code);
+      setAffiliateReferrals(result.referrals || []);
+    } catch (error) {
+      console.error('Failed to load affiliate referrals:', error);
+      alert(error?.response?.data?.detail || 'Unable to load this affiliate’s referred ticket buyers.');
+    } finally {
+      setReferralsLoading(false);
+    }
   }
 
   
@@ -353,14 +367,6 @@ export default function AdminAffiliatesFeaturePage() {
                           style={{ marginRight: '8px' }}
                         >
                           {affiliates.find(a => a.code === affiliate.code)?.is_active ? '🚫' : '✅'}
-                        </button>
-                        <button
-                          className="admin-table-btn"
-                          onClick={() => handleResendReferralEmail(affiliate.code)}
-                          title="Resend referral email for an existing ticket"
-                          style={{ marginRight: '8px' }}
-                        >
-                          Resend Email
                         </button>
                         <button 
                           className="admin-table-btn"
@@ -899,6 +905,60 @@ export default function AdminAffiliatesFeaturePage() {
                     <span>{new Date(selectedAffiliate.created_at).toLocaleDateString()}</span>
                   </div>
                 </div>
+              </div>
+              {/* Referred Ticket Buyers */}
+              <div>
+                <h3 style={{ fontSize: '14px', color: '#f5a623', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  Referred Ticket Buyers ({affiliateReferrals.length})
+                </h3>
+                {referralsLoading ? (
+                  <div style={{ background: '#0a0a0a', padding: '18px', borderRadius: '8px', color: 'rgba(255,255,255,0.65)' }}>
+                    Loading referred buyers...
+                  </div>
+                ) : affiliateReferrals.length === 0 ? (
+                  <div style={{ background: '#0a0a0a', padding: '18px', borderRadius: '8px', color: 'rgba(255,255,255,0.65)' }}>
+                    No referred ticket purchases found for this affiliate.
+                  </div>
+                ) : (
+                  <div style={{ background: '#0a0a0a', padding: '12px', borderRadius: '8px', overflowX: 'auto' }}>
+                    <table className="admin-table" style={{ minWidth: '720px' }}>
+                      <thead>
+                        <tr>
+                          <th>Buyer Name</th>
+                          <th>Ticket ID</th>
+                          <th>Ticket Type</th>
+                          <th>Amount Paid</th>
+                          <th>Commission</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {affiliateReferrals.map((referral) => (
+                          <tr key={referral.ticket_id}>
+                            <td>
+                              <strong>{referral.buyer_name || 'Name unavailable'}</strong>
+                              <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.55)' }}>{referral.buyer_email}</div>
+                            </td>
+                            <td><code>{referral.ticket_id}</code></td>
+                            <td>{referral.ticket_type}</td>
+                            <td>₦{Number(referral.amount_paid || 0).toLocaleString()}</td>
+                            <td style={{ color: '#2db84b', fontWeight: '700' }}>₦{Number(referral.commission_amount || 0).toLocaleString()}</td>
+                            <td>{referral.commission_status === 'paid' ? 'Paid' : referral.commission_status === 'pending' ? 'Pending' : 'Not recorded'}</td>
+                            <td>
+                              <button
+                                className="admin-table-btn"
+                                onClick={() => handleResendReferralEmail(selectedAffiliate.code, referral.ticket_id)}
+                              >
+                                Resend Email
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             </div>
 
