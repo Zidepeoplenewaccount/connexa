@@ -134,8 +134,8 @@ export default function FoodWalletPage() {
               </button>
               <div className="food-wallet-eligibility">
                 <strong>Eligible ticket holders</strong>
-                <span>Talent VIP <b>₦2,000</b></span>
-                <span>Business Owner <b>₦5,000</b></span>
+                <span>Talent VIP</span>
+                <span>Business Owner</span>
                 <small>Other ticket types do not include a food allowance.</small>
               </div>
             </form>
