@@ -180,6 +180,13 @@ export const createAffiliate = async (data) => {
   return response.data;
 };
 
+export const resendAffiliateReferralNotification = async (affiliateCode, ticketId) => {
+  const response = await adminAxios.post(
+    `/admin/affiliates/${encodeURIComponent(affiliateCode)}/resend-referral/${encodeURIComponent(ticketId)}`
+  );
+  return response.data;
+};
+
 
 
 
