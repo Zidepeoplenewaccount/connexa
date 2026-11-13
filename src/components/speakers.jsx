@@ -1,6 +1,6 @@
 import './speakers.css';
 import { useState } from 'react';
-import AskQuestionModal from './AskQuestionModal';
+import QuestionsClosedNotice from './QuestionsClosedNotice';
 import JoshuaPhoto from '../assets/joshua_oluwadepo.webp';
 import ItunuoluwaPhoto from '../assets/itunuoluwa_soniregun.webp';
 import RichardPhoto from '../assets/richard_essangabasi.webp';
@@ -248,14 +248,10 @@ const socialIcons = {
 
 
 export default function Speakers() {
-  const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+  const [showClosedNotice, setShowClosedNotice] = useState(false);
 
-  function openQuestionModal(speaker) {
-    setSelectedSpeaker(speaker);
-  }
-
-  function closeQuestionModal() {
-    setSelectedSpeaker(null);
+  function openQuestionModal() {
+    setShowClosedNotice(true);
   }
 
 
@@ -375,7 +371,7 @@ export default function Speakers() {
                 {speaker.name !== 'Coming Soon' && (
                   <button 
                     className="speaker-ask-btn"
-                    onClick={() => openQuestionModal(speaker)}
+                    onClick={openQuestionModal}
                   >
                     {speaker.askLabel || `Ask ${speaker?.name?.split(' ')[0]}`}
                   </button>
@@ -387,12 +383,7 @@ export default function Speakers() {
 
       </div>
 
-      {selectedSpeaker && (
-        <AskQuestionModal 
-          speaker={selectedSpeaker} 
-          onClose={closeQuestionModal}
-        />
-      )}
+      {showClosedNotice && <QuestionsClosedNotice onClose={() => setShowClosedNotice(false)} />}
     </section>
   );
 }
