@@ -254,3 +254,8 @@ export const getFoodWalletOverview = async () => {
   const response = await adminAxios.get('/connexa-food-wallet/admin/overview');
   return response.data;
 };
+
+export const deleteFoodWalletTransaction = async (transactionId) => {
+  const response = await adminAxios.delete(`/connexa-food-wallet/admin/transactions/${transactionId}`);
+  return response.data;
+};
