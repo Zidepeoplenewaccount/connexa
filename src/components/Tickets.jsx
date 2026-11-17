@@ -1207,9 +1207,7 @@ export default function Tickets({ vendorOnly = false }) {
                 <div className="ticket-countdown" aria-label="Countdown to Connexa on 28 November 2026">
                   {countdownRemaining > 0 ? (
                     <strong className="ticket-countdown-live">
-                      {countdownDays > 0
-                        ? `${countdownDays} ${countdownDays === 1 ? 'day' : 'days'} left`
-                        : 'Less than a day left'}
+                      CLOSES IN {countdownDays}D {String(countdownHours).padStart(2, '0')}H {String(countdownMinutes).padStart(2, '0')}M
                     </strong>
                   ) : (
                     <strong className="ticket-countdown-live">The Opportunity Playground is live!</strong>
