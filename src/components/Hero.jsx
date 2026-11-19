@@ -19,6 +19,8 @@ const heroPartners = [
   { name: 'Turnit', key: 'turnit', logo: '/turnit.jpg' },
   { name: 'Zidepeople', key: 'zidepeople', logo: '/zidepeople.jpg' },
   { name: 'Harmoniq', key: 'harmoniq', logo: harmoniqLogo },
+  { name: 'Sponsor logo', key: 'img-6170', logo: '/IMG_6170.jpg' },
+  { name: 'Sponsor logo', key: 'img-6168', logo: '/IMG_6168.JPG' },
 ];
 
 function PartnerRail({ side }) {
