@@ -40,8 +40,8 @@ export default function AdminDashboardFeaturePage() {
         <div className="admin-stat-card">
           <div className="admin-stat-icon">🎟️</div>
           <div className="admin-stat-info">
-            <span className="admin-stat-label">Tickets Bought</span>
-            <span className="admin-stat-value">{stats?.tickets.bought ?? stats?.tickets.total ?? 0}</span>
+            <span className="admin-stat-label">Paid Tickets</span>
+            <span className="admin-stat-value">{stats?.tickets.paid_total ?? stats?.tickets.bought ?? stats?.tickets.total ?? 0}</span>
           </div>
         </div>
 
@@ -79,7 +79,7 @@ export default function AdminDashboardFeaturePage() {
       </div>
 
       <div className="admin-card">
-        <h2>Tickets by Type</h2>
+        <h2>Paid Purchases by Ticket Category</h2>
         <div className="admin-table-scroll">
           <table className="admin-table">
             <thead>
@@ -89,7 +89,7 @@ export default function AdminDashboardFeaturePage() {
               </tr>
             </thead>
             <tbody>
-              {stats?.tickets.by_type?.map((item) => (
+              {(stats?.tickets.paid_by_type ?? stats?.tickets.by_type ?? []).map((item) => (
                 <tr key={item.type}>
                   <td>{item.type}</td>
                   <td><strong>{item.count}</strong></td>
