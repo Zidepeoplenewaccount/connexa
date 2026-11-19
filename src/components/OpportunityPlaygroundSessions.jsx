@@ -24,7 +24,6 @@ import JonathanPhoto from '../assets/jonathan_makinde.png';
 import CadmusPhoto from '../assets/Cadmus.webp';
 import SamuelPhoto from '../assets/SamuelPhoto.webp';
 import OlansilePhoto from '../assets/OlansilePhoto.webp';
-import TamaraPhoto from '../assets/Tamara.webp';
 
 const PEOPLE = {
   am: [
@@ -46,7 +45,6 @@ const PEOPLE = {
     ['CONNEXERS', 'Amarachi Agu', 'Talent & Business', 'Opportunity Conversations', AmarachiPhoto],
     ['CONNEXERS', 'Eniola Oyeleye', 'Talent & Business', 'Mini Opportunity Conversations & Live Sales Coaching', EniolaOyeleyeImage],
     ['PLAYGROUNDERS', 'Sonayon Cadmus', 'Talent & Business', 'Opportunity Conversations', CadmusPhoto],
-    ['PLAYGROUNDERS', 'Tamara Edwards', 'Talent', 'Opportunity Conversations', TamaraPhoto],
     ['PLAYGROUNDERS', 'Olansile Olanrewaju', 'Business', 'Mini Opportunity Conversations & Live Sales Coaching', OlansilePhoto],
     ['PLAYGROUNDERS', 'Adeife Oluwatomi', 'Talent & Business', 'Opportunity Conversations', OluwatomiPhoto],
     ['PLAYGROUNDERS', 'David Ogooluwa (Dotify)', 'Talent', 'Opportunity Conversations', DavidOgooPhoto]
