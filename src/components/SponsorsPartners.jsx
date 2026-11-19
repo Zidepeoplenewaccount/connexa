@@ -23,6 +23,7 @@ const partners = [
   { name: 'Harmoniq', key: 'harmoniq', logo: harmoniqLogo },
   { name: 'Sponsor logo', key: 'img-6170', logo: '/IMG_6170.jpg' },
   { name: 'Sponsor logo', key: 'img-6168', logo: '/IMG_6168.JPG' },
+  { name: 'Sponsor & Partner', key: '42e7e275', logo: '/42E7E275-D343-4AB2-B6CE-28C4C7AFD210.jpg' },
 ];
 
 export default function SponsorsPartners() {
