@@ -1,7 +1,7 @@
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
 
-const VENDORS = ['Salsar Cakes', 'Nature mix zobo'];
+const VENDORS = ['Salsar Cakes'];
 
 export default function AdminFoodWalletRegistersPage() {
   return (
