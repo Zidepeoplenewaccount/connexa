@@ -135,8 +135,8 @@ export default function FoodWalletPage() {
               <div className="food-wallet-eligibility">
                 <strong>Who can use this voucher?</strong>
                 <span>Six specifically approved attendees</span>
-                <span>Talent ticket holders who paid ₦5,000</span>
-                <small>Each eligible ticket receives one ₦1,000 food voucher. All other tickets are excluded.</small>
+                <span>Valid for Talent Ticket holders only</span>
+                <small>One ₦1,000 food voucher per eligible ticket.</small>
               </div>
             </form>
           ) : (
