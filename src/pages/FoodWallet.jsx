@@ -133,10 +133,10 @@ export default function FoodWalletPage() {
                 {loading ? 'Checking ticket…' : 'Access my food wallet'}
               </button>
               <div className="food-wallet-eligibility">
-                <strong>Eligible ticket holders</strong>
-                <span>Talent VIP</span>
-                <span>Business Owner</span>
-                <small>Other ticket types do not include a food allowance.</small>
+                <strong>Who can use this voucher?</strong>
+                <span>Six specifically approved attendees</span>
+                <span>Talent ticket holders who paid ₦5,000</span>
+                <small>Each eligible ticket receives one ₦1,000 food voucher. All other tickets are excluded.</small>
               </div>
             </form>
           ) : (
@@ -153,7 +153,7 @@ export default function FoodWalletPage() {
               </div>
 
               <div className="food-wallet-balance">
-                <span>Available food allowance</span>
+                <span>Available food voucher</span>
                 <strong>{money(wallet.balance)}</strong>
                 <div className="food-wallet-balance-meta">
                   <span>Allowance: {money(wallet.allowance)}</span>
