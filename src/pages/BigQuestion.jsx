@@ -29,22 +29,12 @@ export default function BigQuestionPage() {
       if(!audioRef.current) audioRef.current=new Ctx();
       if(audioRef.current.state!=='running') await audioRef.current.resume();
       if(audioRef.current.state!=='running') throw new Error('The browser has not enabled audio yet.');
-      // Play a short confirmation tone so the attendee knows sound is enabled.
-      const tone=audioRef.current.createOscillator();
-      const gain=audioRef.current.createGain();
-      tone.type='square';
-      tone.frequency.setValueAtTime(880,audioRef.current.currentTime);
-      gain.gain.setValueAtTime(0.16,audioRef.current.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001,audioRef.current.currentTime+0.28);
-      tone.connect(gain);
-      gain.connect(audioRef.current.destination);
-      tone.start();
-      tone.stop(audioRef.current.currentTime+0.3);
+      // Unlock browser audio silently. The alarm should only be heard after approval.
       setSoundEnabled(true);
       setError('');
     } catch(err) {
       setSoundEnabled(false);
-      setError(err.message || 'Please tap Enable sound alert again and check your phone volume.');
+      setError(err.message || 'Please check your phone volume and browser audio settings.');
     }
   }
 
@@ -84,7 +74,7 @@ export default function BigQuestionPage() {
       pulse.start(now);
       alarmNodesRef.current=[toneA,toneB,pulse];
     } catch(err) {
-      setError('The alarm could not start. Tap Enable / test sound and keep this page open.');
+      setError('The alarm could not start. Check your phone volume and keep this page open.');
     }
   }
   function stopAlarm() {
@@ -153,7 +143,7 @@ export default function BigQuestionPage() {
       </form>}
       {submitted && <div>
         <h2 style={{fontSize:26}}>Your question is in.</h2>
-        <p style={{color:'#c8d7d5',lineHeight:1.6,marginTop:10}}>Keep this page open and your phone volume on. Approval does not mean you are being called yet. When the facilitator calls you, a continuous pulsing alarm will play until you click “I’m here — stop sound”.</p>
+        <p style={{color:'#c8d7d5',lineHeight:1.6,marginTop:10}}>Keep this page open and your phone volume on. Once your question is approved, the continuous pulsing alarm will start. When the facilitator calls you, click “I’m here — stop sound” and proceed to the facilitator.</p>
         <p style={{marginTop:20,fontWeight:800}}>STATUS: <span style={{color:status==='called'?'#FD6025':'#b9d4d0'}}>{status.toUpperCase()||'PENDING'}</span></p>
         {status==='called' && !acknowledged && <div style={{marginTop:22,padding:20,background:'#FD6025',borderRadius:14}}>
           <h2 style={{fontSize:28}}>IT’S YOUR TURN!</h2><p style={{marginTop:8}}>Your question is up next. Please make your way to the facilitator.</p>
