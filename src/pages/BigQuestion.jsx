@@ -25,46 +25,68 @@ export default function BigQuestionPage() {
   async function unlockSound() {
     try {
       const Ctx=window.AudioContext||window.webkitAudioContext;
-      if(!Ctx) return;
+      if(!Ctx) throw new Error('Audio is not supported by this browser.');
       if(!audioRef.current) audioRef.current=new Ctx();
-      if(audioRef.current.state==='suspended') await audioRef.current.resume();
+      if(audioRef.current.state!=='running') await audioRef.current.resume();
+      if(audioRef.current.state!=='running') throw new Error('The browser has not enabled audio yet.');
+      // Play a short confirmation tone so the attendee knows sound is enabled.
+      const tone=audioRef.current.createOscillator();
+      const gain=audioRef.current.createGain();
+      tone.type='square';
+      tone.frequency.setValueAtTime(880,audioRef.current.currentTime);
+      gain.gain.setValueAtTime(0.16,audioRef.current.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001,audioRef.current.currentTime+0.28);
+      tone.connect(gain);
+      gain.connect(audioRef.current.destination);
+      tone.start();
+      tone.stop(audioRef.current.currentTime+0.3);
       setSoundEnabled(true);
-    } catch { setSoundEnabled(false); }
+      setError('');
+    } catch(err) {
+      setSoundEnabled(false);
+      setError(err.message || 'Please tap Enable sound alert again and check your phone volume.');
+    }
   }
 
   async function startAlarm() {
     const ctx=audioRef.current;
-    if(!ctx) return;
+    if(!ctx || alarmNodesRef.current.length) return;
     try {
-      if(ctx.state==='suspended') await ctx.resume();
+      if(ctx.state!=='running') await ctx.resume();
       if(ctx.state!=='running' || alarmNodesRef.current.length) return;
 
-      // Keep one horn tone running continuously. A low-frequency oscillator
-      // makes it pulse like a repeated "PAAH" until the attendee acknowledges.
-      const carrier=ctx.createOscillator();
+      // Loud, repeating two-tone alarm. Audio is started only after the
+      // attendee has enabled it with a direct tap on the page.
+      const toneA=ctx.createOscillator();
+      const toneB=ctx.createOscillator();
       const volume=ctx.createGain();
       const pulse=ctx.createOscillator();
       const pulseDepth=ctx.createGain();
       const now=ctx.currentTime;
 
-      carrier.type='sawtooth';
-      carrier.frequency.setValueAtTime(185,now);
-      volume.gain.setValueAtTime(0.39,now);
-      pulse.type='sine';
-      pulse.frequency.setValueAtTime(1.05,now);
-      pulseDepth.gain.setValueAtTime(0.34,now);
+      toneA.type='square';
+      toneA.frequency.setValueAtTime(740,now);
+      toneB.type='square';
+      toneB.frequency.setValueAtTime(988,now);
+      volume.gain.setValueAtTime(0.19,now);
+      pulse.type='square';
+      pulse.frequency.setValueAtTime(2,now);
+      pulseDepth.gain.setValueAtTime(0.15,now);
 
-      carrier.connect(volume);
+      toneA.connect(volume);
+      toneB.connect(volume);
       volume.connect(ctx.destination);
       pulse.connect(pulseDepth);
       pulseDepth.connect(volume.gain);
 
-      carrier.start(now);
+      toneA.start(now);
+      toneB.start(now);
       pulse.start(now);
-      alarmNodesRef.current=[carrier,pulse];
-    } catch {}
+      alarmNodesRef.current=[toneA,toneB,pulse];
+    } catch(err) {
+      setError('The alarm could not start. Tap Enable / test sound and keep this page open.');
+    }
   }
-
   function stopAlarm() {
     alarmNodesRef.current.forEach(node=>{
       try { node.stop(); } catch {}
@@ -138,7 +160,9 @@ export default function BigQuestionPage() {
           <button style={{...button,background:'#021C1B'}} onClick={()=>{stopAlarm();setAcknowledged(true);}}>I’m here — stop sound</button>
         </div>}
         {acknowledged && <p style={{marginTop:18}}>Thank you. Please make your way to the facilitator.</p>}
-        {!soundEnabled && <button style={button} onClick={unlockSound}>Enable sound alert</button>}
+        <button style={{...button,background:soundEnabled?'#234b46':'#FD6025'}} onClick={unlockSound}>
+          {soundEnabled?'Test sound alert':'Enable sound alert'}
+        </button>
         <button
           style={{...button,display:'block',background:'#fff',color:'#021C1B',marginTop:22}}
           onClick={()=>{
