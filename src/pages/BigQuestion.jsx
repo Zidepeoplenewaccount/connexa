@@ -160,9 +160,6 @@ export default function BigQuestionPage() {
           <button style={{...button,background:'#021C1B'}} onClick={()=>{stopAlarm();setAcknowledged(true);}}>I’m here — stop sound</button>
         </div>}
         {acknowledged && <p style={{marginTop:18}}>Thank you. Please make your way to the facilitator.</p>}
-        <button style={{...button,background:soundEnabled?'#234b46':'#FD6025'}} onClick={unlockSound}>
-          {soundEnabled?'Test sound alert':'Enable sound alert'}
-        </button>
         <button
           style={{...button,display:'block',background:'#fff',color:'#021C1B',marginTop:22}}
           onClick={()=>{
