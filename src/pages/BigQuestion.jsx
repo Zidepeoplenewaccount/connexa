@@ -143,13 +143,14 @@ export default function BigQuestionPage() {
       </form>}
       {submitted && <div>
         <h2 style={{fontSize:26}}>Your question is in.</h2>
-        <p style={{color:'#c8d7d5',lineHeight:1.6,marginTop:10}}>Keep this page open and your phone volume on. Once your question is approved, the continuous pulsing alarm will start. When the facilitator calls you, click “I’m here — stop sound” and proceed to the facilitator.</p>
+        <p style={{color:'#c8d7d5',lineHeight:1.6,marginTop:10}}>Keep this page open and your phone volume on. Once your question is approved, the alarm will start. Click “I am here, stop” to silence the alarm and let the facilitator know you are ready to ask your question.</p>
         <p style={{marginTop:20,fontWeight:800}}>STATUS: <span style={{color:status==='called'?'#FD6025':'#b9d4d0'}}>{status.toUpperCase()||'PENDING'}</span></p>
-        {status==='called' && !acknowledged && <div style={{marginTop:22,padding:20,background:'#FD6025',borderRadius:14}}>
-          <h2 style={{fontSize:28}}>IT’S YOUR TURN!</h2><p style={{marginTop:8}}>Your question is up next. Please make your way to the facilitator.</p>
-          <button style={{...button,background:'#021C1B'}} onClick={()=>{stopAlarm();setAcknowledged(true);}}>I’m here — stop sound</button>
+        {['approved','called'].includes(status) && !acknowledged && <div style={{marginTop:22,padding:20,background:'#FD6025',borderRadius:14}}>
+          <h2 style={{fontSize:28}}>{status==='called'?'IT’S YOUR TURN!':'YOUR QUESTION IS APPROVED!'}</h2>
+          <p style={{marginTop:8}}>Your question has been approved. Click below to stop the sound and let the facilitator know you are here and ready.</p>
+          <button style={{...button,background:'#021C1B'}} onClick={()=>{stopAlarm();setAcknowledged(true);}}>I am here, stop</button>
         </div>}
-        {acknowledged && <p style={{marginTop:18}}>Thank you. Please make your way to the facilitator.</p>}
+        {acknowledged && <p style={{marginTop:18}}>Sound stopped. The facilitator knows you are here and ready to ask your question.</p>}
         <button
           style={{...button,display:'block',background:'#fff',color:'#021C1B',marginTop:22}}
           onClick={()=>{
