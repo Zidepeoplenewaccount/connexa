@@ -127,7 +127,7 @@ export default function BigQuestionPage() {
   },[submitted]);
 
   useEffect(()=>{
-    if(status!=='called' || acknowledged || !soundEnabled) {
+    if(!['approved','called'].includes(status) || acknowledged || !soundEnabled) {
       stopAlarm();
       return;
     }
