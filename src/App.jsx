@@ -36,6 +36,7 @@ import AffiliateProgramPage from './pages/AffiliateProgramPage';
 import BigQuestionPage from './pages/BigQuestion';
 import RollTheDicePage from './pages/RollTheDice';
 import AdminOpportunityQuestions from './pages/AdminOpportunityQuestions';
+import OpportunityQuestionsManager from './pages/OpportunityQuestionsManager';
 import AdminDice from './pages/AdminDice';
 
 import AdminLogin from './features/auth/admin-login-page';
@@ -161,6 +162,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/ask" element={<BigQuestionPage />} />
+        <Route path="/opportunity-questions-manager" element={<OpportunityQuestionsManager />} />
         <Route path="/roll-the-dice" element={<RollTheDicePage />} />
         <Route path="/exhibitors" element={<ExhibitorPage />} />
         <Route path="/affiliates" element={<AffiliateProgramPage />} />
