@@ -139,6 +139,19 @@ export default function BigQuestionPage() {
         </div>}
         {acknowledged && <p style={{marginTop:18}}>Thank you. Please make your way to the facilitator.</p>}
         {!soundEnabled && <button style={button} onClick={unlockSound}>Enable sound alert</button>}
+        <button
+          style={{...button,display:'block',background:'#fff',color:'#021C1B',marginTop:22}}
+          onClick={()=>{
+            stopAlarm();
+            setQuestion('');
+            setStatus('');
+            setAcknowledged(false);
+            setSubmitted(false);
+          }}
+        >Submit another question</button>
+        <p style={{color:'#c8d7d5',fontSize:13,lineHeight:1.5,marginTop:12}}>
+          You can submit more than one question using the same ticket ID. Feel free to ask a different question for another Connexa section.
+        </p>
       </div>}
       {error && <p role="alert" style={{color:'#ff9b8b',marginTop:16}}>{error}</p>}
     </section>
