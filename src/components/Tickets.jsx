@@ -767,7 +767,7 @@ export default function Tickets({ vendorOnly = false }) {
       setConnectorsLookupLoading(true);
       const result = await findTicketsByEmail(email);
       if (!result.tickets || result.tickets.length === 0) {
-        setConnectorsLookupError('No Marketplace or Talent Regular ticket found for this email.');
+        setConnectorsLookupError('No Marketplace or Talent Pass ticket found for this email.');
         return;
       }
       setConnectorsLookupResults(result.tickets);
@@ -1299,7 +1299,7 @@ export default function Tickets({ vendorOnly = false }) {
               {selectedTicket.type === 'connectors' && (
                 <>
                   <div className="ticket-connectors-info">
-                    ℹ️ <strong>Important:</strong> Connectors Pass requires a valid Marketplace or Talent Regular ticket.
+                    ℹ️ <strong>Important:</strong> Connectors Pass requires a valid Marketplace or Talent Pass ticket.
                   </div>
 
                   <div className="ticket-input-group">
