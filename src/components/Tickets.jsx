@@ -234,7 +234,7 @@ const tickets = [
     icon: <FaTicketAlt size={20} />,
     iconClass: 'ticket-icon-white',
     label: 'General Attendees',
-    name: 'Talent Pass — Regular',
+    name: 'Talent Pass',
     subtitle: 'Learn, connect, and discover opportunities',
     price: 5000,
     available: 2700,  // ADD THIS
