@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getAllTickets, getAllPayments, getAllDiscountCodes, deleteTicket, exportTickets } from '../../services/adminApi';
 import AdminFreeTicketUpgradeModal from './AdminFreeTicketUpgradeModal';
+import AdminTicketDowngradeModal from './AdminTicketDowngradeModal';
 import AdminLayout from '../../components/admin/AdminLayout';
 import '../../components/admin/admin.css';
 
@@ -11,6 +12,7 @@ export default function AdminTicketsFeaturePage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [ticketToUpgrade, setTicketToUpgrade] = useState(null);
+  const [ticketToDowngrade, setTicketToDowngrade] = useState(null);
 
   useEffect(() => {
     fetchTickets();
@@ -243,6 +245,15 @@ export default function AdminTicketsFeaturePage() {
                             Upgrade Ticket
                           </button>
                           <button
+                            type="button"
+                            className="admin-table-btn"
+                            style={{ background: '#6B7280', borderColor: '#6B7280', color: '#fff' }}
+                            onClick={() => setTicketToDowngrade(ticket)}
+                            title="Downgrade this ticket"
+                          >
+                            Downgrade Ticket
+                          </button>
+                          <button
                             className="admin-table-btn"
                             onClick={() => handleDelete(ticket.ticket_id)}
                           >
@@ -268,6 +279,14 @@ export default function AdminTicketsFeaturePage() {
           ticket={ticketToUpgrade}
           onClose={() => setTicketToUpgrade(null)}
           onUpgraded={fetchTickets}
+        />
+      )}
+
+      {ticketToDowngrade && (
+        <AdminTicketDowngradeModal
+          ticket={ticketToDowngrade}
+          onClose={() => setTicketToDowngrade(null)}
+          onDowngraded={fetchTickets}
         />
       )}
     </AdminLayout>
