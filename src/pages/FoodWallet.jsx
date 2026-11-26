@@ -61,14 +61,13 @@ export default function FoodWalletPage() {
     if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
       return setError('Enter a valid purchase amount.');
     }
-    if (parsedAmount > wallet.balance) {
-      return setError(`Your remaining food allowance is ${money(wallet.balance)}.`);
-    }
     setConfirmation({
       vendorName,
       itemName: itemName.trim(),
       quantity: parsedQuantity,
       amount: parsedAmount,
+      subsidyAmount: Math.min(parsedAmount, Number(wallet.balance || 0)),
+      customerPayment: Math.max(parsedAmount - Number(wallet.balance || 0), 0),
     });
   }
 
@@ -167,10 +166,15 @@ export default function FoodWalletPage() {
                   <div className="food-wallet-receipt-status">✓ PURCHASE RECORDED</div>
                   <h3>Show this confirmation to the vendor</h3>
                   <div className="food-wallet-reference">{receipt.confirmation_code}</div>
+                  <div className="food-wallet-receipt-row"><span>Attendee</span><b>{receipt.attendee_name}</b></div>
+                  <div className="food-wallet-receipt-row"><span>Ticket ID</span><b>{receipt.ticket_id}</b></div>
                   <div className="food-wallet-receipt-row"><span>Vendor</span><b>{receipt.vendor_name}</b></div>
                   <div className="food-wallet-receipt-row"><span>Item</span><b>{receipt.item_name} × {receipt.quantity}</b></div>
-                  <div className="food-wallet-receipt-row"><span>Amount</span><b>{money(receipt.amount)}</b></div>
-                  <small>Keep this confirmation until you receive your item.</small>
+                  <div className="food-wallet-receipt-row"><span>Purchase amount</span><b>{money(receipt.purchase_amount)}</b></div>
+                  <div className="food-wallet-receipt-row"><span>Connexa subsidy</span><b>{money(receipt.subsidy_amount)}</b></div>
+                  <div className="food-wallet-receipt-row"><span>Customer pays</span><b>{money(receipt.customer_payment)}</b></div>
+                  <div className="food-wallet-receipt-row"><span>Date and time</span><b>{receipt.created_at ? new Date(receipt.created_at).toLocaleString('en-NG', { dateStyle: 'medium', timeStyle: 'short' }) : '—'}</b></div>
+                  <small>Vendor: verify the attendee's name against their ticket. Ask to see a photo ID if the identity is uncertain, but do not record their ID number. Record the four-digit code in your sales register.</small>
                 </div>
               )}
 
@@ -194,7 +198,7 @@ export default function FoodWalletPage() {
                     </div>
                     <div>
                       <label htmlFor="food-amount">Total price (₦)</label>
-                      <input id="food-amount" type="number" min="1" max={wallet.balance} step="0.01" value={amount} onChange={(event) => setAmount(event.target.value)} placeholder="e.g. 1000" required />
+                      <input id="food-amount" type="number" min="1" max="50000" step="0.01" value={amount} onChange={(event) => setAmount(event.target.value)} placeholder="e.g. 1000" required />
                     </div>
                   </div>
                   <button className="food-wallet-primary" type="submit">Review purchase</button>
@@ -219,9 +223,13 @@ export default function FoodWalletPage() {
             <div className="food-wallet-receipt-row"><span>Vendor</span><b>{confirmation.vendorName}</b></div>
             <div className="food-wallet-receipt-row"><span>Item</span><b>{confirmation.itemName}</b></div>
             <div className="food-wallet-receipt-row"><span>Quantity</span><b>{confirmation.quantity}</b></div>
-            <div className="food-wallet-receipt-row"><span>Total</span><b>{money(confirmation.amount)}</b></div>
-            <div className="food-wallet-receipt-row"><span>Balance after purchase</span><b>{money(wallet.balance - confirmation.amount)}</b></div>
-            <p className="food-wallet-modal-note">Only confirm if the vendor has quoted this price and you are ready to collect the item. This transaction cannot be cancelled by you once submitted.</p>
+            <div className="food-wallet-receipt-row"><span>Attendee</span><b>{wallet.attendee_name}</b></div>
+            <div className="food-wallet-receipt-row"><span>Ticket ID</span><b>{wallet.ticket_id}</b></div>
+            <div className="food-wallet-receipt-row"><span>Purchase amount</span><b>{money(confirmation.amount)}</b></div>
+            <div className="food-wallet-receipt-row"><span>Connexa subsidy</span><b>{money(confirmation.subsidyAmount)}</b></div>
+            <div className="food-wallet-receipt-row"><span>Customer pays</span><b>{money(confirmation.customerPayment)}</b></div>
+            <div className="food-wallet-receipt-row"><span>Subsidy balance after purchase</span><b>{money(wallet.balance - confirmation.subsidyAmount)}</b></div>
+            <p className="food-wallet-modal-note">Check that the attendee name and ticket ID are correct. The Connexa subsidy is applied once, up to the remaining balance; you pay any difference. The vendor must verify your name and record the four-digit confirmation code. This transaction cannot be cancelled by you once submitted.</p>
             <div className="food-wallet-modal-actions">
               <button type="button" className="food-wallet-secondary" onClick={() => setConfirmation(null)} disabled={loading}>Go back</button>
               <button type="button" className="food-wallet-primary" onClick={confirmPurchase} disabled={loading}>{loading ? 'Recording…' : 'Confirm purchase'}</button>
