@@ -94,7 +94,7 @@ export default function AdminQuestionsFeaturePage() {
           <select value={filterTicketType} onChange={(e) => setFilterTicketType(e.target.value)} style={{ padding: '10px 16px', background: '#1a1a1a', border: '1px solid #333', borderRadius: '8px', color: '#fff', fontSize: '14px' }}>
             <option value="">All Ticket Types</option>
             <option value="General Access Ticket">General Access</option>
-            <option value="Individual Pass — Regular">Regular</option>
+            <option value="Individual Pass — Regular">Talent Pass</option>
             <option value="Connectors Pass">Connectors</option>
             <option value="Individual Pass — VIP">VIP</option>
             <option value="Business Owner Pass">Business Owner</option>
