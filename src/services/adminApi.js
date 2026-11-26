@@ -4,7 +4,15 @@ import { setupAxiosErrorHandling } from '../utils/errorMessages';
 const BACKEND_URL = 'https://zidepeople-backend.onrender.com';
 //const BACKEND_URL = 'http://127.0.0.1:8000';
 
-const getAuthToken = () => localStorage.getItem('admin_token');
+const getAuthToken = () => {
+  const storedToken = localStorage.getItem('admin_token');
+  if (!storedToken) return null;
+
+  // Older Connexa Admin sessions may have stored the token with or without
+  // the Bearer prefix. The API expects exactly one "Bearer " prefix.
+  const token = storedToken.trim().replace(/^Bearer\\s+/i, '').trim();
+  return token ? `Bearer ${token}` : null;
+};
 
 const adminAxios = axios.create({ baseURL: BACKEND_URL });
 setupAxiosErrorHandling(adminAxios);
