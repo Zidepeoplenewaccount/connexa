@@ -291,7 +291,7 @@ const tickets = [
     price: 5000,
     available: 30,  // ADD THIS
     features: [
-      'Must purchase General access/Individual Regular ticket',
+      'Must purchase a Talent Pass',
       'Gain entry to curated opportunity sessions',
       'Structured introductions to business owners and speakers',
       'Participation in connection circles',
