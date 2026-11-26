@@ -10,7 +10,7 @@ const getAuthToken = () => {
 
   // Older Connexa Admin sessions may have stored the token with or without
   // the Bearer prefix. The API expects exactly one "Bearer " prefix.
-  const token = storedToken.trim().replace(/^Bearer\\s+/i, '').trim();
+  const token = storedToken.trim().replace(/^Bearer\s+/i, '').trim();
   return token ? `Bearer ${token}` : null;
 };
 
