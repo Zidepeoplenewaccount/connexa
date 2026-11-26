@@ -63,6 +63,18 @@ export const adminUpgradeTicket = async (ticketId, upgradeToTicketType) => {
   });
   return response.data;
 };
+ 
+export const getAdminTicketDowngradeOptions = async (ticketId) => {
+  const response = await adminAxios.get(`/admin/tickets/${encodeURIComponent(ticketId)}/downgrade-options`);
+  return response.data;
+};
+
+export const adminDowngradeTicket = async (ticketId, downgradeToTicketType) => {
+  const response = await adminAxios.post(`/admin/tickets/${encodeURIComponent(ticketId)}/downgrade`, {
+    downgrade_to_ticket_type: downgradeToTicketType,
+  });
+  return response.data;
+};
 
 export const exportTickets = async () => {
   const response = await adminAxios.get('/admin/export/tickets', { responseType: 'blob' });
