@@ -2,7 +2,6 @@ import './speakers.css';
 import { useState } from 'react';
 import QuestionsClosedNotice from './QuestionsClosedNotice';
 import MosunmoluwaPhoto from '../assets/mosunmoluwa_david.webp';
-import OmobolanlePhoto from '../assets/omobolanle_adigun.webp';
 import OlalekanPhoto from '../assets/olalekan_asani.webp';
 import DavidOgooPhoto from '../assets/david_ogooluwa.webp';
 import OluwatomiPhoto from '../assets/oluwatomi_adeife.webp';
@@ -32,25 +31,6 @@ const playgrounders = [
       tiktok: 'https://www.tiktok.com/@mosununfiltered',
       twitter: 'https://x.com/themosunmoluwa',
       linkedin: 'https://www.linkedin.com/in/mosunakomolede',
-    },
-  },
-  {
-    id: 2,
-    name: 'Omobolanle Adigun (The Vibe Queen)',
-    connexerType: 'TALENT PLAYGROUNDER',
-    title: 'Actor, TV & Event Host, Brand & Communications Executive, Writer, Content Creator & Entrepreneur',
-    company: 'Creatrix Empire',
-    topic: null,
-    photo: OmobolanlePhoto,
-    featured: false,
-    photoClass: 'zoom-out-photo',
-    askLabel: 'ASK THE VIBE QUEEN',
-    bio: 'Omobolanle Valentina Adigun popularly known as Omobola Val or The Vibe Queen is a multi-talented media and communications professional who is passionate about connecting people with opportunities that transform their lives. As the Head of Brands & communications at Creatrix Empire, an actor, media presenter, event host, and content creator, she has built a strong career around entertainment, personal branding, and meaningful collaborations. Through her work, she has helped talents, brands, and organizations amplify their voices and create lasting impact. As a Talent Playgrounder, she believes that authentic relationships and strategic visibility are powerful tools for career growth.',
-    socials: {
-      instagram: 'https://www.instagram.com/omobolanleadigun_',
-      tiktok: 'https://www.tiktok.com/@omobola_val',
-      twitter: 'https://x.com/omobola_val',
-      linkedin: 'https://linkedin.com/in/omobolanle-adigun-508253120',
     },
   },
   {
