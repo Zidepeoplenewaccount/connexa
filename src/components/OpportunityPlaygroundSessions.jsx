@@ -16,7 +16,6 @@ import TobiMakindeImage from '../assets/TobiMakindeImage.webp';
 import EniolaOyeleyeImage from '../assets/EniolaOyeleyeImage.webp';
 
 import MosunmoluwaPhoto from '../assets/mosunmoluwa_david.webp';
-import OmobolanlePhoto from '../assets/omobolanle_adigun.webp';
 import OlalekanPhoto from '../assets/olalekan_asani.webp';
 import DavidOgooPhoto from '../assets/david_ogooluwa.webp';
 import OluwatomiPhoto from '../assets/oluwatomi_adeife.webp';
@@ -32,7 +31,6 @@ const PEOPLE = {
     ['CONNEXERS', 'Richard Essangabasi', 'Talent & Business', 'Opportunity Conversations', RichardPhoto],
     ['CONNEXERS', 'Joshua Oluwadepo', 'Talent', 'Opportunity Conversations', JoshuaPhoto],
     ['CONNEXERS', 'Rt. Hon Itunuoluwa Maria Soniregun', 'Talent', 'Opportunity Conversations', ItunuoluwaPhoto],
-    ['PLAYGROUNDERS', 'Omobolanle Adigun', 'Talent', 'Opportunity Conversations', OmobolanlePhoto],
     ['PLAYGROUNDERS', 'Barr. (Mrs) Mosunmoluwa David-Gbemisola', 'Business', 'Opportunity Conversations', MosunmoluwaPhoto],
     ['PLAYGROUNDERS', 'Olalekan Asani', 'Business', 'Mini Opportunity Conversations & Live Business Advisory', OlalekanPhoto],
     ['PLAYGROUNDERS', 'Samuel Olatunde', 'Business', 'Opportunity Conversations', SamuelPhoto],
