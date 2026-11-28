@@ -11,14 +11,6 @@ const quotes = [
     name: 'Barr. Mosunmoluwa David-Gbemisola',
   },
   {
-    text: "I was not always the most connected person in the room. I often had to show up where I knew no one, stay when it felt uncomfortable, and keep showing up in silence—until preparation became my loudest introduction.",
-    name: 'Rt. Hon Itunuoluwa Maria Soniregun',
-  },
-  {
-    text: "Too many people lose opportunities they prayed for because they were not prepared for the moment it finally arrived. The real work is not just getting access—it is becoming ready enough not to waste it.",
-    name: 'Rt. Hon Itunuoluwa Maria Soniregun',
-  },
-  {
     text: "Experience gave me knowledge, but one intentional year turned me into a uniquely positioned talent.",
     name: 'Joshua Oluwadepo',
   },
