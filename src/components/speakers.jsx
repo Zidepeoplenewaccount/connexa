@@ -2,7 +2,6 @@ import './speakers.css';
 import { useState } from 'react';
 import QuestionsClosedNotice from './QuestionsClosedNotice';
 import JoshuaPhoto from '../assets/joshua_oluwadepo.webp';
-import ItunuoluwaPhoto from '../assets/itunuoluwa_soniregun.webp';
 import RichardPhoto from '../assets/richard_essangabasi.webp';
 import AmarachiPhoto from '../assets/AmarachiIMG_1222.webp';
 import AnuliPhoto from '../assets/AnuliIMG_1242.JPG.webp';
@@ -54,25 +53,6 @@ const speakers = [
     socials: {
       instagram: 'https://www.instagram.com/connexalagos',
       linkedin: 'https://www.linkedin.com/in/joshuaoluwadepo?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
-    },
-  },
-  {
-    id: 3,
-    name: 'Rt. Hon Itunuoluwa Maria Soniregun',
-    connexerType: 'TALENT CONNEXER',
-    title: 'First Female Speaker, Lagos State Youth Parliament',
-    company: 'Lagos State Youth Parliament',
-    topic: null,
-    photo: ItunuoluwaPhoto,
-    featured: false,
-    askLabel: 'Ask RT. HON ITUNUOLUWA',
-    bio: 'Itunuoluwa Maria Soniregun is a youth leader and policy advocate committed to advancing youth inclusion, leadership development, and civic participation. As the first female Speaker of Lagos State Youth Parliament and the youngest State Youth Parliament Speaker in Nigeria, she has consistently leveraged her platform to bridge the gap between young people and meaningful opportunities in leadership, governance, and personal development. Her journey reflects a deep commitment to preparing young people not only to access opportunities, but to be fully ready to maximize them when they arrive.',
-    instagramUrl: 'https://www.instagram.com/soniregunitunuoluwa',
-    socials: {
-      instagram: 'https://www.instagram.com/soniregunitunuoluwa',
-      tiktok: 'https://www.tiktok.com/@itunuoluwasoniregun1',
-      twitter: 'https://x.com/SoniregunItunu1',
-      linkedin: 'https://www.linkedin.com/in/rt-hon-soniregun-itunuoluwa-5a571a1aa',
     },
   },
   {
