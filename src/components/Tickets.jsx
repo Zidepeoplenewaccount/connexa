@@ -148,7 +148,6 @@ function SkillDropdown({ value, onChange }) {
 const CONNEXER_OPTIONS = [
   { group: 'Connexers', items: [
     { value: 'Joshua Oluwadepo', label: 'Joshua Oluwadepo — Talent Connexer' },
-    { value: 'Rt. Hon Itunuoluwa Maria Soniregun', label: 'Rt. Hon Itunuoluwa — Talent Connexer' },
     { value: 'Richard Essangabasi', label: 'Richard Essangabasi — Talent & Business Connexer' },
   ]},
   { group: 'Playgrounders', items: [
