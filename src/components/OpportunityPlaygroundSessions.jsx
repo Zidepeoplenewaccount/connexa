@@ -5,7 +5,6 @@ import QuestionsClosedNotice from './QuestionsClosedNotice';
 // Reuse the exact participant image assets already used by the Connexers
 // and Playgrounders sections of the Connexa website.
 import JoshuaPhoto from '../assets/joshua_oluwadepo.webp';
-import ItunuoluwaPhoto from '../assets/itunuoluwa_soniregun.webp';
 import RichardPhoto from '../assets/richard_essangabasi.webp';
 import AmarachiPhoto from '../assets/AmarachiIMG_1222.webp';
 import AnuliPhoto from '../assets/AnuliIMG_1242.JPG.webp';
@@ -30,7 +29,6 @@ const PEOPLE = {
     ['CONNEXERS', 'Mrs Stella Ijeoma Olugbemi', 'Business', 'Opportunity Conversations', StellaIjeomaPhoto],
     ['CONNEXERS', 'Richard Essangabasi', 'Talent & Business', 'Opportunity Conversations', RichardPhoto],
     ['CONNEXERS', 'Joshua Oluwadepo', 'Talent', 'Opportunity Conversations', JoshuaPhoto],
-    ['CONNEXERS', 'Rt. Hon Itunuoluwa Maria Soniregun', 'Talent', 'Opportunity Conversations', ItunuoluwaPhoto],
     ['PLAYGROUNDERS', 'Barr. (Mrs) Mosunmoluwa David-Gbemisola', 'Business', 'Opportunity Conversations', MosunmoluwaPhoto],
     ['PLAYGROUNDERS', 'Olalekan Asani', 'Business', 'Mini Opportunity Conversations & Live Business Advisory', OlalekanPhoto],
     ['PLAYGROUNDERS', 'Samuel Olatunde', 'Business', 'Opportunity Conversations', SamuelPhoto],
